@@ -1,0 +1,8 @@
+{
+    "name": "drupal/helfi_trp",
+    "type": "drupal-custom-module",
+    "minimum-stability": "dev",
+    "require": {
+        "drupal/helfi_api_base": "1.x-dev"
+    }
+}

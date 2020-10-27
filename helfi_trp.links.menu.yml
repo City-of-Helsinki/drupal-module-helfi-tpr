@@ -1,0 +1,11 @@
+entity.trp_unit.settings:
+  title: TRP - Unit settings
+  description: Configure TRP unit entity type
+  route_name:  trp_unit.settings
+  parent: system.admin_structure
+
+entity.trp_unit.collection:
+  title: TRP - Unit entities
+  description: List of TRP unit entities
+  route_name: entity.trp_unit.collection
+  parent: system.admin_content

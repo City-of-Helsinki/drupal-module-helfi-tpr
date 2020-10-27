@@ -4,9 +4,10 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_trp\Entity;
 
+use CommerceGuys\Addressing\AddressFormat\AddressField;
+use CommerceGuys\Addressing\AddressFormat\FieldOverride;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
-use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
@@ -66,44 +67,36 @@ class Unit extends TrpEntityBase {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $string_fields = [
-      'name' => ['label' => new TranslatableMarkup('Name')],
-      'latitude' => ['label' => new TranslatableMarkup('Latitude')],
-      'longitude' => ['label' => new TranslatableMarkup('Longitude')],
-      'phone' => [
-        'label' => new TranslatableMarkup('Phone'),
-        'cardinality' => FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
-      ],
-      'call_charge_info' => ['label' => new TranslatableMarkup('Call charge info')],
-      'email' => ['label' => new TranslatableMarkup('Email')],
-      'accessibility_phone' => ['label' => new TranslatableMarkup('Accessibility phone')],
-      'accessibility_email' => ['label' => new TranslatableMarkup('Accessibility email')],
-    ];
-
-    foreach ($string_fields as $name => $settings) {
-      $fields[$name] = BaseFieldDefinition::create('string')
-        ->setLabel($settings['label'])
-        ->setSettings([
-          'max_length' => 255,
-          'text_processing' => 0,
-        ])
-        ->setTranslatable(TRUE)
-        ->setDefaultValue('')
-        ->setDisplayConfigurable('view', TRUE)
-        ->setDisplayConfigurable('form', TRUE);
-
-      if (isset($settings['cardinality'])) {
-        $fields[$name]->setCardinality($settings['cardinality']);
-      }
-    }
-
+    $fields['name'] = static::createStringField('Name');
+    $fields['latitude'] = static::createStringField('Latitude');
+    $fields['longitude'] = static::createStringField('Longitude');
+    $fields['phone'] = static::createStringField('Phone', -1);
+    $fields['call_charge_info'] = static::createStringField('Call charge info');
+    $fields['email'] = static::createStringField('Email');
+    $fields['accessibility_phone'] = static::createStringField('Accessibility phone');
+    $fields['accessibility_email'] = static::createStringField('Accessibility email');
+    $fields['address_postal'] = static::createStringField('Address postal');
+    $fields['www'] = static::createLinkField('Website link');
+    $fields['streetview_entrance_url'] = static::createLinkField('Streetview entrance');
+    $fields['accessibility_www'] = static::createLinkField('Accessibility website link');
 
     $fields['description'] = BaseFieldDefinition::create('text_long')
-      ->setRevisionable(TRUE)
       ->setTranslatable(TRUE)
       ->setLabel(new TranslatableMarkup('Description'))
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
+
+    $fields['address'] = BaseFieldDefinition::create('address')
+      ->setLabel(new TranslatableMarkup('Address'))
+      ->setRevisionable(TRUE)
+      ->setSetting('field_overrides', [
+        AddressField::GIVEN_NAME => ['override' => FieldOverride::HIDDEN],
+        AddressField::ADDITIONAL_NAME => ['override' => FieldOverride::HIDDEN],
+        AddressField::FAMILY_NAME => ['override' => FieldOverride::HIDDEN],
+        AddressField::ORGANIZATION => ['override' => FieldOverride::HIDDEN],
+      ])
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
 
     return $fields;
   }

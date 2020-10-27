@@ -4,6 +4,8 @@
     "minimum-stability": "dev",
     "require": {
         "drupal/helfi_api_base": "1.x-dev",
-        "drupal/address": "~1.0"
+        "drupal/address": "~1.0",
+        "drupal/migrate_plus": "~5.0",
+        "drupal/migrate_tools": "~5.0"
     }
 }

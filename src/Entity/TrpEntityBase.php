@@ -35,6 +35,32 @@ abstract class TrpEntityBase extends RemoteEntityBase implements ContentEntityIn
     return $this;
   }
 
+  protected static function createStringField(string $label, int $cardinality = 1) : BaseFieldDefinition {
+    return BaseFieldDefinition::create('string')
+      ->setLabel(new TranslatableMarkup($label))
+      ->setTranslatable(TRUE)
+      ->setRevisionable(TRUE)
+      ->setDefaultValue('')
+      ->setCardinality($cardinality)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE)
+      ->setSettings([
+        'max_length' => 255,
+        'text_processing' => 0,
+      ]);
+  }
+
+  protected static function createLinkField(string $label, int $cardinality = 1) : BaseFieldDefinition {
+    return BaseFieldDefinition::create('link')
+      ->setLabel(new TranslatableMarkup($label))
+      ->setTranslatable(TRUE)
+      ->setRevisionable(TRUE)
+      ->setDefaultValue('')
+      ->setCardinality($cardinality)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
+  }
+
   /**
    * {@inheritdoc}
    */

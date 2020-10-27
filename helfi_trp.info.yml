@@ -8,3 +8,7 @@ dependencies:
   - helfi_api_base
   - text
   - address
+  - link
+  - migrate
+  - migrate_plus
+  - migrate_tools

@@ -11,7 +11,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
- * Defines the helfi_trp entity class.
+ * Defines the trp_unit entity class.
  *
  * @ContentEntityType(
  *   id = "trp_unit",

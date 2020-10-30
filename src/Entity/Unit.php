@@ -11,7 +11,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
- * Defines the helfi_trp entity class.
+ * Defines the trp_unit entity class.
  *
  * @ContentEntityType(
  *   id = "trp_unit",
@@ -68,19 +68,27 @@ class Unit extends TrpEntityBase {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $fields['name'] = static::createStringField('Name');
-    $fields['latitude'] = static::createStringField('Latitude');
-    $fields['longitude'] = static::createStringField('Longitude');
-    $fields['phone'] = static::createStringField('Phone', -1);
+    $fields['latitude'] = static::createStringField('Latitude')
+      ->setTranslatable(FALSE);
+    $fields['longitude'] = static::createStringField('Longitude')
+      ->setTranslatable(FALSE);
+    $fields['phone'] = static::createStringField('Phone', -1)
+      ->setTranslatable(FALSE);
     $fields['call_charge_info'] = static::createStringField('Call charge info');
-    $fields['email'] = static::createStringField('Email');
-    $fields['accessibility_phone'] = static::createStringField('Accessibility phone');
-    $fields['accessibility_email'] = static::createStringField('Accessibility email');
+    $fields['email'] = static::createStringField('Email')
+      ->setTranslatable(FALSE);
+    $fields['accessibility_phone'] = static::createStringField('Accessibility phone')
+      ->setTranslatable(FALSE);
+    $fields['accessibility_email'] = static::createStringField('Accessibility email')
+      ->setTranslatable(FALSE);
     $fields['address_postal'] = static::createStringField('Address postal');
     $fields['www'] = static::createLinkField('Website link');
-    $fields['streetview_entrance_url'] = static::createLinkField('Streetview entrance');
-    $fields['accessibility_www'] = static::createLinkField('Accessibility website link');
+    $fields['streetview_entrance_url'] = static::createLinkField('Streetview entrance')
+      ->setTranslatable(FALSE);
+    $fields['accessibility_www'] = static::createLinkField('Accessibility website link')
+      ->setTranslatable(FALSE);
 
-    $fields['description'] = BaseFieldDefinition::create('text_long')
+    $fields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
       ->setLabel(new TranslatableMarkup('Description'))
       ->setDisplayConfigurable('form', TRUE)
@@ -88,6 +96,7 @@ class Unit extends TrpEntityBase {
 
     $fields['address'] = BaseFieldDefinition::create('address')
       ->setLabel(new TranslatableMarkup('Address'))
+      ->setTranslatable(TRUE)
       ->setRevisionable(TRUE)
       ->setSetting('field_overrides', [
         AddressField::GIVEN_NAME => ['override' => FieldOverride::HIDDEN],

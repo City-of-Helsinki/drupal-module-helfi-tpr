@@ -27,7 +27,7 @@ class UnitMigrationTest extends MigrationTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp() : void {
     parent::setUp();
 
     $this->installEntitySchema('trp_unit');
@@ -52,7 +52,7 @@ class UnitMigrationTest extends MigrationTestBase {
       $config->set('source', $overrides + $config->get('source'))
         ->save();
 
-      \Drupal::service('plugin.cache_clearer')->clearCachedDefinitions();
+      $this->flushPluginCache();
 
       $this->executeMigration($item);
     }

@@ -31,6 +31,7 @@ abstract class TrpEntityBase extends RemoteEntityBase implements RevisionableInt
    */
   protected static function createStringField(string $label, int $cardinality = 1) : BaseFieldDefinition {
     return BaseFieldDefinition::create('string')
+      // @codingStandardsIgnoreLine
       ->setLabel(new TranslatableMarkup($label))
       ->setTranslatable(TRUE)
       ->setRevisionable(TRUE)
@@ -57,6 +58,7 @@ abstract class TrpEntityBase extends RemoteEntityBase implements RevisionableInt
    */
   protected static function createLinkField(string $label, int $cardinality = 1) : BaseFieldDefinition {
     return BaseFieldDefinition::create('link')
+      // @codingStandardsIgnoreLine
       ->setLabel(new TranslatableMarkup($label))
       ->setTranslatable(TRUE)
       ->setRevisionable(TRUE)

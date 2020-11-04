@@ -1,0 +1,11 @@
+entity.tpr_unit.settings:
+  title: TPR - Unit settings
+  description: Configure TPR unit entity type
+  route_name:  tpr_unit.settings
+  parent: system.admin_structure
+
+entity.tpr_unit.collection:
+  title: TPR - Unit entities
+  description: List of TPR unit entities
+  route_name: entity.tpr_unit.collection
+  parent: system.admin_content

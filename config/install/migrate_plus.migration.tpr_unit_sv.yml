@@ -3,18 +3,18 @@ status: true
 dependencies:
   enforced:
     module:
-      - helfi_trp
-id: trp_unit_en
+      - helfi_tpr
+id: tpr_unit_sv
 class: null
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags:
-  - trp
-migration_group: trp
-label: 'TRP unit (en)'
+  - tpr
+migration_group: tpr
+label: 'TPR unit (sv)'
 source:
   plugin: url
-  urls: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/?'
+  urls: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/'
   data_fetcher_plugin: http
   data_parser_plugin: json
   item_selector: 0
@@ -24,31 +24,31 @@ source:
       selector: /id
     -
       name: name
-      selector: /name_en
+      selector: /name_sv
     -
       name: call_charge_info
-      selector: /call_charge_info_en
+      selector: /call_charge_info_sv
     -
       name: short_desc
-      selector: /short_desc_en
+      selector: /short_desc_sv
     -
       name: desc
-      selector: /desc_en
+      selector: /desc_sv
     -
       name: street_address
-      selector: /street_address_en
+      selector: /street_address_sv
     -
       name: address_city
-      selector: /address_city_en
+      selector: /address_city_sv
     -
       name: address_postal_code
       selector: /address_zip
     -
       name: address_postal
-      selector: /address_postal_full_en
+      selector: /address_postal_full_sv
     -
       name: www
-      selector: /www_en
+      selector: /www_sv
     -
       name: changed
       selector: /modified_time
@@ -67,7 +67,7 @@ process:
     default_value: fi
   langcode:
     plugin: default_value
-    default_value: en
+    default_value: sv
   address/postal_code: address_postal_code
   address/locality: address_city
   address/address_line1: street_address
@@ -90,10 +90,10 @@ process:
       to_timezone: 'UTC'
     -
       plugin: entity_has_changed
-      entity_type: trp_unit
+      entity_type: tpr_unit
 destination:
-  plugin: 'entity:trp_unit'
+  plugin: 'entity:tpr_unit'
   translations: true
 migration_dependencies:
   required:
-    - trp_unit
+    - tpr_unit

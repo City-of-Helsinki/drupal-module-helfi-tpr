@@ -2,15 +2,15 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\helfi_trp\Kernel;
+namespace Drupal\Tests\helfi_tpr\Kernel;
 
-use Drupal\helfi_trp\Entity\Unit;
+use Drupal\helfi_tpr\Entity\Unit;
 use Drupal\Tests\helfi_api_base\Kernel\MigrationTestBase;
 
 /**
  * Tests unit migration.
  *
- * @group helfi_trp
+ * @group helfi_tpr
  */
 class UnitMigrationTest extends MigrationTestBase {
 
@@ -21,7 +21,7 @@ class UnitMigrationTest extends MigrationTestBase {
     'link',
     'address',
     'text',
-    'helfi_trp',
+    'helfi_tpr',
   ];
 
   /**
@@ -30,8 +30,8 @@ class UnitMigrationTest extends MigrationTestBase {
   public function setUp() : void {
     parent::setUp();
 
-    $this->installEntitySchema('trp_unit');
-    $this->installConfig(['helfi_trp']);
+    $this->installEntitySchema('tpr_unit');
+    $this->installConfig(['helfi_tpr']);
   }
 
   /**
@@ -41,12 +41,12 @@ class UnitMigrationTest extends MigrationTestBase {
    */
   public function testMigration(string $migrate, int $expectedCount, string $langcode) : void {
 
-    foreach (['trp_unit', $migrate] as $item) {
+    foreach (['tpr_unit', $migrate] as $item) {
       // Override default url with local copy of unit data.
       $config = $this->config('migrate_plus.migration.' . $item);
 
       $overrides = [
-        'urls' => $this->getFixturePath('helfi_trp', 'unit.json'),
+        'urls' => $this->getFixturePath('helfi_tpr', 'unit.json'),
         'data_fetcher_plugin' => 'file',
       ];
       $config->set('source', $overrides + $config->get('source'))
@@ -72,8 +72,8 @@ class UnitMigrationTest extends MigrationTestBase {
    */
   public function migrationsDataProvider() : array {
     return [
-      ['trp_unit_sv', 6, 'sv'],
-      ['trp_unit_en', 6, 'en'],
+      ['tpr_unit_sv', 6, 'sv'],
+      ['tpr_unit_en', 6, 'en'],
     ];
   }
 

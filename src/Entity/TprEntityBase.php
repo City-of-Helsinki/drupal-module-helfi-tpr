@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\helfi_trp\Entity;
+namespace Drupal\helfi_tpr\Entity;
 
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\RevisionableInterface;
@@ -12,9 +12,9 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\helfi_api_base\Entity\RemoteEntityBase;
 
 /**
- * Defines the base class for all TRP entities.
+ * Defines the base class for all TPR entities.
  */
-abstract class TrpEntityBase extends RemoteEntityBase implements RevisionableInterface {
+abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInterface {
 
   use RevisionLogEntityTrait;
 

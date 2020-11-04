@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\helfi_trp\Entity;
+namespace Drupal\helfi_tpr\Entity;
 
 use CommerceGuys\Addressing\AddressFormat\AddressField;
 use CommerceGuys\Addressing\AddressFormat\FieldOverride;
@@ -11,15 +11,15 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
- * Defines the trp_unit entity class.
+ * Defines the tpr_unit entity class.
  *
  * @ContentEntityType(
- *   id = "trp_unit",
- *   label = @Translation("TRP - Unit"),
- *   label_collection = @Translation("TRP - Unit"),
+ *   id = "tpr_unit",
+ *   label = @Translation("TPR - Unit"),
+ *   label_collection = @Translation("TPR - Unit"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\helfi_trp\Entity\Listing\UnitListBuilder",
+ *     "list_builder" = "Drupal\helfi_tpr\Entity\Listing\UnitListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "access" = "Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess",
  *     "form" = {
@@ -30,10 +30,10 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
  *     }
  *   },
- *   base_table = "trp_unit",
- *   data_table = "trp_unit_field_data",
- *   revision_table = "trp_unit_revision",
- *   revision_data_table = "trp_unit_field_revision",
+ *   base_table = "tpr_unit",
+ *   data_table = "tpr_unit_field_data",
+ *   revision_table = "tpr_unit_revision",
+ *   revision_data_table = "tpr_unit_field_revision",
  *   show_revision_ui = TRUE,
  *   translatable = TRUE,
  *   admin_permission = "administer remote entities",
@@ -51,15 +51,15 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "revision_log_message" = "revision_log"
  *   },
  *   links = {
- *     "canonical" = "/trp-unit/{trp_unit}",
- *     "edit-form" = "/admin/content/trp-unit/{trp_unit}/edit",
- *     "delete-form" = "/admin/content/trp-unit/{trp_unit}/delete",
- *     "collection" = "/admin/content/trp-unit"
+ *     "canonical" = "/tpr-unit/{tpr_unit}",
+ *     "edit-form" = "/admin/content/tpr-unit/{tpr_unit}/edit",
+ *     "delete-form" = "/admin/content/tpr-unit/{tpr_unit}/delete",
+ *     "collection" = "/admin/content/tpr-unit"
  *   },
- *   field_ui_base_route = "trp_unit.settings"
+ *   field_ui_base_route = "tpr_unit.settings"
  * )
  */
-class Unit extends TrpEntityBase {
+class Unit extends TprEntityBase {
 
   /**
    * {@inheritdoc}

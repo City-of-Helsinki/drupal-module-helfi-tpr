@@ -7,5 +7,9 @@
         "drupal/address": "~1.0",
         "drupal/migrate_plus": "~5.0",
         "drupal/migrate_tools": "~5.0"
+    },
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+        "drupal/coder": "^8.3"
     }
 }

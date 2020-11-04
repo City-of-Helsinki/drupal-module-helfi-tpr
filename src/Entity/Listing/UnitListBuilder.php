@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\helfi_trp\Entity\Listing;
+namespace Drupal\helfi_tpr\Entity\Listing;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
@@ -13,7 +13,7 @@ use Drupal\Core\Routing\RedirectDestinationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a list controller for the trp_unit entity type.
+ * Provides a list controller for the tpr_unit entity type.
  */
 class UnitListBuilder extends EntityListBuilder {
 
@@ -65,7 +65,7 @@ class UnitListBuilder extends EntityListBuilder {
       ->count()
       ->execute();
 
-    $build['summary']['#markup'] = $this->t('Total helfi_trps: @total', ['@total' => $total]);
+    $build['summary']['#markup'] = $this->t('Total helfi_tprs: @total', ['@total' => $total]);
     return $build;
   }
 
@@ -83,7 +83,7 @@ class UnitListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /** @var \Drupal\helfi_trp\Entity\Unit $entity */
+    /** @var \Drupal\helfi_tpr\Entity\Unit $entity */
     $row['id'] = $entity->toLink($entity->id());
     $row['created'] = $this->dateFormatter->format($entity->getCreatedTime());
     $row['changed'] = $this->dateFormatter->format($entity->getChangedTime());

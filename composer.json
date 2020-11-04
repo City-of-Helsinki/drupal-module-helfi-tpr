@@ -1,5 +1,5 @@
 {
-    "name": "drupal/helfi_trp",
+    "name": "drupal/helfi_tpr",
     "type": "drupal-custom-module",
     "minimum-stability": "dev",
     "require": {

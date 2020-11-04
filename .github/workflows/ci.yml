@@ -32,6 +32,9 @@ jobs:
           cat $HOME/drupal/composer.json
           drush en --root $HOME/drupal $MODULE_NAME -y
 
+      - name: Run PHPCS
+        run: cd $HOME/drupal && vendor/bin/phpcs public/modules/custom/ --standard=Drupal
+
       - name: Run PHPUnit tests
         run: |
           drush runserver $SIMPLETEST_BASE_URL --root $HOME/drupal > /dev/null 2>&1 &

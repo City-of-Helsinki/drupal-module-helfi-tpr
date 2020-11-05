@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types = 1);
+
+/**
+ * Installs organization and department entity types.
+ */
+function helfi_tpr_install_8001() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+
+  foreach (['tpr_organization', 'tpr_department'] as $type) {
+    $entity_type = \Drupal::entityTypeManager()->getDefinition($type);
+    $manager->installEntityType($entity_type);
+  }
+}

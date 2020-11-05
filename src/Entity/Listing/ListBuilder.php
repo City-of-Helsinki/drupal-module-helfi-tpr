@@ -13,9 +13,9 @@ use Drupal\Core\Routing\RedirectDestinationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a list controller for the tpr_unit entity type.
+ * Provides a list controller for the trp entity types.
  */
-class UnitListBuilder extends EntityListBuilder {
+class ListBuilder extends EntityListBuilder {
 
   /**
    * The date formatter service.
@@ -65,7 +65,7 @@ class UnitListBuilder extends EntityListBuilder {
       ->count()
       ->execute();
 
-    $build['summary']['#markup'] = $this->t('Total helfi_tprs: @total', ['@total' => $total]);
+    $build['summary']['#markup'] = $this->t('Total: @total', ['@total' => $total]);
     return $build;
   }
 

@@ -9,3 +9,15 @@ entity.tpr_unit.collection:
   description: List of TPR unit entities
   route_name: entity.tpr_unit.collection
   parent: system.admin_content
+
+entity.tpr_organization.settings:
+  title: TPR - Organization settings
+  description: Configure TPR organization entity type
+  route_name:  tpr_organization.settings
+  parent: system.admin_structure
+
+entity.tpr_organization.collection:
+  title: TPR - Organization entities
+  description: List of TPR organization entities
+  route_name: entity.tpr_organization.collection
+  parent: system.admin_content

@@ -1,3 +1,11 @@
+# Default tpr collection
+entity.tpr.collection:
+  title: TPR
+  route_name: entity.tpr_unit.collection
+  base_route: system.admin_content
+  weight: 10
+
+# TPR - Unit
 tpr_unit.settings:
   title: Settings
   route_name: tpr_unit.settings
@@ -15,8 +23,33 @@ entity.tpr_unit.delete_form:
   route_name: entity.tpr_unit.delete_form
   base_route: entity.tpr_unit.canonical
   weight: 10
+
 entity.tpr_unit.collection:
-  title: TPR - Unit
+  title: Unit
   route_name: entity.tpr_unit.collection
-  base_route: system.admin_content
+  base_route: entity.tpr.collection
+  weight: 10
+
+# TPR - Organization
+tpr_organization.settings:
+  title: Settings
+  route_name: tpr_organization.settings
+  base_route: tpr_organization.settings
+entity.tpr_organization.view:
+  title: View
+  route_name: entity.tpr_organization.canonical
+  base_route: entity.tpr_organization.canonical
+entity.tpr_organization.edit_form:
+  title: Edit
+  route_name: entity.tpr_organization.edit_form
+  base_route: entity.tpr_organization.canonical
+entity.tpr_organization.delete_form:
+  title: Delete
+  route_name: entity.tpr_organization.delete_form
+  base_route: entity.tpr_organization.canonical
+  weight: 10
+entity.tpr_organization.collection:
+  title: Organization
+  route_name: entity.tpr_organization.collection
+  base_route: entity.tpr.collection
   weight: 10

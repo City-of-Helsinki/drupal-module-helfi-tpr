@@ -11,12 +11,12 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
- * Defines the tpr_unit entity class.
+ * Defines the tpr_department entity class.
  *
  * @ContentEntityType(
- *   id = "tpr_unit",
- *   label = @Translation("TPR - Unit"),
- *   label_collection = @Translation("TPR - Unit"),
+ *   id = "tpr_department",
+ *   label = @Translation("TPR - Department"),
+ *   label_collection = @Translation("TPR - Department"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\helfi_tpr\Entity\Listing\ListBuilder",
@@ -30,10 +30,10 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
  *     }
  *   },
- *   base_table = "tpr_unit",
- *   data_table = "tpr_unit_field_data",
- *   revision_table = "tpr_unit_revision",
- *   revision_data_table = "tpr_unit_field_revision",
+ *   base_table = "tpr_department",
+ *   data_table = "tpr_department_field_data",
+ *   revision_table = "tpr_department_revision",
+ *   revision_data_table = "tpr_department_field_revision",
  *   show_revision_ui = TRUE,
  *   translatable = TRUE,
  *   admin_permission = "administer remote entities",
@@ -51,15 +51,15 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "revision_log_message" = "revision_log"
  *   },
  *   links = {
- *     "canonical" = "/tpr/unit/{tpr_unit}",
- *     "edit-form" = "/admin/content/tpr/unit/{tpr_unit}/edit",
- *     "delete-form" = "/admin/content/tpr/unit/{tpr_unit}/delete",
- *     "collection" = "/admin/content/tpr/unit"
+ *     "canonical" = "/tpr-department/{tpr_department}",
+ *     "edit-form" = "/admin/content/tpr-department/{tpr_department}/edit",
+ *     "delete-form" = "/admin/content/tpr-department/{tpr_department}/delete",
+ *     "collection" = "/admin/content/tpr-department"
  *   },
- *   field_ui_base_route = "tpr_unit.settings"
+ *   field_ui_base_route = "tpr_department.settings"
  * )
  */
-class Unit extends TprEntityBase {
+class Department extends TprEntityBase {
 
   /**
    * {@inheritdoc}
@@ -68,29 +68,32 @@ class Unit extends TprEntityBase {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $fields['name'] = static::createStringField('Name');
-    $fields['latitude'] = static::createStringField('Latitude')
-      ->setTranslatable(FALSE);
-    $fields['longitude'] = static::createStringField('Longitude')
+    $fields['business_id'] = static::createStringField('Business ID')
       ->setTranslatable(FALSE);
     $fields['phone'] = static::createStringField('Phone', -1)
       ->setTranslatable(FALSE);
-    $fields['call_charge_info'] = static::createStringField('Call charge info');
-    $fields['email'] = static::createStringField('Email')
+    $fields['oid'] = static::createStringField('OID')
       ->setTranslatable(FALSE);
-    $fields['accessibility_phone'] = static::createStringField('Accessibility phone')
-      ->setTranslatable(FALSE);
-    $fields['accessibility_email'] = static::createStringField('Accessibility email')
+    $fields['email'] = static::createLinkField('Email')
       ->setTranslatable(FALSE);
     $fields['address_postal'] = static::createStringField('Address postal');
     $fields['www'] = static::createLinkField('Website link');
-    $fields['streetview_entrance_url'] = static::createLinkField('Streetview entrance')
-      ->setTranslatable(FALSE);
-    $fields['accessibility_www'] = static::createLinkField('Accessibility website link')
-      ->setTranslatable(FALSE);
 
-    $fields['description'] = BaseFieldDefinition::create('text_with_summary')
+    $fields['parent_id'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(new TranslatableMarkup('Parent ID'))
+      ->setRevisionable(TRUE)
+      ->setSetting('target_type', 'tpr_department')
+      ->setSetting('handler', 'default')
       ->setTranslatable(TRUE)
-      ->setLabel(new TranslatableMarkup('Description'))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['organization'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(new TranslatableMarkup('Organization'))
+      ->setRevisionable(TRUE)
+      ->setSetting('target_type', 'tpr_organization')
+      ->setSetting('handler', 'default')
+      ->setTranslatable(TRUE)
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 

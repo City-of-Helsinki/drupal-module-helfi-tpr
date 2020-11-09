@@ -51,10 +51,10 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "revision_log_message" = "revision_log"
  *   },
  *   links = {
- *     "canonical" = "/tpr/organization/{tpr_organization}",
- *     "edit-form" = "/admin/content/tpr/organization/{tpr_organization}/edit",
- *     "delete-form" = "/admin/content/tpr/organization/{tpr_organization}/delete",
- *     "collection" = "/admin/content/tpr/organization"
+ *     "canonical" = "/tpr-organization/{tpr_organization}",
+ *     "edit-form" = "/admin/content/tpr-organization/{tpr_organization}/edit",
+ *     "delete-form" = "/admin/content/tpr-organization/{tpr_organization}/delete",
+ *     "collection" = "/admin/content/tpr-organization"
  *   },
  *   field_ui_base_route = "tpr_organization.settings"
  * )
@@ -70,11 +70,27 @@ class Organization extends TprEntityBase {
     $fields['name'] = static::createStringField('Name');
     $fields['business_id'] = static::createStringField('Business ID')
       ->setTranslatable(FALSE);
-    $fields['email'] = static::createStringField('Email')
-      ->setTranslatable(FALSE);
     $fields['phone'] = static::createStringField('Phone', -1)
       ->setTranslatable(FALSE);
+    $fields['oid'] = static::createStringField('OID')
+      ->setTranslatable(FALSE);
+    $fields['email'] = static::createLinkField('Email')
+      ->setTranslatable(FALSE);
     $fields['address_postal'] = static::createStringField('Address postal');
+    $fields['www'] = static::createLinkField('Website link');
+
+    $fields['address'] = BaseFieldDefinition::create('address')
+      ->setLabel(new TranslatableMarkup('Address'))
+      ->setTranslatable(TRUE)
+      ->setRevisionable(TRUE)
+      ->setSetting('field_overrides', [
+        AddressField::GIVEN_NAME => ['override' => FieldOverride::HIDDEN],
+        AddressField::ADDITIONAL_NAME => ['override' => FieldOverride::HIDDEN],
+        AddressField::FAMILY_NAME => ['override' => FieldOverride::HIDDEN],
+        AddressField::ORGANIZATION => ['override' => FieldOverride::HIDDEN],
+      ])
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
 
     return $fields;
   }

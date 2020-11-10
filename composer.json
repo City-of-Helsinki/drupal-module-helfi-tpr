@@ -13,11 +13,5 @@
         "drupal/coder": "^8.3"
     },
     "scripts": {
-      "post-install-cmd": [
-        "sh ./post-install.sh > .git/hooks/commit-msg"
-      ],
-      "post-update-cmd": [
-        "sh ./post-install.sh > .git/hooks/commit-msg"
-      ]
     }
 }

@@ -15,6 +15,9 @@
     "scripts": {
       "post-install-cmd": [
         "sh ./post-install.sh > .git/hooks/commit-msg"
+      ],
+      "post-update-cmd": [
+        "sh ./post-install.sh > .git/hooks/commit-msg"
       ]
     }
 }

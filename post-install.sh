@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cat << 'EOF' > ./.git/hooks/commit-message
+cat << 'EOF' > ./.git/hooks/commit-message && chmod +x ./.git/hooks/commit-message
 #!/bin/sh
 
 COMMIT_FILE=$1

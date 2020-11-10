@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-cat <<END
+cat << 'EOF' > ./.git/hooks/commit-message
 #!/bin/sh
 
 COMMIT_FILE=$1
@@ -12,4 +12,4 @@ if [ ! -z "$JIRA_ID" ]; then
     echo "$JIRA_ID $COMMIT_MSG" > $COMMIT_FILE
         echo "JIRA ID '$JIRA_ID', matched in current branch name, prepended to commit message. (Use --no-verify to skip)"
 fi
-END
+EOF

@@ -2,6 +2,7 @@
     "name": "drupal/helfi_tpr",
     "description": "TPR integration",
     "type": "drupal-custom-module",
+    "license": "GPL-2.0-or-later",
     "minimum-stability": "dev",
     "require": {
         "drupal/helfi_api_base": "1.x-dev",

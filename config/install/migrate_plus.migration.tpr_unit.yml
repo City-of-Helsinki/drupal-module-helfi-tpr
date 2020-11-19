@@ -14,7 +14,7 @@ label: 'TPR unit'
 source:
   plugin: url
   urls: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/'
-  data_fetcher_plugin: file
+  data_fetcher_plugin: http
   data_parser_plugin: json
   item_selector: 0
   fields:

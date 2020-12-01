@@ -12,72 +12,8 @@ migration_tags:
 migration_group: tpr
 label: 'TPR unit'
 source:
-  plugin: url
-  urls: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/'
-  data_fetcher_plugin: http
-  data_parser_plugin: json
-  item_selector: 0
-  fields:
-    -
-      name: id
-      selector: /id
-    -
-      name: name
-      selector: /name_fi
-    -
-      name: call_charge_info
-      selector: /call_charge_info_fi
-    -
-      name: latitude
-      selector: /latitude
-    -
-      name: longitude
-      selector: /longitude
-    -
-      name: phone
-      selector: /phone
-    -
-      name: email
-      selector: /email
-    -
-      name: short_desc
-      selector: /short_desc_fi
-    -
-      name: desc
-      selector: /desc_fi
-    -
-      name: street_address
-      selector: /street_address_fi
-    -
-      name: address_city
-      selector: /address_city_fi
-    -
-      name: address_postal_code
-      selector: /address_zip
-    -
-      name: accessibility_email
-      selector: /accessibility_email
-    -
-      name: accessibility_phone
-      selector: /accessibility_phone
-    -
-      name: accessibility_www
-      selector: /accessibility_www
-    -
-      name: address_postal
-      selector: /address_postal_full_fi
-    -
-      name: www
-      selector: /www_fi
-    -
-      name: streetview_entrance_url
-      selector: /streetview_entrance_url
-    -
-      name: created
-      selector: /created_time
-    -
-      name: changed
-      selector: /modified_time
+  plugin: tpr
+  url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/?search=Pys%C3%A4k%C3%B6intilippuautomaatti'
   ids:
     id:
       type: string
@@ -88,34 +24,6 @@ process:
     source: name
     start: 0
     length: 255
-  langcode:
-    plugin: default_value
-    default_value: fi
-  address/postal_code: address_postal_code
-  address/locality: address_city
-  address/address_line1: street_address
-  address/country_code:
-    plugin: default_value
-    default_value: FI
-  description/value: desc
-  description/summary: short_desc
-  description/format:
-    plugin: default_value
-    default_value: filtered_html
-  latitude: latitude
-  longitude: longitude
-  accessibility_email: accessibility_email
-  accessibility_phone: accessibility_phone
-  accessibility_www: accessibility_www
-  address_postal: address_postal
-  www/uri: www
-  streetview_entrance_url/uri: streetview_entrance_url
-  phone:
-    plugin: explode
-    source: phone
-    delimiter: ','
-  call_charge_info: call_charge_info
-  email: email
   changed:
     -
       plugin: format_date
@@ -135,5 +43,5 @@ process:
     from_timezone: 'Europe/Helsinki'
     to_timezone: 'UTC'
 destination:
-  plugin: 'entity:tpr_unit'
+  plugin: 'tpr_unit'
 migration_dependencies: []

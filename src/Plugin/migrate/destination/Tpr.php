@@ -18,7 +18,7 @@ abstract class Tpr extends EntityContentBase {
    */
   protected function getEntity(Row $row, array $old_destination_id_values) {
     $default_language = $this->languageManager->getDefaultLanguage();
-    $row = $this->populateRowFields($default_language, $row);
+    $row = $this->populateFieldTranslations($default_language, $row);
     /** @var \Drupal\helfi_tpr\Entity\Unit $entity */
     $entity = parent::getEntity($row, $old_destination_id_values);
 
@@ -26,7 +26,7 @@ abstract class Tpr extends EntityContentBase {
     unset($languages[$default_language->getId()]);
 
     foreach ($this->languageManager->getLanguages() as $langcode => $language) {
-      $languageRow = $this->populateRowFields($language, $row);
+      $languageRow = $this->populateFieldTranslations($language, $row);
 
       if ($entity->hasTranslation($langcode)) {
         // Update existing translation.
@@ -64,7 +64,7 @@ abstract class Tpr extends EntityContentBase {
    * @return \Drupal\migrate\Row
    *   The row.
    */
-  protected function populateRowFields(LanguageInterface $language, Row $row) : Row {
+  protected function populateFieldTranslations(LanguageInterface $language, Row $row) : Row {
     $langcode = $language->getId();
 
     if (!$row->get('langcode')) {

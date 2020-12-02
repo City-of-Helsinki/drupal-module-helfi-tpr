@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
 use Drupal\Component\Datetime\DateTimePlus;
+use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\helfi_api_base\MigrateTrait;
 use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
@@ -97,21 +98,30 @@ class Tpr extends SourcePluginBase implements ContainerFactoryPluginInterface {
   protected function getContent(string $url) : array {
     try {
       $content = (string) $this->httpClient->request('GET', $url)->getBody();
-
-      $json = \GuzzleHttp\json_decode($content, TRUE);
-
-      $dates = [];
-      // Sort data by modified_time.
-      foreach ($json as $key => $item) {
-        $dates[$key] = DateTimePlus::createFromFormat('Y-m-d\TH:i:s', $item['modified_time'])->format('U');
-      }
-      array_multisort($dates, SORT_DESC, $json);
-
-      return $json;
+      return \GuzzleHttp\json_decode($content, TRUE);
     }
     catch (GuzzleException $e) {
     }
     return [];
+  }
+
+  /**
+   * Builds a canonical url to individual entity.
+   *
+   * @param int $id
+   *   The entity ID.
+   *
+   * @return string
+   *   The url to canonical page of given entity.
+   */
+  private function buildCanonicalUrl(int $id) : string {
+    $urlParts = UrlHelper::parse($this->configuration['url']);
+
+    return vsprintf('%s/%s/?%s', [
+      rtrim($urlParts['path'], '/'),
+      $id,
+      UrlHelper::buildQuery($urlParts['query']),
+    ]);
   }
 
   /**
@@ -120,6 +130,13 @@ class Tpr extends SourcePluginBase implements ContainerFactoryPluginInterface {
   protected function initializeIterator() {
     $content = $this->getContent($this->configuration['url']);
 
+    $dates = [];
+    // Sort data by modified_time.
+    foreach ($content as $key => $item) {
+      $dates[$key] = DateTimePlus::createFromFormat('Y-m-d\TH:i:s', $item['modified_time'])->format('U');
+    }
+    array_multisort($dates, SORT_DESC, $content);
+
     foreach ($content as $object) {
       // Skip entire migration once we've reached the number of maximum
       // ignored (not changed) rows.
@@ -127,6 +144,8 @@ class Tpr extends SourcePluginBase implements ContainerFactoryPluginInterface {
       if ($this->isPartialMigrate() && ($this->ignoredRows >= static::NUM_IGNORED_ROWS_BEFORE_STOPPING)) {
         break;
       }
+      $object += $this->getContent($this->buildCanonicalUrl($object['id']));
+
       yield $object;
     }
   }
@@ -141,7 +160,8 @@ class Tpr extends SourcePluginBase implements ContainerFactoryPluginInterface {
     $plugin_definition,
     MigrationInterface $migration = NULL
   ) {
-    $instance = new static($configuration, $plugin_id, $plugin_definition, $migration);
+    $instance = new static($configuration, $plugin_id, $plugin_definition,
+      $migration);
     $instance->httpClient = $container->get('http_client');
 
     if (!isset($configuration['url'])) {

@@ -53,6 +53,13 @@ class Tpr extends SourcePluginBase implements ContainerFactoryPluginInterface {
   protected int $ignoredRows = 0;
 
   /**
+   * The total count.
+   *
+   * @var int
+   */
+  protected int $count = 0;
+
+  /**
    * {@inheritdoc}
    */
   public function __toString() {
@@ -64,6 +71,13 @@ class Tpr extends SourcePluginBase implements ContainerFactoryPluginInterface {
    */
   public function getIds() {
     return ['id' => ['type' => 'string']];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function count($refresh = FALSE) {
+    return $this->count;
   }
 
   /**
@@ -129,6 +143,7 @@ class Tpr extends SourcePluginBase implements ContainerFactoryPluginInterface {
    */
   protected function initializeIterator() {
     $content = $this->getContent($this->configuration['url']);
+    $this->count = count($content);
 
     $dates = [];
     // Sort data by modified_time.

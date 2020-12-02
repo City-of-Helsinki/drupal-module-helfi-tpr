@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: tpr
+label: TPR
+description: ''
+source_type: null
+module: helfi_tpr
+shared_configuration: null

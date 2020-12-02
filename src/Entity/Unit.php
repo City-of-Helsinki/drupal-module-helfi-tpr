@@ -72,7 +72,7 @@ class Unit extends TprEntityBase {
       ->setTranslatable(FALSE);
     $fields['longitude'] = static::createStringField('Longitude')
       ->setTranslatable(FALSE);
-    $fields['phone'] = static::createStringField('Phone', -1)
+    $fields['phone'] = static::createStringField('Phone', BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setTranslatable(FALSE);
     $fields['call_charge_info'] = static::createStringField('Call charge info');
     $fields['email'] = static::createStringField('Email')

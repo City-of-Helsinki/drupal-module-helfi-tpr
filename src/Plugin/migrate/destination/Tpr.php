@@ -74,6 +74,17 @@ abstract class Tpr extends EntityContentBase {
   /**
    * Gets the translatable source fields.
    *
+   * Defined as remote field name => local field name:
+   *
+   * @code
+   * [
+   *   'name => 'field_name',
+   *   'www' =>  'field_url',
+   * ]
+   * @endcode
+   * Language code will be appended to remote field automatically. For
+   * example the field `name` will become name_fi, name_en etc.
+   *
    * @return string[]
    *   An array of source fields.
    */
@@ -97,13 +108,17 @@ abstract class Tpr extends EntityContentBase {
       $row->setDestinationProperty('langcode', $langcode);
     }
 
-    foreach ($this->getTranslatableFields() as $name) {
-      $field = sprintf('%s_%s', $name, $langcode);
+    foreach ($this->getTranslatableFields() as $remote => $local) {
+      $field = sprintf('%s_%s', $remote, $langcode);
 
       // Attempt to read source property in current language and fallback to
       // finnish.
-      $value = $row->hasSourceProperty($field) ? $row->getSourceProperty($field) : $row->getSourceProperty(sprintf('%s_fi', $name));
-      $row->setDestinationProperty($name, $value);
+      $value = $row->hasSourceProperty($field) ? $row->getSourceProperty($field) : $row->getSourceProperty(sprintf('%s_fi', $remote));
+
+      if (!$value) {
+        continue;
+      }
+      $row->setDestinationProperty($local, $value);
     }
 
     return $row;

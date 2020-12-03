@@ -35,10 +35,13 @@ jobs:
           drush en $module_name -y
 
       - name: Run PHPCS
-        run: cd $HOME/drupal && vendor/bin/phpcs public/modules/custom/ --standard=Drupal
+        run: |
+          cd $DRUPAL_ROOT
+          vendor/bin/phpcs public/modules/custom/ --standard=Drupal
 
       - name: Run PHPUnit tests
         run: |
-          drush runserver $SIMPLETEST_BASE_URL --root $HOME/drupal > /dev/null 2>&1 &
+          cd $DRUPAL_ROOT
+          drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
           chromedriver --port=4444 > /dev/null 2>&1 &
-          cd $HOME/drupal && vendor/bin/phpunit -c $HOME/drupal/phpunit.xml.dist --verbose --group $MODULE_NAME
+          vendor/bin/phpunit -c $DRUPAL_ROOT/phpunit.xml.dist --verbose --group $MODULE_NAME

@@ -12,3 +12,5 @@ dependencies:
   - migrate
   - migrate_plus
   - migrate_tools
+  - content_translation
+  - language

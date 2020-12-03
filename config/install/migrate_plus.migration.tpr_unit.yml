@@ -4,8 +4,6 @@ dependencies:
   enforced:
     module:
       - helfi_tpr
-_core:
-  default_config_hash: utEV05AAC3Rkgn-SLMNDjfNlAGdILfP-w3mJ0HF3MNQ
 id: tpr_unit
 class: null
 field_plugin_method: null

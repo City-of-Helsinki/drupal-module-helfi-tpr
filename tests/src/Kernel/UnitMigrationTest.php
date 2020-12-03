@@ -6,6 +6,7 @@ namespace Drupal\Tests\helfi_tpr\Kernel;
 
 use Drupal\helfi_tpr\Entity\Unit;
 use Drupal\Tests\helfi_api_base\Kernel\MigrationTestBase;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * Tests unit migration.
@@ -36,45 +37,27 @@ class UnitMigrationTest extends MigrationTestBase {
 
   /**
    * Test default migrations.
-   *
-   * @dataProvider migrationsDataProvider
    */
-  public function testMigration(string $migrate, int $expectedCount, string $langcode) : void {
-
-    foreach (['tpr_unit', $migrate] as $item) {
-      // Override default url with local copy of unit data.
-      $config = $this->config('migrate_plus.migration.' . $item);
-
-      $overrides = [
-        'urls' => $this->getFixturePath('helfi_tpr', 'unit.json'),
-        'data_fetcher_plugin' => 'file',
-      ];
-      $config->set('source', $overrides + $config->get('source'))
-        ->save();
-
-      $this->flushPluginCache();
-
-      $this->executeMigration($item);
-    }
-    $entities = Unit::loadMultiple();
-    $this->assertCount($expectedCount, $entities);
-
-    foreach ($entities as $entity) {
-      $this->assertEqual($entity->getTranslation($langcode)->language()->getId(), $langcode);
-    }
-  }
-
-  /**
-   * Gets the migration data.
-   *
-   * @return array[]
-   *   The migration.
-   */
-  public function migrationsDataProvider() : array {
-    return [
-      ['tpr_unit_sv', 6, 'sv'],
-      ['tpr_unit_en', 6, 'en'],
+  public function testMigration() : void {
+    $units = $this->getFixture('helfi_tpr', 'unit.json');
+    $responses = [
+      new Response(200, [], $units),
     ];
+
+    foreach (json_decode($units, TRUE) as $id => $unit) {
+      $responses[] = new Response(200, [], json_encode($unit));
+    }
+
+    $this->container->set('http_client', $this->createMockHttpClient($responses));
+    $this->executeMigration('tpr_unit');
+    $entities = Unit::loadMultiple();
+    $this->assertCount(6, $entities);
+
+    foreach (['en', 'sv'] as $langcode) {
+      foreach ($entities as $entity) {
+        $this->assertEqual($entity->getTranslation($langcode)->language()->getId(), $langcode);
+      }
+    }
   }
 
 }

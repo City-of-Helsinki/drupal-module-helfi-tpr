@@ -22,14 +22,17 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Set variables
+        run: echo "DRUPAL_ROOT=$HOME/drupal" >> $GITHUB_ENV
+
       - name: Build project
         run: |
-          composer create-project City-of-Helsinki/drupal-helfi-platform:dev-main $HOME/drupal --no-interaction --repository https://repository.drupal.hel.ninja/
-          php -d sendmail_path=$(which true); drush --yes --root $HOME/drupal -v site-install minimal --db-url="$SIMPLETEST_DB"
-          ln -s $GITHUB_WORKSPACE $HOME/drupal/public/modules/custom
-          cd $HOME/drupal &&
-          echo "$(jq --indent 4 '.repositories |= [{"type": "path", "url": "'$GITHUB_WORKSPACE'"}] + .' composer.json)" > composer.json && composer require drupal/$MODULE_NAME
-          drush en --root $HOME/drupal $MODULE_NAME -y
+          composer create-project city-of-helsinki/drupal-helfi-platform:dev-main $drupal_root --no-interaction --repository https://repository.drupal.hel.ninja/
+          cd $drupal_root
+          php -d sendmail_path=$(which true); drush --yes -v site-install minimal --db-url="$SIMPLETEST_DB"
+          echo "$(jq --indent 4 '.repositories |= [{"type": "path", "url": "'$github_workspace'"}] + .' composer.json)" > composer.json
+          composer require drupal/$module_name "phpspec/prophecy-phpunit ^2"
+          drush en $module_name -y
 
       - name: Run PHPCS
         run: cd $HOME/drupal && vendor/bin/phpcs public/modules/custom/ --standard=Drupal

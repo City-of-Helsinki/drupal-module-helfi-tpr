@@ -27,12 +27,12 @@ jobs:
 
       - name: Build project
         run: |
-          composer create-project city-of-helsinki/drupal-helfi-platform:dev-main $drupal_root --no-interaction --repository https://repository.drupal.hel.ninja/
-          cd $drupal_root
+          composer create-project city-of-helsinki/drupal-helfi-platform:dev-main $DRUPAL_ROOT --no-interaction --repository https://repository.drupal.hel.ninja/
+          cd $DRUPAL_ROOT
           php -d sendmail_path=$(which true); drush --yes -v site-install minimal --db-url="$SIMPLETEST_DB"
-          echo "$(jq --indent 4 '.repositories |= [{"type": "path", "url": "'$github_workspace'"}] + .' composer.json)" > composer.json
-          composer require drupal/$module_name "phpspec/prophecy-phpunit ^2"
-          drush en $module_name -y
+          echo "$(jq --indent 4 '.repositories |= [{"type": "path", "url": "'$GITHUB_WORKSPACE'"}] + .' composer.json)" > composer.json
+          composer require drupal/$MODULE_NAME "phpspec/prophecy-phpunit ^2"
+          drush en $MODULE_NAME -y
 
       - name: Run PHPCS
         run: |

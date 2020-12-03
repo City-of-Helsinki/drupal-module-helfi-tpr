@@ -5,6 +5,7 @@ env:
   SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
   DRUPAL_CORE: 9.0.x
   MODULE_NAME: helfi_tpr
+  SYMFONY_DEPRECATIONS_HELPER: disabled
 jobs:
   tests:
     runs-on: ubuntu-latest

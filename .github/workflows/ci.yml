@@ -32,7 +32,7 @@ jobs:
           cd $DRUPAL_ROOT
           php -d sendmail_path=$(which true); drush --yes -v site-install minimal --db-url="$SIMPLETEST_DB"
           echo "$(jq --indent 4 '.repositories |= [{"type": "path", "url": "'$GITHUB_WORKSPACE'"}] + .' composer.json)" > composer.json
-          composer require drupal/$MODULE_NAME "phpspec/prophecy-phpunit ^2"
+          composer require drupal/$MODULE_NAME
           drush en $MODULE_NAME -y
 
       - name: Run PHPCS

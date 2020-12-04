@@ -65,7 +65,7 @@ class UnitListBuilder extends EntityListBuilder {
       ->count()
       ->execute();
 
-    $build['summary']['#markup'] = $this->t('Total helfi_tprs: @total', ['@total' => $total]);
+    $build['summary']['#markup'] = $this->t('Total @total', ['@total' => $total]);
     return $build;
   }
 

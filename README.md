@@ -12,9 +12,7 @@ Integrates [Helsinki Service Map](https://www.hel.fi/palvelukarttaws/restpages/v
 
 Available migrations:
 
-- `tpr_unit` (Finnish Unit data)
-- `tpr_unit_sv` (Swedish Unit data)
-- `tpr_unit_en` (English Unit data)
+- `tpr_unit`
 
 ### Running migrations
 

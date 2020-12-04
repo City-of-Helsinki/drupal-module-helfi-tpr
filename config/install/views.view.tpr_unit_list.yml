@@ -3,6 +3,7 @@ status: true
 dependencies:
   module:
     - helfi_tpr
+    - user
 id: tpr_unit_list
 label: 'TPR unit list'
 module: views
@@ -18,8 +19,9 @@ display:
     position: 0
     display_options:
       access:
-        type: none
-        options: {  }
+        type: perm
+        options:
+          perm: 'access remote entities overview'
       cache:
         type: tag
         options: {  }
@@ -369,6 +371,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.permissions
       tags: {  }
   page_1:
     display_plugin: page
@@ -385,4 +388,5 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.permissions
       tags: {  }

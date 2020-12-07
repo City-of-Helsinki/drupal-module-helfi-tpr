@@ -64,6 +64,13 @@ class Unit extends TprEntityBase {
   /**
    * {@inheritdoc}
    */
+  public static function getMigration(): ?string {
+    return 'tpr_unit';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 

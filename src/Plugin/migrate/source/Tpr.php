@@ -5,14 +5,8 @@ declare(strict_types = 1);
 namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
 use Drupal\Component\Datetime\DateTimePlus;
-use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\helfi_api_base\MigrateTrait;
-use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
-use Drupal\migrate\Plugin\MigrationInterface;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
 
 /**
  * Source plugin for retrieving data from Tpr.
@@ -21,29 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "tpr"
  * )
  */
-class Tpr extends SourcePluginBase implements ContainerFactoryPluginInterface {
-
-  use MigrateTrait;
-
-  /**
-   * The number of ignored rows until we stop the migrate.
-   *
-   * This assumes that your API can be sorted in a way that the newest
-   * changes are listed first.
-   *
-   * For this to have any effect 'track_changes' source setting must be set to
-   * true and you must run the migrate with PARTIAL_MIGRATE=1 setting.
-   *
-   * @var int
-   */
-  protected const NUM_IGNORED_ROWS_BEFORE_STOPPING = 20;
-
-  /**
-   * The http client.
-   *
-   * @var \GuzzleHttp\ClientInterface
-   */
-  protected ClientInterface $httpClient;
+class Tpr extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
 
   /**
    * Keep track of ignored rows to stop migrate after N ignored rows.
@@ -101,47 +73,9 @@ class Tpr extends SourcePluginBase implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * Sends a HTTP request and returns response data as array.
-   *
-   * @param string $url
-   *   The url.
-   *
-   * @return array
-   *   The JSON returned by Ahjo service.
-   */
-  protected function getContent(string $url) : array {
-    try {
-      $content = (string) $this->httpClient->request('GET', $url)->getBody();
-      return \GuzzleHttp\json_decode($content, TRUE);
-    }
-    catch (GuzzleException $e) {
-    }
-    return [];
-  }
-
-  /**
-   * Builds a canonical url to individual entity.
-   *
-   * @param int $id
-   *   The entity ID.
-   *
-   * @return string
-   *   The url to canonical page of given entity.
-   */
-  private function buildCanonicalUrl(int $id) : string {
-    $urlParts = UrlHelper::parse($this->configuration['url']);
-
-    return vsprintf('%s/%s/?%s', [
-      rtrim($urlParts['path'], '/'),
-      $id,
-      UrlHelper::buildQuery($urlParts['query']),
-    ]);
-  }
-
-  /**
    * {@inheritdoc}
    */
-  protected function initializeIterator() {
+  protected function initializeListIterator() : \Iterator {
     $content = $this->getContent($this->configuration['url']);
     $this->count = count($content);
 
@@ -159,30 +93,10 @@ class Tpr extends SourcePluginBase implements ContainerFactoryPluginInterface {
       if ($this->isPartialMigrate() && ($this->ignoredRows >= static::NUM_IGNORED_ROWS_BEFORE_STOPPING)) {
         break;
       }
-      $object += $this->getContent($this->buildCanonicalUrl($object['id']));
+      $object += $this->getContent($this->buildCanonicalUrl((string) $object['id']));
 
       yield $object;
     }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(
-    ContainerInterface $container,
-    array $configuration,
-    $plugin_id,
-    $plugin_definition,
-    MigrationInterface $migration = NULL
-  ) {
-    $instance = new static($configuration, $plugin_id, $plugin_definition,
-      $migration);
-    $instance->httpClient = $container->get('http_client');
-
-    if (!isset($configuration['url'])) {
-      throw new \InvalidArgumentException('The "url" configuration missing.');
-    }
-    return $instance;
   }
 
 }

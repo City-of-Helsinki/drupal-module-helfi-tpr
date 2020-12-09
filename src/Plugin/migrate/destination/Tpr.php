@@ -4,9 +4,11 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Plugin\migrate\destination;
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\migrate\Plugin\migrate\destination\EntityContentBase;
+use Drupal\migrate\Plugin\MigrateIdMapInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Row;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -68,6 +70,17 @@ abstract class Tpr extends EntityContentBase {
         $translation->enforceIsNew();
       }
     }
+    return $entity;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function updateEntity(EntityInterface $entity, Row $row) {
+    $entity = parent::updateEntity($entity, $row);
+    // Always delete on rollback, even if it's "default" translation.
+    $this->setRollbackAction($row->getIdMap(), MigrateIdMapInterface::ROLLBACK_DELETE);
+
     return $entity;
   }
 

@@ -21,6 +21,7 @@ source:
       type: string
 process:
   id: id
+  service_map_embed: id
   latitude: latitude
   longitude: longitude
   streetview_entrance_url/uri: streetview_entrance_url

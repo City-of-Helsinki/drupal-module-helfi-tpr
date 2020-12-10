@@ -75,6 +75,12 @@ class Unit extends TprEntityBase {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $fields['name'] = static::createStringField('Name');
+    $fields['service_map_embed'] = static::createStringField('Service map embed')
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'service_map_embed',
+        'weight' => 0,
+      ]);
     $fields['latitude'] = static::createStringField('Latitude')
       ->setTranslatable(FALSE);
     $fields['longitude'] = static::createStringField('Longitude')

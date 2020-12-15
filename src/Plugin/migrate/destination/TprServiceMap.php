@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Provides a destination plugin for Tpr entities.
  */
-abstract class Tpr extends EntityContentBase {
+abstract class TprServiceMap extends EntityContentBase {
 
   /**
    * The language manager service.

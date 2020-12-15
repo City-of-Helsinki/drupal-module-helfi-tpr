@@ -74,17 +74,6 @@ class Unit extends TprEntityBase {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $fields['name'] = static::createStringField('Name');
-    $fields['service_map_embed'] = static::createStringField('Service map embed')
-      ->setDisplayOptions('view', [
-        'label' => 'hidden',
-        'type' => 'service_map_embed',
-        'weight' => 0,
-      ]);
-    $fields['latitude'] = static::createStringField('Latitude')
-      ->setTranslatable(FALSE);
-    $fields['longitude'] = static::createStringField('Longitude')
-      ->setTranslatable(FALSE);
     $fields['phone'] = static::createStringField('Phone', BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setTranslatable(FALSE);
     $fields['call_charge_info'] = static::createStringField('Call charge info');
@@ -94,19 +83,14 @@ class Unit extends TprEntityBase {
       ->setTranslatable(FALSE);
     $fields['accessibility_email'] = static::createStringField('Accessibility email')
       ->setTranslatable(FALSE);
-    $fields['address_postal'] = static::createStringField('Address postal');
     $fields['www'] = static::createLinkField('Website link');
-    $fields['streetview_entrance_url'] = static::createLinkField('Streetview entrance')
-      ->setTranslatable(FALSE);
     $fields['accessibility_www'] = static::createLinkField('Accessibility website link')
       ->setTranslatable(FALSE);
-
     $fields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
       ->setLabel(new TranslatableMarkup('Description'))
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
-
     $fields['address'] = BaseFieldDefinition::create('address')
       ->setLabel(new TranslatableMarkup('Address'))
       ->setTranslatable(TRUE)
@@ -119,6 +103,19 @@ class Unit extends TprEntityBase {
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
+    $fields['address_postal'] = static::createStringField('Address postal');
+    $fields['service_map_embed'] = static::createStringField('Service map embed')
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'service_map_embed',
+        'weight' => 0,
+      ]);
+    $fields['latitude'] = static::createStringField('Latitude')
+      ->setTranslatable(FALSE);
+    $fields['longitude'] = static::createStringField('Longitude')
+      ->setTranslatable(FALSE);
+    $fields['streetview_entrance_url'] = static::createLinkField('Streetview entrance')
+      ->setTranslatable(FALSE);
 
     return $fields;
   }

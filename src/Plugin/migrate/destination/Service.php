@@ -8,10 +8,10 @@ namespace Drupal\helfi_tpr\Plugin\migrate\destination;
  * Provides a destination plugin for Tpr entities.
  *
  * @MigrateDestination(
- *   id = "tpr_unit",
+ *   id = "tpr_service",
  * )
  */
-final class Unit extends TprServiceMap {
+final class Service extends TprServiceMap {
 
   /**
    * {@inheritdoc}
@@ -33,7 +33,7 @@ final class Unit extends TprServiceMap {
    * {@inheritdoc}
    */
   protected static function getEntityTypeId($plugin_id) {
-    return 'tpr_unit';
+    return 'tpr_service';
   }
 
 }

@@ -12,10 +12,10 @@ use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
  * Source plugin for retrieving data from Tpr.
  *
  * @MigrateSource(
- *   id = "tpr"
+ *   id = "tpr_service_map"
  * )
  */
-class Tpr extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
+class TprServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
 
   /**
    * Keep track of ignored rows to stop migrate after N ignored rows.

@@ -15,7 +15,7 @@ label: 'TPR service'
 source:
   plugin: tpr
   track_changes: true
-  url: 'https://www.hel.fi/palvelukarttaws/rest/vpalvelurekisteri/description/'
+  url: 'https://api.hel.fi/servicemap/v2/service/'
   ids:
     id:
       type: string

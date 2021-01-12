@@ -1,4 +1,4 @@
-entity.tpr_unit.settings:
+tpr_unit.settings:
   title: TPR - Unit settings
   description: Configure TPR unit entity type
   route_name:  tpr_unit.settings

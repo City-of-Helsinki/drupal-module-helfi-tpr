@@ -11,7 +11,7 @@ namespace Drupal\helfi_tpr\Plugin\migrate\destination;
  *   id = "tpr_unit",
  * )
  */
-final class Unit extends TprServiceMap {
+final class Unit extends ServiceMapBase {
 
   /**
    * {@inheritdoc}

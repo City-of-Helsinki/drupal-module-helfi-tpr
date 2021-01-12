@@ -19,7 +19,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   label_collection = @Translation("TPR - Unit"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\helfi_tpr\Entity\Listing\UnitListBuilder",
+ *     "list_builder" = "Drupal\helfi_tpr\Entity\Listing\ListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "access" = "Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess",
  *     "form" = {
@@ -54,7 +54,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "canonical" = "/tpr-unit/{tpr_unit}",
  *     "edit-form" = "/admin/content/tpr-unit/{tpr_unit}/edit",
  *     "delete-form" = "/admin/content/tpr-unit/{tpr_unit}/delete",
- *     "collection" = "/admin/content/tpr-unit"
+ *     "collection" = "/admin/content/tpr-unit",
  *   },
  *   field_ui_base_route = "tpr_unit.settings"
  * )

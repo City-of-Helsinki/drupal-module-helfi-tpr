@@ -15,7 +15,7 @@ use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
  *   id = "tpr_service_map"
  * )
  */
-class TprServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
+class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
 
   /**
    * Keep track of ignored rows to stop migrate after N ignored rows.
@@ -35,7 +35,7 @@ class TprServiceMap extends HttpSourcePluginBase implements ContainerFactoryPlug
    * {@inheritdoc}
    */
   public function __toString() {
-    return 'Tpr';
+    return 'TprServiceMap';
   }
 
   /**

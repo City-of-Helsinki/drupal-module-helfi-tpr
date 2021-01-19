@@ -84,7 +84,7 @@ class ServiceMapFormatterTest extends UnitTestCase {
       'title' => 'Service map',
     ], $result[0]['iframe']['#attributes']);
 
-    $this->assertArrayEquals([
+    $this->assertEquals([
       'href' => 'https://palvelukartta.hel.fi/unit/1',
       'target' => TRUE,
     ], $result[0]['link']['#attributes']);

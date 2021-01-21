@@ -55,7 +55,7 @@ class UnitMigrationTest extends MigrationTestBase {
 
     foreach (['en', 'sv'] as $langcode) {
       foreach ($entities as $entity) {
-        $this->assertEqual($entity->getTranslation($langcode)->language()->getId(), $langcode);
+        $this->assertEquals($entity->getTranslation($langcode)->language()->getId(), $langcode);
       }
     }
   }

@@ -49,6 +49,9 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
    * {@inheritdoc}
    */
   public function count($refresh = FALSE) {
+    if (!$this->count) {
+      $this->count = count($this->getContent($this->configuration['url']));
+    }
     return $this->count;
   }
 
@@ -77,7 +80,6 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
    */
   protected function initializeListIterator() : \Iterator {
     $content = $this->getContent($this->configuration['url']);
-    $this->count = count($content);
 
     $dates = [];
     // Sort data by modified_time.
@@ -85,6 +87,8 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
       $dates[$key] = DateTimePlus::createFromFormat('Y-m-d\TH:i:s', $item['modified_time'])->format('U');
     }
     array_multisort($dates, SORT_DESC, $content);
+
+    $processed = 0;
 
     foreach ($content as $object) {
       // Skip entire migration once we've reached the number of maximum
@@ -94,7 +98,12 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
         break;
       }
       $object += $this->getContent($this->buildCanonicalUrl((string) $object['id']));
+      $processed++;
 
+      // Allow number of items to be limited by using an env variable.
+      if (($this->getLimit() > 0) && $processed > $this->getLimit()) {
+        break;
+      }
       yield $object;
     }
   }

@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Plugin\migrate\destination;
 
+use Drupal\helfi_tpr\Entity\Unit;
+use Drupal\migrate\Row;
+
 /**
  * Provides a destination plugin for Tpr service entities.
  *
@@ -29,6 +32,24 @@ final class Service extends TranslatableEntityBase {
       'description_long' => 'description/value',
       'description_short' => 'description/summary',
     ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getEntity(Row $row, array $old_destination_id_values) {
+    $entity = parent::getEntity($row, $old_destination_id_values);
+
+    if ($unitIds = $row->getSourceProperty('unit_ids')) {
+      $units = Unit::loadMultiple($unitIds);
+
+      array_map(function (Unit $unit) use ($entity) {
+        $unit->addService($entity)
+          ->save();
+      }, $units);
+    }
+
+    return $entity;
   }
 
 }

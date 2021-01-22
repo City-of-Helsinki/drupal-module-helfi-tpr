@@ -69,6 +69,70 @@ class Unit extends TprEntityBase {
   }
 
   /**
+   * Adds the given service.
+   *
+   * @param \Drupal\helfi_tpr\Entity\Service $service
+   *   The service.
+   *
+   * @return $this
+   *   The self.
+   */
+  public function addService(Service $service) : self {
+    if (!$this->hasService($service)) {
+      $this->get('services')->appendItem($service);
+    }
+    return $this;
+  }
+
+  /**
+   * Removes the given service.
+   *
+   * @param \Drupal\helfi_tpr\Entity\Service $service
+   *   The service.
+   *
+   * @return $this
+   *   The self.
+   */
+  public function removeService(Service $service) : self {
+    $index = $this->getServiceIndex($service);
+    if ($index !== FALSE) {
+      $this->get('services')->offsetUnset($index);
+    }
+    return $this;
+  }
+
+  /**
+   * Checks whether the service exists or not.
+   *
+   * @param \Drupal\helfi_tpr\Entity\Service $service
+   *   The service.
+   *
+   * @return bool
+   *   Whether we have given service or not.
+   */
+  public function hasService(Service $service) : bool {
+    return $this->getServiceIndex($service) !== FALSE;
+  }
+
+  /**
+   * Gets the index of the given service.
+   *
+   * @param \Drupal\helfi_tpr\Entity\Service $service
+   *   The service.
+   *
+   * @return int|bool
+   *   The index of the given service, or FALSE if not found.
+   */
+  protected function getServiceIndex(Service $service) {
+    $values = $this->get('services')->getValue();
+    $order_item_ids = array_map(function ($value) {
+      return $value['target_id'];
+    }, $values);
+
+    return array_search($service->id(), $order_item_ids);
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
@@ -116,6 +180,17 @@ class Unit extends TprEntityBase {
       ->setTranslatable(FALSE);
     $fields['streetview_entrance_url'] = static::createLinkField('Streetview entrance')
       ->setTranslatable(FALSE);
+    $fields['services'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(new TranslatableMarkup('Services'))
+      ->setSettings([
+        'target_type' => 'tpr_service',
+        'handler_settings' => [
+          'target_bundles' => ['tpr_service'],
+        ],
+      ])
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
 
     return $fields;
   }

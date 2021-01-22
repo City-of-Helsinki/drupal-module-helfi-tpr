@@ -33,3 +33,26 @@ function helfi_tpr_update_8002() : void {
     $manager->installFieldStorageDefinition($name, 'tpr_service', 'helfi_tpr', $field);
   }
 }
+
+/**
+ * Install TPR unit service reference field.
+ */
+function helfi_tpr_update_8003() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+  $fields = [];
+  $fields['services'] = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(new TranslatableMarkup('Services'))
+    ->setSettings([
+      'target_type' => 'tpr_service',
+      'handler_settings' => [
+        'target_bundles' => ['tpr_service'],
+      ],
+    ])
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setDisplayConfigurable('view', TRUE)
+    ->setDisplayConfigurable('form', TRUE);
+
+  foreach ($fields as $name => $field) {
+    $manager->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
+  }
+}

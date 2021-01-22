@@ -52,8 +52,6 @@ class MigrationTest extends MigrationTestBase {
     $this->container->set('http_client', $this->createMockHttpClient($responses));
     $this->executeMigration('tpr_unit');
     return Unit::loadMultiple();
-
-    return $entities;
   }
 
   /**

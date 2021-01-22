@@ -20,4 +20,15 @@ final class Service extends TranslatableEntityBase {
     return 'tpr_service';
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  protected function getTranslatableFields(): array {
+    return [
+      'title' => 'name',
+      'description_long' => 'description/value',
+      'description_short' => 'description/summary',
+    ];
+  }
+
 }

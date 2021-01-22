@@ -20,7 +20,7 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public function __toString() {
-    return 'TprServiceregister';
+    return 'TprServiceRegister';
   }
 
   /**
@@ -43,17 +43,31 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
   protected function initializeListIterator() : \Iterator {
     $content = $this->getContent($this->configuration['url']);
 
-    foreach ($content as $object) {
-      $url = $this->buildCanonicalUrl((string) $object['id']);
+    $fields = [
+      'title',
+      'description_short',
+      'description_long',
+    ];
 
-      $data = [
-        'fi' => $this->getContent($url),
-      ];
-      // Read language specific data.
-      foreach ($data['provided_languages'] as $language) {
-        $data[$language] = $this->getContent(sprintf('%s?language=%s', $url, $language));
+    foreach ($content as $item) {
+      $service = [];
+
+      foreach (['fi', 'en', 'sv'] as $language) {
+        $url = $this->buildCanonicalUrl(sprintf('%s?language=%s', $item['id'], $language));
+        $data = $this->getContent($url);
+
+        list('id' => $id) = $data;
+
+        if (!isset($service[$id])) {
+          $service[$id] = [];
+        }
+
+        foreach ($fields as $field) {
+          $data[sprintf('%s_%s', $field, $language)] = $data[$field];
+        }
+        $service[$id] += $data;
       }
-      yield $data;
+      yield reset($service);
     }
   }
 

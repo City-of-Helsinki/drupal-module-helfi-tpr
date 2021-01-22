@@ -5,6 +5,8 @@ declare(strict_types = 1);
 namespace Drupal\helfi_tpr\Entity;
 
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Defines the tpr_service entity class.
@@ -24,7 +26,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
- *     }
+ *     },
  *   },
  *   base_table = "tpr_service",
  *   data_table = "tpr_service_field_data",
@@ -69,6 +71,11 @@ class Service extends TprEntityBase {
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
+    $fields['description'] = BaseFieldDefinition::create('text_with_summary')
+      ->setTranslatable(TRUE)
+      ->setLabel(new TranslatableMarkup('Description'))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }

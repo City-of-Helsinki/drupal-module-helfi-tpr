@@ -97,7 +97,6 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
       if ($this->isPartialMigrate() && ($this->ignoredRows >= static::NUM_IGNORED_ROWS_BEFORE_STOPPING)) {
         break;
       }
-      $object += $this->getContent($this->buildCanonicalUrl((string) $object['id']));
       $processed++;
 
       // Allow number of items to be limited by using an env variable.

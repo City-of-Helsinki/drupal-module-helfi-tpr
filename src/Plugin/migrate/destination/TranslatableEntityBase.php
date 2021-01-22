@@ -35,8 +35,7 @@ abstract class TranslatableEntityBase extends EntityContentBase {
     $plugin_definition,
     MigrationInterface $migration = NULL
   ) {
-    $instance = parent::create($container, $configuration, $plugin_id,
-      $plugin_definition, $migration);
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition, $migration);
     $instance->languageManager = $container->get('language_manager');
 
     return $instance;
@@ -144,6 +143,5 @@ abstract class TranslatableEntityBase extends EntityContentBase {
   public function getIds() {
     return ['id' => ['type' => 'string']];
   }
-
 
 }

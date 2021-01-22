@@ -17,10 +17,27 @@ use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
 class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
 
   /**
+   * The total count.
+   *
+   * @var int
+   */
+  protected int $count = 0;
+
+  /**
    * {@inheritdoc}
    */
   public function __toString() {
     return 'TprServiceRegister';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function count($refresh = FALSE) {
+    if (!$this->count) {
+      $this->count = count($this->getContent($this->configuration['url']));
+    }
+    return $this->count;
   }
 
   /**

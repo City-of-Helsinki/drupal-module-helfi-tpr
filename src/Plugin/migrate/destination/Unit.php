@@ -11,7 +11,7 @@ namespace Drupal\helfi_tpr\Plugin\migrate\destination;
  *   id = "tpr_unit",
  * )
  */
-final class Unit extends Tpr {
+final class Unit extends TranslatableEntityBase {
 
   /**
    * {@inheritdoc}

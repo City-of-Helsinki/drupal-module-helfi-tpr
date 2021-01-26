@@ -5,14 +5,11 @@ dependencies:
     module:
       - helfi_tpr
 id: tpr_unit
-field_plugin_method: null
-cck_plugin_method: null
 migration_tags:
   - tpr
-migration_group: tpr
 label: 'TPR unit'
 source:
-  plugin: tpr
+  plugin: tpr_service_map
   track_changes: true
   url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/'
   ids:

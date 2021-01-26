@@ -13,9 +13,9 @@ use Drupal\Core\Routing\RedirectDestinationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a list controller for the tpr_unit entity type.
+ * Provides a list controller for the tpr entity types.
  */
-class UnitListBuilder extends EntityListBuilder {
+class ListBuilder extends EntityListBuilder {
 
   /**
    * The date formatter service.

@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Provides a destination plugin for Tpr entities.
  */
-abstract class Tpr extends EntityContentBase {
+abstract class TranslatableEntityBase extends EntityContentBase {
 
   /**
    * The language manager service.
@@ -39,6 +39,17 @@ abstract class Tpr extends EntityContentBase {
     $instance->languageManager = $container->get('language_manager');
 
     return $instance;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function updateEntity(EntityInterface $entity, Row $row) {
+    $entity = parent::updateEntity($entity, $row);
+    // Always delete on rollback, even if it's "default" translation.
+    $this->setRollbackAction($row->getIdMap(), MigrateIdMapInterface::ROLLBACK_DELETE);
+
+    return $entity;
   }
 
   /**
@@ -70,17 +81,6 @@ abstract class Tpr extends EntityContentBase {
         $translation->enforceIsNew();
       }
     }
-    return $entity;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function updateEntity(EntityInterface $entity, Row $row) {
-    $entity = parent::updateEntity($entity, $row);
-    // Always delete on rollback, even if it's "default" translation.
-    $this->setRollbackAction($row->getIdMap(), MigrateIdMapInterface::ROLLBACK_DELETE);
-
     return $entity;
   }
 

@@ -74,6 +74,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
     $fields += static::revisionLogBaseFieldDefinitions($entity_type);
+    $fields['name'] = static::createStringField('Name');
 
     return $fields;
   }

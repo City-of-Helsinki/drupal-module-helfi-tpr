@@ -13,6 +13,7 @@ Integrates [Helsinki Service Map](https://www.hel.fi/palvelukarttaws/restpages/v
 Available migrations:
 
 - `tpr_unit`
+- `tpr_service`
 
 ### Running migrations
 

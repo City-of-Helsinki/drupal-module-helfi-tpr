@@ -125,11 +125,11 @@ class Unit extends TprEntityBase {
    */
   protected function getServiceIndex(Service $service) {
     $values = $this->get('services')->getValue();
-    $order_item_ids = array_map(function ($value) {
+    $ids = array_map(function ($value) {
       return $value['target_id'];
     }, $values);
 
-    return array_search($service->id(), $order_item_ids);
+    return array_search($service->id(), $ids);
   }
 
   /**

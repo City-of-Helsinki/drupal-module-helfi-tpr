@@ -66,8 +66,16 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
       'description_long',
     ];
 
+    $processed = 0;
+
     foreach ($content as $item) {
       $service = [];
+
+      $processed++;
+      // Allow number of items to be limited by using an env variable.
+      if (($this->getLimit() > 0) && $processed > $this->getLimit()) {
+        break;
+      }
 
       foreach (['fi', 'en', 'sv'] as $language) {
         $url = $this->buildCanonicalUrl(sprintf('%s?language=%s', $item['id'], $language));

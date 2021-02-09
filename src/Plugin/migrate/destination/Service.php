@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Plugin\migrate\destination;
 
+use Drupal\helfi_api_base\Plugin\migrate\destination\TranslatableEntityBase;
 use Drupal\helfi_tpr\Entity\Unit;
 use Drupal\migrate\Row;
 

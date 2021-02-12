@@ -81,7 +81,7 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
         $url = $this->buildCanonicalUrl(sprintf('%s?language=%s', $item['id'], $language));
         $data = $this->getContent($url);
 
-        list('id' => $id) = $data;
+        ['id' => $id] = $data;
 
         if (!isset($service[$id])) {
           $service[$id] = [];

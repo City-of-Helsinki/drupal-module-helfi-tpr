@@ -18,18 +18,16 @@ use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
 class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
 
   /**
-   * Keep track of ignored rows to stop migrate after N ignored rows.
-   *
-   * @var int
-   */
-  protected int $ignoredRows = 0;
-
-  /**
    * The total count.
    *
    * @var int
    */
   protected int $count = 0;
+
+  /**
+   * {@inheritdoc}
+   */
+  protected bool $useRequestCache = FALSE;
 
   /**
    * {@inheritdoc}
@@ -60,19 +58,6 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
    */
   public function fields() {
     return [];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function next() {
-    parent::next();
-
-    // Check if the current row has changes and increment ignoredRows variable
-    // to allow us to stop migrate early if we have no changes.
-    if ($this->isPartialMigrate() && $this->currentRow && !$this->currentRow->changed()) {
-      $this->ignoredRows++;
-    }
   }
 
   /**

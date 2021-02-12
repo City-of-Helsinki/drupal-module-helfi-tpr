@@ -27,6 +27,11 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
   /**
    * {@inheritdoc}
    */
+  protected bool $useRequestCache = FALSE;
+
+  /**
+   * {@inheritdoc}
+   */
   public function __toString() {
     return 'TprServiceMap';
   }

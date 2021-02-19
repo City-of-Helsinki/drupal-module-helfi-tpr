@@ -19,6 +19,4 @@ process:
   id: id
 destination:
   plugin: tpr_service
-migration_dependencies:
-  required:
-    - tpr_unit
+migration_dependencies: {}

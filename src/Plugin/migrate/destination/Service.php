@@ -40,6 +40,7 @@ final class Service extends TranslatableEntityBase {
    */
   public function getEntity(Row $row, array $old_destination_id_values) {
     $entity = parent::getEntity($row, $old_destination_id_values);
+    $entity->setData('source', $row->getSource());
 
     if ($unitIds = $row->getSourceProperty('unit_ids')) {
       $units = Unit::loadMultiple($unitIds);

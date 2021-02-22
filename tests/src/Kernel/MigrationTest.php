@@ -63,7 +63,6 @@ class MigrationTest extends MigrationTestBase {
   protected function createServiceMigration() : array {
     $services = $this->getFixture('helfi_tpr', 'services.json');
     $responses = [
-      new Response(200, [], NULL),
       new Response(200, [], $services),
     ];
 

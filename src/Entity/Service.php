@@ -67,6 +67,41 @@ class Service extends TprEntityBase {
   }
 
   /**
+   * Gets the data.
+   *
+   * @param string $key
+   *   The key.
+   * @param null|mixed $default
+   *   The default value.
+   *
+   * @return mixed|null
+   *   The data.
+   */
+  public function getData(string $key, $default = NULL) {
+    $data = [];
+    if (!$this->get('data')->isEmpty()) {
+      $data = $this->get('data')->first()->getValue();
+    }
+    return isset($data[$key]) ? $data[$key] : $default;
+  }
+
+  /**
+   * Sets the data.
+   *
+   * @param string $key
+   *   The key.
+   * @param mixed $value
+   *   The value.
+   *
+   * @return $this
+   *   The self.
+   */
+  public function setData(string $key, $value) : self {
+    $this->get('data')->__set($key, $value);
+    return $this;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
@@ -76,6 +111,10 @@ class Service extends TprEntityBase {
       ->setLabel(new TranslatableMarkup('Description'))
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
+
+    $fields['data'] = BaseFieldDefinition::create('map')
+      ->setLabel(new TranslatableMarkup('Data'))
+      ->setDescription(new TranslatableMarkup('A serialized array of additional data.'));
 
     return $fields;
   }

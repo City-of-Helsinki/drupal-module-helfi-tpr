@@ -56,3 +56,18 @@ function helfi_tpr_update_8003() : void {
     $manager->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
   }
 }
+
+/**
+ * Install service 'data' field.
+ */
+function helfi_tpr_update_8004() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+  $fields = [];
+  $fields['data'] = BaseFieldDefinition::create('map')
+    ->setLabel(new TranslatableMarkup('Data'))
+    ->setDescription(new TranslatableMarkup('A serialized array of additional data.'));
+
+  foreach ($fields as $name => $field) {
+    $manager->installFieldStorageDefinition($name, 'tpr_service', 'helfi_tpr', $field);
+  }
+}

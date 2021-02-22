@@ -63,7 +63,6 @@ class MigrationTest extends MigrationTestBase {
   protected function createServiceMigration() : array {
     $services = $this->getFixture('helfi_tpr', 'services.json');
     $responses = [
-      new Response(200, [], NULL),
       new Response(200, [], $services),
     ];
 
@@ -100,7 +99,7 @@ class MigrationTest extends MigrationTestBase {
    * Tests service migration.
    */
   public function testServiceMigration() : void {
-    // Services depend on unit migration.
+    // Services has soft dependency on unit migration.
     $this->createUnitMigration();
     $entities = $this->createServiceMigration();
     $this->assertCount(3, $entities);

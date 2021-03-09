@@ -50,9 +50,9 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   },
  *   links = {
  *     "canonical" = "/tpr-service/{tpr_service}",
- *     "edit-form" = "/admin/content/tpr-service/{tpr_service}/edit",
- *     "delete-form" = "/admin/content/tpr-service/{tpr_service}/delete",
- *     "collection" = "/admin/content/tpr-service"
+ *     "edit-form" = "/admin/content/integrations/tpr-service/{tpr_service}/edit",
+ *     "delete-form" = "/admin/content/integrations/tpr-service/{tpr_service}/delete",
+ *     "collection" = "/admin/content/integrations/tpr-service"
  *   },
  *   field_ui_base_route = "tpr_service.settings"
  * )

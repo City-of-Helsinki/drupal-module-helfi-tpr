@@ -22,7 +22,7 @@ entity.tpr_unit.delete_form:
 tpr_unit.content_list:
   title: TPR - Unit
   route_name: entity.tpr_unit.collection
-  base_route: system.admin_content
+  base_route: helfi_api_base.integrations
   weight: 10
 
 tpr_service.settings:
@@ -49,5 +49,5 @@ entity.tpr_service.delete_form:
 tpr_service.content_list:
   title: TPR - Service
   route_name: entity.tpr_service.collection
-  base_route: system.admin_content
+  base_route: helfi_api_base.integrations
   weight: 10

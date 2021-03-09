@@ -53,7 +53,7 @@ class TprUnitListTest extends MigrationTestBase {
    */
   public function testList() : void {
     // Make sure anonymous user can't see the entity list.
-    $this->drupalGet('/admin/content/tpr-unit');
+    $this->drupalGet('/admin/content/integrations/tpr-unit');
     $this->assertSession()->statusCodeEquals(403);
 
     // Make sure logged in user with access remote entities overview permission
@@ -63,19 +63,19 @@ class TprUnitListTest extends MigrationTestBase {
       'edit remote entities',
     ]);
     $this->drupalLogin($account);
-    $this->drupalGet('/admin/content/tpr-unit');
+    $this->drupalGet('/admin/content/integrations/tpr-unit');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('No results found.');
 
     // Migrate entities and make sure we can see all entities from fixture.
     $this->runMigrate();
-    $this->drupalGet('/admin/content/tpr-unit');
+    $this->drupalGet('/admin/content/integrations/tpr-unit');
     $this->assertSession()->pageTextContains('Displaying 1 - 6 of 6');
 
     // Make sure we can run 'update' action on multiple entities.
     Unit::load('22736')->set('name', 'Test 1')->save();
     Unit::load('57331')->set('name', 'Test 2')->save();
-    $this->drupalGet('/admin/content/tpr-unit');
+    $this->drupalGet('/admin/content/integrations/tpr-unit');
     $this->assertSession()->pageTextContains('Test 1');
     $this->assertSession()->pageTextContains('Test 2');
 

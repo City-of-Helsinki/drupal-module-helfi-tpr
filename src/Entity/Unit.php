@@ -52,9 +52,9 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   },
  *   links = {
  *     "canonical" = "/tpr-unit/{tpr_unit}",
- *     "edit-form" = "/admin/content/tpr-unit/{tpr_unit}/edit",
- *     "delete-form" = "/admin/content/tpr-unit/{tpr_unit}/delete",
- *     "collection" = "/admin/content/tpr-unit",
+ *     "edit-form" = "/admin/content/integrations/tpr-unit/{tpr_unit}/edit",
+ *     "delete-form" = "/admin/content/integrations/tpr-unit/{tpr_unit}/delete",
+ *     "collection" = "/admin/content/integrations/tpr-unit",
  *   },
  *   field_ui_base_route = "tpr_unit.settings"
  * )

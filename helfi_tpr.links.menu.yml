@@ -8,7 +8,7 @@ entity.tpr_unit.collection:
   title: TPR - Unit entities
   description: List of TPR unit entities
   route_name: entity.tpr_unit.collection
-  parent: system.admin_content
+  parent: helfi_api_base.integrations
 
 tpr_service.settings:
   title: TPR - Service settings
@@ -20,4 +20,4 @@ entity.tpr_service.collection:
   title: TPR - Service entities
   description: List of TPR service entities
   route_name: entity.tpr_service.collection
-  parent: system.admin_content
+  parent: helfi_api_base.integrations

@@ -63,7 +63,7 @@ class TprUnitListTest extends MigrationTestBase {
       'edit remote entities',
     ]);
     $this->drupalLogin($account);
-    $this->drupalGet('/admin/content/tpr-unit');
+    $this->drupalGet('/admin/content/integrations/tpr-unit');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('No results found.');
 

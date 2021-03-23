@@ -21,6 +21,7 @@ process:
   latitude: latitude
   longitude: longitude
   streetview_entrance_url/uri: streetview_entrance_url
+  picture_url: picture_url
   description/format:
     plugin: default_value
     default_value: filtered_html

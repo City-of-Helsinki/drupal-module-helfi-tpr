@@ -138,6 +138,8 @@ class Unit extends TprEntityBase {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
+    $fields['picture_url'] = static::createStringField('Picture')
+      ->setSetting('max_length', 2048);
     $fields['phone'] = static::createStringField('Phone', BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setTranslatable(FALSE);
     $fields['call_charge_info'] = static::createStringField('Call charge info');

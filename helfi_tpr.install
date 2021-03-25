@@ -71,3 +71,26 @@ function helfi_tpr_update_8004() : void {
     $manager->installFieldStorageDefinition($name, 'tpr_service', 'helfi_tpr', $field);
   }
 }
+
+/**
+ * Install unit 'picture' field.
+ */
+function helfi_tpr_update_8005() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+  $fields = [];
+  $fields['picture_url'] = BaseFieldDefinition::create('string')
+    ->setLabel(new TranslatableMarkup('Picture'))
+    ->setTranslatable(TRUE)
+    ->setRevisionable(TRUE)
+    ->setDefaultValue('')
+    ->setDisplayConfigurable('view', TRUE)
+    ->setDisplayConfigurable('form', TRUE)
+    ->setSettings([
+      'max_length' => 2048,
+      'text_processing' => 0,
+    ]);
+
+  foreach ($fields as $name => $field) {
+    $manager->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
+  }
+}

@@ -26,14 +26,14 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
   /**
    * {@inheritdoc}
    */
-  public function __toString() {
+  public function __toString() : string {
     return 'TprServiceRegister';
   }
 
   /**
    * {@inheritdoc}
    */
-  public function count($refresh = FALSE) {
+  public function count($refresh = FALSE) : int {
     if (!$this->count) {
       $this->count = count($this->getContent($this->configuration['url']));
     }
@@ -43,15 +43,25 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
   /**
    * {@inheritdoc}
    */
-  public function getIds() {
+  public function getIds() : array {
     return ['id' => ['type' => 'string']];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function fields() {
+  public function fields() : array {
     return [];
+  }
+
+  /**
+   * Gets the multilingual fields.
+   *
+   * @return array
+   *   The multilingual fields.
+   */
+  protected function getMultilingualFields() : array {
+    return $this->configuration['multilingual_fields'] ?? [];
   }
 
   /**
@@ -59,13 +69,6 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
    */
   protected function initializeListIterator() : \Iterator {
     $content = $this->getContent($this->configuration['url']);
-
-    $fields = [
-      'title',
-      'description_short',
-      'description_long',
-    ];
-
     $processed = 0;
 
     foreach ($content as $item) {
@@ -87,7 +90,11 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
           $service[$id] = [];
         }
 
-        foreach ($fields as $field) {
+        // Re-map language specifc fields as 'fieldname_langcode'.
+        foreach ($this->getMultilingualFields() as $field) {
+          if (!isset($data[$field])) {
+            continue;
+          }
           $data[sprintf('%s_%s', $field, $language)] = $data[$field];
         }
         $service[$id] += $data;

@@ -11,11 +11,7 @@ label: 'TPR service'
 source:
   plugin: tpr_service_register
   track_changes: true
-  multilingual_fields:
-    - title
-    - description_short
-    - description_long
-  url: 'http://www.hel.fi/palvelukarttaws/rest/vpalvelurekisteri/description/'
+  url: 'https://www.hel.fi/palvelukarttaws/rest/vpalvelurekisteri/errandservice/'
   ids:
     id:
       type: string

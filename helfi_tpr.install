@@ -94,3 +94,15 @@ function helfi_tpr_update_8005() : void {
     $manager->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
   }
 }
+
+/**
+ * Installs the e-service and service channel entity types.
+ */
+function helfi_tpr_update_8006() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+
+  foreach (['tpr_errand_service', 'tpr_service_channel'] as $type) {
+    $entity_type = \Drupal::entityTypeManager()->getDefinition($type);
+    $manager->installEntityType($entity_type);
+  }
+}

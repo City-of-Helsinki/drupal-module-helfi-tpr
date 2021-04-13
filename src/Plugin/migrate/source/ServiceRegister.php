@@ -72,8 +72,6 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
     $processed = 0;
 
     foreach ($content as $item) {
-      $service = [];
-
       $processed++;
       // Allow number of items to be limited by using an env variable.
       if (($this->getLimit() > 0) && $processed > $this->getLimit()) {
@@ -82,24 +80,17 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
 
       foreach (['fi', 'en', 'sv'] as $language) {
         $url = $this->buildCanonicalUrl(sprintf('%s?language=%s', $item['id'], $language));
-        $data = $this->getContent($url);
 
-        ['id' => $id] = $data;
-
-        if (!isset($service[$id])) {
-          $service[$id] = [];
+        if (!$data = $this->getContent($url)) {
+          continue;
         }
-
-        // Re-map language specifc fields as 'fieldname_langcode'.
-        foreach ($this->getMultilingualFields() as $field) {
-          if (!isset($data[$field])) {
-            continue;
-          }
-          $data[sprintf('%s_%s', $field, $language)] = $data[$field];
+        if ($language === 'fi') {
+          $data['default_langcode'] = TRUE;
         }
-        $service[$id] += $data;
+        $data['language'] = $language;
+
+        yield $data;
       }
-      yield reset($service);
     }
   }
 

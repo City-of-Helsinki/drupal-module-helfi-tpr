@@ -102,6 +102,70 @@ class Service extends TprEntityBase {
   }
 
   /**
+   * Adds the given errand service.
+   *
+   * @param \Drupal\helfi_tpr\Entity\ErrandService $errand_service
+   *   The errand service.
+   *
+   * @return $this
+   *   The self.
+   */
+  public function addErrandService(ErrandService $errand_service) : self {
+    if (!$this->hasErrandService($errand_service)) {
+      $this->get('errand_services')->appendItem($errand_service);
+    }
+    return $this;
+  }
+
+  /**
+   * Removes the given errand_service.
+   *
+   * @param \Drupal\helfi_tpr\Entity\ErrandService $errand_service
+   *   The errand service.
+   *
+   * @return $this
+   *   The self.
+   */
+  public function removeErrandService(ErrandService $errand_service) : self {
+    $index = $this->getErrandServiceIndex($errand_service);
+    if ($index !== FALSE) {
+      $this->get('errand_services')->offsetUnset($index);
+    }
+    return $this;
+  }
+
+  /**
+   * Checks whether the errand service exists or not.
+   *
+   * @param \Drupal\helfi_tpr\Entity\ErrandService $errand_service
+   *   The errand service.
+   *
+   * @return bool
+   *   Whether we have given errand service or not.
+   */
+  public function hasErrandService(ErrandService $errand_service) : bool {
+    return $this->getErrandServiceIndex($errand_service) !== FALSE;
+  }
+
+  /**
+   * Gets the index of the given errand service.
+   *
+   * @param \Drupal\helfi_tpr\Entity\ErrandService $errand_service
+   *   The errand service.
+   *
+   * @return int|bool
+   *   The index of the given errand service, or FALSE if not found.
+   */
+  protected function getErrandServiceIndex(ErrandService $errand_service) {
+    $values = $this->get('errand_services')->getValue();
+    $ids = array_map(function ($value) {
+      return $value['target_id'];
+    }, $values);
+
+    return array_search($errand_service->id(), $ids);
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
@@ -115,6 +179,18 @@ class Service extends TprEntityBase {
     $fields['data'] = BaseFieldDefinition::create('map')
       ->setLabel(new TranslatableMarkup('Data'))
       ->setDescription(new TranslatableMarkup('A serialized array of additional data.'));
+
+    $fields['errand_services'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(new TranslatableMarkup('Errand Services'))
+      ->setSettings([
+        'target_type' => 'tpr_errand_service',
+        'handler_settings' => [
+          'target_bundles' => ['tpr_service'],
+        ],
+      ])
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
 
     return $fields;
   }

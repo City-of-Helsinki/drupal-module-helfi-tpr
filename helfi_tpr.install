@@ -5,6 +5,7 @@
  * Contains helfi_tpr installation procedures.
  */
 
+use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 
@@ -104,5 +105,35 @@ function helfi_tpr_update_8006() : void {
   foreach (['tpr_errand_service', 'tpr_service_channel'] as $type) {
     $entity_type = \Drupal::entityTypeManager()->getDefinition($type);
     $manager->installEntityType($entity_type);
+  }
+
+  $fields['errand_services'] = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(new TranslatableMarkup('Errand Services'))
+    ->setSettings([
+      'target_type' => 'tpr_errand_service',
+      'handler_settings' => [
+        'target_bundles' => ['tpr_errand_service'],
+      ],
+    ])
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setDisplayConfigurable('view', TRUE)
+    ->setDisplayConfigurable('form', TRUE);
+
+  foreach ($fields as $name => $field) {
+    $manager->installFieldStorageDefinition($name, 'tpr_service', 'helfi_tpr', $field);
+  }
+}
+
+/**
+ * Enable translation for e-service, service and service channels.
+ */
+function helfi_tpr_update_8007() : void {
+  $config_path = drupal_get_path('module', 'helfi_tpr') . '/config/install';
+  $source = new FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+
+  foreach (['tpr_errand_service', 'tpr_service', 'tpr_service_channel'] as $type) {
+    $config_name = sprintf('language.content_settings.%s.%s', $type, $type);
+    $config_storage->write($config_name, $source->read($config_name));
   }
 }

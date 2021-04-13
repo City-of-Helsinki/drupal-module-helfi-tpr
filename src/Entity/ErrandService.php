@@ -49,10 +49,10 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "revision_log_message" = "revision_log"
  *   },
  *   links = {
- *     "canonical" = "/tpr-errand_service/{tpr_errand_service}",
- *     "edit-form" = "/admin/content/integrations/tpr-errand_service/{tpr_errand_service}/edit",
- *     "delete-form" = "/admin/content/integrations/tpr-errand_service/{tpr_errand_service}/delete",
- *     "collection" = "/admin/content/integrations/tpr-errand_service"
+ *     "canonical" = "/tpr-errand-service/{tpr_errand_service}",
+ *     "edit-form" = "/admin/content/integrations/tpr-errand-service/{tpr_errand_service}/edit",
+ *     "delete-form" = "/admin/content/integrations/tpr-errand-service/{tpr_errand_service}/delete",
+ *     "collection" = "/admin/content/integrations/tpr-errand-service"
  *   },
  *   field_ui_base_route = "tpr_errand_service.settings"
  * )
@@ -75,6 +75,9 @@ class ErrandService extends TprEntityBase {
     $fields['type'] = static::createStringField('Type');
     $fields['name_synonyms'] = static::createStringField('Name synonyms', BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
+    $fields['links'] = static::createLinkField('Links')
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
+
     $fields['channels'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(new TranslatableMarkup('Channels'))
       ->setSettings([
@@ -93,9 +96,10 @@ class ErrandService extends TprEntityBase {
       'processing_time' => new TranslatableMarkup('Processing time'),
       'expiration_time' => new TranslatableMarkup('Expiration time'),
       'information' => new TranslatableMarkup('Information'),
+      'costs' => new TranslatableMarkup('Costs'),
     ];
     foreach ($text_fields as $name => $label) {
-      $fields[$name] = BaseFieldDefinition::create('text')
+      $fields[$name] = BaseFieldDefinition::create('text_long')
         ->setTranslatable(TRUE)
         ->setLabel($label)
         ->setDisplayConfigurable('form', TRUE)

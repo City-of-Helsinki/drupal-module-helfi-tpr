@@ -21,3 +21,9 @@ entity.tpr_service.collection:
   description: List of TPR service entities
   route_name: entity.tpr_service.collection
   parent: helfi_api_base.integrations
+
+entity.tpr_errand_service.collection:
+  title: TPR - Errand Service entities
+  description: List of TPR errand service entities
+  route_name: entity.tpr_errand_service.collection
+  parent: helfi_api_base.integrations

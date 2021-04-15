@@ -1,0 +1,61 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - helfi_tpr
+id: tpr_service_channel
+migration_tags:
+  - tpr
+label: 'TPR service channel'
+source:
+  plugin: tpr_service_channel
+  track_changes: true
+process:
+  name: name
+  id: id
+  type: type
+  links:
+    plugin: sub_process
+    source: links
+    process:
+      title: title
+      uri: url
+  address/address_line1: personal_service_street_addr
+  address/postal_code: personal_service_postal_code
+  address/locality: personal_service_city
+  address/country_code:
+    plugin: default_value
+    default_value: FI
+  prerequisites/value: prerequisites
+  prerequisites/format:
+    plugin: default_value
+    default_value: plain_text
+  availability_summary/value: availability_summary
+  availability_summary/format:
+    plugin: default_value
+    default_value: plain_text
+  process_description/value: process_description
+  process_description/format:
+    plugin: default_value
+    default_value: plain_text
+  expiration_time/value: expiration_time
+  expiration_time/format:
+    plugin: default_value
+    default_value: plain_text
+  authorization_code/value: costs
+  authorization_code/format:
+    plugin: default_value
+    default_value: plain_text
+  requires_authentication: requires_authentication
+  saved_to_customer_folder: saved_to_customer_folder
+  e_processing: e_processing
+  e_decision: e_decision
+  payment_enabled: payment_enabled
+  for_personal_customer: for_personal_customer
+  for_corporate_customer: for_corporate_customer
+destination:
+  plugin: tpr_service_channel
+migration_dependencies:
+  optional:
+    - tpr_errand_service

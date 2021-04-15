@@ -176,6 +176,9 @@ class Service extends TprEntityBase {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['links'] = static::createLinkField('Links')
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
+
     $fields['data'] = BaseFieldDefinition::create('map')
       ->setLabel(new TranslatableMarkup('Data'))
       ->setDescription(new TranslatableMarkup('A serialized array of additional data.'));

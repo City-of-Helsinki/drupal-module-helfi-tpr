@@ -137,3 +137,22 @@ function helfi_tpr_update_8007() : void {
     $config_storage->write($config_name, $source->read($config_name));
   }
 }
+
+/**
+ * Installs TPR service links field.
+ */
+function helfi_tpr_update_8008() : void {
+  $fields['links'] = BaseFieldDefinition::create('link')
+      ->setLabel(new TranslatableMarkup('Links'))
+      ->setTranslatable(TRUE)
+      ->setRevisionable(TRUE)
+      ->setDefaultValue('')
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
+
+  foreach ($fields as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'tpr_service', 'helfi_tpr', $field);
+  }
+}

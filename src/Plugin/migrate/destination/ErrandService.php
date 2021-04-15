@@ -27,24 +27,18 @@ final class ErrandService extends TranslatableEntityBase {
   /**
    * {@inheritdoc}
    */
-  protected function getTranslatableFields(): array {
-    return [
-      'name' => 'name',
-      'description' => 'description/value',
-      'process_description' => 'process_description/value',
-      'processing_time' => 'processing_time/value',
-      'expiration_time' => 'expiration_time/value',
-      'information' => 'information/value',
-      'costs' => 'costs/value',
-    ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getEntity(Row $row, array $old_destination_id_values) {
     /** @var \Drupal\helfi_tpr\Entity\ErrandService $entity */
     $entity = parent::getEntity($row, $old_destination_id_values);
+
+    if ($channels = $row->getSourceProperty('channels')) {
+      $existing_channels = $entity->getData('channels', []);
+
+      foreach ($channels as $channel) {
+        $existing_channels[$row->getSourceProperty('language')] = $channel;
+      }
+      $entity->setData('channels', $existing_channels);
+    }
 
     if ($descriptions = $row->getSourceProperty('exact_descriptions')) {
       $services = Service::loadMultiple($descriptions);

@@ -11,16 +11,29 @@ label: 'TPR service'
 source:
   plugin: tpr_service_register
   track_changes: true
-  multilingual_fields:
-    - title
-    - description_short
-    - description_long
-  url: 'http://www.hel.fi/palvelukarttaws/rest/vpalvelurekisteri/description/'
+  url: 'https://www.hel.fi/palvelukarttaws/rest/vpalvelurekisteri/description/'
   ids:
     id:
       type: string
 process:
   id: id
+  name: title
+  description/summary: description_short
+  description/value: description_long
+  description/format:
+    plugin: default_value
+    default_value: plain_text
+  errand_services:
+    plugin: get
+    source: exact_errand_services
+  links:
+    plugin: sub_process
+    source: links
+    process:
+      title: title
+      uri: url
 destination:
   plugin: tpr_service
-migration_dependencies: {}
+migration_dependencies:
+  optional:
+    - tpr_unit

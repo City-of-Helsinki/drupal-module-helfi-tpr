@@ -27,3 +27,21 @@ entity.tpr_errand_service.collection:
   description: List of TPR errand service entities
   route_name: entity.tpr_errand_service.collection
   parent: helfi_api_base.integrations
+
+tpr_errand_service.settings:
+  title: TPR - Errand Service settings
+  description: Configure TPR errand service entity type
+  route_name:  tpr_errand_service.settings
+  parent: system.admin_structure
+
+entity.tpr_service_channel.collection:
+  title: TPR - Service channel entities
+  description: List of TPR service channel entities
+  route_name: entity.tpr_service_channel.collection
+  parent: helfi_api_base.integrations
+
+tpr_service_channel.settings:
+  title: TPR - Service channel settings
+  description: Configure TPR service channel entity type
+  route_name:  tpr_service_channel.settings
+  parent: system.admin_structure

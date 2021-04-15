@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Entity;
 
+use CommerceGuys\Addressing\AddressFormat\AddressField;
+use CommerceGuys\Addressing\AddressFormat\FieldOverride;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
@@ -72,8 +74,37 @@ class Channel extends TprEntityBase {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $fields['type_string'] = static::createStringField('Type');
     $fields['name_synonyms'] = static::createStringField('Name synonyms', BaseFieldDefinition::CARDINALITY_UNLIMITED);
+
+    $fields['email'] = static::createStringField('Email');
+
+    $string_fields = [
+      'type' => 'Type',
+      'type_string' => 'Type string',
+      'email' => 'Email',
+      'phone' => 'Phone',
+      'call_charge_info' => 'Call charge info',
+    ];
+
+    foreach ($string_fields as $name => $label) {
+      $fields[$name] = static::createStringField($label);
+    }
+
+    $fields['address'] = BaseFieldDefinition::create('address')
+      ->setLabel(new TranslatableMarkup('Address'))
+      ->setTranslatable(TRUE)
+      ->setRevisionable(TRUE)
+      ->setSetting('field_overrides', [
+        AddressField::GIVEN_NAME => ['override' => FieldOverride::HIDDEN],
+        AddressField::ADDITIONAL_NAME => ['override' => FieldOverride::HIDDEN],
+        AddressField::FAMILY_NAME => ['override' => FieldOverride::HIDDEN],
+        AddressField::ORGANIZATION => ['override' => FieldOverride::HIDDEN],
+      ])
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
+
+    $fields['links'] = static::createLinkField('Links')
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
     $text_fields = [
       'prerequisites' => new TranslatableMarkup('Process description'),
@@ -83,7 +114,7 @@ class Channel extends TprEntityBase {
       'authorization_code' => new TranslatableMarkup('Information'),
     ];
     foreach ($text_fields as $name => $label) {
-      $fields[$name] = BaseFieldDefinition::create('text')
+      $fields[$name] = BaseFieldDefinition::create('text_long')
         ->setTranslatable(TRUE)
         ->setLabel($label)
         ->setDisplayConfigurable('form', TRUE)

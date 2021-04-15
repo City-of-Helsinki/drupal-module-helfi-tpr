@@ -12,15 +12,6 @@ source:
   plugin: tpr_service_register
   track_changes: true
   url: 'https://www.hel.fi/palvelukarttaws/rest/vpalvelurekisteri/errandservice/'
-  multilingual_fields:
-    - links
-    - name
-    - description
-    - process_description
-    - processing_time
-    - information
-    - expiration_time
-    - costs
 process:
   name: name
   id: id
@@ -30,6 +21,37 @@ process:
     process:
       title: title
       uri: url
+  channels:
+    plugin: sub_process
+    source: channels
+    process:
+      target_id: id
+  description/value: description
+  description/format:
+    plugin: default_value
+    default_value: plain_text
+  process_description/value: process_description
+  process_description/format:
+    plugin: default_value
+    default_value: plain_text
+  processing_time/value: processing_time
+  processing_time/format:
+    plugin: default_value
+    default_value: plain_text
+  information/value: information
+  information/format:
+    plugin: default_value
+    default_value: plain_text
+  expiration_time/value: expiration_time
+  expiration_time/format:
+    plugin: default_value
+    default_value: plain_text
+  costs/value: expiration_time
+  costs/format:
+    plugin: default_value
+    default_value: plain_text
 destination:
   plugin: tpr_errand_service
-migration_dependencies: {}
+migration_dependencies:
+  optional:
+    - tpr_service

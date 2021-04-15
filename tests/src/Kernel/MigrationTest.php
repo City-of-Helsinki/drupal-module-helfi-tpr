@@ -32,8 +32,16 @@ class MigrationTest extends MigrationTestBase {
   public function setUp() : void {
     parent::setUp();
 
-    $this->installEntitySchema('tpr_unit');
-    $this->installEntitySchema('tpr_service');
+    $entity_types = [
+      'tpr_unit',
+      'tpr_service',
+      'tpr_errand_service',
+      'tpr_service_channel',
+    ];
+
+    foreach ($entity_types as $type) {
+      $this->installEntitySchema($type);
+    }
     $this->installConfig(['helfi_tpr']);
   }
 

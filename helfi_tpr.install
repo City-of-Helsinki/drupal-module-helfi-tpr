@@ -132,7 +132,9 @@ function helfi_tpr_update_8007() : void {
   $source = new FileStorage($config_path);
   $config_storage = \Drupal::service('config.storage');
 
-  foreach (['tpr_errand_service', 'tpr_service', 'tpr_service_channel'] as $type) {
+  $types = ['tpr_errand_service', 'tpr_service', 'tpr_service_channel'];
+
+  foreach ($types as $type) {
     $config_name = sprintf('language.content_settings.%s.%s', $type, $type);
     $config_storage->write($config_name, $source->read($config_name));
   }
@@ -143,13 +145,13 @@ function helfi_tpr_update_8007() : void {
  */
 function helfi_tpr_update_8008() : void {
   $fields['links'] = BaseFieldDefinition::create('link')
-      ->setLabel(new TranslatableMarkup('Links'))
-      ->setTranslatable(TRUE)
-      ->setRevisionable(TRUE)
-      ->setDefaultValue('')
-      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
-      ->setDisplayConfigurable('view', TRUE)
-      ->setDisplayConfigurable('form', TRUE);
+    ->setLabel(new TranslatableMarkup('Links'))
+    ->setTranslatable(TRUE)
+    ->setRevisionable(TRUE)
+    ->setDefaultValue('')
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setDisplayConfigurable('view', TRUE)
+    ->setDisplayConfigurable('form', TRUE);
 
   foreach ($fields as $name => $field) {
     \Drupal::entityDefinitionUpdateManager()

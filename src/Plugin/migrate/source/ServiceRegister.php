@@ -55,16 +55,6 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
   }
 
   /**
-   * Gets the multilingual fields.
-   *
-   * @return array
-   *   The multilingual fields.
-   */
-  protected function getMultilingualFields() : array {
-    return $this->configuration['multilingual_fields'] ?? [];
-  }
-
-  /**
    * {@inheritdoc}
    */
   protected function initializeListIterator() : \Iterator {

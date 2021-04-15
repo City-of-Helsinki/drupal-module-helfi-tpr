@@ -9,7 +9,6 @@ use Drupal\helfi_tpr\Entity\Unit;
 use Drupal\Tests\helfi_api_base\Kernel\MigrationTestBase as ApiMigrationTestBase;
 use GuzzleHttp\Psr7\Response;
 
-
 /**
  * Base class to test TPR migrations.
  */

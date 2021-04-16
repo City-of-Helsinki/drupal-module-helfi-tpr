@@ -8,6 +8,7 @@
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\helfi_tpr\Entity\TprEntityBase;
 
 /**
  * Installs the service entity type.
@@ -156,5 +157,31 @@ function helfi_tpr_update_8008() : void {
   foreach ($fields as $name => $field) {
     \Drupal::entityDefinitionUpdateManager()
       ->installFieldStorageDefinition($name, 'tpr_service', 'helfi_tpr', $field);
+  }
+}
+
+/**
+ * Installs 'owner' field.
+ */
+function helfi_tpr_update_8009() : void {
+  $uid_field = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(new TranslatableMarkup('User ID'))
+    ->setSetting('target_type', 'user')
+    ->setTranslatable(TRUE)
+    ->setDefaultValueCallback(TprEntityBase::class . '::getDefaultEntityOwner');
+
+  $types = [
+    'tpr_unit',
+    'tpr_errand_service',
+    'tpr_service',
+    'tpr_service_channel',
+  ];
+
+  foreach ($types as $type) {
+    if (\Drupal::database()->schema()->fieldExists($type . '_field_data', 'uid')) {
+      continue;
+    }
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition('uid', $type, 'helfi_tpr', $uid_field);
   }
 }

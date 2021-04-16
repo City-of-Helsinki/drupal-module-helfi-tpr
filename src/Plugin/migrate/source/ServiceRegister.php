@@ -68,15 +68,19 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
         break;
       }
 
+      $delta = 0;
       foreach (['fi', 'en', 'sv'] as $language) {
         $url = $this->buildCanonicalUrl(sprintf('%s?language=%s', $item['id'], $language));
 
         if (!$data = $this->getContent($url)) {
           continue;
         }
-        if ($language === 'fi') {
+        // Mark first item as default langcode.
+        if ($delta === 0) {
           $data['default_langcode'] = TRUE;
         }
+        $delta++;
+
         $data['language'] = $language;
 
         yield $data;

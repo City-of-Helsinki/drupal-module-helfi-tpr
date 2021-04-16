@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Drupal\helfi_tpr\Plugin\migrate\destination;
 
 use Drupal\helfi_api_base\Plugin\migrate\destination\TranslatableEntityBase;
-use Drupal\helfi_tpr\Entity\Service;
 use Drupal\migrate\Row;
 
 /**
@@ -38,15 +37,6 @@ final class ErrandService extends TranslatableEntityBase {
         $existing_channels[$row->getSourceProperty('language')] = $channel;
       }
       $entity->setData('channels', $existing_channels);
-    }
-
-    if ($descriptions = $row->getSourceProperty('exact_descriptions')) {
-      $services = Service::loadMultiple($descriptions);
-
-      array_map(function (Service $service) use ($entity) {
-        $service->addErrandService($entity)
-          ->save();
-      }, $services);
     }
 
     return $entity;

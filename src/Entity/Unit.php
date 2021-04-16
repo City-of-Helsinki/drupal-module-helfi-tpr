@@ -41,7 +41,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "id" = "id",
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
- *     "uid" = "uid",
+ *     "owner" = "uid",
  *     "label" = "name",
  *     "uuid" = "uuid"
  *   },
@@ -155,6 +155,9 @@ class Unit extends TprEntityBase {
     $fields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
       ->setLabel(new TranslatableMarkup('Description'))
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
     $fields['address'] = BaseFieldDefinition::create('address')
@@ -167,10 +170,16 @@ class Unit extends TprEntityBase {
         AddressField::FAMILY_NAME => ['override' => FieldOverride::HIDDEN],
         AddressField::ORGANIZATION => ['override' => FieldOverride::HIDDEN],
       ])
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
     $fields['address_postal'] = static::createStringField('Address postal');
     $fields['service_map_embed'] = static::createStringField('Service map embed')
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'service_map_embed',
@@ -189,6 +198,9 @@ class Unit extends TprEntityBase {
         'handler_settings' => [
           'target_bundles' => ['tpr_service'],
         ],
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
       ])
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)

@@ -15,6 +15,18 @@ process:
   name: name
   id: id
   type: type
+  type_string: type_string
+  email: email
+  phone: phone
+  call_charge_info: call_charge_info
+  availabilities:
+    plugin: sub_process
+    source: availabilities
+    process:
+      value: availability_string
+  uid/target_id:
+    plugin: default_value
+    default_value: 1
   links:
     plugin: sub_process
     source: links

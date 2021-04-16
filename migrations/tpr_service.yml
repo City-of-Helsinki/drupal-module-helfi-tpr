@@ -26,6 +26,9 @@ process:
   errand_services:
     plugin: get
     source: exact_errand_services
+  uid/target_id:
+    plugin: default_value
+    default_value: 1
   links:
     plugin: sub_process
     source: links

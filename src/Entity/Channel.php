@@ -41,7 +41,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "id" = "id",
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
- *     "uid" = "uid",
+ *     "owner" = "uid",
  *     "label" = "name",
  *     "uuid" = "uuid"
  *   },
@@ -90,10 +90,15 @@ class Channel extends TprEntityBase {
       $fields[$name] = static::createStringField($label);
     }
 
+    $fields['availabilities'] = static::createStringField('Availabilities', BaseFieldDefinition::CARDINALITY_UNLIMITED);
+
     $fields['address'] = BaseFieldDefinition::create('address')
       ->setLabel(new TranslatableMarkup('Address'))
       ->setTranslatable(TRUE)
       ->setRevisionable(TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
       ->setSetting('field_overrides', [
         AddressField::GIVEN_NAME => ['override' => FieldOverride::HIDDEN],
         AddressField::ADDITIONAL_NAME => ['override' => FieldOverride::HIDDEN],
@@ -117,6 +122,9 @@ class Channel extends TprEntityBase {
       $fields[$name] = BaseFieldDefinition::create('text_long')
         ->setTranslatable(TRUE)
         ->setLabel($label)
+        ->setDisplayOptions('form', [
+          'type' => 'readonly_field_widget',
+        ])
         ->setDisplayConfigurable('form', TRUE)
         ->setDisplayConfigurable('view', TRUE);
     }
@@ -135,6 +143,9 @@ class Channel extends TprEntityBase {
       $fields[$name] = BaseFieldDefinition::create('boolean')
         ->setTranslatable(TRUE)
         ->setLabel($label)
+        ->setDisplayOptions('form', [
+          'type' => 'readonly_field_widget',
+        ])
         ->setDisplayConfigurable('form', TRUE)
         ->setDisplayConfigurable('view', TRUE);
     }

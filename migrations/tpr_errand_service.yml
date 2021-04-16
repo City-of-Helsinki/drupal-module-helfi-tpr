@@ -21,6 +21,9 @@ process:
     process:
       title: title
       uri: url
+  uid/target_id:
+    plugin: default_value
+    default_value: 1
   channels:
     plugin: sub_process
     source: channels
@@ -46,7 +49,7 @@ process:
   expiration_time/format:
     plugin: default_value
     default_value: plain_text
-  costs/value: expiration_time
+  costs/value: costs
   costs/format:
     plugin: default_value
     default_value: plain_text

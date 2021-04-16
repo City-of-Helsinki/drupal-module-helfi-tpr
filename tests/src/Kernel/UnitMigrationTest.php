@@ -35,6 +35,7 @@ class UnitMigrationTest extends MigrationTestBase {
       $this->assertEquals($expected['phone'], $translation->get('phone')->value);
       $this->assertEquals($expected['call_charge_info'], $translation->get('call_charge_info')->value);
       $this->assertEquals($expected['www'], $translation->get('www')->uri);
+      $this->assertEquals('1', $translation->get('uid')->target_id);
     }
   }
 

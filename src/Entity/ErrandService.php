@@ -39,7 +39,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "id" = "id",
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
- *     "uid" = "uid",
+ *     "owner" = "uid",
  *     "label" = "name",
  *     "uuid" = "uuid"
  *   },
@@ -185,6 +185,9 @@ class ErrandService extends TprEntityBase {
           'target_bundles' => ['tpr_service_channel'],
         ],
       ])
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
@@ -201,6 +204,9 @@ class ErrandService extends TprEntityBase {
       $fields[$name] = BaseFieldDefinition::create('text_long')
         ->setTranslatable(TRUE)
         ->setLabel($label)
+        ->setDisplayOptions('form', [
+          'type' => 'readonly_field_widget',
+        ])
         ->setDisplayConfigurable('form', TRUE)
         ->setDisplayConfigurable('view', TRUE);
     }

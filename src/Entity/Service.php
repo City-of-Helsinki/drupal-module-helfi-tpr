@@ -39,7 +39,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "id" = "id",
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
- *     "uid" = "uid",
+ *     "owner" = "uid",
  *     "label" = "name",
  *     "uuid" = "uuid"
  *   },
@@ -173,6 +173,9 @@ class Service extends TprEntityBase {
     $fields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
       ->setLabel(new TranslatableMarkup('Description'))
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
@@ -190,6 +193,9 @@ class Service extends TprEntityBase {
         'handler_settings' => [
           'target_bundles' => ['tpr_service'],
         ],
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
       ])
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)

@@ -87,7 +87,7 @@ class ServiceChannel extends SourcePluginBase implements ContainerFactoryPluginI
   protected function initializeIterator() {
     /** @var \Drupal\helfi_tpr\Entity\ErrandService $entity */
     foreach ($this->storage->loadMultiple() ?? [] as $entity) {
-      $channels = $entity->getData('channels');
+      $channels = $entity->getData('channels', []);
 
       foreach ($channels as $langcode => $data) {
         $data['language'] = $langcode;

@@ -27,17 +27,6 @@ final class Service extends TranslatableEntityBase {
   /**
    * {@inheritdoc}
    */
-  protected function getTranslatableFields(): array {
-    return [
-      'title' => 'name',
-      'description_long' => 'description/value',
-      'description_short' => 'description/summary',
-    ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getEntity(Row $row, array $old_destination_id_values) {
     $entity = parent::getEntity($row, $old_destination_id_values);
     $entity->setData('source', $row->getSource());

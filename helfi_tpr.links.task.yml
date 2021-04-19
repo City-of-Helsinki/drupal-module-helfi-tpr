@@ -51,3 +51,57 @@ tpr_service.content_list:
   route_name: entity.tpr_service.collection
   base_route: helfi_api_base.integrations
   weight: 10
+
+tpr_errand_service.settings:
+  title: Settings
+  route_name: tpr_errand_service.settings
+  base_route: tpr_errand_service.settings
+
+entity.tpr_errand_service.view:
+  title: View
+  route_name: entity.tpr_errand_service.canonical
+  base_route: entity.tpr_errand_service.canonical
+
+entity.tpr_errand_service.edit_form:
+  title: Edit
+  route_name: entity.tpr_errand_service.edit_form
+  base_route: entity.tpr_errand_service.canonical
+
+entity.tpr_errand_service.delete_form:
+  title: Delete
+  route_name: entity.tpr_errand_service.delete_form
+  base_route: entity.tpr_errand_service.canonical
+  weight: 10
+
+tpr_errand_service.content_list:
+  title: TPR - Errand Service
+  route_name: entity.tpr_errand_service.collection
+  base_route: helfi_api_base.integrations
+  weight: 10
+
+tpr_service_channel.settings:
+  title: Settings
+  route_name: tpr_service_channel.settings
+  base_route: tpr_service_channel.settings
+
+entity.tpr_service_channel.view:
+  title: View
+  route_name: entity.tpr_service_channel.canonical
+  base_route: entity.tpr_service_channel.canonical
+
+entity.tpr_service_channel.edit_form:
+  title: Edit
+  route_name: entity.tpr_service_channel.edit_form
+  base_route: entity.tpr_service_channel.canonical
+
+entity.tpr_service_channel.delete_form:
+  title: Delete
+  route_name: entity.tpr_service_channel.delete_form
+  base_route: entity.tpr_service_channel.canonical
+  weight: 10
+
+tpr_service_channel.content_list:
+  title: TPR - Service channel
+  route_name: entity.tpr_service_channel.collection
+  base_route: helfi_api_base.integrations
+  weight: 10

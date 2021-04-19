@@ -22,9 +22,12 @@ process:
   longitude: longitude
   streetview_entrance_url/uri: streetview_entrance_url
   picture_url: picture_url
+  uid/target_id:
+    plugin: default_value
+    default_value: '1'
   description/format:
     plugin: default_value
-    default_value: filtered_html
+    default_value: plain_text
   address/postal_code: address_zip
   address/country_code:
     plugin: default_value

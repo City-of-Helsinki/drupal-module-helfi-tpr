@@ -14,6 +14,8 @@ Available migrations:
 
 - `tpr_unit`
 - `tpr_service`
+- `tpr_errand_service`
+- `tpr_service_channel`
 
 ### Running migrations
 

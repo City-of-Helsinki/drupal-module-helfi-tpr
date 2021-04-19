@@ -10,13 +10,16 @@ use Drupal\Core\Entity\RevisionLogEntityTrait;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\helfi_api_base\Entity\RemoteEntityBase;
+use Drupal\user\EntityOwnerInterface;
+use Drupal\user\EntityOwnerTrait;
 
 /**
  * Defines the base class for all TPR entities.
  */
-abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInterface {
+abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInterface, EntityOwnerInterface {
 
   use RevisionLogEntityTrait;
+  use EntityOwnerTrait;
 
   /**
    * Creates a basic string field.
@@ -39,6 +42,9 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
       ->setCardinality($cardinality)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
       ->setSettings([
         'max_length' => 255,
         'text_processing' => 0,
@@ -64,6 +70,9 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
       ->setRevisionable(TRUE)
       ->setDefaultValue('')
       ->setCardinality($cardinality)
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
   }
@@ -74,6 +83,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
     $fields += static::revisionLogBaseFieldDefinitions($entity_type);
+    $fields += static::ownerBaseFieldDefinitions($entity_type);
     $fields['name'] = static::createStringField('Name');
 
     return $fields;

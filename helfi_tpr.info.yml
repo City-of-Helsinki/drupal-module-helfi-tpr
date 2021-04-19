@@ -3,7 +3,6 @@ type: module
 package: Custom
 core: 8.x
 core_version_requirement: ^8 || ^9
-
 dependencies:
   - helfi_api_base
   - text
@@ -12,3 +11,4 @@ dependencies:
   - migrate
   - content_translation
   - language
+  - readonly_field_widget

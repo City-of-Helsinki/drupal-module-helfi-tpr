@@ -5,8 +5,10 @@
  * Contains helfi_tpr installation procedures.
  */
 
+use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\helfi_tpr\Entity\TprEntityBase;
 
 /**
  * Installs the service entity type.
@@ -92,5 +94,94 @@ function helfi_tpr_update_8005() : void {
 
   foreach ($fields as $name => $field) {
     $manager->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
+  }
+}
+
+/**
+ * Installs the e-service and service channel entity types.
+ */
+function helfi_tpr_update_8006() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+
+  foreach (['tpr_errand_service', 'tpr_service_channel'] as $type) {
+    $entity_type = \Drupal::entityTypeManager()->getDefinition($type);
+    $manager->installEntityType($entity_type);
+  }
+
+  $fields['errand_services'] = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(new TranslatableMarkup('Errand Services'))
+    ->setSettings([
+      'target_type' => 'tpr_errand_service',
+      'handler_settings' => [
+        'target_bundles' => ['tpr_errand_service'],
+      ],
+    ])
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setDisplayConfigurable('view', TRUE)
+    ->setDisplayConfigurable('form', TRUE);
+
+  foreach ($fields as $name => $field) {
+    $manager->installFieldStorageDefinition($name, 'tpr_service', 'helfi_tpr', $field);
+  }
+}
+
+/**
+ * Enable translation for e-service, service and service channels.
+ */
+function helfi_tpr_update_8007() : void {
+  $config_path = drupal_get_path('module', 'helfi_tpr') . '/config/install';
+  $source = new FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+
+  $types = ['tpr_errand_service', 'tpr_service', 'tpr_service_channel'];
+
+  foreach ($types as $type) {
+    $config_name = sprintf('language.content_settings.%s.%s', $type, $type);
+    $config_storage->write($config_name, $source->read($config_name));
+  }
+}
+
+/**
+ * Installs TPR service links field.
+ */
+function helfi_tpr_update_8008() : void {
+  $fields['links'] = BaseFieldDefinition::create('link')
+    ->setLabel(new TranslatableMarkup('Links'))
+    ->setTranslatable(TRUE)
+    ->setRevisionable(TRUE)
+    ->setDefaultValue('')
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setDisplayConfigurable('view', TRUE)
+    ->setDisplayConfigurable('form', TRUE);
+
+  foreach ($fields as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'tpr_service', 'helfi_tpr', $field);
+  }
+}
+
+/**
+ * Installs 'owner' field.
+ */
+function helfi_tpr_update_8009() : void {
+  $uid_field = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(new TranslatableMarkup('User ID'))
+    ->setSetting('target_type', 'user')
+    ->setTranslatable(TRUE)
+    ->setDefaultValueCallback(TprEntityBase::class . '::getDefaultEntityOwner');
+
+  $types = [
+    'tpr_unit',
+    'tpr_errand_service',
+    'tpr_service',
+    'tpr_service_channel',
+  ];
+
+  foreach ($types as $type) {
+    if (\Drupal::database()->schema()->fieldExists($type . '_field_data', 'uid')) {
+      continue;
+    }
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition('uid', $type, 'helfi_tpr', $uid_field);
   }
 }

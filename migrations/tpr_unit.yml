@@ -22,7 +22,7 @@ process:
   longitude: longitude
   streetview_entrance_url/uri: streetview_entrance_url
   picture_url: picture_url
-  uid/target_id:
+  content_translation_uid/target_id:
     plugin: default_value
     default_value: '1'
   description/format:

@@ -39,7 +39,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "id" = "id",
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
- *     "owner" = "uid",
  *     "label" = "name",
  *     "uuid" = "uuid"
  *   },
@@ -170,7 +169,9 @@ class Service extends TprEntityBase {
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
-    $fields['description'] = BaseFieldDefinition::create('text_with_summary')
+
+    static::$overrideFields['name'] = $fields['name'];
+    static::$overrideFields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
       ->setLabel(new TranslatableMarkup('Description'))
       ->setDisplayOptions('form', [
@@ -179,8 +180,17 @@ class Service extends TprEntityBase {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['links'] = static::createLinkField('Links')
+    static::$overrideFields['links'] = static::createLinkField('Links')
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
+
+    // Add overridable fields as base fields.
+    $fields += static::$overrideFields;
+
+    // Create duplicate fields that can be modified by end users and
+    // are ignored by migrations.
+    foreach (static::$overrideFields as $name => $field) {
+      $fields[sprintf('%s_ovr', $name)] = $field;
+    }
 
     $fields['data'] = BaseFieldDefinition::create('map')
       ->setLabel(new TranslatableMarkup('Data'))
@@ -190,9 +200,6 @@ class Service extends TprEntityBase {
       ->setLabel(new TranslatableMarkup('Errand Services'))
       ->setSettings([
         'target_type' => 'tpr_errand_service',
-        'handler_settings' => [
-          'target_bundles' => ['tpr_service'],
-        ],
       ])
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',

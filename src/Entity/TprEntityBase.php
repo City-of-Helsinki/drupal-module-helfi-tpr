@@ -10,16 +10,23 @@ use Drupal\Core\Entity\RevisionLogEntityTrait;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\helfi_api_base\Entity\RemoteEntityBase;
-use Drupal\user\EntityOwnerInterface;
-use Drupal\user\EntityOwnerTrait;
 
 /**
  * Defines the base class for all TPR entities.
  */
-abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInterface, EntityOwnerInterface {
+abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInterface {
 
   use RevisionLogEntityTrait;
-  use EntityOwnerTrait;
+
+  /**
+   * An array of overridable fields.
+   *
+   * These are fields that needs to be duplicated and
+   * be overridable by the end user.
+   *
+   * @var \Drupal\Core\Field\BaseFieldDefinition[]
+   */
+  protected static array $overrideFields = [];
 
   /**
    * Creates a basic string field.
@@ -46,7 +53,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
         'type' => 'readonly_field_widget',
       ])
       ->setSettings([
-        'max_length' => 255,
+        'max_length' => 192,
         'text_processing' => 0,
       ]);
   }
@@ -83,8 +90,12 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
     $fields += static::revisionLogBaseFieldDefinitions($entity_type);
-    $fields += static::ownerBaseFieldDefinitions($entity_type);
     $fields['name'] = static::createStringField('Name');
+
+    foreach (['changed', 'created'] as $field) {
+      // All translations should have same date.
+      $fields[$field]->setTranslatable(FALSE);
+    }
 
     return $fields;
   }

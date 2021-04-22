@@ -41,7 +41,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "id" = "id",
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
- *     "owner" = "uid",
  *     "label" = "name",
  *     "uuid" = "uuid"
  *   },
@@ -138,21 +137,22 @@ class Unit extends TprEntityBase {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $fields['picture_url'] = static::createStringField('Picture')
-      ->setSetting('max_length', 2048);
-    $fields['phone'] = static::createStringField('Phone', BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    static::$overrideFields['name'] = $fields['name'];
+    static::$overrideFields['picture_url'] = static::createStringField('Picture')
+      ->setSetting('max_length', 560);
+    static::$overrideFields['phone'] = static::createStringField('Phone', BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setTranslatable(FALSE);
-    $fields['call_charge_info'] = static::createStringField('Call charge info');
-    $fields['email'] = static::createStringField('Email')
+    static::$overrideFields['call_charge_info'] = static::createStringField('Call charge info');
+    static::$overrideFields['email'] = static::createStringField('Email')
       ->setTranslatable(FALSE);
-    $fields['accessibility_phone'] = static::createStringField('Accessibility phone')
+    static::$overrideFields['accessibility_phone'] = static::createStringField('Accessibility phone')
       ->setTranslatable(FALSE);
-    $fields['accessibility_email'] = static::createStringField('Accessibility email')
+    static::$overrideFields['accessibility_email'] = static::createStringField('Accessibility email')
       ->setTranslatable(FALSE);
-    $fields['www'] = static::createLinkField('Website link');
-    $fields['accessibility_www'] = static::createLinkField('Accessibility website link')
+    static::$overrideFields['www'] = static::createLinkField('Website link');
+    static::$overrideFields['accessibility_www'] = static::createLinkField('Accessibility website link')
       ->setTranslatable(FALSE);
-    $fields['description'] = BaseFieldDefinition::create('text_with_summary')
+    static::$overrideFields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
       ->setLabel(new TranslatableMarkup('Description'))
       ->setDisplayOptions('form', [
@@ -160,7 +160,7 @@ class Unit extends TprEntityBase {
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
-    $fields['address'] = BaseFieldDefinition::create('address')
+    static::$overrideFields['address'] = BaseFieldDefinition::create('address')
       ->setLabel(new TranslatableMarkup('Address'))
       ->setTranslatable(TRUE)
       ->setRevisionable(TRUE)
@@ -175,8 +175,9 @@ class Unit extends TprEntityBase {
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
-    $fields['address_postal'] = static::createStringField('Address postal');
-    $fields['service_map_embed'] = static::createStringField('Service map embed')
+
+    static::$overrideFields['address_postal'] = static::createStringField('Address postal');
+    static::$overrideFields['service_map_embed'] = static::createStringField('Service map embed')
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
       ])
@@ -185,19 +186,26 @@ class Unit extends TprEntityBase {
         'type' => 'service_map_embed',
         'weight' => 0,
       ]);
-    $fields['latitude'] = static::createStringField('Latitude')
+    static::$overrideFields['latitude'] = static::createStringField('Latitude')
       ->setTranslatable(FALSE);
-    $fields['longitude'] = static::createStringField('Longitude')
+    static::$overrideFields['longitude'] = static::createStringField('Longitude')
       ->setTranslatable(FALSE);
-    $fields['streetview_entrance_url'] = static::createLinkField('Streetview entrance')
+    static::$overrideFields['streetview_entrance_url'] = static::createLinkField('Streetview entrance')
       ->setTranslatable(FALSE);
+
+    // Add overridable fields as base fields.
+    $fields += static::$overrideFields;
+
+    // Create duplicate fields that can be modified by end users and
+    // are ignored by migrations.
+    foreach (static::$overrideFields as $name => $field) {
+      $fields[sprintf('%s_ovr', $name)] = clone $field;
+    }
+
     $fields['services'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(new TranslatableMarkup('Services'))
       ->setSettings([
         'target_type' => 'tpr_service',
-        'handler_settings' => [
-          'target_bundles' => ['tpr_service'],
-        ],
       ])
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',

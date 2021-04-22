@@ -121,7 +121,6 @@ class ErrandServiceMigrationTest extends MigrationTestBase {
 
     foreach (['fi', 'sv', 'en'] as $langcode) {
       foreach ($entities as $entity) {
-        /** @var \Drupal\helfi_tpr\Entity\ErrandService $translation */
         $translation = $entity->getTranslation($langcode);
 
         $this->assertEquals($langcode, $translation->language()->getId());
@@ -154,7 +153,6 @@ class ErrandServiceMigrationTest extends MigrationTestBase {
 
     foreach (['fi', 'sv', 'en'] as $langcode) {
       foreach ($entities as $entity) {
-        /** @var \Drupal\helfi_tpr\Entity\Channel $translation */
         $translation = $entity->getTranslation($langcode);
 
         $channel_fields = [

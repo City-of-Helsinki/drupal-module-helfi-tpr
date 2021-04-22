@@ -21,7 +21,7 @@ process:
     process:
       title: title
       uri: url
-  uid/target_id:
+  content_translation_uid/target_id:
     plugin: default_value
     default_value: 1
   channels:

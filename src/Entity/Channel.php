@@ -41,7 +41,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "id" = "id",
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
- *     "owner" = "uid",
  *     "label" = "name",
  *     "uuid" = "uuid"
  *   },
@@ -74,9 +73,10 @@ class Channel extends TprEntityBase {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $fields['name_synonyms'] = static::createStringField('Name synonyms', BaseFieldDefinition::CARDINALITY_UNLIMITED);
+    static::$overrideFields['name'] = $fields['name'];
+    static::$overrideFields['name_synonyms'] = static::createStringField('Name synonyms', BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
-    $fields['email'] = static::createStringField('Email');
+    static::$overrideFields['email'] = static::createStringField('Email');
 
     $string_fields = [
       'type' => 'Type',
@@ -87,12 +87,12 @@ class Channel extends TprEntityBase {
     ];
 
     foreach ($string_fields as $name => $label) {
-      $fields[$name] = static::createStringField($label);
+      static::$overrideFields[$name] = static::createStringField($label);
     }
 
-    $fields['availabilities'] = static::createStringField('Availabilities', BaseFieldDefinition::CARDINALITY_UNLIMITED);
+    static::$overrideFields['availabilities'] = static::createStringField('Availabilities', BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
-    $fields['address'] = BaseFieldDefinition::create('address')
+    static::$overrideFields['address'] = BaseFieldDefinition::create('address')
       ->setLabel(new TranslatableMarkup('Address'))
       ->setTranslatable(TRUE)
       ->setRevisionable(TRUE)
@@ -108,7 +108,7 @@ class Channel extends TprEntityBase {
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
 
-    $fields['links'] = static::createLinkField('Links')
+    static::$overrideFields['links'] = static::createLinkField('Links')
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
     $text_fields = [
@@ -119,7 +119,7 @@ class Channel extends TprEntityBase {
       'authorization_code' => new TranslatableMarkup('Information'),
     ];
     foreach ($text_fields as $name => $label) {
-      $fields[$name] = BaseFieldDefinition::create('text_long')
+      static::$overrideFields[$name] = BaseFieldDefinition::create('text_long')
         ->setTranslatable(TRUE)
         ->setLabel($label)
         ->setDisplayOptions('form', [
@@ -132,7 +132,7 @@ class Channel extends TprEntityBase {
     $boolean_fields = [
       'requires_authentication' => new TranslatableMarkup('Requires authentication'),
       'saved_to_customer_folder' => new TranslatableMarkup('Saved to customer folder'),
-      'e_processing' => new TranslatableMarkup('E-Processing'),
+      'e_processing' => new TranslatableMarkup('E-processing'),
       'e_decision' => new TranslatableMarkup('E-decision'),
       'payment_enabled' => new TranslatableMarkup('Payment enabled'),
       'for_personal_customer' => new TranslatableMarkup('For personal customer'),
@@ -140,7 +140,7 @@ class Channel extends TprEntityBase {
     ];
 
     foreach ($boolean_fields as $name => $label) {
-      $fields[$name] = BaseFieldDefinition::create('boolean')
+      static::$overrideFields[$name] = BaseFieldDefinition::create('boolean')
         ->setTranslatable(TRUE)
         ->setLabel($label)
         ->setDisplayOptions('form', [
@@ -148,6 +148,15 @@ class Channel extends TprEntityBase {
         ])
         ->setDisplayConfigurable('form', TRUE)
         ->setDisplayConfigurable('view', TRUE);
+    }
+
+    // Add overridable fields as base fields.
+    $fields += static::$overrideFields;
+
+    // Create duplicate fields that can be modified by end users and
+    // are ignored by migrations.
+    foreach (static::$overrideFields as $name => $field) {
+      $fields[sprintf('%s_ovr', $name)] = $field;
     }
 
     return $fields;

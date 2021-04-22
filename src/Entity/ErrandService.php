@@ -39,7 +39,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "id" = "id",
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
- *     "owner" = "uid",
  *     "label" = "name",
  *     "uuid" = "uuid"
  *   },
@@ -171,26 +170,12 @@ class ErrandService extends TprEntityBase {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $fields['type'] = static::createStringField('Type');
-    $fields['name_synonyms'] = static::createStringField('Name synonyms', BaseFieldDefinition::CARDINALITY_UNLIMITED);
+    static::$overrideFields['name'] = $fields['name'];
+    static::$overrideFields['type'] = static::createStringField('Type');
+    static::$overrideFields['name_synonyms'] = static::createStringField('Name synonyms', BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
-    $fields['links'] = static::createLinkField('Links')
+    static::$overrideFields['links'] = static::createLinkField('Links')
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
-
-    $fields['channels'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(new TranslatableMarkup('Channels'))
-      ->setSettings([
-        'target_type' => 'tpr_service_channel',
-        'handler_settings' => [
-          'target_bundles' => ['tpr_service_channel'],
-        ],
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'readonly_field_widget',
-      ])
-      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
-      ->setDisplayConfigurable('view', TRUE)
-      ->setDisplayConfigurable('form', TRUE);
 
     $text_fields = [
       'process_description' => new TranslatableMarkup('Process description'),
@@ -201,7 +186,7 @@ class ErrandService extends TprEntityBase {
       'costs' => new TranslatableMarkup('Costs'),
     ];
     foreach ($text_fields as $name => $label) {
-      $fields[$name] = BaseFieldDefinition::create('text_long')
+      static::$overrideFields[$name] = BaseFieldDefinition::create('text_long')
         ->setTranslatable(TRUE)
         ->setLabel($label)
         ->setDisplayOptions('form', [
@@ -210,6 +195,27 @@ class ErrandService extends TprEntityBase {
         ->setDisplayConfigurable('form', TRUE)
         ->setDisplayConfigurable('view', TRUE);
     }
+
+    // Add overridable fields as base fields.
+    $fields += static::$overrideFields;
+
+    // Create duplicate fields that can be modified by end users and
+    // are ignored by migrations.
+    foreach (static::$overrideFields as $name => $field) {
+      $fields[sprintf('%s_ovr', $name)] = $field;
+    }
+
+    $fields['channels'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(new TranslatableMarkup('Channels'))
+      ->setSettings([
+        'target_type' => 'tpr_service_channel',
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
 
     $fields['data'] = BaseFieldDefinition::create('map')
       ->setLabel(new TranslatableMarkup('Data'))

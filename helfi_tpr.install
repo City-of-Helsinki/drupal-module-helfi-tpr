@@ -8,7 +8,7 @@
 /**
  * Re-install all TPR entity types.
  */
-function helfi_tpr_update_8029() : void {
+function helfi_tpr_update_8037() : void {
   $types = [
     'tpr_unit',
     'tpr_errand_service',
@@ -21,6 +21,10 @@ function helfi_tpr_update_8029() : void {
   foreach ($types as $type) {
     $entity_type = $entity_type_manager->getDefinition($type);
     $manager->uninstallEntityType($entity_type);
+  }
+
+  foreach ($types as $type) {
+    $entity_type = $entity_type_manager->getDefinition($type);
     $manager->installEntityType($entity_type);
   }
 }

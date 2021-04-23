@@ -188,15 +188,6 @@ class Unit extends TprEntityBase {
       ->setDisplayConfigurable('form', TRUE);
 
     static::$overrideFields['address_postal'] = static::createStringField('Address postal');
-    static::$overrideFields['service_map_embed'] = static::createStringField('Service map embed')
-      ->setDisplayOptions('form', [
-        'type' => 'readonly_field_widget',
-      ])
-      ->setDisplayOptions('view', [
-        'label' => 'hidden',
-        'type' => 'service_map_embed',
-        'weight' => 0,
-      ]);
 
     $fields['latitude'] = static::createStringField('Latitude')
       ->setTranslatable(FALSE);
@@ -204,14 +195,42 @@ class Unit extends TprEntityBase {
       ->setTranslatable(FALSE);
     $fields['streetview_entrance_url'] = static::createLinkField('Streetview entrance')
       ->setTranslatable(FALSE);
+    $fields['service_map_embed'] = static::createStringField('Service map embed')
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'service_map_embed',
+      ]);
 
     // Add overridable fields as base fields.
     $fields += static::$overrideFields;
 
+    $weight = -20;
     // Create duplicate fields that can be modified by end users and
     // are ignored by migrations.
+    // We need to create 'special' fields that have dedicated database tables (instead of
+    // the default behaviour where one table contains all defined fields). Otherwise
+    // we will hit mysql's max row limit.
     foreach (static::$overrideFields as $name => $field) {
-      $override_field = FieldDefinition::createFromFieldStorageDefinition($field->getFieldStorageDefinition());
+      $field->setDisplayOptions('form', [
+        'weight' => $weight++,
+      ]);
+      $override_field = FieldDefinition::createFromFieldStorageDefinition(
+        clone $field->setName(sprintf('%s_ovr', $name))
+      );
+      $override_field
+        ->setDisplayConfigurable('view', TRUE)
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayOptions('form', [
+          'weight' => $weight++,
+        ])
+        ->setLabel(
+          new TranslatableMarkup('Override: @field_name', [
+            '@field_name' => $field->getLabel(),
+          ])
+        );
       $fields[sprintf('%s_ovr', $name)] = $override_field;
     }
 

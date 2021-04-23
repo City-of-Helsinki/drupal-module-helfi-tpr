@@ -49,6 +49,40 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   }
 
   /**
+   * Creates duplicate overridable fields for given base fields.
+   *
+   * @param \Drupal\Core\Field\BaseFieldDefinition[] $fields
+   *   The field definitions.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition[]
+   *   The field definitions.
+   */
+  protected static function createOverrideFields(array $fields) : array {
+    // Create duplicate fields that can be modified by end users and
+    // are ignored by migrations.
+    $weight = -20;
+    foreach ($fields as $name => $field) {
+      $field->setDisplayOptions('form', [
+        'weight' => $weight++,
+      ]);
+      $override_field = clone $field
+        ->setDisplayConfigurable('view', TRUE)
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayOptions('form', [
+          'weight' => $field->getDisplayOptions('form')['weight'],
+        ])
+        ->setLabel(
+          new TranslatableMarkup('Override: @field_name', [
+            '@field_name' => $field->getLabel(),
+          ])
+        );
+      $fields[sprintf('%s_ovr', $name)] = $override_field;
+    }
+
+    return $fields;
+  }
+
+  /**
    * Creates a basic link field.
    *
    * @param string $label

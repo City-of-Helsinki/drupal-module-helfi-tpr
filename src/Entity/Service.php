@@ -196,12 +196,6 @@ class Service extends TprEntityBase {
     // Add overridable fields as base fields.
     $fields += static::$overrideFields;
 
-    // Create duplicate fields that can be modified by end users and
-    // are ignored by migrations.
-    foreach (static::$overrideFields as $name => $field) {
-      $fields[sprintf('%s_ovr', $name)] = clone $field;
-    }
-
     $fields['data'] = BaseFieldDefinition::create('map')
       ->setLabel(new TranslatableMarkup('Data'))
       ->setDescription(new TranslatableMarkup('A serialized array of additional data.'));
@@ -217,6 +211,8 @@ class Service extends TprEntityBase {
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
+
+    $fields += static::createOverrideFields(static::$overrideFields);
 
     return $fields;
   }

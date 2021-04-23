@@ -165,9 +165,7 @@ class Channel extends TprEntityBase {
 
     // Create duplicate fields that can be modified by end users and
     // are ignored by migrations.
-    foreach (static::$overrideFields as $name => $field) {
-      $fields[sprintf('%s_ovr', $name)] = clone $field;
-    }
+    $fields += static::createOverrideFields(static::$overrideFields);
 
     return $fields;
   }

@@ -59,6 +59,16 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 class ErrandService extends TprEntityBase {
 
   /**
+   * An array of overridable fields.
+   *
+   * These are fields that needs to be duplicated and
+   * be overridable by the end user.
+   *
+   * @var \Drupal\Core\Field\BaseFieldDefinition[]
+   */
+  protected static array $overrideFields = [];
+
+  /**
    * {@inheritdoc}
    */
   public static function getMigration(): ?string {
@@ -202,7 +212,7 @@ class ErrandService extends TprEntityBase {
     // Create duplicate fields that can be modified by end users and
     // are ignored by migrations.
     foreach (static::$overrideFields as $name => $field) {
-      $fields[sprintf('%s_ovr', $name)] = $field;
+      $fields[sprintf('%s_ovr', $name)] = clone $field;
     }
 
     $fields['channels'] = BaseFieldDefinition::create('entity_reference')

@@ -9,6 +9,7 @@ use CommerceGuys\Addressing\AddressFormat\FieldOverride;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\helfi_tpr\Field\FieldDefinition;
 
 /**
  * Defines the tpr_unit entity class.
@@ -59,6 +60,16 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  * )
  */
 class Unit extends TprEntityBase {
+
+  /**
+   * An array of overridable fields.
+   *
+   * These are fields that needs to be duplicated and
+   * be overridable by the end user.
+   *
+   * @var \Drupal\Core\Field\BaseFieldDefinition[]
+   */
+  protected static array $overrideFields = [];
 
   /**
    * {@inheritdoc}
@@ -186,11 +197,12 @@ class Unit extends TprEntityBase {
         'type' => 'service_map_embed',
         'weight' => 0,
       ]);
-    static::$overrideFields['latitude'] = static::createStringField('Latitude')
+
+    $fields['latitude'] = static::createStringField('Latitude')
       ->setTranslatable(FALSE);
-    static::$overrideFields['longitude'] = static::createStringField('Longitude')
+    $fields['longitude'] = static::createStringField('Longitude')
       ->setTranslatable(FALSE);
-    static::$overrideFields['streetview_entrance_url'] = static::createLinkField('Streetview entrance')
+    $fields['streetview_entrance_url'] = static::createLinkField('Streetview entrance')
       ->setTranslatable(FALSE);
 
     // Add overridable fields as base fields.
@@ -199,7 +211,8 @@ class Unit extends TprEntityBase {
     // Create duplicate fields that can be modified by end users and
     // are ignored by migrations.
     foreach (static::$overrideFields as $name => $field) {
-      $fields[sprintf('%s_ovr', $name)] = clone $field;
+      $override_field = FieldDefinition::createFromFieldStorageDefinition($field->getFieldStorageDefinition());
+      $fields[sprintf('%s_ovr', $name)] = $override_field;
     }
 
     $fields['services'] = BaseFieldDefinition::create('entity_reference')

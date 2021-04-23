@@ -61,6 +61,16 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 class Channel extends TprEntityBase {
 
   /**
+   * An array of overridable fields.
+   *
+   * These are fields that needs to be duplicated and
+   * be overridable by the end user.
+   *
+   * @var \Drupal\Core\Field\BaseFieldDefinition[]
+   */
+  protected static array $overrideFields = [];
+
+  /**
    * {@inheritdoc}
    */
   public static function getMigration(): ?string {
@@ -140,7 +150,7 @@ class Channel extends TprEntityBase {
     ];
 
     foreach ($boolean_fields as $name => $label) {
-      static::$overrideFields[$name] = BaseFieldDefinition::create('boolean')
+      $fields[$name] = BaseFieldDefinition::create('boolean')
         ->setTranslatable(TRUE)
         ->setLabel($label)
         ->setDisplayOptions('form', [
@@ -156,7 +166,7 @@ class Channel extends TprEntityBase {
     // Create duplicate fields that can be modified by end users and
     // are ignored by migrations.
     foreach (static::$overrideFields as $name => $field) {
-      $fields[sprintf('%s_ovr', $name)] = $field;
+      $fields[sprintf('%s_ovr', $name)] = clone $field;
     }
 
     return $fields;

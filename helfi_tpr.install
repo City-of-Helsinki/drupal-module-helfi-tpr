@@ -8,7 +8,7 @@
 /**
  * Re-install all TPR entity types.
  */
-function helfi_tpr_update_8017() : void {
+function helfi_tpr_update_8029() : void {
   $types = [
     'tpr_unit',
     'tpr_errand_service',

@@ -19,16 +19,6 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   use RevisionLogEntityTrait;
 
   /**
-   * An array of overridable fields.
-   *
-   * These are fields that needs to be duplicated and
-   * be overridable by the end user.
-   *
-   * @var \Drupal\Core\Field\BaseFieldDefinition[]
-   */
-  protected static array $overrideFields = [];
-
-  /**
    * Creates a basic string field.
    *
    * @param string $label
@@ -53,7 +43,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
         'type' => 'readonly_field_widget',
       ])
       ->setSettings([
-        'max_length' => 192,
+        'max_length' => 255,
         'text_processing' => 0,
       ]);
   }
@@ -79,6 +69,9 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
       ->setCardinality($cardinality)
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
+      ])
+      ->setSettings([
+        'max_length' => 255,
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);

@@ -64,12 +64,13 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     foreach ($fields as $name => $field) {
       $field->setDisplayOptions('form', [
         'weight' => $weight++,
+        'type' => 'readonly_field_widget',
       ]);
       $override_field = clone $field
         ->setDisplayConfigurable('view', TRUE)
         ->setDisplayConfigurable('form', TRUE)
         ->setDisplayOptions('form', [
-          'weight' => $field->getDisplayOptions('form')['weight'],
+          'weight' => $weight++,
         ])
         ->setLabel(
           new TranslatableMarkup('Override: @field_name', [

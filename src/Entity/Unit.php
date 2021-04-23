@@ -216,6 +216,7 @@ class Unit extends TprEntityBase {
     foreach (static::$overrideFields as $name => $field) {
       $field->setDisplayOptions('form', [
         'weight' => $weight++,
+        'type' => 'readonly_field_widget',
       ]);
       $override_field = FieldDefinition::createFromFieldStorageDefinition(
         clone $field->setName(sprintf('%s_ovr', $name))

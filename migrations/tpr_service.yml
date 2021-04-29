@@ -12,9 +12,6 @@ source:
   plugin: tpr_service_register
   track_changes: true
   url: 'https://www.hel.fi/palvelukarttaws/rest/vpalvelurekisteri/description/'
-  ids:
-    id:
-      type: string
 process:
   id: id
   name: title
@@ -26,9 +23,6 @@ process:
   errand_services:
     plugin: get
     source: exact_errand_services
-  content_translation_uid/target_id:
-    plugin: default_value
-    default_value: 1
   links:
     plugin: sub_process
     source: links

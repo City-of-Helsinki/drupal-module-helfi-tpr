@@ -14,6 +14,30 @@ use Drupal\helfi_tpr\Entity\Unit;
 class ServiceMigrationTest extends MigrationTestBase {
 
   /**
+   * Tests that default values are not overridden by migrate.
+   */
+  public function testDefaultServiceValues() : void {
+    $entities = $this->createServiceMigration();
+
+    // Update translation author and status fields.
+    $translation = $entities[1]->getTranslation('sv');
+
+    $this->assertEquals('1', $translation->get('content_translation_uid')->target_id);
+    $this->assertequals('0', $translation->get('content_translation_status')->value);
+
+    $translation->set('content_translation_uid', '0')
+      ->set('content_translation_status', TRUE)
+      ->save();
+
+    // Re-run migrate and make sure author and status fields won't get updated.
+    $entities = $this->createServiceMigration();
+    $translation = $entities[1]->getTranslation('sv');
+
+    $this->assertEquals('0', $translation->get('content_translation_uid')->target_id);
+    $this->assertequals('1', $translation->get('content_translation_status')->value);
+  }
+
+  /**
    * Tests service migration.
    */
   public function testServiceMigration() : void {
@@ -33,7 +57,6 @@ class ServiceMigrationTest extends MigrationTestBase {
 
         $this->assertEquals($langcode, $translation->language()->getId());
         $this->assertEquals(sprintf('Service %s %s', $langcode, $translation->id()), $translation->label());
-        $this->assertEquals('1', $translation->get('content_translation_uid')->target_id);
 
         for ($i = 0; $i < 2; $i++) {
           $this->assertEquals(sprintf('%s: %s link title %s', $i, $langcode, $translation->id()), $translation->get('links')->get($i)->title);

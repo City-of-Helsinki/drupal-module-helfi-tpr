@@ -24,9 +24,6 @@ process:
     source: availabilities
     process:
       value: availability_string
-  content_translation_uid/target_id:
-    plugin: default_value
-    default_value: 1
   links:
     plugin: sub_process
     source: links

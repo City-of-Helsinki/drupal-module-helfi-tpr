@@ -21,9 +21,6 @@ source:
     - short_desc
   track_changes: true
   url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/'
-  ids:
-    id:
-      type: string
 process:
   id: id
   name: name
@@ -36,9 +33,6 @@ process:
   longitude: longitude
   streetview_entrance_url/uri: streetview_entrance_url
   picture_url: picture_url
-  content_translation_uid/target_id:
-    plugin: default_value
-    default_value: '1'
   description/format:
     plugin: default_value
     default_value: plain_text

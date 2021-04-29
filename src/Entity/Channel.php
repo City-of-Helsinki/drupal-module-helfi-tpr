@@ -61,16 +61,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 class Channel extends TprEntityBase {
 
   /**
-   * An array of overridable fields.
-   *
-   * These are fields that needs to be duplicated and
-   * be overridable by the end user.
-   *
-   * @var \Drupal\Core\Field\BaseFieldDefinition[]
-   */
-  protected static array $overrideFields = [];
-
-  /**
    * {@inheritdoc}
    */
   public static function getMigration(): ?string {
@@ -83,8 +73,6 @@ class Channel extends TprEntityBase {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    static::$overrideFields['name'] = $fields['name'];
-
     $fields['name_synonyms'] = static::createStringField('Name synonyms', BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
     $fields['email'] = static::createStringField('Email');
@@ -94,7 +82,6 @@ class Channel extends TprEntityBase {
       'type_string' => 'Type string',
       'email' => 'Email',
       'phone' => 'Phone',
-      'call_charge_info' => 'Call charge info',
     ];
 
     foreach ($string_fields as $name => $label) {
@@ -106,7 +93,7 @@ class Channel extends TprEntityBase {
     $fields['address'] = BaseFieldDefinition::create('address')
       ->setLabel(new TranslatableMarkup('Address'))
       ->setTranslatable(TRUE)
-      ->setRevisionable(TRUE)
+      ->setRevisionable(FALSE)
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
       ])
@@ -128,10 +115,12 @@ class Channel extends TprEntityBase {
       'process_description' => new TranslatableMarkup('Processing time'),
       'expiration_time' => new TranslatableMarkup('Expiration time'),
       'authorization_code' => new TranslatableMarkup('Information'),
+      'call_charge_info' => new TranslatableMarkup('Call charge info'),
     ];
     foreach ($text_fields as $name => $label) {
       $fields[$name] = BaseFieldDefinition::create('text_long')
         ->setTranslatable(TRUE)
+        ->setRevisionable(FALSE)
         ->setLabel($label)
         ->setDisplayOptions('form', [
           'type' => 'readonly_field_widget',
@@ -153,6 +142,7 @@ class Channel extends TprEntityBase {
     foreach ($boolean_fields as $name => $label) {
       $fields[$name] = BaseFieldDefinition::create('boolean')
         ->setTranslatable(TRUE)
+        ->setRevisionable(FALSE)
         ->setLabel($label)
         ->setDisplayOptions('form', [
           'type' => 'readonly_field_widget',
@@ -160,13 +150,6 @@ class Channel extends TprEntityBase {
         ->setDisplayConfigurable('form', TRUE)
         ->setDisplayConfigurable('view', TRUE);
     }
-
-    // Add overridable fields as base fields.
-    $fields += static::$overrideFields;
-
-    // Create duplicate fields that can be modified by end users and
-    // are ignored by migrations.
-    $fields += static::createOverrideFields(static::$overrideFields);
 
     return $fields;
   }

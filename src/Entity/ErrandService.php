@@ -59,16 +59,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 class ErrandService extends TprEntityBase {
 
   /**
-   * An array of overridable fields.
-   *
-   * These are fields that needs to be duplicated and
-   * be overridable by the end user.
-   *
-   * @var \Drupal\Core\Field\BaseFieldDefinition[]
-   */
-  protected static array $overrideFields = [];
-
-  /**
    * {@inheritdoc}
    */
   public static function getMigration(): ?string {
@@ -206,13 +196,6 @@ class ErrandService extends TprEntityBase {
         ->setDisplayConfigurable('form', TRUE)
         ->setDisplayConfigurable('view', TRUE);
     }
-
-    // Add overridable fields as base fields.
-    $fields += static::$overrideFields;
-
-    // Create duplicate fields that can be modified by end users and
-    // are ignored by migrations.
-    $fields += static::createOverrideFields(static::$overrideFields);
 
     $fields['channels'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(new TranslatableMarkup('Channels'))

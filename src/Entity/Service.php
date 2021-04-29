@@ -59,16 +59,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 class Service extends TprEntityBase {
 
   /**
-   * An array of overridable fields.
-   *
-   * These are fields that needs to be duplicated and
-   * be overridable by the end user.
-   *
-   * @var \Drupal\Core\Field\BaseFieldDefinition[]
-   */
-  protected static array $overrideFields = [];
-
-  /**
    * {@inheritdoc}
    */
   public static function getMigration(): ?string {
@@ -180,9 +170,9 @@ class Service extends TprEntityBase {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    static::$overrideFields['name'] = $fields['name'];
     $fields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
+      ->setRevisionable(FALSE)
       ->setLabel(new TranslatableMarkup('Description'))
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
@@ -194,6 +184,7 @@ class Service extends TprEntityBase {
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
     $fields['data'] = BaseFieldDefinition::create('map')
+      ->setRevisionable(FALSE)
       ->setLabel(new TranslatableMarkup('Data'))
       ->setDescription(new TranslatableMarkup('A serialized array of additional data.'));
 
@@ -205,16 +196,10 @@ class Service extends TprEntityBase {
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
       ])
+      ->setRevisionable(FALSE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
-
-    // Add overridable fields as base fields.
-    $fields += static::$overrideFields;
-
-    // Create duplicate fields that can be modified by end users and
-    // are ignored by migrations.
-    $fields += static::createOverrideFields(static::$overrideFields);
 
     return $fields;
   }

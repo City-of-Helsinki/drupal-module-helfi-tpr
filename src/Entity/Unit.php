@@ -61,16 +61,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 class Unit extends TprEntityBase {
 
   /**
-   * An array of overridable fields.
-   *
-   * These are fields that needs to be duplicated and
-   * be overridable by the end user.
-   *
-   * @var \Drupal\Core\Field\BaseFieldDefinition[]
-   */
-  protected static array $overrideFields = [];
-
-  /**
    * {@inheritdoc}
    */
   public static function getMigration(): ?string {
@@ -147,13 +137,10 @@ class Unit extends TprEntityBase {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    static::$overrideFields['name'] = $fields['name'];
-
     $fields['picture_url'] = static::createStringField('Picture')
       ->setSetting('max_length', 2048);
     $fields['phone'] = static::createStringField('Phone', BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setTranslatable(FALSE);
-    $fields['call_charge_info'] = static::createStringField('Call charge info');
     $fields['email'] = static::createStringField('Email')
       ->setTranslatable(FALSE);
     $fields['accessibility_phone'] = static::createStringField('Accessibility phone')
@@ -165,6 +152,7 @@ class Unit extends TprEntityBase {
       ->setTranslatable(FALSE);
     $fields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
+      ->setRevisionable(FALSE)
       ->setLabel(new TranslatableMarkup('Description'))
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
@@ -174,7 +162,7 @@ class Unit extends TprEntityBase {
     $fields['address'] = BaseFieldDefinition::create('address')
       ->setLabel(new TranslatableMarkup('Address'))
       ->setTranslatable(TRUE)
-      ->setRevisionable(TRUE)
+      ->setRevisionable(FALSE)
       ->setSetting('field_overrides', [
         AddressField::GIVEN_NAME => ['override' => FieldOverride::HIDDEN],
         AddressField::ADDITIONAL_NAME => ['override' => FieldOverride::HIDDEN],
@@ -186,6 +174,16 @@ class Unit extends TprEntityBase {
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
+
+    $fields['call_charge_info'] = BaseFieldDefinition::create('text_long')
+      ->setTranslatable(TRUE)
+      ->setRevisionable(FALSE)
+      ->setLabel(new TranslatableMarkup('Call charge info'))
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     $fields['address_postal'] = static::createStringField('Address postal');
 
@@ -204,13 +202,6 @@ class Unit extends TprEntityBase {
         'type' => 'service_map_embed',
       ]);
 
-    // Add overridable fields as base fields.
-    $fields += static::$overrideFields;
-
-    // Create duplicate fields that can be modified by end users and
-    // are ignored by migrations.
-    $fields += static::createOverrideFields(static::$overrideFields);
-
     $fields['services'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(new TranslatableMarkup('Services'))
       ->setSettings([
@@ -219,6 +210,7 @@ class Unit extends TprEntityBase {
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
       ])
+      ->setRevisionable(FALSE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);

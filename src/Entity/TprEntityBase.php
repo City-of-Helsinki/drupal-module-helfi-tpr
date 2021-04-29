@@ -19,6 +19,16 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   use RevisionLogEntityTrait;
 
   /**
+   * An array of overridable fields.
+   *
+   * These are fields that needs to be duplicated and
+   * be overridable by the end user.
+   *
+   * @var \Drupal\Core\Field\BaseFieldDefinition[]
+   */
+  protected static array $overrideFields = [];
+
+  /**
    * Creates a basic string field.
    *
    * @param string $label
@@ -34,7 +44,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
       // @codingStandardsIgnoreLine
       ->setLabel(new TranslatableMarkup($label))
       ->setTranslatable(TRUE)
-      ->setRevisionable(TRUE)
+      ->setRevisionable(FALSE)
       ->setDefaultValue('')
       ->setCardinality($cardinality)
       ->setDisplayConfigurable('view', TRUE)
@@ -68,6 +78,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
       ]);
       $override_field = clone $field;
       $override_field
+        ->setRevisionable(TRUE)
         ->setDisplayConfigurable('view', TRUE)
         ->setDisplayConfigurable('form', TRUE)
         ->setDisplayOptions('form', [
@@ -100,7 +111,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
       // @codingStandardsIgnoreLine
       ->setLabel(new TranslatableMarkup($label))
       ->setTranslatable(TRUE)
-      ->setRevisionable(TRUE)
+      ->setRevisionable(FALSE)
       ->setDefaultValue('')
       ->setCardinality($cardinality)
       ->setDisplayOptions('form', [
@@ -119,7 +130,15 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
     $fields += static::revisionLogBaseFieldDefinitions($entity_type);
-    $fields['name'] = static::createStringField('Name');
+
+    static::$overrideFields['name'] = static::createStringField('Name');
+
+    // Add overridable fields as base fields.
+    $fields += static::$overrideFields;
+
+    // Create duplicate fields that can be modified by end users and
+    // are ignored by migrations.
+    $fields += static::createOverrideFields(static::$overrideFields);
 
     foreach (['changed', 'created'] as $field) {
       // All translations should have same date.

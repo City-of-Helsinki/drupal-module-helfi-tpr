@@ -247,3 +247,113 @@ function helfi_tpr_update_8010() : void {
     }
   }
 }
+
+/**
+ * Make migrated unit fields not revisionable.
+ */
+function helfi_tpr_update_8011() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+
+  if ($definition = $manager->getFieldStorageDefinition('call_charge_info', 'tpr_unit')) {
+    $manager->uninstallFieldStorageDefinition($definition);
+  }
+
+  $fields = [
+    'name',
+    'picture_url',
+    'email',
+    'accessibility_phone',
+    'accessibility_email',
+    'www',
+    'accessibility_www',
+    'description',
+    'address',
+    'address_postal',
+    'latitude',
+    'longitude',
+    'streetview_entrance_url',
+    'service_map_embed',
+  ];
+
+  foreach ($fields as $field) {
+    $definition = $manager->getFieldStorageDefinition($field, 'tpr_unit');
+    $definition->setRevisionable(FALSE);
+
+    $manager->updateFieldStorageDefinition($definition);
+  }
+
+  $field = BaseFieldDefinition::create('text_long')
+    ->setTranslatable(TRUE)
+    ->setRevisionable(FALSE)
+    ->setLabel(new TranslatableMarkup('Call charge info'))
+    ->setDisplayOptions('form', [
+      'type' => 'readonly_field_widget',
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  $manager->installFieldStorageDefinition('call_charge_info', 'tpr_unit', 'helfi_tpr', $field);
+}
+
+/**
+ * Make migrated service channel fields not revisionable.
+ */
+function helfi_tpr_update_8012() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+
+  if ($definition = $manager->getFieldStorageDefinition('call_charge_info', 'tpr_service_channel')) {
+    $manager->uninstallFieldStorageDefinition($definition);
+  }
+
+  $call_charge_info = BaseFieldDefinition::create('text_long')
+    ->setTranslatable(TRUE)
+    ->setRevisionable(FALSE)
+    ->setLabel(new TranslatableMarkup('Call charge info'))
+    ->setDisplayOptions('form', [
+      'type' => 'readonly_field_widget',
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  $manager->installFieldStorageDefinition('call_charge_info', 'tpr_service_channel', 'helfi_tpr', $call_charge_info);
+
+  $fields = [
+    'name',
+    'email',
+    'type',
+    'type_string',
+    'phone',
+    'address',
+  ];
+
+  foreach ($fields as $field) {
+    $definition = $manager->getFieldStorageDefinition($field, 'tpr_service_channel');
+    $definition->setRevisionable(FALSE);
+
+    $manager->updateFieldStorageDefinition($definition);
+  }
+}
+
+/**
+ * Make migrated service fields not revisionable.
+ */
+function helfi_tpr_update_8013() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+  $definition = $manager->getFieldStorageDefinition('name', 'tpr_service');
+  $definition->setRevisionable(FALSE);
+
+  $manager->updateFieldStorageDefinition($definition);
+}
+
+/**
+ * Make migrated errand service fields not revisionable.
+ */
+function helfi_tpr_update_8014() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+  foreach (['name', 'type'] as $field) {
+    $definition = $manager->getFieldStorageDefinition($field, 'tpr_errand_service');
+    $definition->setRevisionable(FALSE);
+
+    $manager->updateFieldStorageDefinition($definition);
+  }
+}

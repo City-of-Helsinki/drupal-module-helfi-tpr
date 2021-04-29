@@ -66,7 +66,8 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
         'weight' => $weight++,
         'type' => 'readonly_field_widget',
       ]);
-      $override_field = clone $field
+      $override_field = clone $field;
+      $override_field
         ->setDisplayConfigurable('view', TRUE)
         ->setDisplayConfigurable('form', TRUE)
         ->setDisplayOptions('form', [
@@ -77,7 +78,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
             '@field_name' => $field->getLabel(),
           ])
         );
-      $fields[sprintf('%s_ovr', $name)] = $override_field;
+      $fields[sprintf('%s_override', $name)] = $override_field;
     }
 
     return $fields;

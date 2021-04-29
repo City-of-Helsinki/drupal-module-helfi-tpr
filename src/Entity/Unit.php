@@ -9,7 +9,6 @@ use CommerceGuys\Addressing\AddressFormat\FieldOverride;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\helfi_tpr\Field\FieldDefinition;
 
 /**
  * Defines the tpr_unit entity class.
@@ -149,21 +148,22 @@ class Unit extends TprEntityBase {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     static::$overrideFields['name'] = $fields['name'];
-    static::$overrideFields['picture_url'] = static::createStringField('Picture')
+
+    $fields['picture_url'] = static::createStringField('Picture')
       ->setSetting('max_length', 560);
-    static::$overrideFields['phone'] = static::createStringField('Phone', BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    $fields['phone'] = static::createStringField('Phone', BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setTranslatable(FALSE);
-    static::$overrideFields['call_charge_info'] = static::createStringField('Call charge info');
-    static::$overrideFields['email'] = static::createStringField('Email')
+    $fields['call_charge_info'] = static::createStringField('Call charge info');
+    $fields['email'] = static::createStringField('Email')
       ->setTranslatable(FALSE);
-    static::$overrideFields['accessibility_phone'] = static::createStringField('Accessibility phone')
+    $fields['accessibility_phone'] = static::createStringField('Accessibility phone')
       ->setTranslatable(FALSE);
-    static::$overrideFields['accessibility_email'] = static::createStringField('Accessibility email')
+    $fields['accessibility_email'] = static::createStringField('Accessibility email')
       ->setTranslatable(FALSE);
-    static::$overrideFields['www'] = static::createLinkField('Website link');
-    static::$overrideFields['accessibility_www'] = static::createLinkField('Accessibility website link')
+    $fields['www'] = static::createLinkField('Website link');
+    $fields['accessibility_www'] = static::createLinkField('Accessibility website link')
       ->setTranslatable(FALSE);
-    static::$overrideFields['description'] = BaseFieldDefinition::create('text_with_summary')
+    $fields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
       ->setLabel(new TranslatableMarkup('Description'))
       ->setDisplayOptions('form', [
@@ -171,7 +171,7 @@ class Unit extends TprEntityBase {
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
-    static::$overrideFields['address'] = BaseFieldDefinition::create('address')
+    $fields['address'] = BaseFieldDefinition::create('address')
       ->setLabel(new TranslatableMarkup('Address'))
       ->setTranslatable(TRUE)
       ->setRevisionable(TRUE)
@@ -187,7 +187,7 @@ class Unit extends TprEntityBase {
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
 
-    static::$overrideFields['address_postal'] = static::createStringField('Address postal');
+    $fields['address_postal'] = static::createStringField('Address postal');
 
     $fields['latitude'] = static::createStringField('Latitude')
       ->setTranslatable(FALSE);
@@ -207,33 +207,9 @@ class Unit extends TprEntityBase {
     // Add overridable fields as base fields.
     $fields += static::$overrideFields;
 
-    $weight = -20;
     // Create duplicate fields that can be modified by end users and
     // are ignored by migrations.
-    // We need to create 'special' fields that have dedicated database tables (instead of
-    // the default behaviour where one table contains all defined fields). Otherwise
-    // we will hit mysql's max row limit.
-    foreach (static::$overrideFields as $name => $field) {
-      $field->setDisplayOptions('form', [
-        'weight' => $weight++,
-        'type' => 'readonly_field_widget',
-      ]);
-      $override_field = FieldDefinition::createFromFieldStorageDefinition(
-        clone $field->setName(sprintf('%s_ovr', $name))
-      );
-      $override_field
-        ->setDisplayConfigurable('view', TRUE)
-        ->setDisplayConfigurable('form', TRUE)
-        ->setDisplayOptions('form', [
-          'weight' => $weight++,
-        ])
-        ->setLabel(
-          new TranslatableMarkup('Override: @field_name', [
-            '@field_name' => $field->getLabel(),
-          ])
-        );
-      $fields[sprintf('%s_ovr', $name)] = $override_field;
-    }
+    $fields += static::createOverrideFields(static::$overrideFields);
 
     $fields['services'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(new TranslatableMarkup('Services'))

@@ -124,7 +124,7 @@ class ErrandServiceMigrationTest extends MigrationTestBase {
         $translation = $entity->getTranslation($langcode);
 
         $this->assertEquals($langcode, $translation->language()->getId());
-        $this->assertEquals('1', $translation->get('uid')->target_id);
+        $this->assertEquals('1', $translation->get('content_translation_uid')->target_id);
 
         foreach ($this->getFields() as $field) {
           $this->assertEquals(

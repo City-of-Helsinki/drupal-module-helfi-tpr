@@ -84,9 +84,10 @@ class Channel extends TprEntityBase {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     static::$overrideFields['name'] = $fields['name'];
-    static::$overrideFields['name_synonyms'] = static::createStringField('Name synonyms', BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
-    static::$overrideFields['email'] = static::createStringField('Email');
+    $fields['name_synonyms'] = static::createStringField('Name synonyms', BaseFieldDefinition::CARDINALITY_UNLIMITED);
+
+    $fields['email'] = static::createStringField('Email');
 
     $string_fields = [
       'type' => 'Type',
@@ -97,12 +98,12 @@ class Channel extends TprEntityBase {
     ];
 
     foreach ($string_fields as $name => $label) {
-      static::$overrideFields[$name] = static::createStringField($label);
+      $fields[$name] = static::createStringField($label);
     }
 
-    static::$overrideFields['availabilities'] = static::createStringField('Availabilities', BaseFieldDefinition::CARDINALITY_UNLIMITED);
+    $fields['availabilities'] = static::createStringField('Availabilities', BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
-    static::$overrideFields['address'] = BaseFieldDefinition::create('address')
+    $fields['address'] = BaseFieldDefinition::create('address')
       ->setLabel(new TranslatableMarkup('Address'))
       ->setTranslatable(TRUE)
       ->setRevisionable(TRUE)
@@ -118,7 +119,7 @@ class Channel extends TprEntityBase {
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
 
-    static::$overrideFields['links'] = static::createLinkField('Links')
+    $fields['links'] = static::createLinkField('Links')
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
     $text_fields = [
@@ -129,7 +130,7 @@ class Channel extends TprEntityBase {
       'authorization_code' => new TranslatableMarkup('Information'),
     ];
     foreach ($text_fields as $name => $label) {
-      static::$overrideFields[$name] = BaseFieldDefinition::create('text_long')
+      $fields[$name] = BaseFieldDefinition::create('text_long')
         ->setTranslatable(TRUE)
         ->setLabel($label)
         ->setDisplayOptions('form', [

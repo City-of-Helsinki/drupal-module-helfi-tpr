@@ -40,7 +40,7 @@ class TprUnitListTest extends MigrationTestBase {
       new Response(200, [], $units),
     ];
 
-    foreach (json_decode($units, TRUE) as $id => $unit) {
+    foreach (json_decode($units, TRUE) as $unit) {
       $responses[] = new Response(200, [], json_encode($unit));
     }
 
@@ -69,13 +69,17 @@ class TprUnitListTest extends MigrationTestBase {
 
     // Migrate entities and make sure we can see all entities from fixture.
     $this->runMigrate();
-    $this->drupalGet('/admin/content/integrations/tpr-unit');
-    $this->assertSession()->pageTextContains('Displaying 1 - 6 of 6');
+    $expected = ['fi' => 6, 'en' => 0, 'sv' => 4];
+
+    foreach ($expected as $language => $total) {
+      $this->drupalGet('/admin/content/integrations/tpr-unit', ['query' => ['language' => $language]]);
+      $this->assertSession()->pageTextContains(sprintf('Displaying %d - %d of %d', ($total > 0 ? 1 : 0), $total, $total));
+    }
 
     // Make sure we can run 'update' action on multiple entities.
     Unit::load('22736')->set('name', 'Test 1')->save();
     Unit::load('57331')->set('name', 'Test 2')->save();
-    $this->drupalGet('/admin/content/integrations/tpr-unit');
+    $this->drupalGet('/admin/content/integrations/tpr-unit', ['query' => ['language' => 'fi']]);
     $this->assertSession()->pageTextContains('Test 1');
     $this->assertSession()->pageTextContains('Test 2');
 

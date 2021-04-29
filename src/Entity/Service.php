@@ -181,7 +181,7 @@ class Service extends TprEntityBase {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     static::$overrideFields['name'] = $fields['name'];
-    static::$overrideFields['description'] = BaseFieldDefinition::create('text_with_summary')
+    $fields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
       ->setLabel(new TranslatableMarkup('Description'))
       ->setDisplayOptions('form', [
@@ -190,11 +190,8 @@ class Service extends TprEntityBase {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    static::$overrideFields['links'] = static::createLinkField('Links')
+    $fields['links'] = static::createLinkField('Links')
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
-
-    // Add overridable fields as base fields.
-    $fields += static::$overrideFields;
 
     $fields['data'] = BaseFieldDefinition::create('map')
       ->setLabel(new TranslatableMarkup('Data'))
@@ -212,6 +209,11 @@ class Service extends TprEntityBase {
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
 
+    // Add overridable fields as base fields.
+    $fields += static::$overrideFields;
+
+    // Create duplicate fields that can be modified by end users and
+    // are ignored by migrations.
     $fields += static::createOverrideFields(static::$overrideFields);
 
     return $fields;

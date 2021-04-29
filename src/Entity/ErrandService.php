@@ -181,10 +181,11 @@ class ErrandService extends TprEntityBase {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     static::$overrideFields['name'] = $fields['name'];
-    static::$overrideFields['type'] = static::createStringField('Type');
-    static::$overrideFields['name_synonyms'] = static::createStringField('Name synonyms', BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
-    static::$overrideFields['links'] = static::createLinkField('Links')
+    $fields['type'] = static::createStringField('Type');
+    $fields['name_synonyms'] = static::createStringField('Name synonyms', BaseFieldDefinition::CARDINALITY_UNLIMITED);
+
+    $fields['links'] = static::createLinkField('Links')
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
     $text_fields = [
@@ -196,7 +197,7 @@ class ErrandService extends TprEntityBase {
       'costs' => new TranslatableMarkup('Costs'),
     ];
     foreach ($text_fields as $name => $label) {
-      static::$overrideFields[$name] = BaseFieldDefinition::create('text_long')
+      $fields[$name] = BaseFieldDefinition::create('text_long')
         ->setTranslatable(TRUE)
         ->setLabel($label)
         ->setDisplayOptions('form', [

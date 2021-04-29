@@ -35,7 +35,7 @@ class UnitMigrationTest extends MigrationTestBase {
       $this->assertEquals($expected['phone'], $translation->get('phone')->value);
       $this->assertEquals($expected['call_charge_info'], $translation->get('call_charge_info')->value);
       $this->assertEquals($expected['www'], $translation->get('www')->uri);
-      $this->assertEquals('1', $translation->get('uid')->target_id);
+      $this->assertEquals('1', $translation->get('content_translation_uid')->target_id);
     }
   }
 
@@ -51,15 +51,15 @@ class UnitMigrationTest extends MigrationTestBase {
         'en',
         [
           'id' => 1,
-          'name' => 'Name fi 1',
+          'name' => 'Name en 1',
           'latitude' => '60.19',
           'longitude' => '24.76',
-          'street_address' => 'Address fi 1',
+          'street_address' => NULL,
           'address_zip' => '02180',
           'address_city' => 'Espoo en 1',
           'phone' => '+3581234',
           'call_charge_info' => 'pvm en 1',
-          'www' => 'https://localhost/fi/1',
+          'www' => 'https://localhost/en/1',
         ],
       ],
       [

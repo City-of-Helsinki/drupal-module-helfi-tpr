@@ -10,6 +10,15 @@ migration_tags:
 label: 'TPR unit'
 source:
   plugin: tpr_service_map
+  translatable_fields:
+    - name
+    - call_charge_info
+    - www
+    - address_postal_full
+    - street_address
+    - address_city
+    - desc
+    - short_desc
   track_changes: true
   url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/'
   ids:
@@ -17,6 +26,11 @@ source:
       type: string
 process:
   id: id
+  name: name
+  call_charge_info: call_charge_info
+  www/uri: www
+  description/value: desc
+  description/summary: short_desc
   service_map_embed: id
   latitude: latitude
   longitude: longitude
@@ -28,6 +42,9 @@ process:
   description/format:
     plugin: default_value
     default_value: plain_text
+  address_postal: address_postal_full
+  address/address_line1: street_address
+  address/locality: address_city
   address/postal_code: address_zip
   address/country_code:
     plugin: default_value

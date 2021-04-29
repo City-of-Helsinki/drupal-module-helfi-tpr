@@ -1,0 +1,44 @@
+<?php
+
+use Drupal\Core\Render\Element;
+
+/**
+ * Implements hook_theme().
+ */
+function helfi_tpr_theme() {
+  return [
+    'tpr_unit' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function helfi_tpr_theme_suggestions_tpr_unit(array $variables) {
+  $suggestions = [];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'tpr_unit__' . $sanitized_view_mode;
+  $suggestions[] = "tpr_unit";
+
+  return $suggestions;
+}
+
+/**
+ * Prepares variables for tpr_unit templates.
+ *
+ * Default template: tpr-unit.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ */
+function template_preprocess_tpr_unit(array &$variables) {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  // Helpful $content variable for templates.
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+}

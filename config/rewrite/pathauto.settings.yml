@@ -1,0 +1,4 @@
+enabled_entity_types:
+  - tpr_service
+  - tpr_unit
+  - user

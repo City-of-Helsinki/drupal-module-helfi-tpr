@@ -150,7 +150,7 @@ class Unit extends TprEntityBase {
     static::$overrideFields['name'] = $fields['name'];
 
     $fields['picture_url'] = static::createStringField('Picture')
-      ->setSetting('max_length', 560);
+      ->setSetting('max_length', 2048);
     $fields['phone'] = static::createStringField('Phone', BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setTranslatable(FALSE);
     $fields['call_charge_info'] = static::createStringField('Call charge info');

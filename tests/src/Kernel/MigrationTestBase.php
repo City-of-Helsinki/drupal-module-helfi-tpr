@@ -22,6 +22,7 @@ abstract class MigrationTestBase extends ApiMigrationTestBase {
     'address',
     'text',
     'helfi_tpr',
+    'media',
   ];
 
   /**

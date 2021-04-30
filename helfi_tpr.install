@@ -346,3 +346,22 @@ function helfi_tpr_update_8014() : void {
     $manager->updateFieldStorageDefinition($definition);
   }
 }
+
+/**
+ * Installs Unit 'picture_url_override' field.
+ */
+function helfi_tpr_update_8015() : void {
+  $picture_url_override = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(new TranslatableMarkup('Override: Picture'))
+    ->setSettings([
+      'target_type' => 'media',
+      'handler_settings' => [
+        'target_bundles' => ['image'],
+      ],
+    ])
+    ->setDisplayConfigurable('view', TRUE)
+    ->setDisplayConfigurable('form', TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('picture_url_override', 'tpr_unit', 'helfi_tpr', $picture_url_override);
+}

@@ -12,3 +12,4 @@ dependencies:
   - content_translation
   - language
   - readonly_field_widget
+  - media

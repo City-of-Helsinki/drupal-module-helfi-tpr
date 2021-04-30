@@ -139,6 +139,16 @@ class Unit extends TprEntityBase {
 
     $fields['picture_url'] = static::createStringField('Picture')
       ->setSetting('max_length', 2048);
+    $fields['picture_url_override'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(new TranslatableMarkup('Override: Picture'))
+      ->setSettings([
+        'target_type' => 'media',
+        'handler_settings' => [
+          'target_bundles' => ['image'],
+        ],
+      ])
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
     $fields['phone'] = static::createStringField('Phone', BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setTranslatable(FALSE);
     $fields['email'] = static::createStringField('Email')

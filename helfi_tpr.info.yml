@@ -13,3 +13,4 @@ dependencies:
   - language
   - readonly_field_widget
   - media
+  - twig_tweak

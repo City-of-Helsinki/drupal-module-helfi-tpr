@@ -43,7 +43,6 @@
           </div>
         {% endif %}
       </div>
-
       {% if content.address|render or content.email|render or content.phone|render or content.address_postal|render %}
         <div class="unit__contact">
           <h3 class="unit__contact__title">
@@ -87,7 +86,22 @@
           {% endif %}
         </div>
       {% endif %}
-
+    </div>
+    <div class="unit__content">
+      <div class="unit__services">
+        <div class="unit__servivces__container container">
+          <div class="unit__services__header">
+            <h2 class="unit__services__title">{% trans with {'context': 'Unit services title'}%}Services{% endtrans %}</h2>
+            <span class="unit__services__count-container">
+                <span class="unit__services__count">X</span>
+                {% trans with {'context': 'Unit services count'}%}service{% plural total_rows %}services{% endtrans %}
+              </span>
+          </div>
+          <div class="unit__services__list">
+            {{ drupal_view('unit_services', 'unit_services') }}
+          </div>
+        </div>
+      </div>
     </div>
 
   </article>

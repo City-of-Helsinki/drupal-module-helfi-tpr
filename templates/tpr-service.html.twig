@@ -36,6 +36,22 @@
         {% endif %}
       </div>
     </div>
+    <div class="service__content">
+      <div class="service__units">
+        <div class="service__units__container container">
+          <div class="service__units__header">
+            <h2 class="service__units__title">{% trans with {'context': 'Service units title'}%}Service available here{% endtrans %}</h2>
+            <span class="service__units__count-container">
+                <span class="service__units__count">X</span>
+                {% trans with {'context': 'Service units count'}%}unit{% plural total_rows %}units{% endtrans %}
+              </span>
+          </div>
+          <div class="service__units__list">
+            {{ drupal_view('service_units', 'service_units') }}
+          </div>
+        </div>
+      </div>
+    </div>
 
   </article>
 

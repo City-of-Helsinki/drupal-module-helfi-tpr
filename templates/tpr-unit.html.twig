@@ -20,7 +20,7 @@
     <div class="unit-header__container container">
       <div{{ content_attributes.addClass('unit__header') }}>
         <h1{{ title_attributes.addClass('unit__title') }}>
-          {{ content.name }}
+          {{ entity.label }}
         </h1>
         {% if content.description_summary|render %}
           <div class="unit__short-desc">
@@ -96,7 +96,7 @@
 
   <div{{ attributes.addClass(classes) }}>
     <h3 class="unit__title">
-      {{ content.name }}
+      {{ entity.label }}
     </h3>
     <div class="unit__info">
       {% if content.address|render %}
@@ -112,7 +112,7 @@
         </div>
       {% endif %}
     </div>
-    <a href="{{ url }}" class="unit__link">
+    <a href="{{ url('entity.tpr_unit.canonical', { 'tpr_unit': entity.id() }) }}" class="unit__link">
       <span class="is-hidden">{% trans with {'context': 'Unit teaser link'} %}Go to{% endtrans %} {{ content.name }}</span>
       {% include '@hdbt/misc/icon.twig' with {icon: 'arrow-right', label: 'Unit page'|t } %}
     </a>

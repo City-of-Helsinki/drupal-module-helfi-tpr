@@ -42,6 +42,7 @@ function template_preprocess_tpr_unit(array &$variables) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
   if (isset($variables['elements']['#tpr_unit'])) {
+    $variables['entity'] = $variables['elements']['#tpr_unit'];
     $variables['content']['description_summary'] = $variables['elements']['#tpr_unit']->get('description')->summary;
   }
 }

@@ -137,8 +137,11 @@ class Unit extends TprEntityBase {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $fields['picture_url'] = static::createStringField('Picture')
-      ->setSetting('max_length', 2048);
+    $fields['picture_url'] = static::createStringField('Picture');
+    $fields['picture_url']->setSetting('max_length', 2048)
+      ->setDisplayOptions('form', $fields['picture_url']->getDisplayOptions('form') + [
+        'weight' => -19,
+      ]);
     $fields['picture_url_override'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(new TranslatableMarkup('Override: Picture'))
       ->setSettings([
@@ -146,6 +149,10 @@ class Unit extends TprEntityBase {
         'handler_settings' => [
           'target_bundles' => ['image'],
         ],
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'media_library_widget',
+        'weight' => -19,
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);

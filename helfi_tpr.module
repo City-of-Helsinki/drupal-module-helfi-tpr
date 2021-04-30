@@ -9,6 +9,7 @@ function helfi_tpr_theme() {
   return [
     'tpr_unit' => [
       'render element' => 'elements',
+      'template' => 'tpr-unit',
     ],
   ];
 }
@@ -21,7 +22,6 @@ function helfi_tpr_theme_suggestions_tpr_unit(array $variables) {
   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
 
   $suggestions[] = 'tpr_unit__' . $sanitized_view_mode;
-  $suggestions[] = "tpr_unit";
 
   return $suggestions;
 }
@@ -40,5 +40,8 @@ function template_preprocess_tpr_unit(array &$variables) {
   // Helpful $content variable for templates.
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
+  }
+  if (isset($variables['elements']['#tpr_unit'])) {
+    $variables['content']['description_summary'] = $variables['elements']['#tpr_unit']->get('description')->summary;
   }
 }

@@ -24,7 +24,10 @@ source:
 process:
   id: id
   name: name
-  call_charge_info: call_charge_info
+  call_charge_info/value: call_charge_info
+  call_charge_info/format:
+    plugin: default_value
+    default_value: plain_text
   www/uri: www
   description/value: desc
   description/summary: short_desc

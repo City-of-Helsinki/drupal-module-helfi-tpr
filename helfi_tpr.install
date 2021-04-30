@@ -254,10 +254,6 @@ function helfi_tpr_update_8010() : void {
 function helfi_tpr_update_8011() : void {
   $manager = \Drupal::entityDefinitionUpdateManager();
 
-  if ($definition = $manager->getFieldStorageDefinition('call_charge_info', 'tpr_unit')) {
-    $manager->uninstallFieldStorageDefinition($definition);
-  }
-
   $fields = [
     'name',
     'picture_url',
@@ -282,17 +278,26 @@ function helfi_tpr_update_8011() : void {
     $manager->updateFieldStorageDefinition($definition);
   }
 
-  $field = BaseFieldDefinition::create('text_long')
-    ->setTranslatable(TRUE)
-    ->setRevisionable(FALSE)
-    ->setLabel(new TranslatableMarkup('Call charge info'))
-    ->setDisplayOptions('form', [
-      'type' => 'readonly_field_widget',
-    ])
-    ->setDisplayConfigurable('form', TRUE)
-    ->setDisplayConfigurable('view', TRUE);
+  if ($definition = $manager->getFieldStorageDefinition('call_charge_info', 'tpr_unit')) {
+    \Drupal::database()->update('tpr_unit_field_data')
+      ->isNotNull('call_charge_info')
+      ->fields(['call_charge_info' => NULL])
+      ->execute();
 
-  $manager->installFieldStorageDefinition('call_charge_info', 'tpr_unit', 'helfi_tpr', $field);
+    $manager->uninstallFieldStorageDefinition($definition);
+
+    $field = BaseFieldDefinition::create('text_long')
+      ->setTranslatable(TRUE)
+      ->setRevisionable(FALSE)
+      ->setLabel(new TranslatableMarkup('Call charge info'))
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $manager->installFieldStorageDefinition('call_charge_info', 'tpr_unit', 'helfi_tpr', $field);
+  }
 }
 
 /**
@@ -300,22 +305,6 @@ function helfi_tpr_update_8011() : void {
  */
 function helfi_tpr_update_8012() : void {
   $manager = \Drupal::entityDefinitionUpdateManager();
-
-  if ($definition = $manager->getFieldStorageDefinition('call_charge_info', 'tpr_service_channel')) {
-    $manager->uninstallFieldStorageDefinition($definition);
-  }
-
-  $call_charge_info = BaseFieldDefinition::create('text_long')
-    ->setTranslatable(TRUE)
-    ->setRevisionable(FALSE)
-    ->setLabel(new TranslatableMarkup('Call charge info'))
-    ->setDisplayOptions('form', [
-      'type' => 'readonly_field_widget',
-    ])
-    ->setDisplayConfigurable('form', TRUE)
-    ->setDisplayConfigurable('view', TRUE);
-
-  $manager->installFieldStorageDefinition('call_charge_info', 'tpr_service_channel', 'helfi_tpr', $call_charge_info);
 
   $fields = [
     'name',

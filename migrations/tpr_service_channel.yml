@@ -18,7 +18,6 @@ process:
   type_string: type_string
   email: email
   phone: phone
-  call_charge_info: call_charge_info
   availabilities:
     plugin: sub_process
     source: availabilities
@@ -36,6 +35,10 @@ process:
   address/country_code:
     plugin: default_value
     default_value: FI
+  call_charge_info/value: call_charge_info
+  call_charge_info/format:
+    plugin: default_value
+    default_value: plain_text
   prerequisites/value: prerequisites
   prerequisites/format:
     plugin: default_value

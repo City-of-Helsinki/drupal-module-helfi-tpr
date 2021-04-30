@@ -28,14 +28,13 @@
           </div>
         {% endif %}
         <span class="unit__divider"></span>
-        {% if content.picture_url|render %}
-          <div class="unit__image">
-            {{ content.picture_url }}
-          </div>
-        {% endif %}
         {% if content.picture_url_override|render %}
           <div class="unit__image">
             {{ content.picture_url_override }}
+          </div>
+        {% elseif content.picture_url|render %}
+          <div class="unit__image">
+            {{ content.picture_url }}
           </div>
         {% endif %}
         {% if content.description|render %}

@@ -137,7 +137,8 @@ class Unit extends TprEntityBase {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $fields['picture_url'] = static::createStringField('Picture');
+    $fields['picture_url'] = static::createStringField('Picture')
+      ->setTranslatable(FALSE);
     $fields['picture_url']->setSetting('max_length', 2048)
       ->setDisplayOptions('form', $fields['picture_url']->getDisplayOptions('form') + [
         'weight' => -19,

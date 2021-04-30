@@ -29,6 +29,17 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   protected static array $overrideFields = [];
 
   /**
+   * {@inheritdoc}
+   */
+  public function label() {
+    // Use overridden name field as default label when possible.
+    if (!$this->get('name_override')->isEmpty()) {
+      return $this->get('name_override')->value;
+    }
+    return parent::label();
+  }
+
+  /**
    * Creates a basic string field.
    *
    * @param string $label

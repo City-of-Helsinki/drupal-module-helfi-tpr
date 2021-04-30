@@ -11,6 +11,10 @@ function helfi_tpr_theme() {
       'render element' => 'elements',
       'template' => 'tpr-unit',
     ],
+    'tpr_service' => [
+      'render element' => 'elements',
+      'template' => 'tpr-service',
+    ],
   ];
 }
 
@@ -22,6 +26,18 @@ function helfi_tpr_theme_suggestions_tpr_unit(array $variables) {
   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
 
   $suggestions[] = 'tpr_unit__' . $sanitized_view_mode;
+
+  return $suggestions;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function helfi_tpr_theme_suggestions_tpr_service(array $variables) {
+  $suggestions = [];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'tpr_service__' . $sanitized_view_mode;
 
   return $suggestions;
 }
@@ -44,5 +60,26 @@ function template_preprocess_tpr_unit(array &$variables) {
   if (isset($variables['elements']['#tpr_unit'])) {
     $variables['entity'] = $variables['elements']['#tpr_unit'];
     $variables['content']['description_summary'] = $variables['elements']['#tpr_unit']->get('description')->summary;
+  }
+}
+
+/**
+ * Prepares variables for tpr_unit templates.
+ *
+ * Default template: tpr-unit.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ */
+function template_preprocess_tpr_service(array &$variables) {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  // Helpful $content variable for templates.
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+  if (isset($variables['elements']['#tpr_service'])) {
+    $variables['entity'] = $variables['elements']['#tpr_service'];
+    $variables['content']['description_summary'] = $variables['elements']['#tpr_service']->get('description')->summary;
   }
 }

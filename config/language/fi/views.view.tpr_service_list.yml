@@ -44,7 +44,7 @@ display:
       title: 'TPR Palvelut'
       header:
         result:
-          content: '@start - @end / @total'
+          content: 'Näytetään @start - @end / @total'
       empty:
         area:
           content:

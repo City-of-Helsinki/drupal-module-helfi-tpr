@@ -56,7 +56,7 @@ display:
       title: 'TPR Toimipisteet'
       header:
         result:
-          content: '@start - @end / @total'
+          content: 'Näytetään @start - @end / @total'
     display_title: Isäntä
   page_1:
     display_title: Sivu

@@ -14,4 +14,3 @@ dependencies:
   - readonly_field_widget
   - media
   - twig_tweak
-  - menu_link

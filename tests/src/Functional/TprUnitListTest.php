@@ -72,7 +72,7 @@ class TprUnitListTest extends MigrationTestBase {
     $expected = ['fi' => 6, 'en' => 0, 'sv' => 4];
 
     foreach ($expected as $language => $total) {
-      $this->drupalGet('/admin/content/integrations/tpr-unit', ['query' => ['language' => $language]]);
+      $this->drupalGet('/admin/content/integrations/tpr-unit', ['query' => ['langcode' => $language]]);
       $this->assertSession()->pageTextContains(sprintf('Displaying %d - %d of %d', ($total > 0 ? 1 : 0), $total, $total));
     }
 

@@ -70,7 +70,7 @@ class TprUnitListTest extends MigrationTestBase {
     // Migrate entities and make sure we can see all entities from fixture.
     $this->runMigrate();
     $this->drupalGet('/admin/content/integrations/tpr-unit');
-    $this->assertSession()->pageTextContains('Displaying 1 - 6 of 6');
+    $this->assertSession()->pageTextContains('Displaying 1 - 18 of 18');
 
     // Make sure we can run 'update' action on multiple entities.
     Unit::load('22736')->set('name', 'Test 1')->save();

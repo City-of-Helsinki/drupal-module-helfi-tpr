@@ -89,18 +89,7 @@
     </div>
     <div class="unit__content">
       <div class="unit__services">
-        <div class="unit__servivces__container container">
-          <div class="unit__services__header">
-            <h2 class="unit__services__title">{% trans with {'context': 'Unit services title'}%}Services{% endtrans %}</h2>
-            <span class="unit__services__count-container">
-                <span class="unit__services__count">X</span>
-                {% trans with {'context': 'Unit services count'}%}service{% plural total_rows %}services{% endtrans %}
-              </span>
-          </div>
-          <div class="unit__services__list">
-            {{ drupal_view('unit_services', 'unit_services') }}
-          </div>
-        </div>
+        {{ drupal_view('unit_services', 'unit_services') }}
       </div>
     </div>
 
@@ -122,7 +111,7 @@
       {% if content.phone|render %}
         <div class="unit__info-row unit__info-row--phone">
           {% include '@hdbt/misc/icon.twig' with {icon: 'phone', label: 'Phone number'|t } %}
-          {{ content.phone }}
+          <a href="tel:{{ content.phone }}">{{ content.phone }}</a>
         </div>
       {% endif %}
     </div>

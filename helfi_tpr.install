@@ -365,3 +365,35 @@ function helfi_tpr_update_8015() : void {
   \Drupal::entityDefinitionUpdateManager()
     ->installFieldStorageDefinition('picture_url_override', 'tpr_unit', 'helfi_tpr', $picture_url_override);
 }
+
+/**
+ * Update tpr_unit and tpr_service views.
+ */
+function helfi_tpr_update_8016() : void {
+  $config_path = drupal_get_path('module', 'helfi_tpr') . '/config/install';
+  $source = new FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+
+  // Update TPR service "update action" to configuration.
+  $tpr_service_action = 'system.action.tpr_service_update_action';
+  $config_storage->write($tpr_service_action, $source->read($tpr_service_action));
+
+  // Create file storages.
+  $optional_config_path = drupal_get_path('module', 'helfi_tpr') . '/config/optional';
+  $optional_config_source = new FileStorage($optional_config_path);
+  $language_config_path = drupal_get_path('module', 'helfi_tpr') . '/config/language/fi';
+  $language_config_source = new FileStorage($language_config_path);
+  $views = ['views.view.tpr_service_list', 'views.view.tpr_unit_list'];
+
+  // Update Unit and Service views to configuration.
+  foreach ($views as $view) {
+    $config_storage->write($view, $optional_config_source->read($view));
+  }
+
+  // Update Unit and Service views Finnish translations to configuration.
+  foreach ($views as $view) {
+    $config_storage
+      ->createCollection('language.fi')
+      ->write($view, $language_config_source->read($view));
+  }
+}

@@ -24,11 +24,17 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "access" = "Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess",
  *     "form" = {
  *       "default" = "Drupal\Core\Entity\ContentEntityForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm"
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
- *     }
+ *       "revision" = "\Drupal\helfi_api_base\Entity\Routing\RevisionRouteProvider",
+ *     },
+ *     "local_action_provider" = {
+ *       "collection" = "\Drupal\entity\Menu\EntityCollectionLocalActionProvider",
+ *     },
+ *     "local_task_provider" = {
+ *       "default" = "\Drupal\entity\Menu\DefaultEntityLocalTaskProvider",
+ *     },
  *   },
  *   base_table = "tpr_unit",
  *   data_table = "tpr_unit_field_data",
@@ -52,8 +58,10 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   links = {
  *     "canonical" = "/tpr-unit/{tpr_unit}",
  *     "edit-form" = "/admin/content/integrations/tpr-unit/{tpr_unit}/edit",
- *     "delete-form" = "/admin/content/integrations/tpr-unit/{tpr_unit}/delete",
  *     "collection" = "/admin/content/integrations/tpr-unit",
+ *     "version-history" = "/admin/content/integrations/tpr-unit/{tpr_unit}/revisions",
+ *     "revision" = "/admin/content/integrations/tpr-unit/{tpr_unit}/revisions/{tpr_unit_revision}/view",
+ *     "revision-revert-language-form" = "/admin/content/integrations/tpr-unit/{tpr_unit}/revisions/{tpr_unit_revision}/revert/{langcode}",
  *   },
  *   field_ui_base_route = "tpr_unit.settings"
  * )

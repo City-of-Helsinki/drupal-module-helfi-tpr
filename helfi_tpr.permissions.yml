@@ -1,0 +1,6 @@
+'view all tpr_unit revisions':
+  title: 'View all tpr_unit revisions'
+  'restrict access': TRUE
+'revert all tpr_unit revisions':
+  title: 'Revert all tpr_unit revisions'
+  'restrict access': TRUE

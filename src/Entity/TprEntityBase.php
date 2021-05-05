@@ -7,6 +7,7 @@ namespace Drupal\helfi_tpr\Entity;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\Entity\RevisionLogEntityTrait;
+use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\helfi_api_base\Entity\RemoteEntityBase;
@@ -14,7 +15,7 @@ use Drupal\helfi_api_base\Entity\RemoteEntityBase;
 /**
  * Defines the base class for all TPR entities.
  */
-abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInterface {
+abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInterface, RevisionLogInterface {
 
   use RevisionLogEntityTrait;
 

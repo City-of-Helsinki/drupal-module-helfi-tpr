@@ -21,7 +21,8 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\helfi_tpr\Entity\Listing\ListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
- *     "access" = "Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess",
+ *     "access" = "Drupal\entity\EntityAccessControlHandler",
+ *     "permission_provider" = "Drupal\entity\EntityPermissionProvider",
  *     "form" = {
  *       "default" = "Drupal\Core\Entity\ContentEntityForm",
  *     },
@@ -41,8 +42,9 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   revision_table = "tpr_unit_revision",
  *   revision_data_table = "tpr_unit_field_revision",
  *   show_revision_ui = TRUE,
+ *   revisionable = TRUE,
  *   translatable = TRUE,
- *   admin_permission = "administer remote entities",
+ *   admin_permission = "administer tpr_unit",
  *   entity_keys = {
  *     "id" = "id",
  *     "revision" = "revision_id",

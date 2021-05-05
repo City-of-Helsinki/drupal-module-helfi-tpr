@@ -10,7 +10,6 @@ use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\helfi_tpr\Entity\TprEntityBase;
 
 /**
  * Installs the service entity type.
@@ -182,7 +181,7 @@ function helfi_tpr_update_8009() : void {
     'tpr_unit',
     'tpr_service',
     'tpr_errand_service',
-    'tpr_service_channel'
+    'tpr_service_channel',
   ];
 
   foreach ($entity_types as $type) {

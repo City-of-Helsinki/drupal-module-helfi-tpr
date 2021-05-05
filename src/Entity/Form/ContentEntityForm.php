@@ -7,6 +7,7 @@ use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\ContentEntityForm as CoreContentEntityForm;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
+use Drupal\user\Entity\User;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -130,6 +131,25 @@ class ContentEntityForm extends CoreContentEntityForm {
       '#markup' => $this->dateFormatter->format($this->getEntity()->getChangedTime(), 'short'),
       '#wrapper_attributes' => ['class' => ['entity-meta__last-saved']],
       '#weight' => 0,
+    ];
+
+    /** @var \Drupal\user\Entity\User $author */
+    $author = User::load($this->getEntity()->get('content_translation_uid')->target_id);
+
+    $form['meta']['author'] = [
+      '#type' => 'item',
+      '#title' => $this->t('Publisher'),
+      '#markup' => !empty($author) ? $author->getAccountName() : '',
+      '#wrapper_attributes' => ['class' => ['entity-meta__author']],
+    ];
+
+    // Author information for administrators.
+    $form['author_information'] = [
+      '#type' => 'details',
+      '#title' => t('Authoring information'),
+      '#group' => 'advanced',
+      '#weight' => 90,
+      '#optional' => TRUE,
     ];
 
     return $form;

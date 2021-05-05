@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Plugin\migrate\destination;
 
-use Drupal\helfi_api_base\Plugin\migrate\destination\TranslatableEntityBase;
 use Drupal\helfi_tpr\Entity\Unit;
 use Drupal\migrate\Row;
 
@@ -15,7 +14,7 @@ use Drupal\migrate\Row;
  *   id = "tpr_service",
  * )
  */
-final class Service extends TranslatableEntityBase {
+final class Service extends TprDestinationBase {
 
   /**
    * {@inheritdoc}

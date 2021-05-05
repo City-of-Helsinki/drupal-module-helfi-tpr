@@ -1,0 +1,124 @@
+{#
+/**
+ * @file
+ * Theme for unit entity.
+ *
+ */
+#}
+
+{%
+  set classes = [
+  'unit',
+  view_mode ? 'unit--view-mode-' ~ view_mode|clean_class,
+]
+%}
+
+{% if view_mode != 'teaser' %}
+
+  <article{{ attributes.addClass(classes) }}>
+
+    <div class="unit-header__container container">
+      <div{{ content_attributes.addClass('unit__header') }}>
+        <h1{{ title_attributes.addClass('unit__title') }}>
+          {{ entity.label }}
+        </h1>
+        {% if content.description_summary|render %}
+          <div class="unit__short-desc">
+            {{ content.description_summary }}
+          </div>
+        {% endif %}
+        <span class="unit__divider"></span>
+        {% if content.picture_url_override|render %}
+          <div class="unit__image">
+            {{ content.picture_url_override }}
+          </div>
+        {% elseif content.picture_url|render %}
+          <div class="unit__image">
+            {{ content.picture_url }}
+          </div>
+        {% endif %}
+        {% if content.description|render %}
+          <div class="unit__long-desc">
+            {{ content.description }}
+          </div>
+        {% endif %}
+      </div>
+      {% if content.address|render or content.email|render or content.phone|render or content.address_postal|render %}
+        <div class="unit__contact">
+          <h3 class="unit__contact__title">
+            {% trans with {'context': 'Contact card title'} %}Contact{% endtrans %}
+          </h3>
+          {% if content.address|render %}
+            <div class="unit__contact-row unit__contact-row--address">
+              <label class="unit__contact-row__label">
+                {% include '@hdbt/misc/icon.twig' with {icon: 'location', label: 'Visiting address'|t } %}
+                {{ 'Visiting address'|t }}:
+              </label>
+              {{ content.address }}
+            </div>
+          {% endif %}
+          {% if content.email|render %}
+            <div class="unit__contact-row unit__contact-row--email">
+              <label class="unit__contact-row__label">
+                {% include '@hdbt/misc/icon.twig' with {icon: 'envelope', label: 'E-mail'|t } %}
+                {{ 'E-mail'|t }}:
+              </label>
+              <a href="mailto:{{ content.email }}">{{ content.email }}</a>
+            </div>
+          {% endif %}
+          {% if content.phone|render %}
+            <div class="unit__contact-row unit__contact-row--phone">
+              <label class="unit__contact-row__label">
+                {% include '@hdbt/misc/icon.twig' with {icon: 'phone', label: 'Phone number'|t } %}
+                {{ 'Phone number'|t }}:
+              </label>
+              {{ content.phone }}
+            </div>
+          {% endif %}
+          {% if content.address_postal|render %}
+            <div class="unit__contact-row unit__contact-row--postal-address">
+              <label class="unit__contact-row__label">
+                {% include '@hdbt/misc/icon.twig' with {icon: 'location', label: 'Postal address'|t } %}
+                {{ 'Postal address'|t }}:
+              </label>
+              {{ content.address_postal }}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+    <div class="unit__content">
+      <div class="unit__services">
+        {{ drupal_view('unit_services', 'unit_services') }}
+      </div>
+    </div>
+
+  </article>
+
+{% elseif view_mode == 'teaser' %}
+
+  <div{{ attributes.addClass(classes) }}>
+    <h3 class="unit__title">
+      {{ entity.label }}
+    </h3>
+    <div class="unit__info">
+      {% if content.address|render %}
+        <div class="unit__info-row unit__info-row--address">
+          {% include '@hdbt/misc/icon.twig' with {icon: 'location', label: 'Visiting address'|t } %}
+          {{ content.address }}
+        </div>
+      {% endif %}
+      {% if content.phone|render %}
+        <div class="unit__info-row unit__info-row--phone">
+          {% include '@hdbt/misc/icon.twig' with {icon: 'phone', label: 'Phone number'|t } %}
+          <a href="tel:{{ content.phone }}">{{ content.phone }}</a>
+        </div>
+      {% endif %}
+    </div>
+    <a href="{{ url('entity.tpr_unit.canonical', { 'tpr_unit': entity.id() }) }}" class="unit__link">
+      <span class="is-hidden">{% trans with {'context': 'Unit teaser link'} %}Go to{% endtrans %} {{ content.name }}</span>
+      {% include '@hdbt/misc/icon.twig' with {icon: 'arrow-right', label: 'Unit page'|t } %}
+    </a>
+  </div>
+
+{% endif %}

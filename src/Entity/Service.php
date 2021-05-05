@@ -39,7 +39,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "id" = "id",
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
- *     "owner" = "uid",
  *     "label" = "name",
  *     "uuid" = "uuid"
  *   },
@@ -170,8 +169,10 @@ class Service extends TprEntityBase {
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
+
     $fields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
+      ->setRevisionable(FALSE)
       ->setLabel(new TranslatableMarkup('Description'))
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
@@ -183,6 +184,7 @@ class Service extends TprEntityBase {
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
     $fields['data'] = BaseFieldDefinition::create('map')
+      ->setRevisionable(FALSE)
       ->setLabel(new TranslatableMarkup('Data'))
       ->setDescription(new TranslatableMarkup('A serialized array of additional data.'));
 
@@ -190,13 +192,11 @@ class Service extends TprEntityBase {
       ->setLabel(new TranslatableMarkup('Errand Services'))
       ->setSettings([
         'target_type' => 'tpr_errand_service',
-        'handler_settings' => [
-          'target_bundles' => ['tpr_service'],
-        ],
       ])
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
       ])
+      ->setRevisionable(FALSE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);

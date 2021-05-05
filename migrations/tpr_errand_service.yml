@@ -21,9 +21,6 @@ process:
     process:
       title: title
       uri: url
-  uid/target_id:
-    plugin: default_value
-    default_value: 1
   channels:
     plugin: sub_process
     source: channels

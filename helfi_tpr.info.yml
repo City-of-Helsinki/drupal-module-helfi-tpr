@@ -12,3 +12,6 @@ dependencies:
   - content_translation
   - language
   - readonly_field_widget
+  - media
+  - twig_tweak
+  - views_infinite_scroll

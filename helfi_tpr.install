@@ -5,10 +5,11 @@
  * Contains helfi_tpr installation procedures.
  */
 
+use Drupal\content_translation\ContentTranslationHandler;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\helfi_tpr\Entity\TprEntityBase;
 
 /**
  * Installs the service entity type.
@@ -161,35 +162,213 @@ function helfi_tpr_update_8008() : void {
 }
 
 /**
- * Installs 'owner' field.
+ * Installs name override fields.
  */
 function helfi_tpr_update_8009() : void {
-  $uid_field = BaseFieldDefinition::create('entity_reference')
-    ->setLabel(new TranslatableMarkup('User ID'))
-    ->setSetting('target_type', 'user')
+  $field = BaseFieldDefinition::create('string')
+    ->setLabel(new TranslatableMarkup('Override: Name'))
     ->setTranslatable(TRUE)
-    ->setDefaultValueCallback(TprEntityBase::class . '::getDefaultEntityOwner');
+    ->setRevisionable(TRUE)
+    ->setDefaultValue('')
+    ->setDisplayConfigurable('view', TRUE)
+    ->setDisplayConfigurable('form', TRUE)
+    ->setSettings([
+      'max_length' => 255,
+      'text_processing' => 0,
+    ]);
 
-  $types = [
+  $entity_types = [
     'tpr_unit',
-    'tpr_errand_service',
     'tpr_service',
+    'tpr_errand_service',
     'tpr_service_channel',
   ];
 
-  foreach ($types as $type) {
-    if (\Drupal::database()->schema()->fieldExists($type . '_field_data', 'uid')) {
-      continue;
-    }
+  foreach ($entity_types as $type) {
     \Drupal::entityDefinitionUpdateManager()
-      ->installFieldStorageDefinition('uid', $type, 'helfi_tpr', $uid_field);
+      ->installFieldStorageDefinition('name_override', $type, 'helfi_tpr', $field);
   }
+}
+
+/**
+ * Installs content translation fields for errand services and channels.
+ */
+function helfi_tpr_update_8010() : void {
+  $definitions['content_translation_source'] = BaseFieldDefinition::create('language')
+    ->setLabel(t('Translation source'))
+    ->setDescription(t('The source language from which this translation was created.'))
+    ->setDefaultValue(LanguageInterface::LANGCODE_NOT_SPECIFIED)
+    ->setInitialValue(LanguageInterface::LANGCODE_NOT_SPECIFIED)
+    ->setRevisionable(TRUE)
+    ->setTranslatable(TRUE);
+
+  $definitions['content_translation_outdated'] = BaseFieldDefinition::create('boolean')
+    ->setLabel(t('Translation outdated'))
+    ->setDescription(t('A boolean indicating whether this translation needs to be updated.'))
+    ->setDefaultValue(FALSE)
+    ->setInitialValue(FALSE)
+    ->setRevisionable(TRUE)
+    ->setTranslatable(TRUE);
+
+  $definitions['content_translation_uid'] = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(t('Translation author'))
+    ->setDescription(t('The author of this translation.'))
+    ->setSetting('target_type', 'user')
+    ->setSetting('handler', 'default')
+    ->setRevisionable(TRUE)
+    ->setDefaultValueCallback(ContentTranslationHandler::class . '::getDefaultOwnerId')
+    ->setTranslatable(TRUE);
+
+  $definitions['content_translation_status'] = BaseFieldDefinition::create('boolean')
+    ->setLabel(t('Translation status'))
+    ->setDescription(t('A boolean indicating whether the translation is visible to non-translators.'))
+    ->setDefaultValue(TRUE)
+    ->setInitialValue(TRUE)
+    ->setRevisionable(TRUE)
+    ->setTranslatable(TRUE);
+
+  $definitions['content_translation_created'] = BaseFieldDefinition::create('created')
+    ->setLabel(t('Translation created time'))
+    ->setDescription(t('The Unix timestamp when the translation was created.'))
+    ->setRevisionable(TRUE)
+    ->setTranslatable(TRUE);
+
+  $definitions['content_translation_changed'] = BaseFieldDefinition::create('changed')
+    ->setLabel(t('Translation changed time'))
+    ->setDescription(t('The Unix timestamp when the translation was most recently saved.'))
+    ->setRevisionable(TRUE)
+    ->setTranslatable(TRUE);
+
+  foreach (['tpr_errand_service', 'tpr_service_channel'] as $entity_type) {
+    foreach ($definitions as $name => $field) {
+      \Drupal::entityDefinitionUpdateManager()
+        ->installFieldStorageDefinition($name, $entity_type, 'helfi_tpr', $field);
+    }
+  }
+}
+
+/**
+ * Make migrated unit fields not revisionable.
+ */
+function helfi_tpr_update_8011() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+
+  $fields = [
+    'name',
+    'picture_url',
+    'email',
+    'accessibility_phone',
+    'accessibility_email',
+    'www',
+    'accessibility_www',
+    'description',
+    'address',
+    'address_postal',
+    'latitude',
+    'longitude',
+    'streetview_entrance_url',
+    'service_map_embed',
+  ];
+
+  foreach ($fields as $field) {
+    $definition = $manager->getFieldStorageDefinition($field, 'tpr_unit');
+    $definition->setRevisionable(FALSE);
+
+    $manager->updateFieldStorageDefinition($definition);
+  }
+
+  if ($definition = $manager->getFieldStorageDefinition('call_charge_info', 'tpr_unit')) {
+    \Drupal::database()->update('tpr_unit_field_data')
+      ->isNotNull('call_charge_info')
+      ->fields(['call_charge_info' => NULL])
+      ->execute();
+
+    $manager->uninstallFieldStorageDefinition($definition);
+
+    $field = BaseFieldDefinition::create('text_long')
+      ->setTranslatable(TRUE)
+      ->setRevisionable(FALSE)
+      ->setLabel(new TranslatableMarkup('Call charge info'))
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $manager->installFieldStorageDefinition('call_charge_info', 'tpr_unit', 'helfi_tpr', $field);
+  }
+}
+
+/**
+ * Make migrated service channel fields not revisionable.
+ */
+function helfi_tpr_update_8012() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+
+  $fields = [
+    'name',
+    'email',
+    'type',
+    'type_string',
+    'phone',
+    'address',
+  ];
+
+  foreach ($fields as $field) {
+    $definition = $manager->getFieldStorageDefinition($field, 'tpr_service_channel');
+    $definition->setRevisionable(FALSE);
+
+    $manager->updateFieldStorageDefinition($definition);
+  }
+}
+
+/**
+ * Make migrated service fields not revisionable.
+ */
+function helfi_tpr_update_8013() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+  $definition = $manager->getFieldStorageDefinition('name', 'tpr_service');
+  $definition->setRevisionable(FALSE);
+
+  $manager->updateFieldStorageDefinition($definition);
+}
+
+/**
+ * Make migrated errand service fields not revisionable.
+ */
+function helfi_tpr_update_8014() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+  foreach (['name', 'type'] as $field) {
+    $definition = $manager->getFieldStorageDefinition($field, 'tpr_errand_service');
+    $definition->setRevisionable(FALSE);
+
+    $manager->updateFieldStorageDefinition($definition);
+  }
+}
+
+/**
+ * Installs Unit 'picture_url_override' field.
+ */
+function helfi_tpr_update_8015() : void {
+  $picture_url_override = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(new TranslatableMarkup('Override: Picture'))
+    ->setSettings([
+      'target_type' => 'media',
+      'handler_settings' => [
+        'target_bundles' => ['image'],
+      ],
+    ])
+    ->setDisplayConfigurable('view', TRUE)
+    ->setDisplayConfigurable('form', TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('picture_url_override', 'tpr_unit', 'helfi_tpr', $picture_url_override);
 }
 
 /**
  * Update tpr_unit and tpr_service views.
  */
-function helfi_tpr_update_8010() : void {
+function helfi_tpr_update_8016() : void {
   $config_path = drupal_get_path('module', 'helfi_tpr') . '/config/install';
   $source = new FileStorage($config_path);
   $config_storage = \Drupal::service('config.storage');

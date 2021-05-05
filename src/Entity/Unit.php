@@ -21,27 +21,34 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\helfi_tpr\Entity\Listing\ListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
- *     "access" = "Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess",
+ *     "access" = "Drupal\entity\EntityAccessControlHandler",
+ *     "permission_provider" = "Drupal\entity\EntityPermissionProvider",
  *     "form" = {
  *       "default" = "Drupal\Core\Entity\ContentEntityForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm"
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
- *     }
+ *       "revision" = "\Drupal\helfi_api_base\Entity\Routing\RevisionRouteProvider",
+ *     },
+ *     "local_action_provider" = {
+ *       "collection" = "\Drupal\entity\Menu\EntityCollectionLocalActionProvider",
+ *     },
+ *     "local_task_provider" = {
+ *       "default" = "\Drupal\entity\Menu\DefaultEntityLocalTaskProvider",
+ *     },
  *   },
  *   base_table = "tpr_unit",
  *   data_table = "tpr_unit_field_data",
  *   revision_table = "tpr_unit_revision",
  *   revision_data_table = "tpr_unit_field_revision",
  *   show_revision_ui = TRUE,
+ *   revisionable = TRUE,
  *   translatable = TRUE,
- *   admin_permission = "administer remote entities",
+ *   admin_permission = "administer tpr_unit",
  *   entity_keys = {
  *     "id" = "id",
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
- *     "owner" = "uid",
  *     "label" = "name",
  *     "uuid" = "uuid"
  *   },
@@ -53,8 +60,10 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   links = {
  *     "canonical" = "/tpr-unit/{tpr_unit}",
  *     "edit-form" = "/admin/content/integrations/tpr-unit/{tpr_unit}/edit",
- *     "delete-form" = "/admin/content/integrations/tpr-unit/{tpr_unit}/delete",
  *     "collection" = "/admin/content/integrations/tpr-unit",
+ *     "version-history" = "/admin/content/integrations/tpr-unit/{tpr_unit}/revisions",
+ *     "revision" = "/admin/content/integrations/tpr-unit/{tpr_unit}/revisions/{tpr_unit_revision}/view",
+ *     "revision-revert-language-form" = "/admin/content/integrations/tpr-unit/{tpr_unit}/revisions/{tpr_unit_revision}/revert/{langcode}",
  *   },
  *   field_ui_base_route = "tpr_unit.settings"
  * )
@@ -139,10 +148,27 @@ class Unit extends TprEntityBase {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $fields['picture_url'] = static::createStringField('Picture')
-      ->setSetting('max_length', 2048);
+      ->setTranslatable(FALSE);
+    $fields['picture_url']->setSetting('max_length', 2048)
+      ->setDisplayOptions('form', $fields['picture_url']->getDisplayOptions('form') + [
+        'weight' => -19,
+      ]);
+    $fields['picture_url_override'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(new TranslatableMarkup('Override: Picture'))
+      ->setSettings([
+        'target_type' => 'media',
+        'handler_settings' => [
+          'target_bundles' => ['image'],
+        ],
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'media_library_widget',
+        'weight' => -19,
+      ])
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
     $fields['phone'] = static::createStringField('Phone', BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setTranslatable(FALSE);
-    $fields['call_charge_info'] = static::createStringField('Call charge info');
     $fields['email'] = static::createStringField('Email')
       ->setTranslatable(FALSE);
     $fields['accessibility_phone'] = static::createStringField('Accessibility phone')
@@ -154,6 +180,7 @@ class Unit extends TprEntityBase {
       ->setTranslatable(FALSE);
     $fields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
+      ->setRevisionable(FALSE)
       ->setLabel(new TranslatableMarkup('Description'))
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
@@ -163,7 +190,7 @@ class Unit extends TprEntityBase {
     $fields['address'] = BaseFieldDefinition::create('address')
       ->setLabel(new TranslatableMarkup('Address'))
       ->setTranslatable(TRUE)
-      ->setRevisionable(TRUE)
+      ->setRevisionable(FALSE)
       ->setSetting('field_overrides', [
         AddressField::GIVEN_NAME => ['override' => FieldOverride::HIDDEN],
         AddressField::ADDITIONAL_NAME => ['override' => FieldOverride::HIDDEN],
@@ -175,7 +202,25 @@ class Unit extends TprEntityBase {
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
+
+    $fields['call_charge_info'] = BaseFieldDefinition::create('text_long')
+      ->setTranslatable(TRUE)
+      ->setRevisionable(FALSE)
+      ->setLabel(new TranslatableMarkup('Call charge info'))
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     $fields['address_postal'] = static::createStringField('Address postal');
+
+    $fields['latitude'] = static::createStringField('Latitude')
+      ->setTranslatable(FALSE);
+    $fields['longitude'] = static::createStringField('Longitude')
+      ->setTranslatable(FALSE);
+    $fields['streetview_entrance_url'] = static::createLinkField('Streetview entrance')
+      ->setTranslatable(FALSE);
     $fields['service_map_embed'] = static::createStringField('Service map embed')
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
@@ -183,25 +228,17 @@ class Unit extends TprEntityBase {
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'service_map_embed',
-        'weight' => 0,
       ]);
-    $fields['latitude'] = static::createStringField('Latitude')
-      ->setTranslatable(FALSE);
-    $fields['longitude'] = static::createStringField('Longitude')
-      ->setTranslatable(FALSE);
-    $fields['streetview_entrance_url'] = static::createLinkField('Streetview entrance')
-      ->setTranslatable(FALSE);
+
     $fields['services'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(new TranslatableMarkup('Services'))
       ->setSettings([
         'target_type' => 'tpr_service',
-        'handler_settings' => [
-          'target_bundles' => ['tpr_service'],
-        ],
       ])
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
       ])
+      ->setRevisionable(FALSE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);

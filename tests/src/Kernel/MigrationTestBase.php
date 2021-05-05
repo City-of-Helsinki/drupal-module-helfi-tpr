@@ -22,6 +22,7 @@ abstract class MigrationTestBase extends ApiMigrationTestBase {
     'address',
     'text',
     'helfi_tpr',
+    'media',
   ];
 
   /**
@@ -55,6 +56,7 @@ abstract class MigrationTestBase extends ApiMigrationTestBase {
         'id' => 1,
         'name_fi' => 'Name fi 1',
         'name_sv' => 'Name sv 1',
+        'name_en' => 'Name en 1',
         'latitude' => '60.19',
         'longitude' => '24.76',
         'street_address_fi' => 'Address fi 1',
@@ -69,6 +71,7 @@ abstract class MigrationTestBase extends ApiMigrationTestBase {
         'call_charge_info_sv' => 'pvm sv 1',
         'www_fi' => 'https://localhost/fi/1',
         'www_sv' => 'https://localhost/sv/1',
+        'www_en' => 'https://localhost/en/1',
         'created_time' => '2015-11-03T12:03:45',
         'modified_time' => '2015-11-03T12:03:45',
       ],

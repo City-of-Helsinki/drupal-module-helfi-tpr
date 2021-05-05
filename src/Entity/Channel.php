@@ -41,7 +41,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "id" = "id",
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
- *     "owner" = "uid",
  *     "label" = "name",
  *     "uuid" = "uuid"
  *   },
@@ -83,7 +82,6 @@ class Channel extends TprEntityBase {
       'type_string' => 'Type string',
       'email' => 'Email',
       'phone' => 'Phone',
-      'call_charge_info' => 'Call charge info',
     ];
 
     foreach ($string_fields as $name => $label) {
@@ -95,7 +93,7 @@ class Channel extends TprEntityBase {
     $fields['address'] = BaseFieldDefinition::create('address')
       ->setLabel(new TranslatableMarkup('Address'))
       ->setTranslatable(TRUE)
-      ->setRevisionable(TRUE)
+      ->setRevisionable(FALSE)
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
       ])
@@ -117,10 +115,12 @@ class Channel extends TprEntityBase {
       'process_description' => new TranslatableMarkup('Processing time'),
       'expiration_time' => new TranslatableMarkup('Expiration time'),
       'authorization_code' => new TranslatableMarkup('Information'),
+      'call_charge_info' => new TranslatableMarkup('Call charge info'),
     ];
     foreach ($text_fields as $name => $label) {
       $fields[$name] = BaseFieldDefinition::create('text_long')
         ->setTranslatable(TRUE)
+        ->setRevisionable(FALSE)
         ->setLabel($label)
         ->setDisplayOptions('form', [
           'type' => 'readonly_field_widget',
@@ -132,7 +132,7 @@ class Channel extends TprEntityBase {
     $boolean_fields = [
       'requires_authentication' => new TranslatableMarkup('Requires authentication'),
       'saved_to_customer_folder' => new TranslatableMarkup('Saved to customer folder'),
-      'e_processing' => new TranslatableMarkup('E-Processing'),
+      'e_processing' => new TranslatableMarkup('E-processing'),
       'e_decision' => new TranslatableMarkup('E-decision'),
       'payment_enabled' => new TranslatableMarkup('Payment enabled'),
       'for_personal_customer' => new TranslatableMarkup('For personal customer'),
@@ -142,6 +142,7 @@ class Channel extends TprEntityBase {
     foreach ($boolean_fields as $name => $label) {
       $fields[$name] = BaseFieldDefinition::create('boolean')
         ->setTranslatable(TRUE)
+        ->setRevisionable(FALSE)
         ->setLabel($label)
         ->setDisplayOptions('form', [
           'type' => 'readonly_field_widget',

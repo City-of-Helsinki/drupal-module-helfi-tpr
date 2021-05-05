@@ -39,7 +39,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "id" = "id",
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
- *     "owner" = "uid",
  *     "label" = "name",
  *     "uuid" = "uuid"
  *   },
@@ -171,26 +170,13 @@ class ErrandService extends TprEntityBase {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
+    static::$overrideFields['name'] = $fields['name'];
+
     $fields['type'] = static::createStringField('Type');
     $fields['name_synonyms'] = static::createStringField('Name synonyms', BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
     $fields['links'] = static::createLinkField('Links')
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
-
-    $fields['channels'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(new TranslatableMarkup('Channels'))
-      ->setSettings([
-        'target_type' => 'tpr_service_channel',
-        'handler_settings' => [
-          'target_bundles' => ['tpr_service_channel'],
-        ],
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'readonly_field_widget',
-      ])
-      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
-      ->setDisplayConfigurable('view', TRUE)
-      ->setDisplayConfigurable('form', TRUE);
 
     $text_fields = [
       'process_description' => new TranslatableMarkup('Process description'),
@@ -210,6 +196,18 @@ class ErrandService extends TprEntityBase {
         ->setDisplayConfigurable('form', TRUE)
         ->setDisplayConfigurable('view', TRUE);
     }
+
+    $fields['channels'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(new TranslatableMarkup('Channels'))
+      ->setSettings([
+        'target_type' => 'tpr_service_channel',
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
 
     $fields['data'] = BaseFieldDefinition::create('map')
       ->setLabel(new TranslatableMarkup('Data'))

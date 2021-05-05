@@ -1,0 +1,63 @@
+{#
+/**
+ * @file
+ * Theme for service entity.
+ *
+ */
+#}
+
+{%
+  set classes = [
+  'service',
+  view_mode ? 'service--view-mode-' ~ view_mode|clean_class,
+]
+%}
+
+{% if view_mode != 'teaser' %}
+
+  <article{{ attributes.addClass(classes) }}>
+
+    <div class="service-header__container container">
+      <h1{{ title_attributes.addClass('service__title') }}>
+        {{ entity.label }}
+      </h1>
+
+      <div{{ content_attributes.addClass('service__header') }}>
+        {% if content.description_summary|render %}
+          <div class="service__short-desc">
+            {{ content.description_summary }}
+          </div>
+        {% endif %}
+        <span class="service__divider"></span>
+        {% if content.description|render %}
+          <div class="service__long-desc">
+            {{ content.description }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="service__content">
+      <div class="service__units">
+        {{ drupal_view('service_units', 'service_units') }}
+      </div>
+    </div>
+
+  </article>
+
+{% elseif view_mode == 'teaser' %}
+
+  <div{{ attributes.addClass(classes) }}>
+    <a href="{{ url('entity.tpr_service.canonical', { 'tpr_service': entity.id() }) }}" class="service__link">
+      <h3 class="service__title">
+        {{ entity.label }}
+      </h3>
+      {% if content.description_summary|render %}
+        <div class="service__short-desc">
+          {{ content.description_summary }}
+        </div>
+      {% endif %}
+      {% include '@hdbt/misc/icon.twig' with {icon: 'arrow-right', label: 'Service page'|t } %}
+    </a>
+  </div>
+
+{% endif %}

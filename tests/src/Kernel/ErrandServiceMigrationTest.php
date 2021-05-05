@@ -113,6 +113,30 @@ class ErrandServiceMigrationTest extends MigrationTestBase {
   }
 
   /**
+   * Tests that default values are not overridden by migrate.
+   */
+  public function testDefaultErrandServiceValues() : void {
+    $entities = $this->createErrandServiceMigration();
+
+    // Update translation author and status fields.
+    $translation = $entities[1]->getTranslation('sv');
+
+    $this->assertEquals('1', $translation->get('content_translation_uid')->target_id);
+    $this->assertequals('0', $translation->get('content_translation_status')->value);
+
+    $translation->set('content_translation_uid', '0')
+      ->set('content_translation_status', TRUE)
+      ->save();
+
+    // Re-run migrate and make sure author and status fields won't get updated.
+    $entities = $this->createErrandServiceMigration();
+    $translation = $entities[1]->getTranslation('sv');
+
+    $this->assertEquals('0', $translation->get('content_translation_uid')->target_id);
+    $this->assertequals('1', $translation->get('content_translation_status')->value);
+  }
+
+  /**
    * Tests errand service migration.
    */
   public function testErrandServiceMigration() : void {
@@ -121,11 +145,9 @@ class ErrandServiceMigrationTest extends MigrationTestBase {
 
     foreach (['fi', 'sv', 'en'] as $langcode) {
       foreach ($entities as $entity) {
-        /** @var \Drupal\helfi_tpr\Entity\ErrandService $translation */
         $translation = $entity->getTranslation($langcode);
 
         $this->assertEquals($langcode, $translation->language()->getId());
-        $this->assertEquals('1', $translation->get('uid')->target_id);
 
         foreach ($this->getFields() as $field) {
           $this->assertEquals(
@@ -143,6 +165,34 @@ class ErrandServiceMigrationTest extends MigrationTestBase {
   }
 
   /**
+   * Tests that default values are not overridden by migrate.
+   */
+  public function testDefaultServiceChannelValues() : void {
+    $this->createErrandServiceMigration();
+    $this->executeMigration('tpr_service_channel');
+    $entities = Channel::loadMultiple();
+    $this->assertCount(3, $entities);
+
+    // Update translation author and status fields.
+    $translation = $entities[1]->getTranslation('sv');
+
+    $this->assertEquals('1', $translation->get('content_translation_uid')->target_id);
+    $this->assertequals('0', $translation->get('content_translation_status')->value);
+
+    $translation->set('content_translation_uid', '0')
+      ->set('content_translation_status', TRUE)
+      ->save();
+
+    // Re-run migrate and make sure author and status fields won't get updated.
+    $this->executeMigration('tpr_service_channel');
+    $entities = Channel::loadMultiple();
+    $translation = $entities[1]->getTranslation('sv');
+
+    $this->assertEquals('0', $translation->get('content_translation_uid')->target_id);
+    $this->assertequals('1', $translation->get('content_translation_status')->value);
+  }
+
+  /**
    * Tests service channel migration.
    */
   public function testServiceChannelMigration() : void {
@@ -154,7 +204,6 @@ class ErrandServiceMigrationTest extends MigrationTestBase {
 
     foreach (['fi', 'sv', 'en'] as $langcode) {
       foreach ($entities as $entity) {
-        /** @var \Drupal\helfi_tpr\Entity\Channel $translation */
         $translation = $entity->getTranslation($langcode);
 
         $channel_fields = [

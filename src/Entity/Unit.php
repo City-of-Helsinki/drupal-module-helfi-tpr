@@ -24,7 +24,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "access" = "Drupal\entity\EntityAccessControlHandler",
  *     "permission_provider" = "Drupal\entity\EntityPermissionProvider",
  *     "form" = {
- *       "default" = "Drupal\Core\Entity\ContentEntityForm",
+ *       "default" = "Drupal\helfi_tpr\Entity\Form\ContentEntityForm",
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",

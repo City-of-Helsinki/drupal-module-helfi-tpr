@@ -21,8 +21,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "access" = "Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess",
  *     "form" = {
- *       "default" = "Drupal\Core\Entity\ContentEntityForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm"
+ *       "default" = "Drupal\helfi_tpr\Entity\Form\ContentEntityForm",
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
@@ -50,7 +49,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   links = {
  *     "canonical" = "/tpr-service/{tpr_service}",
  *     "edit-form" = "/admin/content/integrations/tpr-service/{tpr_service}/edit",
- *     "delete-form" = "/admin/content/integrations/tpr-service/{tpr_service}/delete",
  *     "collection" = "/admin/content/integrations/tpr-service"
  *   },
  *   field_ui_base_route = "tpr_service.settings"

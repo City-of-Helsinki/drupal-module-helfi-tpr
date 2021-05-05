@@ -112,15 +112,13 @@ class ContentEntityForm extends CoreContentEntityForm {
       '#title' => $this->t('Status'),
       '#attributes' => ['class' => ['entity-meta__header']],
       '#tree' => TRUE,
-      // TODO Permission check needs refactoring.
+      // @todo Permission check needs refactoring.
       '#access' => $this->currentUser->hasPermission('administer remote entities'),
     ];
 
     $form['meta']['published'] = [
       '#type' => 'item',
-      '#markup' => $this->getEntity()->get('content_translation_status')->first()->value
-        ? $this->t('Published')
-        : $this->t('Not published'),
+      '#markup' => $this->getEntity()->get('content_translation_status')->first()->value ? $this->t('Published') : $this->t('Not published'),
       '#wrapper_attributes' => ['class' => ['entity-meta__title']],
       '#weight' => -1,
     ];
@@ -146,7 +144,7 @@ class ContentEntityForm extends CoreContentEntityForm {
     // Author information for administrators.
     $form['author_information'] = [
       '#type' => 'details',
-      '#title' => t('Authoring information'),
+      '#title' => $this->t('Authoring information'),
       '#group' => 'advanced',
       '#weight' => 90,
       '#optional' => TRUE,

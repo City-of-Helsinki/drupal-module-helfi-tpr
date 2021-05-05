@@ -60,7 +60,7 @@ class TprUnitListTest extends MigrationTestBase {
     // can see the entity list.
     $account = $this->createUser([
       'access remote entities overview',
-      'edit remote entities',
+      'administer tpr_unit',
     ]);
     $this->drupalLogin($account);
     $this->drupalGet('/admin/content/integrations/tpr-unit');

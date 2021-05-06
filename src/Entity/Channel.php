@@ -81,12 +81,13 @@ class Channel extends TprEntityBase {
       'type' => 'Type',
       'type_string' => 'Type string',
       'email' => 'Email',
-      'phone' => 'Phone',
     ];
 
     foreach ($string_fields as $name => $label) {
       $fields[$name] = static::createStringField($label);
     }
+
+    $fields['phone'] = static::createPhoneField('Phone');
 
     $fields['availabilities'] = static::createStringField('Availabilities', BaseFieldDefinition::CARDINALITY_UNLIMITED);
 

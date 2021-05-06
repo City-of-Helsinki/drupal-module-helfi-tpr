@@ -23,6 +23,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "access" = "Drupal\entity\EntityAccessControlHandler",
  *     "permission_provider" = "Drupal\entity\EntityPermissionProvider",
+ *     "translation" = "Drupal\helfi_tpr\Entity\TranslationHandler",
  *     "form" = {
  *       "default" = "Drupal\helfi_tpr\Entity\Form\ContentEntityForm",
  *     },

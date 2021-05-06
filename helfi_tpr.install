@@ -419,6 +419,7 @@ function helfi_tpr_update_8018() : void {
   }
   $manager->installFieldStorageDefinition('phone', 'tpr_service_channel', 'helfi_tpr', $field);
 
-  $field->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
+  $field->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setTranslatable(FALSE);
   $manager->installFieldStorageDefinition('phone', 'tpr_unit', 'helfi_tpr', $field);
 }

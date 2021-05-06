@@ -407,7 +407,7 @@ function helfi_tpr_update_8018() : void {
 
   $field = BaseFieldDefinition::create('telephone')
     ->setLabel(new TranslatableMarkup('Phone'))
-    ->setTranslatable(TRUE)
+    ->setTranslatable(FALSE)
     ->setRevisionable(FALSE)
     ->setDisplayConfigurable('view', TRUE)
     ->setDisplayConfigurable('form', TRUE);

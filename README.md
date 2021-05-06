@@ -17,9 +17,16 @@ Available migrations:
 - `tpr_errand_service`
 - `tpr_service_channel`
 
+### Turn on the feature needed to enrich the TPR data
+
+Install HELfi TPR configuration module included in [HELfi platform config](https://github.com/City-of-Helsinki/drupal-helfi-platform-config) module.
+
+`drush en helfi_tpr_config`
+
 ### Running migrations
 
 Running all TPR migrations:
+
 `drush migrate:import --group tpr`
 
 Running a single migration:

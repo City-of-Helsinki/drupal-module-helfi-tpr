@@ -35,6 +35,28 @@ class ContentEntityForm extends CoreContentEntityForm {
   /**
    * {@inheritdoc}
    */
+  public function buildForm(array $form, FormStateInterface $form_state) {
+    /** @var \Drupal\helfi_tpr\Entity\TprEntityBase $entity */
+    $entity = $this->getEntity();
+    $form = parent::buildForm($form, $form_state);
+
+    /** @var \Drupal\helfi_tpr\Entity\TranslationHandler $controller */
+    $controller = $this->entityTypeManager
+      ->getHandler($entity->getEntityTypeId(), 'translation');
+
+    // Content translation module assumes that the 'original' entity is always
+    // published and won't show published/author fields unless the entity has
+    // one or more translations.
+    // TPR entities are unpublished by default and might not have any
+    // translations, leaving users unable to un/publish given content.
+    $controller->entityFormAlter($form, $form_state, $entity);
+
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function form(array $form, FormStateInterface $form_state) {
     /** @var \Drupal\helfi_tpr\Entity\TprEntityBase $entity */
     $entity = $this->getEntity();

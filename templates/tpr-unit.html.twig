@@ -111,7 +111,9 @@
       {% if content.phone|render %}
         <div class="unit__info-row unit__info-row--phone">
           {% include '@hdbt/misc/icon.twig' with {icon: 'phone', label: 'Phone number'|t } %}
-          <a href="tel:{{ content.phone }}">{{ content.phone }}</a>
+          <span class="phones">
+            {{ content.phone }}
+          </span>
         </div>
       {% endif %}
     </div>

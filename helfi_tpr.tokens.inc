@@ -33,6 +33,9 @@ function helfi_tpr_token_info() {
     $info['tokens'][$entity_type]['label'] = [
       'name' => t('Label'),
     ];
+    $info['tokens'][$entity_type]['description'] = [
+      'name' => t('Description'),
+    ];
   }
   return $info;
 }
@@ -64,6 +67,10 @@ function helfi_tpr_tokens(
   foreach ($tokens as $name => $original) {
     if ($name === 'label') {
       $replacements[$original] = $entity->label();
+    }
+
+    if ($name === 'description:summary') {
+      $replacements[$original] = $entity->getDescription()->summary;
     }
 
     if ($entity instanceof Unit && $name === 'picture') {

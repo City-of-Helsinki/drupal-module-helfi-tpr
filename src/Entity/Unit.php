@@ -8,6 +8,7 @@ use CommerceGuys\Addressing\AddressFormat\AddressField;
 use CommerceGuys\Addressing\AddressFormat\FieldOverride;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldItemList;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
@@ -162,6 +163,19 @@ class Unit extends TprEntityBase {
       return $file->createFileUrl(FALSE);
     }
     return NULL;
+  }
+
+  /**
+   * Gets the description.
+   *
+   * @return string|null
+   *   The description.
+   */
+  /**
+   * @return FieldItemList|null
+   */
+  public function getDescription() : ? FieldItemList {
+    return $this->get('description');
   }
 
   /**

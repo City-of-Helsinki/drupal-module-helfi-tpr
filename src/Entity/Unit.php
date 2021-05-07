@@ -143,6 +143,28 @@ class Unit extends TprEntityBase {
   }
 
   /**
+   * Gets the picture url.
+   *
+   * @return string|null
+   *   The picture url.
+   */
+  public function getPictureUrl() : ? string {
+    /** @var \Drupal\media\MediaInterface $picture_url */
+    $picture_url = $this->get('picture_url_override')->entity;
+
+    // Fallback to default picture url if override is not set.
+    if (!$picture_url) {
+      return $this->get('picture_url')->value;
+    }
+
+    /** @var \Drupal\file\FileInterface $file */
+    if ($file = $picture_url->get('field_media_image')->entity) {
+      return $file->createFileUrl(FALSE);
+    }
+    return NULL;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {

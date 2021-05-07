@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Drupal\Tests\helfi_tpr\Functional;
 
 use Drupal\Core\Url;
-use Drupal\Tests\helfi_api_base\Functional\MigrationTestBase;
 use Drupal\Tests\helfi_tpr\Traits\UnitMigrateTrait;
 
 /**

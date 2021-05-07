@@ -77,7 +77,6 @@ function helfi_tpr_tokens(
       $replacements[$original] = $entity->label();
     }
 
-
     if ($entity instanceof Unit) {
       if ($name === 'picture') {
         $replacements[$original] = $entity->getPictureUrl();

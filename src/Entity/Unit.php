@@ -10,6 +10,8 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldItemList;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\text\Plugin\Field\FieldType\TextItem;
+use Webmozart\Assert\Assert;
 
 /**
  * Defines the tpr_unit entity class.
@@ -171,11 +173,9 @@ class Unit extends TprEntityBase {
    * @return string|null
    *   The description.
    */
-  /**
-   * @return FieldItemList|null
-   */
-  public function getDescription() : ? FieldItemList {
-    return $this->get('description');
+  public function getDescription(string $key) : ? string {
+    Assert::oneOf($key, ['value', 'summary', 'format']);
+    return $this->get('description')->{$key};
   }
 
   /**

@@ -90,6 +90,48 @@ class TokenTest extends MigrationTestBase {
   }
 
   /**
+   * Tests description token.
+   */
+  public function testDescription() : void {
+    $unit = Unit::create([
+      'id' => 999,
+      'name' => 'Name fi',
+      'langcode' => 'fi',
+      'description' => [
+        'value' => 'Description fi value',
+        'summary' => 'Description fi summary',
+        'format' => 'plain_text',
+      ],
+    ]);
+    $unit
+      ->addTranslation('en', [
+        'description' => [
+          'value' => 'Description en value',
+          'summary' => 'Description en summary',
+          'format' => 'plain_text',
+        ],
+      ])
+      ->addTranslation('sv', [
+        'description' => [
+          'value' => 'Description sv value',
+          'summary' => 'Description sv summary',
+          'format' => 'plain_text',
+        ],
+      ])
+      ->save();
+
+    foreach (['en', 'sv', 'fi'] as $langcode) {
+      foreach (['value', 'summary'] as $type) {
+        $description = \Drupal::token()
+          ->replace("[tpr_unit:description:$type]", [
+            'tpr_unit' => $unit->getTranslation($langcode),
+          ]);
+        $this->assertEquals("Description $langcode $type", $description);
+      }
+    }
+  }
+
+  /**
    * Tests picture token.
    */
   public function testPictureUrl() : void {

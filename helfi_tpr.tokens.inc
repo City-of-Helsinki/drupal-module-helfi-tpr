@@ -34,6 +34,17 @@ function helfi_tpr_token_info() {
       'name' => t('Label'),
     ];
   }
+
+  $info['tokens']['tpr_unit']['picture'] = [
+    'name' => t('Picture'),
+  ];
+  $info['tokens']['tpr_unit']['description:value'] = [
+    'name' => t('Description'),
+  ];
+  $info['tokens']['tpr_unit']['description:summary'] = [
+    'name' => t('Description summary'),
+  ];
+
   return $info;
 }
 
@@ -66,8 +77,17 @@ function helfi_tpr_tokens(
       $replacements[$original] = $entity->label();
     }
 
-    if ($entity instanceof Unit && $name === 'picture') {
-      $replacements[$original] = $entity->getPictureUrl();
+
+    if ($entity instanceof Unit) {
+      if ($name === 'picture') {
+        $replacements[$original] = $entity->getPictureUrl();
+      }
+      if ($name === 'description:value') {
+        $replacements[$original] = $entity->getDescription('value');
+      }
+      if ($name === 'description:summary') {
+        $replacements[$original] = $entity->getDescription('summary');
+      }
     }
   }
 

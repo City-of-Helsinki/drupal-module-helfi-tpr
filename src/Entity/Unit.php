@@ -8,7 +8,10 @@ use CommerceGuys\Addressing\AddressFormat\AddressField;
 use CommerceGuys\Addressing\AddressFormat\FieldOverride;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldItemList;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\text\Plugin\Field\FieldType\TextItem;
+use Webmozart\Assert\Assert;
 
 /**
  * Defines the tpr_unit entity class.
@@ -162,6 +165,17 @@ class Unit extends TprEntityBase {
       return $file->createFileUrl(FALSE);
     }
     return NULL;
+  }
+
+  /**
+   * Gets the description.
+   *
+   * @return string|null
+   *   The description.
+   */
+  public function getDescription(string $key) : ? string {
+    Assert::oneOf($key, ['value', 'summary', 'format']);
+    return $this->get('description')->{$key};
   }
 
   /**

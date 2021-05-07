@@ -8,7 +8,6 @@ use Drupal\file\Entity\File;
 use Drupal\helfi_tpr\Entity\Unit;
 use Drupal\media\Entity\Media;
 use Drupal\Tests\media\Traits\MediaTypeCreationTrait;
-use org\bovigo\vfs\vfsStream;
 
 /**
  * Tests custom tokens.

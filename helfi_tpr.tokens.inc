@@ -72,5 +72,4 @@ function helfi_tpr_tokens(
   }
 
   return $replacements;
-
 }

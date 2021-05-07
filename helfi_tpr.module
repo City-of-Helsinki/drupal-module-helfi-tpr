@@ -94,4 +94,3 @@ function template_preprocess_tpr_service(array &$variables) {
     $variables['content']['description_summary'] = $variables['elements']['#tpr_service']->get('description')->summary;
   }
 }
-

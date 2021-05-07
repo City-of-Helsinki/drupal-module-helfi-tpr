@@ -1,8 +1,6 @@
 langcode: en
 status: true
 dependencies:
-  config:
-    - core.entity_view_mode.tpr_service.teaser
   module:
     - helfi_tpr
     - user

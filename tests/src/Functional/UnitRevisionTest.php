@@ -5,10 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\Tests\helfi_tpr\Functional;
 
 use Drupal\Core\Url;
-use Drupal\Tests\helfi_api_base\Functional\MigrationTestBase;
-use Drupal\Tests\helfi_api_base\Traits\ApiTestTrait;
-use Drupal\user\UserInterface;
-use GuzzleHttp\Psr7\Response;
+use Drupal\Tests\helfi_tpr\Traits\UnitMigrateTrait;
 
 /**
  * Tests unit revisions.
@@ -17,74 +14,14 @@ use GuzzleHttp\Psr7\Response;
  */
 class UnitRevisionTest extends MigrationTestBase {
 
-  use ApiTestTrait;
-
-  /**
-   * {@inheritdoc}
-   */
-  protected static $modules = [
-    'media',
-    'block',
-    'readonly_field_widget',
-    'media_library',
-    'entity',
-    'helfi_tpr',
-  ];
-
-  /**
-   * The account.
-   *
-   * @var \Drupal\user\UserInterface
-   */
-  protected UserInterface $account;
-
-  /**
-   * {@inheritdoc}
-   */
-  protected $defaultTheme = 'stark';
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setUp(): void {
-    parent::setUp();
-
-    $this->account = $this->createUser([
-      'administer tpr_unit',
-      'translate editable entities',
-      'view all tpr_unit revisions',
-      'revert all tpr_unit revisions',
-    ]);
-    $this->drupalLogin($this->account);
-
-    $this->drupalPlaceBlock('local_tasks_block');
-  }
-
-  /**
-   * Migrates the tpr unit entities.
-   *
-   * @param array $units
-   *   The units.
-   *
-   * @throws \Drupal\migrate\MigrateException
-   */
-  private function runMigrate(array $units): void {
-    $responses = [
-      new Response(200, [], json_encode($units)),
-    ];
-
-    foreach ($units as $unit) {
-      $responses[] = new Response(200, [], json_encode($unit));
-    }
-
-    $this->container->set('http_client', $this->createMockHttpClient($responses));
-    $this->executeMigration('tpr_unit');
-  }
+  use UnitMigrateTrait;
 
   /**
    * Tests revisions.
    */
   public function testRevision() : void {
+    $this->drupalLogin($this->privilegedAccount);
+
     $units = [
       [
         'id' => 999,

@@ -9,6 +9,7 @@ use CommerceGuys\Addressing\AddressFormat\FieldOverride;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Webmozart\Assert\Assert;
 
 /**
  * Defines the tpr_unit entity class.
@@ -23,8 +24,9 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "access" = "Drupal\entity\EntityAccessControlHandler",
  *     "permission_provider" = "Drupal\entity\EntityPermissionProvider",
+ *     "translation" = "Drupal\helfi_tpr\Entity\TranslationHandler",
  *     "form" = {
- *       "default" = "Drupal\Core\Entity\ContentEntityForm",
+ *       "default" = "Drupal\helfi_tpr\Entity\Form\ContentEntityForm",
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
@@ -142,6 +144,39 @@ class Unit extends TprEntityBase {
   }
 
   /**
+   * Gets the picture url.
+   *
+   * @return string|null
+   *   The picture url.
+   */
+  public function getPictureUrl() : ? string {
+    /** @var \Drupal\media\MediaInterface $picture_url */
+    $picture_url = $this->get('picture_url_override')->entity;
+
+    // Fallback to default picture url if override is not set.
+    if (!$picture_url) {
+      return $this->get('picture_url')->value;
+    }
+
+    /** @var \Drupal\file\FileInterface $file */
+    if ($file = $picture_url->get('field_media_image')->entity) {
+      return $file->createFileUrl(FALSE);
+    }
+    return NULL;
+  }
+
+  /**
+   * Gets the description.
+   *
+   * @return string|null
+   *   The description.
+   */
+  public function getDescription(string $key) : ? string {
+    Assert::oneOf($key, ['value', 'summary', 'format']);
+    return $this->get('description')->{$key};
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
@@ -167,7 +202,7 @@ class Unit extends TprEntityBase {
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
-    $fields['phone'] = static::createStringField('Phone', BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    $fields['phone'] = static::createPhoneField('Phone', BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setTranslatable(FALSE);
     $fields['email'] = static::createStringField('Email')
       ->setTranslatable(FALSE);

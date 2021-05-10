@@ -19,13 +19,21 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\helfi_tpr\Entity\Listing\ListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
- *     "access" = "Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess",
+ *     "access" = "Drupal\entity\EntityAccessControlHandler",
+ *     "permission_provider" = "Drupal\entity\EntityPermissionProvider",
+ *     "translation" = "Drupal\helfi_tpr\Entity\TranslationHandler",
  *     "form" = {
- *       "default" = "Drupal\Core\Entity\ContentEntityForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm"
+ *       "default" = "Drupal\helfi_tpr\Entity\Form\ContentEntityForm",
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
+ *       "revision" = "\Drupal\helfi_api_base\Entity\Routing\RevisionRouteProvider",
+ *     },
+ *     "local_action_provider" = {
+ *       "collection" = "\Drupal\entity\Menu\EntityCollectionLocalActionProvider",
+ *     },
+ *     "local_task_provider" = {
+ *       "default" = "\Drupal\entity\Menu\DefaultEntityLocalTaskProvider",
  *     },
  *   },
  *   base_table = "tpr_service",
@@ -33,6 +41,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   revision_table = "tpr_service_revision",
  *   revision_data_table = "tpr_service_field_revision",
  *   show_revision_ui = TRUE,
+ *   revisionable = TRUE,
  *   translatable = TRUE,
  *   admin_permission = "administer remote entities",
  *   entity_keys = {
@@ -50,8 +59,10 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   links = {
  *     "canonical" = "/tpr-service/{tpr_service}",
  *     "edit-form" = "/admin/content/integrations/tpr-service/{tpr_service}/edit",
- *     "delete-form" = "/admin/content/integrations/tpr-service/{tpr_service}/delete",
- *     "collection" = "/admin/content/integrations/tpr-service"
+ *     "collection" = "/admin/content/integrations/tpr-service",
+ *     "version-history" = "/admin/content/integrations/tpr-service/{tpr_service}/revisions",
+ *     "revision" = "/admin/content/integrations/tpr-service/{tpr_service}/revisions/{tpr_service_revision}/view",
+ *     "revision-revert-language-form" = "/admin/content/integrations/tpr-service/{tpr_service}/revisions/{tpr_service_revision}/revert/{langcode}",
  *   },
  *   field_ui_base_route = "tpr_service.settings"
  * )

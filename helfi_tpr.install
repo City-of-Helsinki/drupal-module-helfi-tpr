@@ -396,3 +396,30 @@ function helfi_tpr_update_8016() : void {
       ->write($view, $language_config_source->read($view));
   }
 }
+
+/**
+ * Convert old phone numbers to use telephone field.
+ */
+function helfi_tpr_update_8018() : void {
+  \Drupal::service('module_installer')->install(['telephone']);
+
+  $manager = \Drupal::entityDefinitionUpdateManager();
+
+  $field = BaseFieldDefinition::create('telephone')
+    ->setLabel(new TranslatableMarkup('Phone'))
+    ->setTranslatable(TRUE)
+    ->setRevisionable(FALSE)
+    ->setDisplayConfigurable('view', TRUE)
+    ->setDisplayConfigurable('form', TRUE);
+
+  foreach (['tpr_unit', 'tpr_service_channel'] as $entity_type) {
+    if ($definition = $manager->getFieldStorageDefinition('phone', $entity_type)) {
+      $manager->uninstallFieldStorageDefinition($definition);
+    }
+  }
+  $manager->installFieldStorageDefinition('phone', 'tpr_service_channel', 'helfi_tpr', $field);
+
+  $field->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setTranslatable(FALSE);
+  $manager->installFieldStorageDefinition('phone', 'tpr_unit', 'helfi_tpr', $field);
+}

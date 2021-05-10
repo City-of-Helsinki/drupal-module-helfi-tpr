@@ -20,6 +20,12 @@ function helfi_tpr_theme() {
       'render element' => 'elements',
       'template' => 'tpr-service',
     ],
+    'tpr_unit_form' => [
+      'render element' => 'form',
+    ],
+    'tpr_service_form' => [
+      'render element' => 'form',
+    ],
   ];
 }
 

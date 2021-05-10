@@ -9,6 +9,7 @@ use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\Entity\RevisionLogEntityTrait;
 use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\helfi_api_base\Entity\RemoteEntityBase;
 
@@ -41,7 +42,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   }
 
   /**
-   * Creates a basic string field.
+   * Helper function to create a basic string field.
    *
    * @param string $label
    *   The label.
@@ -52,22 +53,54 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
    *   The field definition.
    */
   protected static function createStringField(string $label, int $cardinality = 1) : BaseFieldDefinition {
-    return BaseFieldDefinition::create('string')
+    return static::createBaseField(BaseFieldDefinition::create('string'), $label)
       // @codingStandardsIgnoreLine
-      ->setLabel(new TranslatableMarkup($label))
-      ->setTranslatable(TRUE)
-      ->setRevisionable(FALSE)
-      ->setDefaultValue('')
       ->setCardinality($cardinality)
-      ->setDisplayConfigurable('view', TRUE)
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayOptions('form', [
-        'type' => 'readonly_field_widget',
-      ])
+      ->setDefaultValue('')
       ->setSettings([
         'max_length' => 255,
         'text_processing' => 0,
       ]);
+  }
+
+  /**
+   * Helper function to create a basic base field.
+   *
+   * @param \Drupal\Core\Field\BaseFieldDefinition $field
+   *   The base field.
+   * @param string $label
+   *   The label.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The base field.
+   */
+  protected static function createBaseField(BaseFieldDefinition $field, string $label) : BaseFieldDefinition {
+    return $field
+      // @codingStandardsIgnoreLine
+      ->setLabel(new TranslatableMarkup($label))
+      ->setTranslatable(TRUE)
+      ->setRevisionable(FALSE)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ]);
+  }
+
+  /**
+   * Helper function to create a basic phone field.
+   *
+   * @param string $label
+   *   The label.
+   * @param int $cardinality
+   *   The cardinality.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The field definition.
+   */
+  protected static function createPhoneField(string $label, int $cardinality = 1) : BaseFieldDefinition {
+    return static::createBaseField(BaseFieldDefinition::create('telephone'), $label)
+      ->setCardinality($cardinality);
   }
 
   /**
@@ -108,7 +141,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   }
 
   /**
-   * Creates a basic link field.
+   * Helper function to create a basic link field.
    *
    * @param string $label
    *   The label.
@@ -119,21 +152,31 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
    *   The field definition.
    */
   protected static function createLinkField(string $label, int $cardinality = 1) : BaseFieldDefinition {
-    return BaseFieldDefinition::create('link')
-      // @codingStandardsIgnoreLine
-      ->setLabel(new TranslatableMarkup($label))
-      ->setTranslatable(TRUE)
-      ->setRevisionable(FALSE)
-      ->setDefaultValue('')
+    return static::createBaseField(BaseFieldDefinition::create('link'), $label)
       ->setCardinality($cardinality)
-      ->setDisplayOptions('form', [
-        'type' => 'readonly_field_widget',
-      ])
       ->setSettings([
         'max_length' => 255,
-      ])
-      ->setDisplayConfigurable('view', TRUE)
-      ->setDisplayConfigurable('form', TRUE);
+      ]);
+  }
+
+  /**
+   * Whether the entity is published.
+   *
+   * @return bool
+   *   Whether entity is published or not.
+   */
+  public function isPublished() : bool {
+    return (bool) $this->get('content_translation_status')->value;
+  }
+
+  /**
+   * Gets the author.
+   *
+   * @return \Drupal\Core\Session\AccountInterface|null
+   *   The account.
+   */
+  public function getAuthor() : ? AccountInterface {
+    return $this->get('content_translation_uid')->entity;
   }
 
   /**

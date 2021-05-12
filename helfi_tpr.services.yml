@@ -1,3 +1,9 @@
 services:
   migration_fixture.tpr_unit:
     class: Drupal\helfi_tpr\Fixture\Unit
+  migration_fixture.tpr_service:
+    class: Drupal\helfi_tpr\Fixture\Service
+  migration_fixture.tpr_errand_service:
+    class: Drupal\helfi_tpr\Fixture\ErrandService
+  migration_fixture.tpr_service_channel:
+    class: Drupal\helfi_tpr\Fixture\ServiceChannel

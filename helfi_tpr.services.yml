@@ -1,0 +1,3 @@
+services:
+  migration_fixture.tpr_unit:
+    class: Drupal\helfi_tpr\Fixture\Unit

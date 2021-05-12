@@ -65,4 +65,12 @@ final class TranslationHandler extends ContentTranslationHandler {
     unset($form['actions']['delete_translation']);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  protected function addTranslatabilityClue(&$element) {
+    // Do nothing since we don't care if elements are translated
+    // per language or not.
+  }
+
 }

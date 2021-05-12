@@ -46,6 +46,10 @@ Migration failed and the migration process is stuck at importing:
 Set `PARTIAL_MIGRATE=1` env variable to only migrate changed items. *NOTE:* running a partial migrate will skip
 all garbage collection tasks (such as cleaning removed remote entities), so you should periodically run full migrations as well.
 
+### Migrate fixtures
+
+`drush helfi:migrate-fixture {migrate_id}`.
+
 ## Contact
 
 Slack: #helfi-drupal (http://helsinkicity.slack.com/)

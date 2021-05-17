@@ -237,7 +237,6 @@ class Unit extends TprEntityBase {
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
-
     $fields['call_charge_info'] = BaseFieldDefinition::create('text_long')
       ->setTranslatable(TRUE)
       ->setRevisionable(FALSE)
@@ -247,9 +246,7 @@ class Unit extends TprEntityBase {
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
-
     $fields['address_postal'] = static::createStringField('Address postal');
-
     $fields['latitude'] = static::createStringField('Latitude')
       ->setTranslatable(FALSE);
     $fields['longitude'] = static::createStringField('Longitude')
@@ -264,7 +261,6 @@ class Unit extends TprEntityBase {
         'label' => 'hidden',
         'type' => 'service_map_embed',
       ]);
-
     $fields['services'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(new TranslatableMarkup('Services'))
       ->setSettings([
@@ -277,6 +273,13 @@ class Unit extends TprEntityBase {
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
+    $fields['menu_link'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(new TranslatableMarkup('Menu link'))
+      ->setSettings([
+        'target_type' => 'menu_link_content',
+      ])
+      ->setRevisionable(FALSE)
+      ->setTranslatable(TRUE);
 
     return $fields;
   }

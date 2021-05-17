@@ -7,6 +7,8 @@ namespace Drupal\helfi_tpr\Entity\Form;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\ContentEntityForm as CoreContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Menu\MenuParentFormSelectorInterface;
+use Drupal\helfi_api_base\Entity\Form\MenuLinkFormTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -16,6 +18,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ContentEntityForm extends CoreContentEntityForm {
 
+  use MenuLinkFormTrait;
+
   /**
    * The date formatter service.
    *
@@ -24,11 +28,19 @@ class ContentEntityForm extends CoreContentEntityForm {
   protected DateFormatterInterface $dateFormatter;
 
   /**
+   * The menu parent form selector.
+   *
+   * @var \Drupal\Core\Menu\MenuParentFormSelectorInterface
+   */
+  protected MenuParentFormSelectorInterface $menuParentSelector;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
     $instance->dateFormatter = $container->get('date.formatter');
+    $instance->menuParentSelector = $container->get('menu.parent_form_selector');
     return $instance;
   }
 
@@ -50,6 +62,10 @@ class ContentEntityForm extends CoreContentEntityForm {
     // TPR entities are unpublished by default and might not have any
     // translations, leaving users unable to un/publish given content.
     $controller->entityFormAlter($form, $form_state, $entity);
+
+    if ($entity->hasField('menu_link')) {
+      $form = $this->attachMenuLinkForm($form, $form_state);
+    }
 
     return $form;
   }

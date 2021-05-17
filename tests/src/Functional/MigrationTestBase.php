@@ -22,6 +22,7 @@ abstract class MigrationTestBase extends ApiMigrationTestBase {
     'media',
     'block',
     'readonly_field_widget',
+    'menu_link_content',
     'media_library',
     'entity',
     'helfi_tpr',

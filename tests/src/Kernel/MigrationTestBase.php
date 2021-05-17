@@ -24,6 +24,7 @@ abstract class MigrationTestBase extends ApiMigrationTestBase {
     'helfi_tpr',
     'media',
     'telephone',
+    'menu_link_content',
   ];
 
   /**
@@ -33,6 +34,7 @@ abstract class MigrationTestBase extends ApiMigrationTestBase {
     parent::setUp();
 
     $entity_types = [
+      'menu_link_content',
       'tpr_unit',
       'tpr_service',
       'tpr_errand_service',

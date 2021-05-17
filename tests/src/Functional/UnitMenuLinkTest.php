@@ -24,7 +24,17 @@ class UnitMenuLinkTest extends MigrationTestBase {
     'menu_ui',
   ];
 
-  private function assertMenuLink(string $expected_link, string $language, bool $expected) : void {
+  /**
+   * Asserts that given menu link exists and is enabled or disabled.
+   *
+   * @param string $expected_link
+   *   The expected link label.
+   * @param string $language
+   *   The language.
+   * @param bool $is_checked
+   *   Whether the checkbox is expected to be checked or not.
+   */
+  private function assertMenuLink(string $expected_link, string $language, bool $is_checked) : void {
     // Make sure link is disabled by default.
     $this->drupalGet('/admin/structure/menu/manage/main', [
       'query' => ['language' => $language],
@@ -33,7 +43,7 @@ class UnitMenuLinkTest extends MigrationTestBase {
     $element = $this->getSession()->getPage()->find('css', '.checkbox.menu-enabled input[type="checkbox"]');
     $this->assertNotNull($element);
 
-    if ($expected) {
+    if ($is_checked) {
       $this->assertTrue($element->isChecked());
     }
     else {

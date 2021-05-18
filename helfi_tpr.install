@@ -10,6 +10,7 @@ use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\helfi_tpr\Entity\Unit;
 
 /**
  * Installs the service entity type.
@@ -162,35 +163,6 @@ function helfi_tpr_update_8008() : void {
 }
 
 /**
- * Installs name override fields.
- */
-function helfi_tpr_update_8009() : void {
-  $field = BaseFieldDefinition::create('string')
-    ->setLabel(new TranslatableMarkup('Override: Name'))
-    ->setTranslatable(TRUE)
-    ->setRevisionable(TRUE)
-    ->setDefaultValue('')
-    ->setDisplayConfigurable('view', TRUE)
-    ->setDisplayConfigurable('form', TRUE)
-    ->setSettings([
-      'max_length' => 255,
-      'text_processing' => 0,
-    ]);
-
-  $entity_types = [
-    'tpr_unit',
-    'tpr_service',
-    'tpr_errand_service',
-    'tpr_service_channel',
-  ];
-
-  foreach ($entity_types as $type) {
-    \Drupal::entityDefinitionUpdateManager()
-      ->installFieldStorageDefinition('name_override', $type, 'helfi_tpr', $field);
-  }
-}
-
-/**
  * Installs content translation fields for errand services and channels.
  */
 function helfi_tpr_update_8010() : void {
@@ -248,121 +220,27 @@ function helfi_tpr_update_8010() : void {
 }
 
 /**
- * Make migrated unit fields not revisionable.
+ * Uninstall all entity types.
  */
 function helfi_tpr_update_8011() : void {
   $manager = \Drupal::entityDefinitionUpdateManager();
 
-  $fields = [
-    'name',
-    'picture_url',
-    'email',
-    'accessibility_phone',
-    'accessibility_email',
-    'www',
-    'accessibility_www',
-    'description',
-    'address',
-    'address_postal',
-    'latitude',
-    'longitude',
-    'streetview_entrance_url',
-    'service_map_embed',
-  ];
-
-  foreach ($fields as $field) {
-    $definition = $manager->getFieldStorageDefinition($field, 'tpr_unit');
-    $definition->setRevisionable(FALSE);
-
-    $manager->updateFieldStorageDefinition($definition);
-  }
-
-  if ($definition = $manager->getFieldStorageDefinition('call_charge_info', 'tpr_unit')) {
-    \Drupal::database()->update('tpr_unit_field_data')
-      ->isNotNull('call_charge_info')
-      ->fields(['call_charge_info' => NULL])
-      ->execute();
-
-    $manager->uninstallFieldStorageDefinition($definition);
-
-    $field = BaseFieldDefinition::create('text_long')
-      ->setTranslatable(TRUE)
-      ->setRevisionable(FALSE)
-      ->setLabel(new TranslatableMarkup('Call charge info'))
-      ->setDisplayOptions('form', [
-        'type' => 'readonly_field_widget',
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    $manager->installFieldStorageDefinition('call_charge_info', 'tpr_unit', 'helfi_tpr', $field);
+  foreach (['tpr_unit', 'tpr_service', 'tpr_errand_service', 'tpr_service_channel'] as $type) {
+    $manager->uninstallEntityType($manager->getEntityType($type));
   }
 }
 
 /**
- * Make migrated service channel fields not revisionable.
+ * Install all entity types.
  */
 function helfi_tpr_update_8012() : void {
   $manager = \Drupal::entityDefinitionUpdateManager();
+  drupal_flush_all_caches();
 
-  $fields = [
-    'name',
-    'email',
-    'type',
-    'type_string',
-    'phone',
-    'address',
-  ];
-
-  foreach ($fields as $field) {
-    $definition = $manager->getFieldStorageDefinition($field, 'tpr_service_channel');
-    $definition->setRevisionable(FALSE);
-
-    $manager->updateFieldStorageDefinition($definition);
+  foreach (['tpr_unit', 'tpr_service', 'tpr_errand_service', 'tpr_service_channel'] as $type) {
+    $entity_type = \Drupal::entityTypeManager()->getDefinition($type);
+    $manager->installEntityType($entity_type);
   }
-}
-
-/**
- * Make migrated service fields not revisionable.
- */
-function helfi_tpr_update_8013() : void {
-  $manager = \Drupal::entityDefinitionUpdateManager();
-  $definition = $manager->getFieldStorageDefinition('name', 'tpr_service');
-  $definition->setRevisionable(FALSE);
-
-  $manager->updateFieldStorageDefinition($definition);
-}
-
-/**
- * Make migrated errand service fields not revisionable.
- */
-function helfi_tpr_update_8014() : void {
-  $manager = \Drupal::entityDefinitionUpdateManager();
-  foreach (['name', 'type'] as $field) {
-    $definition = $manager->getFieldStorageDefinition($field, 'tpr_errand_service');
-    $definition->setRevisionable(FALSE);
-
-    $manager->updateFieldStorageDefinition($definition);
-  }
-}
-
-/**
- * Installs Unit 'picture_url_override' field.
- */
-function helfi_tpr_update_8015() : void {
-  $picture_url_override = BaseFieldDefinition::create('entity_reference')
-    ->setLabel(new TranslatableMarkup('Override: Picture'))
-    ->setSettings([
-      'target_type' => 'media',
-      'handler_settings' => [
-        'target_bundles' => ['image'],
-      ],
-    ])
-    ->setDisplayConfigurable('view', TRUE)
-    ->setDisplayConfigurable('form', TRUE);
-
-  \Drupal::entityDefinitionUpdateManager()
-    ->installFieldStorageDefinition('picture_url_override', 'tpr_unit', 'helfi_tpr', $picture_url_override);
 }
 
 /**
@@ -395,47 +273,4 @@ function helfi_tpr_update_8016() : void {
       ->createCollection('language.fi')
       ->write($view, $language_config_source->read($view));
   }
-}
-
-/**
- * Convert old phone numbers to use telephone field.
- */
-function helfi_tpr_update_8018() : void {
-  \Drupal::service('module_installer')->install(['telephone']);
-
-  $manager = \Drupal::entityDefinitionUpdateManager();
-
-  $field = BaseFieldDefinition::create('telephone')
-    ->setLabel(new TranslatableMarkup('Phone'))
-    ->setTranslatable(TRUE)
-    ->setRevisionable(FALSE)
-    ->setDisplayConfigurable('view', TRUE)
-    ->setDisplayConfigurable('form', TRUE);
-
-  foreach (['tpr_unit', 'tpr_service_channel'] as $entity_type) {
-    if ($definition = $manager->getFieldStorageDefinition('phone', $entity_type)) {
-      $manager->uninstallFieldStorageDefinition($definition);
-    }
-  }
-  $manager->installFieldStorageDefinition('phone', 'tpr_service_channel', 'helfi_tpr', $field);
-
-  $field->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
-    ->setTranslatable(FALSE);
-  $manager->installFieldStorageDefinition('phone', 'tpr_unit', 'helfi_tpr', $field);
-}
-
-/**
- * Installs 'menu_link' field.
- */
-function helfi_tpr_update_8020() : void {
-  $menu_link = BaseFieldDefinition::create('entity_reference')
-    ->setLabel(new TranslatableMarkup('Menu link'))
-    ->setSettings([
-      'target_type' => 'menu_link_content',
-    ])
-    ->setRevisionable(FALSE)
-    ->setTranslatable(TRUE);
-
-  \Drupal::entityDefinitionUpdateManager()
-    ->installFieldStorageDefinition('menu_link', 'tpr_unit', 'helfi_tpr', $menu_link);
 }

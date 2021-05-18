@@ -8,7 +8,7 @@ use Drupal\Core\Url;
 use Drupal\Tests\helfi_tpr\Traits\UnitMigrateTrait;
 
 /**
- * Tests unit revisions.
+ * Tests menu link creation from unit entity form.
  *
  * @group helfi_tpr
  */
@@ -35,7 +35,6 @@ class UnitMenuLinkTest extends MigrationTestBase {
    *   Whether the checkbox is expected to be checked or not.
    */
   private function assertMenuLink(string $expected_link, string $language, bool $is_checked) : void {
-    // Make sure link is disabled by default.
     $this->drupalGet('/admin/structure/menu/manage/main', [
       'query' => ['language' => $language],
     ]);

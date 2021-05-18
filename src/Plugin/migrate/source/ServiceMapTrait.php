@@ -48,7 +48,7 @@ trait ServiceMapTrait {
 
       $item['language'] = $language;
 
-      // 'Normalize' suffixed fields to have a same name for every language.
+      // 'Normalize' suffixed fields to have same name for every language.
       // For example: name_fi, name_sv => name.
       foreach ($this->configuration['translatable_fields'] ?? [] as $field) {
         $key = sprintf('%s_%s', $field, $language);

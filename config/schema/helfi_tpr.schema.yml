@@ -2,6 +2,9 @@ field.value.accessibility_sentence:
   type: mapping
   label: Default value
   mapping:
+    group:
+      label: Group
+      type: string
     value:
-      type: label
+      type: string
       label: Value

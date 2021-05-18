@@ -89,7 +89,7 @@ class UnitMigrationTest extends MigrationTestBase {
       ->save();
 
     // Re-run migrate and make sure author and status fields won't get updated.
-    $entities = $this->createUnitMigration();
+    $entities = $this->createUnitMigration($this->getUnitData());
     $translation = $entities[1]->getTranslation('sv');
 
     $this->assertEquals('0', $translation->get('content_translation_uid')->target_id);

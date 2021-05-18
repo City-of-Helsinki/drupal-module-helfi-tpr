@@ -42,7 +42,14 @@ class ServiceMigrationTest extends MigrationTestBase {
    */
   public function testServiceMigration() : void {
     // Services has soft dependency on unit migration.
-    $this->createUnitMigration();
+    $this->createUnitMigration([
+      [
+        'id' => 1,
+        'name_fi' => 'Name fi 1',
+        'name_sv' => 'Name sv 1',
+        'name_en' => 'Name en 1',
+      ],
+    ]);
     $entities = $this->createServiceMigration();
     $this->assertCount(3, $entities);
 

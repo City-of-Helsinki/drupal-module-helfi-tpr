@@ -82,6 +82,9 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
     $dates = [];
     // Sort data by modified_time.
     foreach ($content as $key => $item) {
+      if (!isset($item['modified_time'])) {
+        $item['modified_time'] = (new DateTimePlus())->format('Y-m-d\TH:i:s');
+      }
       $dates[$key] = DateTimePlus::createFromFormat('Y-m-d\TH:i:s', $item['modified_time'])->format('U');
     }
     array_multisort($dates, SORT_DESC, $content);

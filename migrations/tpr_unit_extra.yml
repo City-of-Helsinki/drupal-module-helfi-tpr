@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - helfi_tpr
+id: tpr_unit_extra
+migration_tags:
+  - tpr
+label: 'TPR unit extra'
+source:
+  plugin: tpr_unit
+  track_changes: true
+  url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/'
+process:
+  id: id
+  accessibility_sentences:
+    plugin: sub_process
+    source: accessibility_sentences
+    process:
+      value: sentence
+      group: sentence_group
+destination:
+  plugin: tpr_unit
+migration_dependencies:
+  optional:
+    - tpr_unit

@@ -1,0 +1,7 @@
+field.value.accessibility_sentence:
+  type: mapping
+  label: Default value
+  mapping:
+    value:
+      type: label
+      label: Value

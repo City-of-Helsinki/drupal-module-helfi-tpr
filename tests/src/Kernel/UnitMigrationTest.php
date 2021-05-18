@@ -12,12 +12,46 @@ namespace Drupal\Tests\helfi_tpr\Kernel;
 class UnitMigrationTest extends MigrationTestBase {
 
   /**
+   * Gets the unit data.
+   *
+   * @return array[]
+   *   The unit data.
+   */
+  protected function getUnitData() : array {
+    return [
+      [
+        'id' => 1,
+        'name_fi' => 'Name fi 1',
+        'name_sv' => 'Name sv 1',
+        'name_en' => 'Name en 1',
+        'latitude' => '60.19',
+        'longitude' => '24.76',
+        'street_address_fi' => 'Address fi 1',
+        'street_address_sv' => 'Address sv 1',
+        'address_zip' => '02180',
+        'address_city_fi' => 'Espoo fi 1',
+        'address_city_sv' => 'Espoo sv 1',
+        'address_city_en' => 'Espoo en 1',
+        'phone' => '+3581234',
+        'call_charge_info_fi' => 'pvm fi 1',
+        'call_charge_info_en' => 'pvm en 1',
+        'call_charge_info_sv' => 'pvm sv 1',
+        'www_fi' => 'https://localhost/fi/1',
+        'www_sv' => 'https://localhost/sv/1',
+        'www_en' => 'https://localhost/en/1',
+        'created_time' => '2015-11-03T12:03:45',
+        'modified_time' => '2015-11-03T12:03:45',
+      ],
+    ];
+  }
+
+  /**
    * Tests unit migration.
    *
-   * @dataProvider unitMigrationData
+   * @dataProvider expectedUnitData
    */
   public function testUnitMigration(string $langcode, array $expected) : void {
-    $entities = $this->createUnitMigration();
+    $entities = $this->createUnitMigration($this->getUnitData());
     $this->assertCount(1, $entities);
 
     foreach ($entities as $entity) {
@@ -42,7 +76,7 @@ class UnitMigrationTest extends MigrationTestBase {
    * Tests that default values are not overridden by migrate.
    */
   public function testDefaultUnitValues() : void {
-    $entities = $this->createUnitMigration();
+    $entities = $this->createUnitMigration($this->getUnitData());
 
     // Update translation author and status fields.
     $translation = $entities[1]->getTranslation('sv');
@@ -68,7 +102,7 @@ class UnitMigrationTest extends MigrationTestBase {
    * @return array
    *   The data.
    */
-  public function unitMigrationData() : array {
+  public function expectedUnitData() : array {
     return [
       [
         'en',

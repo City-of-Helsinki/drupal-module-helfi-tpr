@@ -10,7 +10,6 @@ use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\helfi_tpr\Entity\Unit;
 
 /**
  * Installs the service entity type.
@@ -225,7 +224,14 @@ function helfi_tpr_update_8010() : void {
 function helfi_tpr_update_8011() : void {
   $manager = \Drupal::entityDefinitionUpdateManager();
 
-  foreach (['tpr_unit', 'tpr_service', 'tpr_errand_service', 'tpr_service_channel'] as $type) {
+  $entity_types = [
+    'tpr_unit',
+    'tpr_service',
+    'tpr_errand_service',
+    'tpr_service_channel',
+  ];
+
+  foreach ($entity_types as $type) {
     $manager->uninstallEntityType($manager->getEntityType($type));
   }
 }
@@ -235,9 +241,14 @@ function helfi_tpr_update_8011() : void {
  */
 function helfi_tpr_update_8012() : void {
   $manager = \Drupal::entityDefinitionUpdateManager();
-  drupal_flush_all_caches();
 
-  foreach (['tpr_unit', 'tpr_service', 'tpr_errand_service', 'tpr_service_channel'] as $type) {
+  $entity_types = [
+    'tpr_unit',
+    'tpr_service',
+    'tpr_errand_service',
+    'tpr_service_channel',
+  ];
+  foreach ($entity_types as $type) {
     $entity_type = \Drupal::entityTypeManager()->getDefinition($type);
     $manager->installEntityType($entity_type);
   }
@@ -273,4 +284,17 @@ function helfi_tpr_update_8016() : void {
       ->createCollection('language.fi')
       ->write($view, $language_config_source->read($view));
   }
+}
+
+/**
+ * Install 'accessibility_sentences' field.
+ */
+function helfi_tpr_update_8017() : void {
+  $field = BaseFieldDefinition::create('accessibility_sentence')
+    ->setLabel(new TranslatableMarkup('Accessibility sentence'))
+    ->setTranslatable(TRUE)
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setDisplayConfigurable('view', TRUE);
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('accessibility_sentences', 'tpr_unit', 'helfi_tpr', $field);
 }

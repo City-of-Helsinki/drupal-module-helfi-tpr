@@ -17,6 +17,8 @@ use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
  */
 class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
 
+  use ServiceMapTrait;
+
   /**
    * The total count.
    *
@@ -67,58 +69,7 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
     foreach ($this->entityIds as $entityId) {
       $content = $this->getContent($this->buildCanonicalUrl($entityId));
 
-      yield from $this->yieldTranslatableContent($content);
-    }
-  }
-
-  /**
-   * Converts one multilingual object into multiple objects.
-   *
-   * By default a TPR entity has langcode suffixed fields for multilingual
-   * data, like:
-   * @code
-   * name_fi => Name in finnish
-   * name_sv => Name in swedish
-   * www_fi => http://finnish-link
-   * www_sv => http://swedish-link
-   * @endcode
-   *
-   * Our destination plugin expects translations to be returned as
-   * separate objects and have identical field names.
-   *
-   * @param array $data
-   *   The data from API.
-   *
-   * @return \Generator
-   *   The iterator.
-   */
-  private function yieldTranslatableContent(array $data) : \Generator {
-    $delta = 0;
-
-    foreach (['fi', 'sv', 'en'] as $language) {
-      // Skip translations without translated names.
-      if (!isset($data[sprintf('name_%s', $language)])) {
-        continue;
-      }
-      $item = $data;
-
-      // Mark first item as default langcode.
-      if ($delta === 0) {
-        $item['default_langcode'] = TRUE;
-      }
-      $delta++;
-
-      $item['language'] = $language;
-
-      foreach ($this->configuration['translatable_fields'] ?? [] as $field) {
-        $key = sprintf('%s_%s', $field, $language);
-
-        if (!isset($data[$key])) {
-          continue;
-        }
-        $item[$field] = $data[$key];
-      }
-      yield $item;
+      yield from $this->normalizeMultilingualData($content);
     }
   }
 
@@ -150,7 +101,7 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
       if ($this->isPartialMigrate() && ($this->ignoredRows >= static::NUM_IGNORED_ROWS_BEFORE_STOPPING)) {
         break;
       }
-      yield from $this->yieldTranslatableContent($object);
+      yield from $this->normalizeMultilingualData($object);
     }
   }
 

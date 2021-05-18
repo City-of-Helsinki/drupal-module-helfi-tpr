@@ -423,3 +423,19 @@ function helfi_tpr_update_8018() : void {
     ->setTranslatable(FALSE);
   $manager->installFieldStorageDefinition('phone', 'tpr_unit', 'helfi_tpr', $field);
 }
+
+/**
+ * Installs 'menu_link' field.
+ */
+function helfi_tpr_update_8020() : void {
+  $menu_link = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(new TranslatableMarkup('Menu link'))
+    ->setSettings([
+      'target_type' => 'menu_link_content',
+    ])
+    ->setRevisionable(FALSE)
+    ->setTranslatable(TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('menu_link', 'tpr_unit', 'helfi_tpr', $menu_link);
+}

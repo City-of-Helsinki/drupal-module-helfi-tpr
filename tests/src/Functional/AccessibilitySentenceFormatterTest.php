@@ -67,6 +67,16 @@ class AccessibilitySentenceFormatterTest extends MigrationTestBase {
         $this->entity->save();
       }
     }
+
+    /** @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface $display_repository */
+    $display_repository = \Drupal::service('entity_display.repository');
+    $display_repository->getViewDisplay('tpr_unit', 'tpr_unit')
+      ->setComponent('accessibility_sentence', [
+        'type' => 'accessibility_sentence',
+        'weight' => 1,
+        'label' => 'above',
+      ])
+      ->save();
   }
 
   /**
@@ -78,6 +88,7 @@ class AccessibilitySentenceFormatterTest extends MigrationTestBase {
       $this->drupalGet(Url::fromRoute('entity.tpr_unit.canonical', ['tpr_unit' => 999]), [
         'query' => ['language' => $language],
       ]);
+      $this->assertSession()->pageTextContains('Accessibility sentences');
       $this->assertSession()->pageTextContains("Test group $language 1");
       $this->assertSession()->pageTextContains("Test value $language 1");
       $this->assertSession()->pageTextContains("Test group $language 2");

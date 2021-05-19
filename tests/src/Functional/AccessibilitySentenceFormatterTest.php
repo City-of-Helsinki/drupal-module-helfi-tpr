@@ -72,10 +72,10 @@ class AccessibilitySentenceFormatterTest extends MigrationTestBase {
   /**
    * Asserts that we can or can't see the field values.
    *
-   * @param bool $expected
+   * @param bool $expect_visible
    *   Whether we should see field values.
    */
-  private function assertFieldDisplay(bool $expected) : void {
+  private function assertFieldDisplay(bool $expect_visible) : void {
     foreach (['fi', 'en', 'sv'] as $language) {
       $this->drupalGet(Url::fromRoute('entity.tpr_unit.canonical', ['tpr_unit' => 999]), [
         'query' => ['language' => $language],
@@ -89,7 +89,7 @@ class AccessibilitySentenceFormatterTest extends MigrationTestBase {
       ];
 
       foreach ($strings as $string) {
-        $expected ?
+        $expect_visible ?
           $this->assertSession()->pageTextContains($string) :
           $this->assertSession()->pageTextNotContains($string);
       }

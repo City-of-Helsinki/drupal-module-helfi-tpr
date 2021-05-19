@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\helfi_tpr\Kernel;
 
+use Drupal\helfi_tpr\Entity\Service;
 use Drupal\helfi_tpr\Entity\Unit;
 
 /**
@@ -17,7 +18,8 @@ class ServiceMigrationTest extends MigrationTestBase {
    * Tests that default values are not overridden by migrate.
    */
   public function testDefaultServiceValues() : void {
-    $entities = $this->createServiceMigration();
+    $this->runServiceMigrate();
+    $entities = Service::loadMultiple();
 
     // Update translation author and status fields.
     $translation = $entities[1]->getTranslation('sv');
@@ -30,7 +32,8 @@ class ServiceMigrationTest extends MigrationTestBase {
       ->save();
 
     // Re-run migrate and make sure author and status fields won't get updated.
-    $entities = $this->createServiceMigration();
+    $this->runServiceMigrate();
+    $entities = Service::loadMultiple();
     $translation = $entities[1]->getTranslation('sv');
 
     $this->assertEquals('0', $translation->get('content_translation_uid')->target_id);
@@ -42,15 +45,9 @@ class ServiceMigrationTest extends MigrationTestBase {
    */
   public function testServiceMigration() : void {
     // Services has soft dependency on unit migration.
-    $this->createUnitMigration([
-      [
-        'id' => 1,
-        'name_fi' => 'Name fi 1',
-        'name_sv' => 'Name sv 1',
-        'name_en' => 'Name en 1',
-      ],
-    ]);
-    $entities = $this->createServiceMigration();
+    $this->runUnitMigrate();
+    $this->runServiceMigrate();
+    $entities = Service::loadMultiple();
     $this->assertCount(3, $entities);
 
     // Make sure unit_ids are mapped properly.

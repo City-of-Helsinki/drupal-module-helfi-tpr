@@ -20,7 +20,15 @@ final class Service extends FixtureBase {
       [
         'id' => 1,
         'title' => 'Service 1',
-        'unit_ids' => ['999'],
+        'unit_ids' => ['1'],
+      ],
+      [
+        'id' => 2,
+        'title' => 'Service 2',
+      ],
+      [
+        'id' => 3,
+        'title' => 'Service 3',
       ],
     ];
     $responses = [
@@ -37,6 +45,7 @@ final class Service extends FixtureBase {
           'description_long' => sprintf('Description long %s %s', $language, $id),
           'exact_errand_services' => [
             123,
+            456,
           ],
           'links' => [
             [

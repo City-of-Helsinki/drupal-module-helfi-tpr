@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\Tests\helfi_tpr\Functional;
 
 use Drupal\Core\Url;
-use Drupal\Tests\helfi_tpr\Traits\UnitMigrateTrait;
+use Drupal\Tests\helfi_tpr\Traits\TprMigrateTrait;
 
 /**
  * Tests menu link creation from unit entity form.
@@ -14,7 +14,7 @@ use Drupal\Tests\helfi_tpr\Traits\UnitMigrateTrait;
  */
 class UnitMenuLinkTest extends MigrationTestBase {
 
-  use UnitMigrateTrait;
+  use TprMigrateTrait;
 
   /**
    * {@inheritdoc}
@@ -59,20 +59,10 @@ class UnitMenuLinkTest extends MigrationTestBase {
     ]);
     $this->drupalLogin($this->privilegedAccount);
 
-    $units = [
-      [
-        'id' => 999,
-        'name_fi' => 'Name fi',
-        'name_sv' => 'Name sv',
-        'call_charge_info_fi' => 'Charge fi',
-        'call_charge_info_sv' => 'Charge sv',
-        'modified_time' => '2015-05-16T20:01:01',
-      ],
-    ];
-    $this->runMigrate($units);
+    $this->runUnitMigrate();
 
     foreach (['fi', 'sv'] as $language) {
-      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 999]), [
+      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 1]), [
         'query' => ['language' => $language],
       ]);
       $this->assertSession()->statusCodeEquals(200);
@@ -85,7 +75,7 @@ class UnitMenuLinkTest extends MigrationTestBase {
     $this->privilegedAccount->save();
 
     foreach (['fi', 'sv'] as $language) {
-      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 999]), [
+      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 1]), [
         'query' => ['language' => $language],
       ]);
       // Make sure menu link is not enabled by default.
@@ -103,7 +93,7 @@ class UnitMenuLinkTest extends MigrationTestBase {
       $this->assertMenuLink("Menu link $language", $language, FALSE);
 
       // Make sure publishing entity also publishes the menu link.
-      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 999]), [
+      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 1]), [
         'query' => ['language' => $language],
       ]);
       $this->submitForm([

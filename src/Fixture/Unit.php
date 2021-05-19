@@ -13,31 +13,64 @@ use GuzzleHttp\Psr7\Response;
 final class Unit extends FixtureBase {
 
   /**
+   * Gets the mock data.
+   *
+   * @return array[]
+   *   The mock data.
+   */
+  public function getMockData() : array {
+    return [
+      [
+        'id' => 1,
+        'name_fi' => 'Name fi 1',
+        'name_sv' => 'Name sv 1',
+        'name_en' => 'Name en 1',
+        'latitude' => '60.19',
+        'longitude' => '24.76',
+        'street_address_fi' => 'Address fi 1',
+        'street_address_sv' => 'Address sv 1',
+        'address_zip' => '02180',
+        'address_city_fi' => 'Espoo fi 1',
+        'address_city_sv' => 'Espoo sv 1',
+        'address_city_en' => 'Espoo en 1',
+        'phone' => '+3581234',
+        'call_charge_info_fi' => 'pvm fi 1',
+        'call_charge_info_en' => 'pvm en 1',
+        'call_charge_info_sv' => 'pvm sv 1',
+        'www_fi' => 'https://localhost/fi/1',
+        'www_sv' => 'https://localhost/sv/1',
+        'www_en' => 'https://localhost/en/1',
+        'created_time' => '2015-11-03T12:03:45',
+        'modified_time' => '2015-11-03T12:03:45',
+        'accessibility_sentences' => [
+          [
+            'sentence_group_name' => 'Group 1',
+            'sentence_group_fi' => 'Group fi 1',
+            'sentence_group_sv' => 'Group sv 1',
+            'sentence_group_en' => 'Group en 1',
+            'sentence_fi' => 'Sentence fi 1',
+            'sentence_sv' => 'Sentence sv 1',
+            'sentence_en' => 'Sentence en 1',
+          ],
+          [
+            'sentence_group_name' => 'Group 2',
+            'sentence_group_fi' => 'Group fi 2',
+            'sentence_group_sv' => 'Group sv 2',
+            'sentence_group_en' => 'Group en 2',
+            'sentence_fi' => 'Sentence fi 2',
+            'sentence_sv' => 'Sentence sv 2',
+            'sentence_en' => 'Sentence en 2',
+          ],
+        ],
+      ],
+    ];
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function getMockResponses() : array {
-    $units = [
-      [
-        'id' => 999,
-        'name_fi' => 'Name fi',
-        'name_sv' => 'Name sv',
-        'call_charge_info_fi' => 'Charge fi',
-        'call_charge_info_sv' => 'Charge sv',
-        'modified_time' => '2015-05-16T20:01:01',
-        'www_fi' => 'https://github.com/City-of-Helsinki/drupal-module-helfi-tpr',
-        'desc' => 'Description fi',
-        'desc_sv' => 'Description sv',
-        'latitude' => '60.241573',
-        'longitude' => '24.882076',
-        'streetview_entrance_url' => 'https://www.google.fi/maps?q=http://www.hel.fi/palvelukartta/kml.aspx?lang%3Dfi%26id%3D2&ll=60.241052,24.882134&spn=0.001012,0.007349&layer=c&cbll=60.24105,24.882129&cbp=12,27.23,,0,0&t=h&panoid=UHkdl6Zbjixy0b8xGN_C3g&z=17',
-        'address_postal_full' => 'Pasilankatu 2, Helsinki',
-        'street_address' => 'Pasilankatu 2',
-        'address_city' => 'Helsinki',
-        'address_zip' => '00180',
-        'phone' => '040123456, 050123456',
-      ],
-    ];
-
+    $units = $this->getMockData();
     $responses = [
       new Response(200, [], json_encode($units)),
     ];

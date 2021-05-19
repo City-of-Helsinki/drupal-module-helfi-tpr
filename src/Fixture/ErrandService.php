@@ -13,17 +13,13 @@ use GuzzleHttp\Psr7\Response;
 final class ErrandService extends FixtureBase {
 
   /**
-   * {@inheritdoc}
+   * Gets the fields used in migration.
+   *
+   * @return string[]
+   *   The fields.
    */
-  public function getMockResponses() : array {
-    $eservices = [
-      ['id' => 1],
-    ];
-    $responses = [
-      new Response(200, [], json_encode($eservices)),
-    ];
-
-    $fields = [
+  public function getFields() : array {
+    return [
       'name',
       'description',
       'process_description',
@@ -31,6 +27,20 @@ final class ErrandService extends FixtureBase {
       'information',
       'expiration_time',
       'costs',
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getMockResponses() : array {
+    $eservices = [
+      ['id' => 1],
+      ['id' => 2],
+      ['id' => 3],
+    ];
+    $responses = [
+      new Response(200, [], json_encode($eservices)),
     ];
 
     foreach ($eservices as $service) {
@@ -84,7 +94,7 @@ final class ErrandService extends FixtureBase {
           ],
         ];
 
-        foreach ($fields as $field) {
+        foreach ($this->getFields() as $field) {
           $service[$field] = sprintf('%s %s %s', $field, $language, $id);
         }
         $responses[] = new Response(200, [], json_encode($service));

@@ -67,33 +67,54 @@ class AccessibilitySentenceFormatterTest extends MigrationTestBase {
         $this->entity->save();
       }
     }
+  }
 
-    /** @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface $display_repository */
-    $display_repository = \Drupal::service('entity_display.repository');
-    $display_repository->getViewDisplay('tpr_unit', 'tpr_unit')
-      ->setComponent('accessibility_sentence', [
-        'type' => 'accessibility_sentence',
-        'weight' => 1,
-        'label' => 'above',
-      ])
-      ->save();
+  /**
+   * Asserts that we can or can't see the field values.
+   *
+   * @param bool $expected
+   *   Whether we should see field values.
+   */
+  private function assertFieldDisplay(bool $expected) : void {
+    foreach (['fi', 'en', 'sv'] as $language) {
+      $this->drupalGet(Url::fromRoute('entity.tpr_unit.canonical', ['tpr_unit' => 999]), [
+        'query' => ['language' => $language],
+      ]);
+
+      $strings = [
+        'Accessibility sentences',
+        "Test group $language 1",
+        "Test value $language 1",
+        "Test value $language 2",
+      ];
+
+      foreach ($strings as $string) {
+        $expected ?
+          $this->assertSession()->pageTextContains($string) :
+          $this->assertSession()->pageTextNotContains($string);
+      }
+    }
   }
 
   /**
    * Tests the formatter.
    */
   public function testFormatter() : void {
-    // Make sure we can see accessibility sentences for all languages.
-    foreach (['fi', 'en', 'sv'] as $language) {
-      $this->drupalGet(Url::fromRoute('entity.tpr_unit.canonical', ['tpr_unit' => 999]), [
-        'query' => ['language' => $language],
-      ]);
-      $this->assertSession()->pageTextContains('Accessibility sentences');
-      $this->assertSession()->pageTextContains("Test group $language 1");
-      $this->assertSession()->pageTextContains("Test value $language 1");
-      $this->assertSession()->pageTextContains("Test group $language 2");
-      $this->assertSession()->pageTextContains("Test value $language 2");
-    }
+    // Make sure field display is disabled by default.
+    $this->assertFieldDisplay(FALSE);
+
+    /** @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface $display_repository */
+    $display_repository = \Drupal::service('entity_display.repository');
+    $display_repository->getViewDisplay('tpr_unit', 'tpr_unit')
+      ->setComponent('accessibility_sentences', [
+        'type' => 'accessibility_sentence',
+        'label' => 'above',
+      ])
+      ->save();
+
+    // Make sure we can see accessibility sentences for all languages once
+    // the field display is enabled.
+    $this->assertFieldDisplay(TRUE);
   }
 
 }

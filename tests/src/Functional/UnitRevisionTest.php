@@ -5,7 +5,8 @@ declare(strict_types = 1);
 namespace Drupal\Tests\helfi_tpr\Functional;
 
 use Drupal\Core\Url;
-use Drupal\Tests\helfi_tpr\Traits\UnitMigrateTrait;
+use Drupal\helfi_tpr\Entity\Unit;
+use Drupal\Tests\helfi_tpr\Traits\TprMigrateTrait;
 
 /**
  * Tests unit revisions.
@@ -14,28 +15,17 @@ use Drupal\Tests\helfi_tpr\Traits\UnitMigrateTrait;
  */
 class UnitRevisionTest extends MigrationTestBase {
 
-  use UnitMigrateTrait;
+  use TprMigrateTrait;
 
   /**
    * Tests revisions.
    */
   public function testRevision() : void {
     $this->drupalLogin($this->privilegedAccount);
-
-    $units = [
-      [
-        'id' => 999,
-        'name_fi' => 'Name fi',
-        'name_sv' => 'Name sv',
-        'call_charge_info_fi' => 'Charge fi',
-        'call_charge_info_sv' => 'Charge sv',
-        'modified_time' => '2015-05-16T20:01:01',
-      ],
-    ];
-    $this->runMigrate($units);
+    $this->runUnitMigrate();
 
     foreach (['fi', 'sv'] as $language) {
-      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 999]), [
+      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 1]), [
         'query' => ['language' => $language],
       ]);
       $this->assertSession()->statusCodeEquals(200);
@@ -49,18 +39,18 @@ class UnitRevisionTest extends MigrationTestBase {
         'name_override[0][value]' => "Override name $language",
       ], 'Save');
 
-      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 999]), [
+      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 1]), [
         'query' => ['language' => $language],
       ]);
       $this->assertSession()->fieldValueEquals('name_override[0][value]', "Override name $language");
       // Make sure TPR data is unchanged when the form is saved.
-      $this->assertSession()->pageTextContains("Charge $language");
-      $this->assertSession()->pageTextContains("Name $language");
+      $this->assertSession()->pageTextContains("pvm $language 1");
+      $this->assertSession()->pageTextContains("Name $language 1");
 
       // Go to revisions tab and make sure it's visible.
       $this->getSession()->getPage()->findLink('Revisions')->click();
 
-      $expected_url = Url::fromRoute('entity.tpr_unit.version_history', ['tpr_unit' => 999], ['query' => ['language' => $language]])->toString();
+      $expected_url = Url::fromRoute('entity.tpr_unit.version_history', ['tpr_unit' => 1], ['query' => ['language' => $language]])->toString();
       $this->assertSession()->addressEquals($expected_url);
       $this->assertSession()->statusCodeEquals(200);
 
@@ -81,24 +71,21 @@ class UnitRevisionTest extends MigrationTestBase {
 
     // Update TPR data and make sure reverting revisions doens't revert TPR
     // fields.
-    $units = [
-      [
-        'id' => 999,
-        'name_fi' => 'Name updated fi',
-        'name_sv' => 'Name updated sv',
-        'call_charge_info_fi' => 'Charge updated fi',
-        'call_charge_info_sv' => 'Charge updated sv',
-        'modified_time' => '2015-05-16T20:01:01',
-      ],
-    ];
-    $this->runMigrate($units);
+    Unit::load(1)
+      ->getTranslation('fi')
+      ->set('name', 'Name updated fi')
+      ->set('call_charge_info', 'pvm fi updated 1')
+      ->getTranslation('sv')
+      ->set('name', 'Name updated sv')
+      ->set('call_charge_info', 'pvm sv updated 1')
+      ->save();
 
     foreach (['fi', 'sv'] as $language) {
-      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 999]), [
+      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 1]), [
         'query' => ['language' => $language],
       ]);
       // Make sure TPR data is updated.
-      $this->assertSession()->pageTextContains("Charge updated $language");
+      $this->assertSession()->pageTextContains("pvm $language updated 1");
       $this->assertSession()->pageTextContains("Name updated $language");
 
       // Revert back to first revision.
@@ -107,10 +94,10 @@ class UnitRevisionTest extends MigrationTestBase {
       $this->getSession()->getPage()->pressButton('Revert');
 
       // Make sure TPR data is unchanged.
-      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 999]), [
+      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 1]), [
         'query' => ['language' => $language],
       ]);
-      $this->assertSession()->pageTextContains("Charge updated $language");
+      $this->assertSession()->pageTextContains("pvm $language updated 1");
       $this->assertSession()->pageTextContains("Name updated $language");
       // Our override field should be empty because we reverted back to the
       // original version.

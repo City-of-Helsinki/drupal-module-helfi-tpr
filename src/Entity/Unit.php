@@ -280,6 +280,11 @@ class Unit extends TprEntityBase {
       ])
       ->setRevisionable(FALSE)
       ->setTranslatable(TRUE);
+    $fields['accessibility_sentences'] = BaseFieldDefinition::create('tpr_accessibility_sentence')
+      ->setLabel(new TranslatableMarkup('Accessibility sentences'))
+      ->setTranslatable(TRUE)
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }

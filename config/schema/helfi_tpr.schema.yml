@@ -1,0 +1,24 @@
+field.value.accessibility_sentence:
+  type: mapping
+  label: Default value
+  mapping:
+    group:
+      label: Group
+      type: string
+    value:
+      type: string
+      label: Value
+
+field.formatter.settings.service_map_embed:
+  type: mapping
+  label: 'Service map embed'
+  mapping:
+    iframe_title:
+      type: label
+      label: 'Iframe title'
+    link_title:
+      type: label
+      label: 'Link title'
+    target:
+      type: boolean
+      label: 'Whether to open in a new tab or not'

@@ -87,6 +87,11 @@
         </div>
       {% endif %}
     </div>
+    {% if content.accessibility_sentences|render %}
+    <div class="unit__accessibility_sentences">
+      {{ content.accessibility_sentences }}
+    </div>
+    {% endif %}
     <div class="unit__content">
       <div class="unit__services">
         {{ drupal_view('unit_services', 'unit_services') }}

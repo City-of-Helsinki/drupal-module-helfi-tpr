@@ -290,7 +290,7 @@ function helfi_tpr_update_8016() : void {
  * Install 'accessibility_sentences' field.
  */
 function helfi_tpr_update_8017() : void {
-  $field = BaseFieldDefinition::create('accessibility_sentence')
+  $field = BaseFieldDefinition::create('tpr_accessibility_sentence')
     ->setLabel(new TranslatableMarkup('Accessibility sentence'))
     ->setTranslatable(TRUE)
     ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)

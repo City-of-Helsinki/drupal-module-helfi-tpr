@@ -35,7 +35,7 @@ class AccessibilitySentenceItemTest extends FieldKernelTestBase {
     FieldStorageConfig::create([
       'field_name' => 'field_accessibility_sentences',
       'entity_type' => 'entity_test',
-      'type' => 'accessibility_sentence',
+      'type' => 'tpr_accessibility_sentence',
     ])->save();
     FieldConfig::create([
       'entity_type' => 'entity_test',

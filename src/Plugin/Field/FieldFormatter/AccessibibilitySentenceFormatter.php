@@ -11,10 +11,10 @@ use Drupal\Core\Field\FormatterBase;
  * Plugin implementation of the 'Accessibibility sentence' formatter.
  *
  * @FieldFormatter(
- *   id = "accessibility_sentence",
+ *   id = "tpr_accessibility_sentence",
  *   label = @Translation("Accessibibility sentences"),
  *   field_types = {
- *     "accessibility_sentence"
+ *     "tpr_accessibility_sentence"
  *   }
  * )
  */

@@ -107,7 +107,7 @@ class AccessibilitySentenceFormatterTest extends MigrationTestBase {
     $display_repository = \Drupal::service('entity_display.repository');
     $display_repository->getViewDisplay('tpr_unit', 'tpr_unit')
       ->setComponent('accessibility_sentences', [
-        'type' => 'accessibility_sentence',
+        'type' => 'tpr_accessibility_sentence',
         'label' => 'above',
       ])
       ->save();

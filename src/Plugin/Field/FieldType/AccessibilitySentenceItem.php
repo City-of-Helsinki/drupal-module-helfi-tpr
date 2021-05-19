@@ -12,14 +12,13 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\DataDefinition;
 
 /**
- * Defines the 'accessibility_sentence' field type.
+ * Defines the 'tpr_accessibility_sentence' field type.
  *
  * @FieldType(
- *   id = "accessibility_sentence",
+ *   id = "tpr_accessibility_sentence",
  *   label = @Translation("AccessibilitySentence"),
  *   category = @Translation("General"),
- *   default_widget = "string_textfield",
- *   default_formatter = "string"
+ *   default_formatter = "tpr_accessibility_sentence"
  * )
  */
 class AccessibilitySentenceItem extends FieldItemBase {

@@ -298,3 +298,16 @@ function helfi_tpr_update_8017() : void {
   \Drupal::entityDefinitionUpdateManager()
     ->installFieldStorageDefinition('accessibility_sentences', 'tpr_unit', 'helfi_tpr', $field);
 }
+
+/**
+ * Install 'connections' field.
+ */
+function helfi_tpr_update_8018() : void {
+  $field = BaseFieldDefinition::create('tpr_connection')
+    ->setLabel(new TranslatableMarkup('Connections'))
+    ->setTranslatable(TRUE)
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setDisplayConfigurable('view', TRUE);
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('connections', 'tpr_unit', 'helfi_tpr', $field);
+}

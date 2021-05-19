@@ -22,3 +22,11 @@ field.formatter.settings.service_map_embed:
     target:
       type: boolean
       label: 'Whether to open in a new tab or not'
+
+field.value.tpr_connection:
+  type: mapping
+  label: Default value
+  mapping:
+    value:
+      type: label
+      label: Value

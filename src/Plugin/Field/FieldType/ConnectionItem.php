@@ -12,34 +12,43 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\DataDefinition;
 
 /**
- * Defines the 'tpr_accessibility_sentence' field type.
+ * Defines the 'tpr_connection' field type.
  *
  * @FieldType(
- *   id = "tpr_accessibility_sentence",
- *   label = @Translation("AccessibilitySentence"),
+ *   id = "tpr_connection",
+ *   label = @Translation("Connection"),
  *   no_ui = TRUE,
- *   default_formatter = "tpr_accessibility_sentence"
+ *   default_formatter = "tpr_connection"
  * )
  */
-class AccessibilitySentenceItem extends FieldItemBase {
+class ConnectionItem extends FieldItemBase {
 
   /**
    * {@inheritdoc}
    */
   public function isEmpty() : bool {
-    $value = $this->get('value')->getValue();
-    return $value === NULL || $value === '';
+    return empty($this->values);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function mainPropertyName() : ? string {
+    return NULL;
   }
 
   /**
    * {@inheritdoc}
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) : array {
-    $properties['group'] = DataDefinition::create('string')
-      ->setLabel(new TranslatableMarkup('Group'))
-      ->setRequired(TRUE);
     $properties['value'] = DataDefinition::create('string')
       ->setLabel(new TranslatableMarkup('Value'))
+      ->setRequired(TRUE);
+    $properties['type'] = DataDefinition::create('string')
+      ->setLabel(new TranslatableMarkup('Type'))
+      ->setRequired(TRUE);
+    $properties['data'] = DataDefinition::create('tpr_connection_data')
+      ->setLabel(new TranslatableMarkup('Data'))
       ->setRequired(TRUE);
 
     return $properties;
@@ -54,10 +63,15 @@ class AccessibilitySentenceItem extends FieldItemBase {
         'type' => 'text',
         'size' => 'big',
       ],
-      'group' => [
+      'type' => [
         'type' => 'varchar',
         'not null' => FALSE,
         'length' => 255,
+      ],
+      'data' => [
+        'type' => 'blob',
+        'size' => 'big',
+        'serialize' => TRUE,
       ],
     ];
 
@@ -69,9 +83,7 @@ class AccessibilitySentenceItem extends FieldItemBase {
    */
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) : array {
     $random = new Random();
-    foreach (['value', 'group'] as $key) {
-      $values[$key] = $random->word(mt_rand(1, 50));
-    }
+    $values['value'] = $random->word(mt_rand(1, 50));
     return $values;
   }
 

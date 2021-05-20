@@ -27,6 +27,9 @@ field.value.tpr_connection:
   type: mapping
   label: Default value
   mapping:
+    type:
+      type: label
+      label: Type
     value:
       type: label
       label: Value

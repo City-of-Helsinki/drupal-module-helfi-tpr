@@ -10,6 +10,13 @@ namespace Drupal\helfi_tpr\Field\Connection;
 abstract class Connection {
 
   /**
+   * The type name.
+   *
+   * @var string
+   */
+  public const TYPE_NAME = '';
+
+  /**
    * The data.
    *
    * @var array

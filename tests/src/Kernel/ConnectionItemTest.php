@@ -9,7 +9,6 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\entity_test\Entity\EntityTest;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\helfi_tpr\Field\Connection\Connection;
 use Drupal\helfi_tpr\Field\Connection\OpeningHour;
 use Drupal\Tests\field\Kernel\FieldKernelTestBase;
 
@@ -60,16 +59,35 @@ class ConnectionItemTest extends FieldKernelTestBase {
     foreach ($values as $key => $value) {
       $object->set($key, $value);
     }
-    $entity->field_connections->value = $object->get('name');
+    // Make sure we can set values individually.
+    $entity->field_connections->value = $values['name'];
     $entity->field_connections->type = 'OPENING_HOURS';
     $entity->field_connections->data = $object;
     $entity->save();
 
     $entity = EntityTest::load($entity->id());
+    $this->assertConnectionField($entity, $object);
+
+    // Make sure we can pass an object to field as well.
+    $entity->field_connections = $object;
+    $entity->save();
+
+    $entity = EntityTest::load($entity->id());
+    $this->assertConnectionField($entity, $object);
+  }
+
+  /**
+   * Asserts connections field.
+   *
+   * @param \Drupal\entity_test\Entity\EntityTest $entity
+   *   The entity.
+   * @param \Drupal\helfi_tpr\Field\Connection\OpeningHour $object
+   *   The opening hours object.
+   */
+  protected function assertConnectionField(EntityTest $entity, OpeningHour $object) : void {
     $this->assertEquals($object->get('name'), $entity->field_connections->value);
-    $this->assertEquals('OPENING_HOURS', $entity->field_connections->type);
+    $this->assertEquals($object::TYPE_NAME, $entity->field_connections->type);
     $this->assertEquals($object, $entity->field_connections->data);
-    $this->assertInstanceOf(Connection::class, $entity->field_connections->data);
   }
 
   /**

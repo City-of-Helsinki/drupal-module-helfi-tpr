@@ -10,6 +10,7 @@ use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\DataDefinition;
+use Drupal\helfi_tpr\Field\Connection\Connection;
 use Drupal\helfi_tpr\Field\Connection\OpeningHour;
 
 /**
@@ -53,6 +54,21 @@ class ConnectionItem extends FieldItemBase {
       ->setRequired(TRUE);
 
     return $properties;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setValue($values, $notify = TRUE) {
+    // Populate from object if passed one.
+    if ($values instanceof Connection) {
+      $values = [
+        'value' => $values->get('name'),
+        'type' => $values::TYPE_NAME,
+        'data' => $values,
+      ];
+    }
+    parent::setValue($values, $notify);
   }
 
   /**

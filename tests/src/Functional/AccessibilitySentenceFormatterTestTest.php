@@ -5,69 +5,14 @@ declare(strict_types = 1);
 namespace Drupal\Tests\helfi_tpr\Functional;
 
 use Drupal\Core\Url;
-use Drupal\helfi_tpr\Entity\Unit;
-use Drupal\Tests\helfi_api_base\Functional\MigrationTestBase;
+use Drupal\helfi_tpr\Entity\TprEntityBase;
 
 /**
  * Tests accessibility sentence formatter.
  *
  * @group helfi_tpr
  */
-class AccessibilitySentenceFormatterTest extends MigrationTestBase {
-
-  /**
-   * {@inheritdoc}
-   */
-  protected static $modules = [
-    'field',
-    'helfi_tpr',
-  ];
-
-  /**
-   * {@inheritdoc}
-   */
-  protected $defaultTheme = 'stark';
-
-  /**
-   * The entity to test.
-   *
-   * @var \Drupal\helfi_tpr\Entity\Unit
-   */
-  protected Unit $entity;
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setUp() : void {
-    parent::setUp();
-
-    $account = $this->createUser([
-      'view tpr_unit',
-    ]);
-    $this->drupalLogin($account);
-
-    $this->entity = Unit::create([
-      'id' => 999,
-      'langcode' => 'fi',
-      'name' => 'Test',
-    ]);
-
-    $this->entity->addTranslation('sv', ['name' => 'Test'])
-      ->addTranslation('en', ['name' => 'Test'])
-      ->save();
-
-    foreach (['fi', 'sv', 'en'] as $language) {
-      for ($i = 1; $i <= 2; $i++) {
-        $this->entity->getTranslation($language)
-          ->get('accessibility_sentences')
-          ->appendItem([
-            'group' => "Test group $language $i",
-            'value' => "Test value $language $i",
-          ]);
-        $this->entity->save();
-      }
-    }
-  }
+class AccessibilitySentenceFormatterTestTest extends CustomFieldFormatterTestBase {
 
   /**
    * Asserts that we can or can't see the field values.
@@ -94,6 +39,27 @@ class AccessibilitySentenceFormatterTest extends MigrationTestBase {
           $this->assertSession()->pageTextNotContains($string);
       }
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getEntity(): TprEntityBase {
+    $entity = parent::getEntity();
+
+    foreach (['fi', 'sv', 'en'] as $language) {
+      for ($i = 1; $i <= 2; $i++) {
+        $entity->getTranslation($language)
+          ->get('accessibility_sentences')
+          ->appendItem([
+            'group' => "Test group $language $i",
+            'value' => "Test value $language $i",
+          ]);
+        $entity->save();
+      }
+    }
+
+    return $entity;
   }
 
   /**

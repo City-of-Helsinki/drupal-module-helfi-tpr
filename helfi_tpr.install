@@ -304,10 +304,10 @@ function helfi_tpr_update_8017() : void {
  */
 function helfi_tpr_update_8018() : void {
   $field = BaseFieldDefinition::create('tpr_connection')
-    ->setLabel(new TranslatableMarkup('Connections'))
+    ->setLabel(new TranslatableMarkup('Opening hours'))
     ->setTranslatable(TRUE)
     ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
     ->setDisplayConfigurable('view', TRUE);
   \Drupal::entityDefinitionUpdateManager()
-    ->installFieldStorageDefinition('connections', 'tpr_unit', 'helfi_tpr', $field);
+    ->installFieldStorageDefinition('opening_hours', 'tpr_unit', 'helfi_tpr', $field);
 }

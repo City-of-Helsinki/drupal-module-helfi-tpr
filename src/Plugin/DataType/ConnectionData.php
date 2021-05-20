@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\helfi_tpr\Plugin\DataType;
 
 use Drupal\Core\TypedData\TypedData;
-use Drupal\helfi_tpr\Connection;
+use Drupal\helfi_tpr\Field\Connection\Connection;
 
 /**
  * Provides a data type wrapping for \Drupal\helfi_tpr\Connection.
@@ -20,9 +20,9 @@ class ConnectionData extends TypedData {
   /**
    * The connection object.
    *
-   * @var \Drupal\helfi_tpr\Connection
+   * @var \Drupal\helfi_tpr\Field\Connection\Connection|null
    */
-  protected Connection $value;
+  protected ?Connection $value;
 
   /**
    * {@inheritdoc}

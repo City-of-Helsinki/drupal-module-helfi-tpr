@@ -285,8 +285,8 @@ class Unit extends TprEntityBase {
       ->setTranslatable(TRUE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE);
-    $fields['connections'] = BaseFieldDefinition::create('tpr_connection')
-      ->setLabel(new TranslatableMarkup('Connections'))
+    $fields['opening_hours'] = BaseFieldDefinition::create('tpr_connection')
+      ->setLabel(new TranslatableMarkup('Opening hours'))
       ->setTranslatable(TRUE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE);

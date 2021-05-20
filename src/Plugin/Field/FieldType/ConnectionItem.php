@@ -27,7 +27,7 @@ class ConnectionItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public function isEmpty() : bool {
-    return empty($this->values);
+    return empty($this->value) || empty($this->type) || empty($this->data);
   }
 
   /**

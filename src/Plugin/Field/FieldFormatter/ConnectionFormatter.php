@@ -25,8 +25,14 @@ class ConnectionFormatter extends FormatterBase {
     $element = [];
 
     foreach ($items as $delta => $item) {
+      if (!$item->data) {
+        continue;
+      }
+      /** @var \Drupal\helfi_tpr\Field\Connection\Connection $connection */
+      $connection = $item->data;
       $element[$delta] = [
-        '#markup' => $item->value,
+        '#type' => 'item',
+        'content' => $connection->build(),
       ];
     }
 

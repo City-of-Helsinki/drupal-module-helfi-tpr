@@ -15,7 +15,7 @@ final class Repository {
    * @var string[]
    */
   protected array $map = [
-    'OPENING_HOURS' => OpeningHour::class,
+    OpeningHour::TYPE_NAME => OpeningHour::class,
   ];
 
   /**

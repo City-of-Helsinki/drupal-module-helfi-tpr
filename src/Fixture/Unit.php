@@ -62,6 +62,53 @@ final class Unit extends FixtureBase {
             'sentence_en' => 'Sentence en 2',
           ],
         ],
+        'connections' => [
+          [
+            'section_type' => 'OPENING_HOURS',
+            'name_fi' => 'open fi 1',
+            'name_en' => 'open en 1',
+            'name_sv' => 'open sv 1',
+          ],
+          [
+            'section_type' => 'OPENING_HOURS',
+            'name_fi' => 'open fi 2',
+            'name_en' => 'open en 2',
+            'name_sv' => 'open sv 2',
+            'www_fi' => 'https://localhost/fi',
+            'www_en' => 'https://localhost/en',
+            'www_sv' => 'https://localhost/sv',
+          ],
+          [
+            'section_type' => 'HIGHLIGHT',
+            'name_fi' => 'hilight fi 1',
+            'name_en' => 'hilight en 1',
+            'name_sv' => 'hilight sv 1',
+          ],
+          [
+            'section_type' => 'HIGHLIGHT',
+            'name_fi' => 'hilight fi 2',
+            'name_en' => 'hilight en 2',
+            'name_sv' => 'hilight sv 2',
+          ],
+          [
+            'section_type' => 'PHONE_OR_EMAIL',
+            'name_fi' => 'phone or email fi 1',
+            'name_en' => 'phone or email en 1',
+            'name_sv' => 'phone or email sv 1',
+            'phone' => '040123456',
+          ],
+          [
+            'section_type' => 'PHONE_OR_EMAIL',
+            'name_fi' => 'phone or email fi 2',
+            'contact_person' => 'contact person name',
+            'phone' => '040654321',
+          ],
+          [
+            'section_type' => 'ESERVICE_LINK',
+            'name_fi' => 'eservice link fi',
+            'www_fi' => 'https://link.fi',
+          ],
+        ],
       ],
     ];
   }

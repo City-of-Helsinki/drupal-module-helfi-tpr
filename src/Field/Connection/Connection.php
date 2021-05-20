@@ -45,8 +45,8 @@ abstract class Connection {
       throw new \InvalidArgumentException(sprintf('Field "%s" is not valid.', $field));
     }
 
-    if (!is_scalar($value)) {
-      throw new \InvalidArgumentException(sprintf('Only scalar values allowed for "%s".', $field));
+    if (!is_scalar($value) && !is_null($value)) {
+      throw new \InvalidArgumentException(sprintf('Only scalar or null values allowed for "%s".', $field));
     }
     $this->data[$field] = $value;
 

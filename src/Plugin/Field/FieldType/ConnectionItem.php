@@ -10,6 +10,7 @@ use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\DataDefinition;
+use Drupal\helfi_tpr\Field\Connection\OpeningHour;
 
 /**
  * Defines the 'tpr_connection' field type.
@@ -83,8 +84,15 @@ class ConnectionItem extends FieldItemBase {
    */
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) : array {
     $random = new Random();
-    $values['value'] = $random->word(mt_rand(1, 50));
-    return $values;
+    $object = (new OpeningHour())
+      ->set('name', $random->word(mt_rand(1, 50)))
+      ->set('www', 'https://' . $random->word(mt_rand(1, 50)) . '.com/');
+
+    return [
+      'value' => $object->get('name'),
+      'type' => 'OPENING_HOURS',
+      'data' => $object,
+    ];
   }
 
 }

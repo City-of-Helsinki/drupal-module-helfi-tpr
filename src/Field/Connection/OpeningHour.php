@@ -12,6 +12,13 @@ use Drupal\Core\Url;
 final class OpeningHour extends Connection {
 
   /**
+   * The type name.
+   *
+   * @var string
+   */
+  public const TYPE_NAME = 'OPENING_HOURS';
+
+  /**
    * {@inheritdoc}
    */
   public function getFields(): array {

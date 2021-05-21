@@ -134,9 +134,10 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     // are ignored by migrations.
     $fields += static::createOverrideFields(static::$overrideFields);
 
+
     foreach (['changed', 'created'] as $field) {
-      // All translations should have same date.
-      $fields[$field]->setTranslatable(FALSE);
+      // Remove changed and created fields.
+      unset($fields[$field]);
     }
 
     return $fields;

@@ -332,3 +332,25 @@ function helfi_tpr_update_8019() : void {
     $config_storage->write($action, $source->read($action));
   }
 }
+
+/**
+ * Uninstalls 'created' and 'changed' fields.
+ */
+function helfi_tpr_update_8020() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+
+  $entity_types = [
+    'tpr_unit',
+    'tpr_service',
+    'tpr_errand_service',
+    'tpr_service_channel',
+  ];
+  foreach ($entity_types as $type) {
+    foreach (['created', 'changed'] as $field) {
+      if (!$definition = $manager->getFieldStorageDefinition($field, $type)) {
+        continue;
+      }
+      $manager->uninstallFieldStorageDefinition($definition);
+    }
+  }
+}

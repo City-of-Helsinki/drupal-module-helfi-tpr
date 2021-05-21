@@ -14,7 +14,7 @@ use GuzzleHttp\Psr7\Response;
  *
  * @group helfi_tpr
  */
-class TprUnitListTest extends MigrationTestBase {
+class UnitListTest extends MigrationTestBase {
 
   use ApiTestTrait;
 
@@ -72,14 +72,26 @@ class TprUnitListTest extends MigrationTestBase {
     $expected = ['fi' => 6, 'en' => 0, 'sv' => 4];
 
     foreach ($expected as $language => $total) {
-      $this->drupalGet('/admin/content/integrations/tpr-unit', ['query' => ['langcode' => $language]]);
+      $this->drupalGet('/admin/content/integrations/tpr-unit', [
+        'query' => [
+          'langcode' => $language,
+          'language' => $language,
+        ],
+      ]);
       $this->assertSession()->pageTextContains(sprintf('Displaying %d - %d of %d', ($total > 0 ? 1 : 0), $total, $total));
     }
 
     // Make sure we can run 'update' action on multiple entities.
     Unit::load('22736')->set('name', 'Test 1')->save();
     Unit::load('57331')->set('name', 'Test 2')->save();
-    $this->drupalGet('/admin/content/integrations/tpr-unit', ['query' => ['language' => 'fi']]);
+    $this->drupalGet('/admin/content/integrations/tpr-unit', [
+      'query' => [
+        'language' => 'fi',
+        'langcode' => 'fi',
+        'order' => 'changed',
+        'sort' => 'desc',
+      ],
+    ]);
     $this->assertSession()->pageTextContains('Test 1');
     $this->assertSession()->pageTextContains('Test 2');
 

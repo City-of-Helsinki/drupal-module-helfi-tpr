@@ -311,3 +311,24 @@ function helfi_tpr_update_8018() : void {
   \Drupal::entityDefinitionUpdateManager()
     ->installFieldStorageDefinition('opening_hours', 'tpr_unit', 'helfi_tpr', $field);
 }
+
+/**
+ * Install publish and unpublish actions for TPR unit and service.
+ */
+function helfi_tpr_update_8019() : void {
+  $config_path = drupal_get_path('module', 'helfi_tpr').'/config/install';
+  $source = new FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+
+  // Update TPR unit and service publish and unpublish actions to configuration.
+  $actions = [
+    'system.action.tpr_service_publish_action',
+    'system.action.tpr_service_unpublish_action',
+    'system.action.tpr_unit_publish_action',
+    'system.action.tpr_unit_unpublish_action',
+  ];
+
+  foreach ($actions as $action) {
+    $config_storage->write($action, $source->read($action));
+  }
+}

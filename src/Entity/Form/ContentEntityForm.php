@@ -107,7 +107,7 @@ class ContentEntityForm extends CoreContentEntityForm {
     $form['meta']['author'] = [
       '#type' => 'item',
       '#title' => $this->t('Publisher'),
-      '#markup' => $entity->getAuthor() ? $entity->getAuthor()->getAccountName() : '',
+      '#markup' => $entity->getOwner() ? $entity->getOwner()->getAccountName() : '',
       '#wrapper_attributes' => ['class' => ['entity-meta__author']],
     ];
 

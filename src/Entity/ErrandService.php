@@ -42,6 +42,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "label" = "name",
  *     "uuid" = "uuid",
  *     "published" = "content_translation_status",
+ *     "owner" = "content_translation_uid",
  *   },
  *   revision_metadata_keys = {
  *     "revision_created" = "revision_timestamp",

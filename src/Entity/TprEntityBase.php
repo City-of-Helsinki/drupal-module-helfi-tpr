@@ -119,6 +119,16 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   }
 
   /**
+   * Gets the changed time.
+   *
+   * @return int|null
+   *   The timestmap.
+   */
+  public function getChangedTime() : ? int {
+    return $this->get('content_translation_changed')->value;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {

@@ -354,3 +354,57 @@ function helfi_tpr_update_8020() : void {
     }
   }
 }
+
+/**
+ * Add 'published' and 'owner' entity keys to all TPR entity types.
+ */
+function helfi_tpr_update_8021() : void {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+
+  $entity_types = [
+    'tpr_unit',
+    'tpr_service',
+    'tpr_errand_service',
+    'tpr_service_channel',
+  ];
+  foreach ($entity_types as $type) {
+    $entity_type = $definition_update_manager->getEntityType($type);
+    $keys = $entity_type->getKeys();
+    $keys['published'] = 'content_translation_status';
+    $keys['owner'] = 'content_translation_uid';
+    $entity_type->set('entity_keys', $keys);
+    $definition_update_manager->updateEntityType($entity_type);
+  }
+}
+
+/**
+ * Re-install content_translation_uid and status fields.
+ */
+function helfi_tpr_update_8022() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+
+  $entity_types = [
+    'tpr_unit',
+    'tpr_service',
+    'tpr_errand_service',
+    'tpr_service_channel',
+  ];
+
+  foreach ($entity_types as $type) {
+    foreach (['uid', 'status'] as $field) {
+      $field_name = 'content_translation_' . $field;
+
+      if ($definition = $manager->getFieldStorageDefinition($field_name, $type)) {
+        $manager->uninstallFieldStorageDefinition($definition);
+        $manager->installFieldStorageDefinition($field_name, $type, 'content_translation', $definition);
+      }
+    }
+  }
+}
+
+/**
+ * Update tpr views again.
+ */
+function helfi_tpr_update_8023() : void {
+  helfi_tpr_update_8016();
+}

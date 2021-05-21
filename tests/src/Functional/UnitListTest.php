@@ -49,6 +49,22 @@ class UnitListTest extends MigrationTestBase {
   }
 
   /**
+   * Asserts that the item is published or unpublishedt.
+   *
+   * @param int $nthChild
+   *   The nth child.
+   * @param bool $published
+   *   TRUE if expected to be published.
+   */
+  private function assertPublished(int $nthChild, bool $published) : void {
+    $element = $this->getSession()
+      ->getPage()
+      ->find('css', "table tbody tr:nth-of-type($nthChild) .views-field-content-translation-status");
+
+    $this->assertEquals($published ? 'Published' : 'Unpublished', $element->getText());
+  }
+
+  /**
    * Tests collection route (views).
    */
   public function testList() : void {
@@ -108,6 +124,25 @@ class UnitListTest extends MigrationTestBase {
     $this->assertSession()->pageTextNotContains('Test 2');
     $this->assertSession()->pageTextContains('Esteetön testireitti / Leppävaara');
     $this->assertSession()->pageTextContains('InnoOmnia');
+
+    // Make sure we can use actions to publish and unpublish content.
+    $actions = [
+      'tpr_unit_publish_action' => TRUE,
+      'tpr_unit_unpublish_action' => FALSE,
+    ];
+
+    foreach ($actions as $action => $published) {
+      $form_data = [
+        'action' => $action,
+        'tpr_unit_bulk_form[0]' => 1,
+        'tpr_unit_bulk_form[1]' => 1,
+      ];
+      $this->submitForm($form_data, 'Apply to selected items');
+
+      for ($i = 1; $i <= 2; $i++) {
+        $this->assertPublished($i, $published);
+      }
+    }
   }
 
 }

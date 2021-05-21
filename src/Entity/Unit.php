@@ -52,7 +52,8 @@ use Webmozart\Assert\Assert;
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
  *     "label" = "name",
- *     "uuid" = "uuid"
+ *     "uuid" = "uuid",
+ *     "published" = "content_translation_status",
  *   },
  *   revision_metadata_keys = {
  *     "revision_created" = "revision_timestamp",

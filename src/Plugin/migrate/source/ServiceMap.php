@@ -76,6 +76,13 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
   /**
    * {@inheritdoc}
    */
+  protected function getFieldNormalizers(): array {
+    return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   protected function initializeListIterator() : \Iterator {
     $content = $this->getContent($this->configuration['url']);
 

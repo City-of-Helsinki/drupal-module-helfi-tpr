@@ -52,7 +52,8 @@ use Webmozart\Assert\Assert;
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
  *     "label" = "name",
- *     "uuid" = "uuid"
+ *     "uuid" = "uuid",
+ *     "published" = "content_translation_status",
  *   },
  *   revision_metadata_keys = {
  *     "revision_created" = "revision_timestamp",
@@ -282,6 +283,11 @@ class Unit extends TprEntityBase {
       ->setTranslatable(TRUE);
     $fields['accessibility_sentences'] = BaseFieldDefinition::create('tpr_accessibility_sentence')
       ->setLabel(new TranslatableMarkup('Accessibility sentences'))
+      ->setTranslatable(TRUE)
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('view', TRUE);
+    $fields['opening_hours'] = BaseFieldDefinition::create('tpr_connection')
+      ->setLabel(new TranslatableMarkup('Opening hours'))
       ->setTranslatable(TRUE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE);

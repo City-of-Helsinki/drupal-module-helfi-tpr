@@ -14,6 +14,20 @@ source:
   url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/'
 process:
   id: id
+  opening_hours:
+    plugin: sub_process
+    source: connections
+    process:
+      # Only import opening hours
+      skip:
+        plugin: skip_on_value
+        not_equals: true
+        source: type
+        value: OPENING_HOURS
+        method: row
+      value: value
+      data: data
+      type: type
   accessibility_sentences:
     plugin: sub_process
     source: accessibility_sentences

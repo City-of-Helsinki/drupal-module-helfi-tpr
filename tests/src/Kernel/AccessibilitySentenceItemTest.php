@@ -31,7 +31,7 @@ class AccessibilitySentenceItemTest extends FieldKernelTestBase {
   protected function setUp() : void {
     parent::setUp();
 
-    // Create a telephone field storage and field for validation.
+    // Create an accessibility sentence field storage and field for validation.
     FieldStorageConfig::create([
       'field_name' => 'field_accessibility_sentences',
       'entity_type' => 'entity_test',

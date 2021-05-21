@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\Tests\helfi_tpr\Kernel;
 
 use Drupal\helfi_tpr\Entity\Unit;
+use Drupal\helfi_tpr\Field\Connection\OpeningHour;
 
 /**
  * Tests TPR Unit extras migration.
@@ -32,7 +33,12 @@ class UnitExtrasMigrationTest extends MigrationTestBase {
         $delta = $i + 1;
         $this->assertEquals("Group $langcode $delta", $translation->get('accessibility_sentences')->get($i)->group);
         $this->assertEquals("Sentence $langcode $delta", $translation->get('accessibility_sentences')->get($i)->value);
+        $this->assertEquals("open $langcode $delta", $translation->get('opening_hours')->get($i)->value);
       }
+
+      $opening_hour = $translation->get('opening_hours')->get(1)->data;
+      $this->assertInstanceOf(OpeningHour::class, $opening_hour);
+      $this->assertEquals("https://localhost/$langcode", $opening_hour->get('www'));
     }
   }
 

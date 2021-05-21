@@ -17,7 +17,7 @@ use Drupal\Core\TypedData\DataDefinition;
  * @FieldType(
  *   id = "tpr_accessibility_sentence",
  *   label = @Translation("AccessibilitySentence"),
- *   category = @Translation("General"),
+ *   no_ui = TRUE,
  *   default_formatter = "tpr_accessibility_sentence"
  * )
  */

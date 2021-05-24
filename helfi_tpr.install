@@ -389,6 +389,7 @@ function helfi_tpr_update_8022() : void {
     'tpr_errand_service',
     'tpr_service_channel',
   ];
+  field_purge_batch(1000);
 
   foreach ($entity_types as $type) {
     foreach (['uid', 'status'] as $field) {
@@ -396,6 +397,7 @@ function helfi_tpr_update_8022() : void {
 
       if ($definition = $manager->getFieldStorageDefinition($field_name, $type)) {
         $manager->uninstallFieldStorageDefinition($definition);
+        field_purge_batch(1000);
         $manager->installFieldStorageDefinition($field_name, $type, 'content_translation', $definition);
       }
     }

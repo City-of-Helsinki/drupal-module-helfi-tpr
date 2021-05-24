@@ -44,11 +44,14 @@
         </div>
       {% endif %}
     </div>
-    <div class="service__content">
-      <div class="service__units">
-        {{ drupal_view('service_units', 'service_units') }}
+    {% set view = drupal_view_result('service_units', 'service_units')|length %}
+    {% if view > 0 %}
+      <div class="service__content">
+        <div class="service__units">
+          {{ drupal_view('service_units', 'service_units') }}
+        </div>
       </div>
-    </div>
+    {% endif %}
 
   </article>
 
@@ -64,7 +67,7 @@
           {{ content.description_summary }}
         </div>
       {% endif %}
-      {% include '@hdbt/misc/icon.twig' with {icon: 'arrow-right', label: 'Service page'|t } %}
+      {% include '@hdbt/misc/icon.twig' with {icon: 'arrow-right'} %}
     </a>
   </div>
 

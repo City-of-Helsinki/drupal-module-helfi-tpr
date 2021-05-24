@@ -48,6 +48,7 @@
           </div>
         {% endif %}
       </div>
+      main
       <div class="unit__sidebar">
         {{ drupal_entity('block', 'main_navigation_level_2', check_access=false) }}
 
@@ -59,7 +60,7 @@
             {% if content.address|render %}
               <div class="unit__contact-row unit__contact-row--address">
                 <label class="unit__contact-row__label">
-                  {% include '@hdbt/misc/icon.twig' with {icon: 'location', label: 'Visiting address'|t } %}
+                  {% include '@hdbt/misc/icon.twig' with {icon: 'location'} %}
                   {{ 'Visiting address'|t }}:
                 </label>
                 {{ content.address }}
@@ -68,7 +69,7 @@
             {% if content.email|render %}
               <div class="unit__contact-row unit__contact-row--email">
                 <label class="unit__contact-row__label">
-                  {% include '@hdbt/misc/icon.twig' with {icon: 'envelope', label: 'E-mail'|t } %}
+                  {% include '@hdbt/misc/icon.twig' with {icon: 'envelope'} %}
                   {{ 'E-mail'|t }}:
                 </label>
                 <a href="mailto:{{ content.email }}">{{ content.email }}</a>
@@ -77,16 +78,25 @@
             {% if content.phone|render %}
               <div class="unit__contact-row unit__contact-row--phone">
                 <label class="unit__contact-row__label">
-                  {% include '@hdbt/misc/icon.twig' with {icon: 'phone', label: 'Phone number'|t } %}
+                  {% include '@hdbt/misc/icon.twig' with {icon: 'phone'} %}
                   {{ 'Phone number'|t }}:
                 </label>
                 {{ content.phone }}
               </div>
             {% endif %}
+            {% if content.opening_hours|render %}
+              <div class="unit__contact-row unit__contact-row--opening-hours">
+                <label class="unit__contact-row__label">
+                  {% include '@hdbt/misc/icon.twig' with {icon: 'clock'} %}
+                  {{ 'Opening hours'|t }}:
+                </label>
+                {{ content.opening_hours }}
+              </div>
+            {% endif %}
             {% if content.address_postal|render %}
               <div class="unit__contact-row unit__contact-row--postal-address">
                 <label class="unit__contact-row__label">
-                  {% include '@hdbt/misc/icon.twig' with {icon: 'location', label: 'Postal address'|t } %}
+                  {% include '@hdbt/misc/icon.twig' with {icon: 'location'} %}
                   {{ 'Postal address'|t }}:
                 </label>
                 {{ content.address_postal }}
@@ -98,21 +108,19 @@
       </div>
 
     </div>
+    {% set view = drupal_view_result('unit_services', 'unit_services')|length %}
+    {% if view > 0 %}
+      <div class="unit__content">
+        <div class="unit__services">
+          {{ drupal_view('unit_services', 'unit_services') }}
+        </div>
+      </div>
+    {% endif %}
     {% if content.accessibility_sentences|render %}
-    <div class="unit__accessibility_sentences">
-      {{ content.accessibility_sentences }}
-    </div>
-    {% endif %}
-    {% if content.opening_hours|render %}
-      <div class="unit__opening-hours">
-        {{ content.opening_hours }}
+      <div class="unit__accessibility_sentences">
+        {{ content.accessibility_sentences }}
       </div>
     {% endif %}
-    <div class="unit__content">
-      <div class="unit__services">
-        {{ drupal_view('unit_services', 'unit_services') }}
-      </div>
-    </div>
 
   </article>
 
@@ -125,13 +133,13 @@
     <div class="unit__info">
       {% if content.address|render %}
         <div class="unit__info-row unit__info-row--address">
-          {% include '@hdbt/misc/icon.twig' with {icon: 'location', label: 'Visiting address'|t } %}
+          {% include '@hdbt/misc/icon.twig' with {icon: 'location'} %}
           {{ content.address }}
         </div>
       {% endif %}
       {% if content.phone|render %}
         <div class="unit__info-row unit__info-row--phone">
-          {% include '@hdbt/misc/icon.twig' with {icon: 'phone', label: 'Phone number'|t } %}
+          {% include '@hdbt/misc/icon.twig' with {icon: 'phone'} %}
           <span class="phones">
             {{ content.phone }}
           </span>
@@ -140,7 +148,7 @@
     </div>
     <a href="{{ url('entity.tpr_unit.canonical', { 'tpr_unit': entity.id() }) }}" class="unit__link">
       <span class="is-hidden">{% trans with {'context': 'Unit teaser link'} %}Go to{% endtrans %} {{ content.name }}</span>
-      {% include '@hdbt/misc/icon.twig' with {icon: 'arrow-right', label: 'Unit page'|t } %}
+      {% include '@hdbt/misc/icon.twig' with {icon: 'arrow-right'} %}
     </a>
   </div>
 
@@ -178,13 +186,13 @@
         <div class="unit__info">
           {% if content.address|render %}
             <div class="unit__info-row unit__info-row--address">
-              {% include '@hdbt/misc/icon.twig' with {icon: 'location', label: 'Visiting address'|t } %}
+              {% include '@hdbt/misc/icon.twig' with {icon: 'location'} %}
               {{ content.address }}
             </div>
           {% endif %}
           {% if content.phone|render %}
             <div class="unit__info-row unit__info-row--phone">
-              {% include '@hdbt/misc/icon.twig' with {icon: 'phone', label: 'Phone number'|t } %}
+              {% include '@hdbt/misc/icon.twig' with {icon: 'phone'} %}
               <span class="phones">
               {{ content.phone }}
             </span>

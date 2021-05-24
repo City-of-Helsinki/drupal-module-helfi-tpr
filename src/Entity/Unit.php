@@ -54,6 +54,7 @@ use Webmozart\Assert\Assert;
  *     "label" = "name",
  *     "uuid" = "uuid",
  *     "published" = "content_translation_status",
+ *     "owner" = "content_translation_uid",
  *   },
  *   revision_metadata_keys = {
  *     "revision_created" = "revision_timestamp",

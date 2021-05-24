@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Entity;
 
+use Drupal\Core\Entity\EntityPublishedInterface;
+use Drupal\Core\Entity\EntityPublishedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\Entity\RevisionLogEntityTrait;
@@ -12,14 +14,18 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\helfi_api_base\Entity\RemoteEntityBase;
+use Drupal\user\EntityOwnerInterface;
+use Drupal\user\EntityOwnerTrait;
 
 /**
  * Defines the base class for all TPR entities.
  */
-abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInterface, RevisionLogInterface {
+abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInterface, RevisionLogInterface, EntityPublishedInterface, EntityOwnerInterface {
 
   use RevisionLogEntityTrait;
   use BaseFieldTrait;
+  use EntityPublishedTrait;
+  use EntityOwnerTrait;
 
   /**
    * An array of overridable fields.
@@ -99,23 +105,29 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   }
 
   /**
-   * Whether the entity is published.
-   *
-   * @return bool
-   *   Whether entity is published or not.
-   */
-  public function isPublished() : bool {
-    return (bool) $this->get('content_translation_status')->value;
-  }
-
-  /**
    * Gets the author.
    *
    * @return \Drupal\Core\Session\AccountInterface|null
    *   The account.
+   *
+   * @codingStandardsIgnoreStart
+   * @deprecated Use ::getOwner() instead.
+   * @codingStandardsIgnoreEnd
    */
   public function getAuthor() : ? AccountInterface {
-    return $this->get('content_translation_uid')->entity;
+    return $this->getOwner();
+  }
+
+  /**
+   * Gets the changed time.
+   *
+   * @return int|null
+   *   The timestmap.
+   */
+  public function getChangedTime() : ? int {
+    $value = $this->get('content_translation_changed')->value;
+
+    return $value ? (int) $value : NULL;
   }
 
   /**
@@ -135,8 +147,8 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     $fields += static::createOverrideFields(static::$overrideFields);
 
     foreach (['changed', 'created'] as $field) {
-      // All translations should have same date.
-      $fields[$field]->setTranslatable(FALSE);
+      // Remove changed and created fields.
+      unset($fields[$field]);
     }
 
     return $fields;

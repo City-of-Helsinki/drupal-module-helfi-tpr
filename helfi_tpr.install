@@ -162,35 +162,6 @@ function helfi_tpr_update_8008() : void {
 }
 
 /**
- * Installs name override fields.
- */
-function helfi_tpr_update_8009() : void {
-  $field = BaseFieldDefinition::create('string')
-    ->setLabel(new TranslatableMarkup('Override: Name'))
-    ->setTranslatable(TRUE)
-    ->setRevisionable(TRUE)
-    ->setDefaultValue('')
-    ->setDisplayConfigurable('view', TRUE)
-    ->setDisplayConfigurable('form', TRUE)
-    ->setSettings([
-      'max_length' => 255,
-      'text_processing' => 0,
-    ]);
-
-  $entity_types = [
-    'tpr_unit',
-    'tpr_service',
-    'tpr_errand_service',
-    'tpr_service_channel',
-  ];
-
-  foreach ($entity_types as $type) {
-    \Drupal::entityDefinitionUpdateManager()
-      ->installFieldStorageDefinition('name_override', $type, 'helfi_tpr', $field);
-  }
-}
-
-/**
  * Installs content translation fields for errand services and channels.
  */
 function helfi_tpr_update_8010() : void {
@@ -248,121 +219,39 @@ function helfi_tpr_update_8010() : void {
 }
 
 /**
- * Make migrated unit fields not revisionable.
+ * Uninstall all entity types.
  */
 function helfi_tpr_update_8011() : void {
   $manager = \Drupal::entityDefinitionUpdateManager();
 
-  $fields = [
-    'name',
-    'picture_url',
-    'email',
-    'accessibility_phone',
-    'accessibility_email',
-    'www',
-    'accessibility_www',
-    'description',
-    'address',
-    'address_postal',
-    'latitude',
-    'longitude',
-    'streetview_entrance_url',
-    'service_map_embed',
+  $entity_types = [
+    'tpr_unit',
+    'tpr_service',
+    'tpr_errand_service',
+    'tpr_service_channel',
   ];
 
-  foreach ($fields as $field) {
-    $definition = $manager->getFieldStorageDefinition($field, 'tpr_unit');
-    $definition->setRevisionable(FALSE);
-
-    $manager->updateFieldStorageDefinition($definition);
-  }
-
-  if ($definition = $manager->getFieldStorageDefinition('call_charge_info', 'tpr_unit')) {
-    \Drupal::database()->update('tpr_unit_field_data')
-      ->isNotNull('call_charge_info')
-      ->fields(['call_charge_info' => NULL])
-      ->execute();
-
-    $manager->uninstallFieldStorageDefinition($definition);
-
-    $field = BaseFieldDefinition::create('text_long')
-      ->setTranslatable(TRUE)
-      ->setRevisionable(FALSE)
-      ->setLabel(new TranslatableMarkup('Call charge info'))
-      ->setDisplayOptions('form', [
-        'type' => 'readonly_field_widget',
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    $manager->installFieldStorageDefinition('call_charge_info', 'tpr_unit', 'helfi_tpr', $field);
+  foreach ($entity_types as $type) {
+    $manager->uninstallEntityType($manager->getEntityType($type));
   }
 }
 
 /**
- * Make migrated service channel fields not revisionable.
+ * Install all entity types.
  */
 function helfi_tpr_update_8012() : void {
   $manager = \Drupal::entityDefinitionUpdateManager();
 
-  $fields = [
-    'name',
-    'email',
-    'type',
-    'type_string',
-    'phone',
-    'address',
+  $entity_types = [
+    'tpr_unit',
+    'tpr_service',
+    'tpr_errand_service',
+    'tpr_service_channel',
   ];
-
-  foreach ($fields as $field) {
-    $definition = $manager->getFieldStorageDefinition($field, 'tpr_service_channel');
-    $definition->setRevisionable(FALSE);
-
-    $manager->updateFieldStorageDefinition($definition);
+  foreach ($entity_types as $type) {
+    $entity_type = \Drupal::entityTypeManager()->getDefinition($type);
+    $manager->installEntityType($entity_type);
   }
-}
-
-/**
- * Make migrated service fields not revisionable.
- */
-function helfi_tpr_update_8013() : void {
-  $manager = \Drupal::entityDefinitionUpdateManager();
-  $definition = $manager->getFieldStorageDefinition('name', 'tpr_service');
-  $definition->setRevisionable(FALSE);
-
-  $manager->updateFieldStorageDefinition($definition);
-}
-
-/**
- * Make migrated errand service fields not revisionable.
- */
-function helfi_tpr_update_8014() : void {
-  $manager = \Drupal::entityDefinitionUpdateManager();
-  foreach (['name', 'type'] as $field) {
-    $definition = $manager->getFieldStorageDefinition($field, 'tpr_errand_service');
-    $definition->setRevisionable(FALSE);
-
-    $manager->updateFieldStorageDefinition($definition);
-  }
-}
-
-/**
- * Installs Unit 'picture_url_override' field.
- */
-function helfi_tpr_update_8015() : void {
-  $picture_url_override = BaseFieldDefinition::create('entity_reference')
-    ->setLabel(new TranslatableMarkup('Override: Picture'))
-    ->setSettings([
-      'target_type' => 'media',
-      'handler_settings' => [
-        'target_bundles' => ['image'],
-      ],
-    ])
-    ->setDisplayConfigurable('view', TRUE)
-    ->setDisplayConfigurable('form', TRUE);
-
-  \Drupal::entityDefinitionUpdateManager()
-    ->installFieldStorageDefinition('picture_url_override', 'tpr_unit', 'helfi_tpr', $picture_url_override);
 }
 
 /**
@@ -398,28 +287,126 @@ function helfi_tpr_update_8016() : void {
 }
 
 /**
- * Convert old phone numbers to use telephone field.
+ * Install 'accessibility_sentences' field.
+ */
+function helfi_tpr_update_8017() : void {
+  $field = BaseFieldDefinition::create('tpr_accessibility_sentence')
+    ->setLabel(new TranslatableMarkup('Accessibility sentence'))
+    ->setTranslatable(TRUE)
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setDisplayConfigurable('view', TRUE);
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('accessibility_sentences', 'tpr_unit', 'helfi_tpr', $field);
+}
+
+/**
+ * Install 'connections' field.
  */
 function helfi_tpr_update_8018() : void {
-  \Drupal::service('module_installer')->install(['telephone']);
+  $field = BaseFieldDefinition::create('tpr_connection')
+    ->setLabel(new TranslatableMarkup('Opening hours'))
+    ->setTranslatable(TRUE)
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setDisplayConfigurable('view', TRUE);
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('opening_hours', 'tpr_unit', 'helfi_tpr', $field);
+}
 
+/**
+ * Install publish and unpublish actions for TPR unit and service.
+ */
+function helfi_tpr_update_8019() : void {
+  $config_path = drupal_get_path('module', 'helfi_tpr').'/config/install';
+  $source = new FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+
+  // Update TPR unit and service publish and unpublish actions to configuration.
+  $actions = [
+    'system.action.tpr_service_publish_action',
+    'system.action.tpr_service_unpublish_action',
+    'system.action.tpr_unit_publish_action',
+    'system.action.tpr_unit_unpublish_action',
+  ];
+
+  foreach ($actions as $action) {
+    $config_storage->write($action, $source->read($action));
+  }
+}
+
+/**
+ * Uninstalls 'created' and 'changed' fields.
+ */
+function helfi_tpr_update_8020() : void {
   $manager = \Drupal::entityDefinitionUpdateManager();
 
-  $field = BaseFieldDefinition::create('telephone')
-    ->setLabel(new TranslatableMarkup('Phone'))
-    ->setTranslatable(TRUE)
-    ->setRevisionable(FALSE)
-    ->setDisplayConfigurable('view', TRUE)
-    ->setDisplayConfigurable('form', TRUE);
-
-  foreach (['tpr_unit', 'tpr_service_channel'] as $entity_type) {
-    if ($definition = $manager->getFieldStorageDefinition('phone', $entity_type)) {
+  $entity_types = [
+    'tpr_unit',
+    'tpr_service',
+    'tpr_errand_service',
+    'tpr_service_channel',
+  ];
+  foreach ($entity_types as $type) {
+    foreach (['created', 'changed'] as $field) {
+      if (!$definition = $manager->getFieldStorageDefinition($field, $type)) {
+        continue;
+      }
       $manager->uninstallFieldStorageDefinition($definition);
     }
   }
-  $manager->installFieldStorageDefinition('phone', 'tpr_service_channel', 'helfi_tpr', $field);
+}
 
-  $field->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
-    ->setTranslatable(FALSE);
-  $manager->installFieldStorageDefinition('phone', 'tpr_unit', 'helfi_tpr', $field);
+/**
+ * Add 'published' and 'owner' entity keys to all TPR entity types.
+ */
+function helfi_tpr_update_8021() : void {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+
+  $entity_types = [
+    'tpr_unit',
+    'tpr_service',
+    'tpr_errand_service',
+    'tpr_service_channel',
+  ];
+  foreach ($entity_types as $type) {
+    $entity_type = $definition_update_manager->getEntityType($type);
+    $keys = $entity_type->getKeys();
+    $keys['published'] = 'content_translation_status';
+    $keys['owner'] = 'content_translation_uid';
+    $entity_type->set('entity_keys', $keys);
+    $definition_update_manager->updateEntityType($entity_type);
+  }
+}
+
+/**
+ * Re-install content_translation_uid and status fields.
+ */
+function helfi_tpr_update_8022() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+
+  $entity_types = [
+    'tpr_unit',
+    'tpr_service',
+    'tpr_errand_service',
+    'tpr_service_channel',
+  ];
+  field_purge_batch(1000);
+
+  foreach ($entity_types as $type) {
+    foreach (['uid', 'status'] as $field) {
+      $field_name = 'content_translation_' . $field;
+
+      if ($definition = $manager->getFieldStorageDefinition($field_name, $type)) {
+        $manager->uninstallFieldStorageDefinition($definition);
+        field_purge_batch(1000);
+        $manager->installFieldStorageDefinition($field_name, $type, 'content_translation', $definition);
+      }
+    }
+  }
+}
+
+/**
+ * Update tpr views again.
+ */
+function helfi_tpr_update_8023() : void {
+  helfi_tpr_update_8016();
 }

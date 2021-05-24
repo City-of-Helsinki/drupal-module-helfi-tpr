@@ -49,7 +49,9 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
  *     "label" = "name",
- *     "uuid" = "uuid"
+ *     "uuid" = "uuid",
+ *     "published" = "content_translation_status",
+ *     "owner" = "content_translation_uid",
  *   },
  *   revision_metadata_keys = {
  *     "revision_created" = "revision_timestamp",
@@ -92,7 +94,7 @@ class Service extends TprEntityBase {
     if (!$this->get('data')->isEmpty()) {
       $data = $this->get('data')->first()->getValue();
     }
-    return isset($data[$key]) ? $data[$key] : $default;
+    return $data[$key] ?? $default;
   }
 
   /**

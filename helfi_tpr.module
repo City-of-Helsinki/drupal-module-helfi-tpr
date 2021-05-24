@@ -12,6 +12,9 @@ use Drupal\Core\Render\Element;
  */
 function helfi_tpr_theme() {
   return [
+    'tpr_accessibility_sentences' => [
+      'variables' => ['name' => NULL, 'items' => []],
+    ],
     'tpr_unit' => [
       'render element' => 'elements',
       'template' => 'tpr-unit',

@@ -52,7 +52,9 @@ use Webmozart\Assert\Assert;
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
  *     "label" = "name",
- *     "uuid" = "uuid"
+ *     "uuid" = "uuid",
+ *     "published" = "content_translation_status",
+ *     "owner" = "content_translation_uid",
  *   },
  *   revision_metadata_keys = {
  *     "revision_created" = "revision_timestamp",
@@ -237,7 +239,6 @@ class Unit extends TprEntityBase {
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
-
     $fields['call_charge_info'] = BaseFieldDefinition::create('text_long')
       ->setTranslatable(TRUE)
       ->setRevisionable(FALSE)
@@ -247,9 +248,7 @@ class Unit extends TprEntityBase {
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
-
     $fields['address_postal'] = static::createStringField('Address postal');
-
     $fields['latitude'] = static::createStringField('Latitude')
       ->setTranslatable(FALSE);
     $fields['longitude'] = static::createStringField('Longitude')
@@ -264,7 +263,6 @@ class Unit extends TprEntityBase {
         'label' => 'hidden',
         'type' => 'service_map_embed',
       ]);
-
     $fields['services'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(new TranslatableMarkup('Services'))
       ->setSettings([
@@ -277,6 +275,23 @@ class Unit extends TprEntityBase {
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
+    $fields['menu_link'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(new TranslatableMarkup('Menu link'))
+      ->setSettings([
+        'target_type' => 'menu_link_content',
+      ])
+      ->setRevisionable(FALSE)
+      ->setTranslatable(TRUE);
+    $fields['accessibility_sentences'] = BaseFieldDefinition::create('tpr_accessibility_sentence')
+      ->setLabel(new TranslatableMarkup('Accessibility sentences'))
+      ->setTranslatable(TRUE)
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('view', TRUE);
+    $fields['opening_hours'] = BaseFieldDefinition::create('tpr_connection')
+      ->setLabel(new TranslatableMarkup('Opening hours'))
+      ->setTranslatable(TRUE)
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }

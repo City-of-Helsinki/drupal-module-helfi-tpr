@@ -8,6 +8,7 @@ dependencies:
   - text
   - address
   - link
+  - menu_link_content
   - migrate
   - content_translation
   - language

@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\helfi_tpr\Kernel;
 
+use Drupal\helfi_tpr\Entity\Unit;
+
 /**
  * Tests TPR Unit migration.
  *
@@ -13,16 +15,15 @@ class UnitMigrationTest extends MigrationTestBase {
 
   /**
    * Tests unit migration.
-   *
-   * @dataProvider unitMigrationData
    */
-  public function testUnitMigration(string $langcode, array $expected) : void {
-    $entities = $this->createUnitMigration();
+  public function testUnitMigration() : void {
+    $this->runUnitMigrate();
+    $entities = Unit::loadMultiple();
     $this->assertCount(1, $entities);
 
-    foreach ($entities as $entity) {
+    foreach ($this->expectedUnitData() as $langcode => $expected) {
       /** @var \Drupal\helfi_tpr\Entity\Unit $translation */
-      $translation = $entity->getTranslation($langcode);
+      $translation = $entities[1]->getTranslation($langcode);
 
       $this->assertEquals($expected['id'], $translation->id());
       $this->assertEquals($expected['name'], $translation->label());
@@ -42,7 +43,8 @@ class UnitMigrationTest extends MigrationTestBase {
    * Tests that default values are not overridden by migrate.
    */
   public function testDefaultUnitValues() : void {
-    $entities = $this->createUnitMigration();
+    $this->runUnitMigrate();
+    $entities = Unit::loadMultiple();
 
     // Update translation author and status fields.
     $translation = $entities[1]->getTranslation('sv');
@@ -55,7 +57,8 @@ class UnitMigrationTest extends MigrationTestBase {
       ->save();
 
     // Re-run migrate and make sure author and status fields won't get updated.
-    $entities = $this->createUnitMigration();
+    $this->runUnitMigrate();
+    $entities = Unit::loadMultiple();
     $translation = $entities[1]->getTranslation('sv');
 
     $this->assertEquals('0', $translation->get('content_translation_uid')->target_id);
@@ -68,52 +71,43 @@ class UnitMigrationTest extends MigrationTestBase {
    * @return array
    *   The data.
    */
-  public function unitMigrationData() : array {
+  public function expectedUnitData() : array {
     return [
-      [
-        'en',
-        [
-          'id' => 1,
-          'name' => 'Name en 1',
-          'latitude' => '60.19',
-          'longitude' => '24.76',
-          'street_address' => NULL,
-          'address_zip' => '02180',
-          'address_city' => 'Espoo en 1',
-          'phone' => '+3581234',
-          'call_charge_info' => 'pvm en 1',
-          'www' => 'https://localhost/en/1',
-        ],
+      'en' => [
+        'id' => 1,
+        'name' => 'Name en 1',
+        'latitude' => '60.19',
+        'longitude' => '24.76',
+        'street_address' => NULL,
+        'address_zip' => '02180',
+        'address_city' => 'Espoo en 1',
+        'phone' => '+3581234',
+        'call_charge_info' => 'pvm en 1',
+        'www' => 'https://localhost/en/1',
       ],
-      [
-        'fi',
-        [
-          'id' => 1,
-          'name' => 'Name fi 1',
-          'latitude' => '60.19',
-          'longitude' => '24.76',
-          'street_address' => 'Address fi 1',
-          'address_zip' => '02180',
-          'address_city' => 'Espoo fi 1',
-          'phone' => '+3581234',
-          'call_charge_info' => 'pvm fi 1',
-          'www' => 'https://localhost/fi/1',
-        ],
+      'fi' => [
+        'id' => 1,
+        'name' => 'Name fi 1',
+        'latitude' => '60.19',
+        'longitude' => '24.76',
+        'street_address' => 'Address fi 1',
+        'address_zip' => '02180',
+        'address_city' => 'Espoo fi 1',
+        'phone' => '+3581234',
+        'call_charge_info' => 'pvm fi 1',
+        'www' => 'https://localhost/fi/1',
       ],
-      [
-        'sv',
-        [
-          'id' => 1,
-          'name' => 'Name sv 1',
-          'latitude' => '60.19',
-          'longitude' => '24.76',
-          'street_address' => 'Address sv 1',
-          'address_zip' => '02180',
-          'address_city' => 'Espoo sv 1',
-          'phone' => '+3581234',
-          'call_charge_info' => 'pvm sv 1',
-          'www' => 'https://localhost/sv/1',
-        ],
+      'sv' => [
+        'id' => 1,
+        'name' => 'Name sv 1',
+        'latitude' => '60.19',
+        'longitude' => '24.76',
+        'street_address' => 'Address sv 1',
+        'address_zip' => '02180',
+        'address_city' => 'Espoo sv 1',
+        'phone' => '+3581234',
+        'call_charge_info' => 'pvm sv 1',
+        'www' => 'https://localhost/sv/1',
       ],
     ];
   }

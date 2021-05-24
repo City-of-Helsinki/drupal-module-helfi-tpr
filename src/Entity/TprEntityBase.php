@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Entity;
 
+use Drupal\Core\Entity\EntityPublishedInterface;
+use Drupal\Core\Entity\EntityPublishedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\Entity\RevisionLogEntityTrait;
@@ -12,13 +14,18 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\helfi_api_base\Entity\RemoteEntityBase;
+use Drupal\user\EntityOwnerInterface;
+use Drupal\user\EntityOwnerTrait;
 
 /**
  * Defines the base class for all TPR entities.
  */
-abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInterface, RevisionLogInterface {
+abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInterface, RevisionLogInterface, EntityPublishedInterface, EntityOwnerInterface {
 
   use RevisionLogEntityTrait;
+  use BaseFieldTrait;
+  use EntityPublishedTrait;
+  use EntityOwnerTrait;
 
   /**
    * An array of overridable fields.
@@ -39,68 +46,6 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
       return $this->get('name_override')->value;
     }
     return parent::label();
-  }
-
-  /**
-   * Helper function to create a basic string field.
-   *
-   * @param string $label
-   *   The label.
-   * @param int $cardinality
-   *   The cardinality.
-   *
-   * @return \Drupal\Core\Field\BaseFieldDefinition
-   *   The field definition.
-   */
-  protected static function createStringField(string $label, int $cardinality = 1) : BaseFieldDefinition {
-    return static::createBaseField(BaseFieldDefinition::create('string'), $label)
-      // @codingStandardsIgnoreLine
-      ->setCardinality($cardinality)
-      ->setDefaultValue('')
-      ->setSettings([
-        'max_length' => 255,
-        'text_processing' => 0,
-      ]);
-  }
-
-  /**
-   * Helper function to create a basic base field.
-   *
-   * @param \Drupal\Core\Field\BaseFieldDefinition $field
-   *   The base field.
-   * @param string $label
-   *   The label.
-   *
-   * @return \Drupal\Core\Field\BaseFieldDefinition
-   *   The base field.
-   */
-  protected static function createBaseField(BaseFieldDefinition $field, string $label) : BaseFieldDefinition {
-    return $field
-      // @codingStandardsIgnoreLine
-      ->setLabel(new TranslatableMarkup($label))
-      ->setTranslatable(TRUE)
-      ->setRevisionable(FALSE)
-      ->setDisplayConfigurable('view', TRUE)
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayOptions('form', [
-        'type' => 'readonly_field_widget',
-      ]);
-  }
-
-  /**
-   * Helper function to create a basic phone field.
-   *
-   * @param string $label
-   *   The label.
-   * @param int $cardinality
-   *   The cardinality.
-   *
-   * @return \Drupal\Core\Field\BaseFieldDefinition
-   *   The field definition.
-   */
-  protected static function createPhoneField(string $label, int $cardinality = 1) : BaseFieldDefinition {
-    return static::createBaseField(BaseFieldDefinition::create('telephone'), $label)
-      ->setCardinality($cardinality);
   }
 
   /**
@@ -160,23 +105,29 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   }
 
   /**
-   * Whether the entity is published.
-   *
-   * @return bool
-   *   Whether entity is published or not.
-   */
-  public function isPublished() : bool {
-    return (bool) $this->get('content_translation_status')->value;
-  }
-
-  /**
    * Gets the author.
    *
    * @return \Drupal\Core\Session\AccountInterface|null
    *   The account.
+   *
+   * @codingStandardsIgnoreStart
+   * @deprecated Use ::getOwner() instead.
+   * @codingStandardsIgnoreEnd
    */
   public function getAuthor() : ? AccountInterface {
-    return $this->get('content_translation_uid')->entity;
+    return $this->getOwner();
+  }
+
+  /**
+   * Gets the changed time.
+   *
+   * @return int|null
+   *   The timestmap.
+   */
+  public function getChangedTime() : ? int {
+    $value = $this->get('content_translation_changed')->value;
+
+    return $value ? (int) $value : NULL;
   }
 
   /**
@@ -196,8 +147,8 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     $fields += static::createOverrideFields(static::$overrideFields);
 
     foreach (['changed', 'created'] as $field) {
-      // All translations should have same date.
-      $fields[$field]->setTranslatable(FALSE);
+      // Remove changed and created fields.
+      unset($fields[$field]);
     }
 
     return $fields;

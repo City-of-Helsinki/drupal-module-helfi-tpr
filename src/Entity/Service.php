@@ -43,7 +43,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   show_revision_ui = TRUE,
  *   revisionable = TRUE,
  *   translatable = TRUE,
- *   admin_permission = "administer remote entities",
+ *   admin_permission = "administer tpr_service",
  *   entity_keys = {
  *     "id" = "id",
  *     "revision" = "revision_id",

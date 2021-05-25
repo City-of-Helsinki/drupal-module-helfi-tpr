@@ -13,10 +13,6 @@
 ]
 %}
 
-{% if drupal_entity('block', 'main_navigation_level_2', check_access=false)|render|striptags|trim is not empty %}
-  {% set in_menu =  TRUE %}
-{% endif %}
-
 {% if view_mode != 'teaser' %}
 
   <article{{ attributes.addClass(classes) }}>
@@ -41,6 +37,8 @@
       {% if in_menu %}
         <div class="service__sidebar">
           {{ drupal_entity('block', 'main_navigation_level_2', check_access=false) }}
+          {% block sidebar_block %}
+          {% endblock sidebar_block%}
         </div>
       {% endif %}
     </div>

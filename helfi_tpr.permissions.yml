@@ -4,3 +4,10 @@
 'revert all tpr_unit revisions':
   title: 'Revert all tpr_unit revisions'
   'restrict access': TRUE
+
+'view all tpr_service revisions':
+  title: 'View all tpr_service revisions'
+  'restrict access': TRUE
+'revert all tpr_service revisions':
+  title: 'Revert all tpr_service revisions'
+  'restrict access': TRUE

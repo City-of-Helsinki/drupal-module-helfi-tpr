@@ -213,6 +213,13 @@ class Service extends TprEntityBase {
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
+    $fields['menu_link'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(new TranslatableMarkup('Menu link'))
+      ->setSettings([
+        'target_type' => 'menu_link_content',
+      ])
+      ->setRevisionable(FALSE)
+      ->setTranslatable(TRUE);
 
     return $fields;
   }

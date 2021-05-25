@@ -17,8 +17,7 @@
 {% if view_mode == 'full' %}
 
   <article{{ attributes.addClass(classes) }}>
-
-    <div class="unit-header__container container">
+    <div class="unit-header__container container {{ in_menu ? 'has-navigation' }}">
       <div{{ content_attributes.addClass('unit__header') }}>
         <h1{{ title_attributes.addClass('unit__title') }}>
           {{ entity.label }}
@@ -44,65 +43,86 @@
           </div>
         {% endif %}
       </div>
-      {% if content.address|render or content.email|render or content.phone|render or content.address_postal|render %}
-        <div class="unit__contact">
-          <h3 class="unit__contact__title">
-            {% trans with {'context': 'Contact card title'} %}Contact{% endtrans %}
-          </h3>
-          {% if content.address|render %}
-            <div class="unit__contact-row unit__contact-row--address">
-              <label class="unit__contact-row__label">
-                {% include '@hdbt/misc/icon.twig' with {icon: 'location', label: 'Visiting address'|t } %}
-                {{ 'Visiting address'|t }}:
-              </label>
-              {{ content.address }}
-            </div>
-          {% endif %}
-          {% if content.email|render %}
-            <div class="unit__contact-row unit__contact-row--email">
-              <label class="unit__contact-row__label">
-                {% include '@hdbt/misc/icon.twig' with {icon: 'envelope', label: 'E-mail'|t } %}
-                {{ 'E-mail'|t }}:
-              </label>
-              <a href="mailto:{{ content.email }}">{{ content.email }}</a>
-            </div>
-          {% endif %}
-          {% if content.phone|render %}
-            <div class="unit__contact-row unit__contact-row--phone">
-              <label class="unit__contact-row__label">
-                {% include '@hdbt/misc/icon.twig' with {icon: 'phone', label: 'Phone number'|t } %}
-                {{ 'Phone number'|t }}:
-              </label>
-              {{ content.phone }}
-            </div>
-          {% endif %}
-          {% if content.address_postal|render %}
-            <div class="unit__contact-row unit__contact-row--postal-address">
-              <label class="unit__contact-row__label">
-                {% include '@hdbt/misc/icon.twig' with {icon: 'location', label: 'Postal address'|t } %}
-                {{ 'Postal address'|t }}:
-              </label>
-              {{ content.address_postal }}
-            </div>
-          {% endif %}
+
+      <div class="unit__sidebar">
+        {% block sidebar_block %}
+        {% endblock sidebar_block%}
+
+        {% if
+          content.address|render or
+          content.email|render or
+          content.phone|render or
+          content.address_postal|render or
+          content.opening_hours|render
+        %}
+          <div class="unit__contact">
+            <h3 class="unit__contact__title">
+              {% trans with {'context': 'Contact card title'} %}Contact{% endtrans %}
+            </h3>
+            {% if content.address|render %}
+              <div class="unit__contact-row unit__contact-row--address">
+                <label class="unit__contact-row__label">
+                  {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'location'} %}
+                  {{ 'Visiting address'|t }}:
+                </label>
+                {{ content.address }}
+              </div>
+            {% endif %}
+            {% if content.email|render %}
+              <div class="unit__contact-row unit__contact-row--email">
+                <label class="unit__contact-row__label">
+                  {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'envelope'} %}
+                  {{ 'E-mail'|t }}:
+                </label>
+                <a href="mailto:{{ content.email }}">{{ content.email }}</a>
+              </div>
+            {% endif %}
+            {% if content.phone|render %}
+              <div class="unit__contact-row unit__contact-row--phone">
+                <label class="unit__contact-row__label">
+                  {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'phone'} %}
+                  {{ 'Phone number'|t }}:
+                </label>
+                {{ content.phone }}
+              </div>
+            {% endif %}
+            {% if content.opening_hours|render %}
+              <div class="unit__contact-row unit__contact-row--opening-hours">
+                <label class="unit__contact-row__label">
+                  {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'clock'} %}
+                  {{ 'Opening hours'|t }}:
+                </label>
+                {{ content.opening_hours }}
+              </div>
+            {% endif %}
+            {% if content.address_postal|render %}
+              <div class="unit__contact-row unit__contact-row--postal-address">
+                <label class="unit__contact-row__label">
+                  {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'location'} %}
+                  {{ 'Postal address'|t }}:
+                </label>
+                {{ content.address_postal }}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+
+      </div>
+
+    </div>
+    {% set view = drupal_view_result('unit_services', 'unit_services')|length %}
+    {% if view > 0 %}
+      <div class="unit__content">
+        <div class="unit__services">
+          {{ drupal_view('unit_services', 'unit_services') }}
         </div>
-      {% endif %}
-    </div>
+      </div>
+    {% endif %}
     {% if content.accessibility_sentences|render %}
-    <div class="unit__accessibility_sentences">
-      {{ content.accessibility_sentences }}
-    </div>
-    {% endif %}
-    {% if content.opening_hours|render %}
-      <div class="unit__opening-hours">
-        {{ content.opening_hours }}
+      <div class="unit__accessibility_sentences">
+        {{ content.accessibility_sentences }}
       </div>
     {% endif %}
-    <div class="unit__content">
-      <div class="unit__services">
-        {{ drupal_view('unit_services', 'unit_services') }}
-      </div>
-    </div>
 
   </article>
 
@@ -115,13 +135,13 @@
     <div class="unit__info">
       {% if content.address|render %}
         <div class="unit__info-row unit__info-row--address">
-          {% include '@hdbt/misc/icon.twig' with {icon: 'location', label: 'Visiting address'|t } %}
+          {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'location'} %}
           {{ content.address }}
         </div>
       {% endif %}
       {% if content.phone|render %}
         <div class="unit__info-row unit__info-row--phone">
-          {% include '@hdbt/misc/icon.twig' with {icon: 'phone', label: 'Phone number'|t } %}
+          {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'phone'} %}
           <span class="phones">
             {{ content.phone }}
           </span>
@@ -130,7 +150,7 @@
     </div>
     <a href="{{ url('entity.tpr_unit.canonical', { 'tpr_unit': entity.id() }) }}" class="unit__link">
       <span class="is-hidden">{% trans with {'context': 'Unit teaser link'} %}Go to{% endtrans %} {{ content.name }}</span>
-      {% include '@hdbt/misc/icon.twig' with {icon: 'arrow-right', label: 'Unit page'|t } %}
+      {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'arrow-right'} %}
     </a>
   </div>
 
@@ -156,7 +176,7 @@
       {% elseif content.picture_url|render %}
         {{ content.picture_url }}
       {% else %}
-        {% include "@hdbt/misc/image-placeholder.twig" %}
+        {% include "@hdbt/misc/image-placeholder.twig" ignore missing %}
       {% endif %}
     </div>
 
@@ -168,13 +188,13 @@
         <div class="unit__info">
           {% if content.address|render %}
             <div class="unit__info-row unit__info-row--address">
-              {% include '@hdbt/misc/icon.twig' with {icon: 'location', label: 'Visiting address'|t } %}
+              {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'location'} %}
               {{ content.address }}
             </div>
           {% endif %}
           {% if content.phone|render %}
             <div class="unit__info-row unit__info-row--phone">
-              {% include '@hdbt/misc/icon.twig' with {icon: 'phone', label: 'Phone number'|t } %}
+              {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'phone'} %}
               <span class="phones">
               {{ content.phone }}
             </span>
@@ -184,7 +204,7 @@
       </div>
       <a href="{{ url('entity.tpr_unit.canonical', { 'tpr_unit': entity.id() }) }}" class="unit__link">
         <span class="is-hidden">{% trans with {'context': 'Unit teaser link'} %}Go to{% endtrans %} {{ content.name }}</span>
-        {% include '@hdbt/misc/icon.twig' with {icon: 'arrow-right'} %}
+        {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'arrow-right'} %}
       </a>
     </div>
   </div>

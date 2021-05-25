@@ -17,12 +17,11 @@
 
   <article{{ attributes.addClass(classes) }}>
 
-    <div class="service-header__container container">
-      <h1{{ title_attributes.addClass('service__title') }}>
-        {{ entity.label }}
-      </h1>
-
+    <div class="service-header__container container {{ in_menu ? 'has-navigation' }}">
       <div{{ content_attributes.addClass('service__header') }}>
+        <h1{{ title_attributes.addClass('service__title') }}>
+          {{ entity.label }}
+        </h1>
         {% if content.description_summary|render %}
           <div class="service__short-desc">
             {{ content.description_summary }}
@@ -35,12 +34,22 @@
           </div>
         {% endif %}
       </div>
+      {% if in_menu %}
+        <div class="service__sidebar">
+          {{ drupal_entity('block', 'main_navigation_level_2', check_access=false) }}
+          {% block sidebar_block %}
+          {% endblock sidebar_block%}
+        </div>
+      {% endif %}
     </div>
-    <div class="service__content">
-      <div class="service__units">
-        {{ drupal_view('service_units', 'service_units') }}
+    {% set view = drupal_view_result('service_units', 'service_units')|length %}
+    {% if view > 0 %}
+      <div class="service__content">
+        <div class="service__units">
+          {{ drupal_view('service_units', 'service_units') }}
+        </div>
       </div>
-    </div>
+    {% endif %}
 
   </article>
 
@@ -56,7 +65,7 @@
           {{ content.description_summary }}
         </div>
       {% endif %}
-      {% include '@hdbt/misc/icon.twig' with {icon: 'arrow-right', label: 'Service page'|t } %}
+      {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'arrow-right'} %}
     </a>
   </div>
 

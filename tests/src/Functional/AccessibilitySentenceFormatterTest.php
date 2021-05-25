@@ -12,7 +12,7 @@ use Drupal\helfi_tpr\Entity\TprEntityBase;
  *
  * @group helfi_tpr
  */
-class AccessibilitySentenceFormatterTestTest extends CustomFieldFormatterTestBase {
+class AccessibilitySentenceFormatterTest extends CustomFieldFormatterTestBase {
 
   /**
    * Asserts that we can or can't see the field values.

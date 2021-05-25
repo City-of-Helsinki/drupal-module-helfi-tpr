@@ -37,6 +37,9 @@
             {{ content.description }}
           </div>
         {% endif %}
+
+        {% block main_content %}
+        {% endblock main_content %}
       </div>
       {% if in_menu %}
         <div class="service__sidebar">

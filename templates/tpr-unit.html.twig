@@ -14,14 +14,9 @@
   ]
 %}
 
-{% if drupal_entity('block', 'main_navigation_level_2', check_access=false)|render|striptags|trim is not empty %}
-  {% set in_menu =  TRUE %}
-{% endif %}
-
 {% if view_mode == 'full' %}
 
   <article{{ attributes.addClass(classes) }}>
-
     <div class="unit-header__container container {{ in_menu ? 'has-navigation' }}">
       <div{{ content_attributes.addClass('unit__header') }}>
         <h1{{ title_attributes.addClass('unit__title') }}>
@@ -54,9 +49,16 @@
       </div>
 
       <div class="unit__sidebar">
-        {{ drupal_entity('block', 'main_navigation_level_2', check_access=false) }}
+        {% block sidebar_block %}
+        {% endblock sidebar_block%}
 
-        {% if content.address|render or content.email|render or content.phone|render or content.address_postal|render %}
+        {% if
+          content.address|render or
+          content.email|render or
+          content.phone|render or
+          content.address_postal|render or
+          content.opening_hours|render
+        %}
           <div class="unit__contact">
             <h3 class="unit__contact__title">
               {% trans with {'context': 'Contact card title'} %}Contact{% endtrans %}
@@ -64,7 +66,7 @@
             {% if content.address|render %}
               <div class="unit__contact-row unit__contact-row--address">
                 <label class="unit__contact-row__label">
-                  {% include '@hdbt/misc/icon.twig' with {icon: 'location'} %}
+                  {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'location'} %}
                   {{ 'Visiting address'|t }}:
                 </label>
                 {{ content.address }}
@@ -73,7 +75,7 @@
             {% if content.email|render %}
               <div class="unit__contact-row unit__contact-row--email">
                 <label class="unit__contact-row__label">
-                  {% include '@hdbt/misc/icon.twig' with {icon: 'envelope'} %}
+                  {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'envelope'} %}
                   {{ 'E-mail'|t }}:
                 </label>
                 <a href="mailto:{{ content.email }}">{{ content.email }}</a>
@@ -82,7 +84,7 @@
             {% if content.phone|render %}
               <div class="unit__contact-row unit__contact-row--phone">
                 <label class="unit__contact-row__label">
-                  {% include '@hdbt/misc/icon.twig' with {icon: 'phone'} %}
+                  {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'phone'} %}
                   {{ 'Phone number'|t }}:
                 </label>
                 {{ content.phone }}
@@ -91,7 +93,7 @@
             {% if content.opening_hours|render %}
               <div class="unit__contact-row unit__contact-row--opening-hours">
                 <label class="unit__contact-row__label">
-                  {% include '@hdbt/misc/icon.twig' with {icon: 'clock'} %}
+                  {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'clock'} %}
                   {{ 'Opening hours'|t }}:
                 </label>
                 {{ content.opening_hours }}
@@ -100,7 +102,7 @@
             {% if content.address_postal|render %}
               <div class="unit__contact-row unit__contact-row--postal-address">
                 <label class="unit__contact-row__label">
-                  {% include '@hdbt/misc/icon.twig' with {icon: 'location'} %}
+                  {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'location'} %}
                   {{ 'Postal address'|t }}:
                 </label>
                 {{ content.address_postal }}
@@ -137,13 +139,13 @@
     <div class="unit__info">
       {% if content.address|render %}
         <div class="unit__info-row unit__info-row--address">
-          {% include '@hdbt/misc/icon.twig' with {icon: 'location'} %}
+          {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'location'} %}
           {{ content.address }}
         </div>
       {% endif %}
       {% if content.phone|render %}
         <div class="unit__info-row unit__info-row--phone">
-          {% include '@hdbt/misc/icon.twig' with {icon: 'phone'} %}
+          {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'phone'} %}
           <span class="phones">
             {{ content.phone }}
           </span>
@@ -152,7 +154,7 @@
     </div>
     <a href="{{ url('entity.tpr_unit.canonical', { 'tpr_unit': entity.id() }) }}" class="unit__link">
       <span class="is-hidden">{% trans with {'context': 'Unit teaser link'} %}Go to{% endtrans %} {{ content.name }}</span>
-      {% include '@hdbt/misc/icon.twig' with {icon: 'arrow-right'} %}
+      {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'arrow-right'} %}
     </a>
   </div>
 
@@ -178,7 +180,7 @@
       {% elseif content.picture_url|render %}
         {{ content.picture_url }}
       {% else %}
-        {% include "@hdbt/misc/image-placeholder.twig" %}
+        {% include "@hdbt/misc/image-placeholder.twig" ignore missing %}
       {% endif %}
     </div>
 
@@ -190,13 +192,13 @@
         <div class="unit__info">
           {% if content.address|render %}
             <div class="unit__info-row unit__info-row--address">
-              {% include '@hdbt/misc/icon.twig' with {icon: 'location'} %}
+              {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'location'} %}
               {{ content.address }}
             </div>
           {% endif %}
           {% if content.phone|render %}
             <div class="unit__info-row unit__info-row--phone">
-              {% include '@hdbt/misc/icon.twig' with {icon: 'phone'} %}
+              {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'phone'} %}
               <span class="phones">
               {{ content.phone }}
             </span>
@@ -206,7 +208,7 @@
       </div>
       <a href="{{ url('entity.tpr_unit.canonical', { 'tpr_unit': entity.id() }) }}" class="unit__link">
         <span class="is-hidden">{% trans with {'context': 'Unit teaser link'} %}Go to{% endtrans %} {{ content.name }}</span>
-        {% include '@hdbt/misc/icon.twig' with {icon: 'arrow-right'} %}
+        {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'arrow-right'} %}
       </a>
     </div>
   </div>

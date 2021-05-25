@@ -36,7 +36,6 @@
       </div>
       {% if in_menu %}
         <div class="service__sidebar">
-          {{ drupal_entity('block', 'main_navigation_level_2', check_access=false) }}
           {% block sidebar_block %}
           {% endblock sidebar_block%}
         </div>

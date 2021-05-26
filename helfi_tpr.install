@@ -410,3 +410,18 @@ function helfi_tpr_update_8022() : void {
 function helfi_tpr_update_8023() : void {
   helfi_tpr_update_8016();
 }
+
+/**
+ * Adds 'menu_link' field to tpr service.
+ */
+function helfi_tpr_update_8024() : void {
+  $field = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(new TranslatableMarkup('Menu link'))
+    ->setSettings([
+      'target_type' => 'menu_link_content',
+    ])
+    ->setRevisionable(FALSE)
+    ->setTranslatable(TRUE);
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('menu_link_content', 'tpr_service', 'helfi_tpr', $field);
+}

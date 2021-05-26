@@ -8,11 +8,11 @@ use Drupal\Core\Url;
 use Drupal\Tests\helfi_tpr\Traits\TprMigrateTrait;
 
 /**
- * Tests menu link creation from unit entity form.
+ * Tests menu link creation from service entity form.
  *
  * @group helfi_tpr
  */
-class UnitMenuLinkTest extends MigrationTestBase {
+class ServiceMenuLinkTest extends MigrationTestBase {
 
   use TprMigrateTrait;
 
@@ -34,9 +34,10 @@ class UnitMenuLinkTest extends MigrationTestBase {
     $this->drupalLogin($this->privilegedAccount);
 
     $this->runUnitMigrate();
+    $this->runServiceMigrate();
 
     foreach (['fi', 'sv'] as $language) {
-      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 1]), [
+      $this->drupalGet(Url::fromRoute('entity.tpr_service.edit_form', ['tpr_service' => 1]), [
         'query' => ['language' => $language],
       ]);
       $this->assertSession()->statusCodeEquals(200);
@@ -49,7 +50,7 @@ class UnitMenuLinkTest extends MigrationTestBase {
     $this->privilegedAccount->save();
 
     foreach (['fi', 'sv'] as $language) {
-      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 1]), [
+      $this->drupalGet(Url::fromRoute('entity.tpr_service.edit_form', ['tpr_service' => 1]), [
         'query' => ['language' => $language],
       ]);
       // Make sure menu link is not enabled by default.
@@ -67,7 +68,7 @@ class UnitMenuLinkTest extends MigrationTestBase {
       $this->assertMenuLink("Menu link $language", $language, FALSE);
 
       // Make sure publishing entity also publishes the menu link.
-      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 1]), [
+      $this->drupalGet(Url::fromRoute('entity.tpr_service.edit_form', ['tpr_service' => 1]), [
         'query' => ['language' => $language],
       ]);
       $this->submitForm([

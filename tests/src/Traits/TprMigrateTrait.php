@@ -48,22 +48,6 @@ trait TprMigrateTrait {
   }
 
   /**
-   * Runs the 'tpr_unit_extra' migration.
-   */
-  protected function runUnitExtrasMigration(array $responses = []) : void {
-    if (empty($responses)) {
-      $units = $this->fixture('tpr_unit')->getMockData();
-
-      $responses = [];
-      foreach ($units as $unit) {
-        $responses[] = new Response(200, [], json_encode($unit));
-      }
-    }
-    $this->container->set('http_client', $this->createMockHttpClient($responses));
-    $this->executeMigration('tpr_unit_extra');
-  }
-
-  /**
    * Runs the 'tpr_errand_service' migration.
    */
   protected function runErrandServiceMigration(array $responses = []) : void {

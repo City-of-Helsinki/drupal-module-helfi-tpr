@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\Tests\helfi_tpr\Traits;
 
 use Drupal\helfi_api_base\Fixture\FixtureBase;
-use GuzzleHttp\Psr7\Response;
 
 /**
  * Provides shared functionality for unit entity tests.

@@ -100,6 +100,9 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
       $content = $this->getContent($url);
 
       foreach ($content as $object) {
+        if (!isset($object['unit_id'])) {
+          continue;
+        }
         $data[$type][$object['unit_id']][] = $object;
       }
     }

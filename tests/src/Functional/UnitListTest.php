@@ -42,6 +42,9 @@ class UnitListTest extends MigrationTestBase {
 
     foreach (json_decode($units, TRUE) as $unit) {
       $responses[] = new Response(200, [], json_encode($unit));
+      // Connections and accessibility sentences requests.
+      $responses[] = new Response(200, [], json_encode([]));
+      $responses[] = new Response(200, [], json_encode([]));
     }
 
     $this->container->set('http_client', $this->createMockHttpClient($responses));

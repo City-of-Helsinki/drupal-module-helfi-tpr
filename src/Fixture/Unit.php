@@ -44,6 +44,7 @@ final class Unit extends FixtureBase {
         'modified_time' => '2015-11-03T12:03:45',
         'accessibility_sentences' => [
           [
+            'unit_id' => 1,
             'sentence_group_name' => 'Group 1',
             'sentence_group_fi' => 'Group fi 1',
             'sentence_group_sv' => 'Group sv 1',
@@ -53,6 +54,7 @@ final class Unit extends FixtureBase {
             'sentence_en' => 'Sentence en 1',
           ],
           [
+            'unit_id' => 1,
             'sentence_group_name' => 'Group 2',
             'sentence_group_fi' => 'Group fi 2',
             'sentence_group_sv' => 'Group sv 2',
@@ -64,12 +66,14 @@ final class Unit extends FixtureBase {
         ],
         'connections' => [
           [
+            'unit_id' => 1,
             'section_type' => 'OPENING_HOURS',
             'name_fi' => 'open fi 1',
             'name_en' => 'open en 1',
             'name_sv' => 'open sv 1',
           ],
           [
+            'unit_id' => 1,
             'section_type' => 'OPENING_HOURS',
             'name_fi' => 'open fi 2',
             'name_en' => 'open en 2',
@@ -79,18 +83,21 @@ final class Unit extends FixtureBase {
             'www_sv' => 'https://localhost/sv',
           ],
           [
+            'unit_id' => 1,
             'section_type' => 'HIGHLIGHT',
             'name_fi' => 'hilight fi 1',
             'name_en' => 'hilight en 1',
             'name_sv' => 'hilight sv 1',
           ],
           [
+            'unit_id' => 1,
             'section_type' => 'HIGHLIGHT',
             'name_fi' => 'hilight fi 2',
             'name_en' => 'hilight en 2',
             'name_sv' => 'hilight sv 2',
           ],
           [
+            'unit_id' => 1,
             'section_type' => 'PHONE_OR_EMAIL',
             'name_fi' => 'phone or email fi 1',
             'name_en' => 'phone or email en 1',
@@ -98,12 +105,14 @@ final class Unit extends FixtureBase {
             'phone' => '040123456',
           ],
           [
+            'unit_id' => 1,
             'section_type' => 'PHONE_OR_EMAIL',
             'name_fi' => 'phone or email fi 2',
             'contact_person' => 'contact person name',
             'phone' => '040654321',
           ],
           [
+            'unit_id' => 1,
             'section_type' => 'ESERVICE_LINK',
             'name_fi' => 'eservice link fi',
             'www_fi' => 'https://link.fi',
@@ -121,8 +130,10 @@ final class Unit extends FixtureBase {
     $responses = [
       new Response(200, [], json_encode($units)),
     ];
+
     foreach ($units as $unit) {
-      $responses[] = new Response(200, [], json_encode($unit));
+      $responses[] = new Response(200, [], json_encode($unit['accessibility_sentences']));
+      $responses[] = new Response(200, [], json_encode($unit['connections']));
     }
     return $responses;
   }

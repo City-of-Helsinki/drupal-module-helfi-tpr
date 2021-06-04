@@ -81,6 +81,35 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
   }
 
   /**
+   * Gets the extra unit data such as connections and accessibility sentences.
+   *
+   * @param int $unitId
+   *   The unit id used to get the data.
+   * @param string $type
+   *   The type to fetch.
+   * @param string $url
+   *   The url to fetch.
+   *
+   * @return array
+   *   The data.
+   */
+  protected function getExtraUnitData(int $unitId, string $type, string $url) : array {
+    static $data;
+
+    if (!isset($data[$type])) {
+      $content = $this->getContent($url);
+
+      foreach ($content as $object) {
+        if (!isset($object['unit_id'])) {
+          continue;
+        }
+        $data[$type][$object['unit_id']][] = $object;
+      }
+    }
+    return $data[$type][$unitId] ?? [];
+  }
+
+  /**
    * {@inheritdoc}
    */
   protected function initializeListIterator() : \Iterator {
@@ -110,6 +139,24 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
       // @see static::NUM_IGNORED_ROWS_BEFORE_STOPPING.
       if ($this->isPartialMigrate() && ($this->ignoredRows >= static::NUM_IGNORED_ROWS_BEFORE_STOPPING)) {
         break;
+      }
+
+      if (isset($this->configuration['accessibility_sentences_url'])) {
+        // Fetch and combine accessibility sentences if configured to do so.
+        $object['accessibility_sentences'] = $this->getExtraUnitData(
+          $object['id'],
+          'accessibility_sentences',
+          $this->configuration['accessibility_sentences_url']
+        );
+      }
+
+      if (isset($this->configuration['connections_url'])) {
+        // Fetch and combine connections if configured to do so.
+        $object['connections'] = $this->getExtraUnitData(
+          $object['id'],
+          'connections',
+          $this->configuration['connections_url']
+        );
       }
       yield from $this->normalizeMultilingualData($object);
     }

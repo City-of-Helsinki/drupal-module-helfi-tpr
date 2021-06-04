@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\Tests\helfi_tpr\Traits;
 
 use Drupal\helfi_api_base\Fixture\FixtureBase;
-use GuzzleHttp\Psr7\Response;
 
 /**
  * Provides shared functionality for unit entity tests.
@@ -45,22 +44,6 @@ trait TprMigrateTrait {
     }
     $this->container->set('http_client', $this->createMockHttpClient($responses));
     $this->executeMigration('tpr_service');
-  }
-
-  /**
-   * Runs the 'tpr_unit_extra' migration.
-   */
-  protected function runUnitExtrasMigration(array $responses = []) : void {
-    if (empty($responses)) {
-      $units = $this->fixture('tpr_unit')->getMockData();
-
-      $responses = [];
-      foreach ($units as $unit) {
-        $responses[] = new Response(200, [], json_encode($unit));
-      }
-    }
-    $this->container->set('http_client', $this->createMockHttpClient($responses));
-    $this->executeMigration('tpr_unit_extra');
   }
 
   /**

@@ -54,8 +54,10 @@ class Unit extends HttpSourcePluginBase implements ContainerFactoryPluginInterfa
    * {@inheritdoc}
    */
   protected function initializeListIterator() : \Generator {
-    $entity_ids = $this->storage->getQuery()
-      ->execute();
+    $query = $this->storage->getQuery();
+
+    $entity_ids = $query->execute();
+
     foreach ($entity_ids as $id) {
       $data = $this->getContent($this->buildCanonicalUrl($id));
 

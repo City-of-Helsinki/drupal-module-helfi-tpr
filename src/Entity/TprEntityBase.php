@@ -39,6 +39,14 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
 
   /**
    * {@inheritdoc}
+   *
+   * We set max sync attempts to 0 to disable automatic migration
+   * cleanup tasks.
+   */
+  public const MAX_SYNC_ATTEMPTS = 0;
+
+  /**
+   * {@inheritdoc}
    */
   public function label() {
     // Use overridden name field as default label when possible.

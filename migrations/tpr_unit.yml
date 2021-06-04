@@ -21,9 +21,31 @@ source:
     - short_desc
   track_changes: true
   url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/'
+  accessibility_sentences_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/accessibility_sentence/'
+  connections_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/connection/'
 process:
   id: id
   name: name
+  opening_hours:
+    plugin: sub_process
+    source: connections
+    process:
+      # Only import opening hours
+      skip:
+        plugin: skip_on_value
+        not_equals: true
+        source: type
+        value: OPENING_HOURS
+        method: row
+      value: value
+      data: data
+      type: type
+  accessibility_sentences:
+    plugin: sub_process
+    source: accessibility_sentences
+    process:
+      value: sentence
+      group: sentence_group
   call_charge_info/value: call_charge_info
   call_charge_info/format:
     plugin: default_value

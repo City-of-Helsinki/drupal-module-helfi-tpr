@@ -1,4 +1,8 @@
-<h4>{{ name }}</h4>
-{% for item in items %}
-  <span>{{ item }}</span>
-{% endfor %}
+<h3>{{ name }}</h3>
+{% if items %}
+  <ul>
+  {% for item in items %}
+    <li>{{ item }}</li>
+  {% endfor %}
+  </ul>
+{% endif %}

@@ -6,7 +6,6 @@
  */
 
 use Drupal\Core\Render\BubbleableMetadata;
-use Drupal\menu_link_content\MenuLinkContentInterface;
 use Drupal\helfi_tpr\Entity\Unit;
 
 /**

@@ -61,7 +61,6 @@ final class ServiceMapFormatter extends FormatterBase {
     $elements['target'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Open link in new window'),
-      '#return_value' => '_blank',
       '#default_value' => $this->getSetting('target'),
     ];
 
@@ -113,7 +112,7 @@ final class ServiceMapFormatter extends FormatterBase {
           '#value' => $this->getSetting('link_title'),
           '#attributes' => [
             'href' => $this->generateUrl($entity),
-            'target' => $this->getSetting('target'),
+            'target' => $this->getSetting('target') ? '_blank' : '',
           ],
         ],
       ];

@@ -42,6 +42,11 @@
             {{ content.description }}
           </div>
         {% endif %}
+        {% if content.service_map_embed|render %}
+          <div class="unit__map">
+            {{ content.service_map_embed }}
+          </div>
+        {% endif %}
 
         {% block main_content %}
         {% endblock main_content %}

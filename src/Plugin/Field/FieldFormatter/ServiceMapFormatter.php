@@ -95,7 +95,7 @@ final class ServiceMapFormatter extends FormatterBase {
       throw new \InvalidArgumentException('The "service_map_embed" field can only be used with tpr_unit entities.');
     }
 
-    $link_title = $this->getSetting('link_title');
+    $link_title = (string) $this->getSetting('link_title');
 
     foreach ($items as $delta => $item) {
       $element[$delta] = [
@@ -112,7 +112,7 @@ final class ServiceMapFormatter extends FormatterBase {
         'link' => [
           '#type' => 'html_tag',
           '#tag' => 'a',
-          '#value' => t((string) $link_title),
+          '#value' => t($link_title),
           '#attributes' => [
             'href' => $this->generateUrl($entity),
             'target' => $this->getSetting('target') ? '_blank' : '',

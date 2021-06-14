@@ -35,7 +35,7 @@ final class ServiceMapFormatter extends FormatterBase {
   public static function defaultSettings() {
     return [
       'iframe_title' => 'Service map',
-      'link_title' => 'View larger map',
+      'link_title' => t('View larger map'),
       'target' => TRUE,
     ] + parent::defaultSettings();
   }
@@ -109,7 +109,7 @@ final class ServiceMapFormatter extends FormatterBase {
         'link' => [
           '#type' => 'html_tag',
           '#tag' => 'a',
-          '#value' => $this->getSetting('link_title'),
+          '#value' => t($this->getSetting('link_title')),
           '#attributes' => [
             'href' => $this->generateUrl($entity),
             'target' => $this->getSetting('target') ? '_blank' : '',

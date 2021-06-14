@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\menu_link_content\MenuLinkContentInterface;
 use Drupal\helfi_tpr\Entity\Unit;
 
 /**
@@ -33,6 +34,13 @@ function helfi_tpr_token_info() {
     $info['tokens'][$entity_type]['label'] = [
       'name' => t('Label'),
     ];
+
+    if ($entity_type == 'tpr_unit' || $entity_type == 'tpr_service') {
+      $info['tokens'][$entity_type]['menu-link-parents'] = [
+        'name' => t('Menu link parents'),
+        'description' => t('Custom token for entity URL alias with menu parents.'),
+      ];
+    }
   }
 
   $info['tokens']['tpr_unit']['picture'] = [
@@ -86,6 +94,32 @@ function helfi_tpr_tokens(
       }
       if ($name === 'description:summary') {
         $replacements[$original] = $entity->getDescription('summary');
+      }
+    }
+
+    // Custom token for entity URL alias with menu parents.
+    if ($name == 'menu-link-parents') {
+      // Get entity menu link.
+      $menu_link_manager = \Drupal::service('plugin.manager.menu.link');
+      $menu_link = $menu_link_manager->loadLinksByRoute('entity.' . $type . '.canonical', [$type => $entity->id()]);
+
+      if (is_array($menu_link) && count($menu_link)) {
+        $menu_link = reset($menu_link);
+        if ($menu_link->getParent()) {
+          // Get entity menu link parents.
+          $parents = $menu_link_manager->getParentIds($menu_link->getParent());
+
+          // Put the cleaned parent titles in an array.
+          $titles = [];
+
+          foreach (array_reverse($parents) as $parent) {
+            $title = $menu_link_manager->createInstance($parent)->getTitle();
+            $titles[] = \Drupal::service('pathauto.alias_cleaner')->cleanString($title, $options);
+          }
+
+          // Return the titles as a string separated with /'s.
+          $replacements[$original] = implode('/', $titles);
+        }
       }
     }
   }

@@ -109,7 +109,7 @@ final class ServiceMapFormatter extends FormatterBase {
         'link' => [
           '#type' => 'html_tag',
           '#tag' => 'a',
-          '#value' => t($this->getSetting('link_title')),
+          '#value' => t((string) $this->getSetting('link_title')),
           '#attributes' => [
             'href' => $this->generateUrl($entity),
             'target' => $this->getSetting('target') ? '_blank' : '',

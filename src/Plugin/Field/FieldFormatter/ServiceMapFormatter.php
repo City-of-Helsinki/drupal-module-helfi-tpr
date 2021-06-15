@@ -110,7 +110,7 @@ final class ServiceMapFormatter extends FormatterBase {
         'link' => [
           '#type' => 'html_tag',
           '#tag' => 'a',
-          '#value' => $this->t('View the map in new window'),
+          '#value' => $this->getSetting('link_title'),
           '#attributes' => [
             'href' => $this->generateUrl($entity),
             'target' => $this->getSetting('target') ? '_blank' : '',

@@ -35,7 +35,7 @@ final class ServiceMapFormatter extends FormatterBase {
   public static function defaultSettings() {
     return [
       'iframe_title' => 'Service map',
-      'link_title' => 'View larger map',
+      'link_title' => t('View larger map'),
       'target' => TRUE,
     ] + parent::defaultSettings();
   }
@@ -61,7 +61,6 @@ final class ServiceMapFormatter extends FormatterBase {
     $elements['target'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Open link in new window'),
-      '#return_value' => '_blank',
       '#default_value' => $this->getSetting('target'),
     ];
 
@@ -95,6 +94,7 @@ final class ServiceMapFormatter extends FormatterBase {
     if (!$entity instanceof Unit) {
       throw new \InvalidArgumentException('The "service_map_embed" field can only be used with tpr_unit entities.');
     }
+
     foreach ($items as $delta => $item) {
       $element[$delta] = [
         'iframe' => [
@@ -113,7 +113,8 @@ final class ServiceMapFormatter extends FormatterBase {
           '#value' => $this->getSetting('link_title'),
           '#attributes' => [
             'href' => $this->generateUrl($entity),
-            'target' => $this->getSetting('target'),
+            'target' => $this->getSetting('target') ? '_blank' : '',
+            'class' => 'link',
           ],
         ],
       ];

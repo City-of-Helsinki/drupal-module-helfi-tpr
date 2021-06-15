@@ -42,6 +42,15 @@
             {{ content.description }}
           </div>
         {% endif %}
+        {% if content.service_map_embed|render %}
+          <div class="unit__map">
+            <label class="unit__map__label">
+              {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'location'} %}
+              {{ 'Location'|t }}
+            </label>
+            {{ content.service_map_embed }}
+          </div>
+        {% endif %}
 
         {% block main_content %}
         {% endblock main_content %}

@@ -86,7 +86,8 @@ class ServiceMapFormatterTest extends UnitTestCase {
 
     $this->assertEquals([
       'href' => 'https://palvelukartta.hel.fi/unit/1',
-      'target' => TRUE,
+      'target' => '_blank',
+      'class' => 'link',
     ], $result[0]['link']['#attributes']);
 
     $this->sut->setSetting('iframe_title', 'Iframe title changed');
@@ -94,7 +95,7 @@ class ServiceMapFormatterTest extends UnitTestCase {
     $this->sut->setSetting('target', FALSE);
     $result = $this->sut->viewElements($list, 'en');
 
-    $this->assertFalse($result[0]['link']['#attributes']['target']);
+    $this->assertEquals('', $result[0]['link']['#attributes']['target']);
     $this->assertEquals('Iframe title changed', $result[0]['iframe']['#attributes']['title']);
     $this->assertEquals('Link title changed', $result[0]['link']['#value']);
   }

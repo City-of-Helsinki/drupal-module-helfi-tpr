@@ -139,6 +139,18 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   }
 
   /**
+   * Gets the created time.
+   *
+   * @return int|null
+   *   The timestamp.
+   */
+  public function getCreatedTime() : ? int {
+    $value = $this->get('content_translation_created')->value;
+
+    return $value ? (int) $value : NULL;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {

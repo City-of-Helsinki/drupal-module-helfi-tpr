@@ -83,7 +83,7 @@ class ListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /** @var \Drupal\helfi_tpr\Entity\Unit $entity */
+    /** @var \Drupal\helfi_tpr\Entity\TprEntityBase $entity */
     $row['id'] = $entity->toLink($entity->id());
     $row['created'] = $this->dateFormatter->format($entity->getCreatedTime());
     $row['changed'] = $this->dateFormatter->format($entity->getChangedTime());

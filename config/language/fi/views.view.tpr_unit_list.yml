@@ -19,7 +19,7 @@ display:
           label: Nimi
           separator: ', '
         content_translation_changed:
-          label: Muuttunut
+          label: Päivitetty
           separator: ', '
         operations:
           label: Toimenpiteet

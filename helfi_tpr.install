@@ -425,3 +425,41 @@ function helfi_tpr_update_8024() : void {
   \Drupal::entityDefinitionUpdateManager()
     ->installFieldStorageDefinition('menu_link_content', 'tpr_service', 'helfi_tpr', $field);
 }
+
+/**
+ * Install tpr_errand_service and tpr_service_channel views.
+ */
+function helfi_tpr_update_8025() : void {
+  $config_storage = \Drupal::service('config.storage');
+  $config_factory = \Drupal::configFactory();
+  $uuid_service = \Drupal::service('uuid');
+
+  // Create file storages.
+  $config_path = drupal_get_path('module', 'helfi_tpr').'/config/install';
+  $config_source = new FileStorage($config_path);
+  $optional_config_path = drupal_get_path('module', 'helfi_tpr') . '/config/optional';
+  $optional_config_source = new FileStorage($optional_config_path);
+  $language_config_path = drupal_get_path('module', 'helfi_tpr') . '/config/language/fi';
+  $language_config_source = new FileStorage($language_config_path);
+
+  // Add new config: publish and unpublish actions for 'Errand service' and 'Service channel'.
+  $actions = [
+    'system.action.tpr_errand_service_publish_action',
+    'system.action.tpr_errand_service_unpublish_action',
+    'system.action.tpr_service_channel_publish_action',
+    'system.action.tpr_service_channel_unpublish_action',
+  ];
+  foreach ($actions as $action) {
+    $config_storage->write($action, $config_source->read($action));
+    $config_factory->getEditable($action)->set('uuid', $uuid_service->generate())->save();
+  }
+
+  // Install new config: 'Errand service' and 'Service channel' views.
+  // Optional configurations are only installed if they are not already present.
+  \Drupal::service('config.installer')->installOptionalConfig($optional_config_source);
+  // Add Finnish translation for 'Errand service' and 'Service channel' views.
+  $views = ['views.view.tpr_errand_service_list', 'views.view.tpr_service_channel_list'];
+  foreach ($views as $view) {
+    $config_storage->createCollection('language.fi')->write($view, $language_config_source->read($view));
+  }
+}

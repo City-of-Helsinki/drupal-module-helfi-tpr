@@ -123,21 +123,29 @@
       </div>
 
     </div>
-    {% set view = drupal_view_result('unit_services', 'unit_services')|length %}
-    {% if view > 0 %}
+    {% set services_view = drupal_view_result('unit_services', 'unit_services')|length %}
+
+    {% if services_view > 0 or content.accessibility_sentences|render %}
       <div class="unit__content">
+    {% endif %}
+
+      {% if services_view > 0 %}
         <div class="unit__services">
           {{ drupal_view('unit_services', 'unit_services') }}
         </div>
+      {% endif %}
+
+      {% block accessibility_sentences_block %}
+        {% if content.accessibility_sentences|render %}
+          <div class="unit__accessibility_sentences">
+            {{ content.accessibility_sentences }}
+          </div>
+        {% endif %}
+      {% endblock accessibility_sentences_block %}
+
+    {% if services_view > 0 or content.accessibility_sentences|render %}
       </div>
     {% endif %}
-    {% block accessibility_sentences_block %}
-      {% if content.accessibility_sentences|render %}
-        <div class="unit__accessibility_sentences">
-          {{ content.accessibility_sentences }}
-        </div>
-      {% endif %}
-    {% endblock accessibility_sentences_block %}
 
   </article>
 

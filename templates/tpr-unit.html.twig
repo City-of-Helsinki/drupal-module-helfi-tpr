@@ -87,7 +87,7 @@
                   {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'envelope'} %}
                   {{ 'E-mail'|t }}:
                 </label>
-                <a href="mailto:{{ content.email }}">{{ content.email }}</a>
+                <a href="mailto:{{ content.email|render|striptags|trim|lower }}">{{ content.email }}</a>
               </div>
             {% endif %}
             {% if content.phone|render %}

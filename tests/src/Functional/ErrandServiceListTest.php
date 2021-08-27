@@ -33,23 +33,25 @@ class ErrandServiceListTest extends MigrationTestBase {
    * Tests collection route (views).
    */
   public function testList() : void {
+    $adminListUrl = '/admin/content/integrations/tpr-errand-service';
+
     // Make sure anonymous user can't see the entity list.
-    $this->drupalGet('/admin/content/integrations/tpr-errand-service');
+    $this->drupalGet($adminListUrl);
     $this->assertSession()->statusCodeEquals(403);
 
     // Make sure logged in user without permissions can't see the entity list.
     $account = $this->createUser();
     $this->drupalLogin($account);
-    $this->drupalGet('/admin/content/integrations/tpr-errand-service');
+    $this->drupalGet($adminListUrl);
     $this->assertSession()->statusCodeEquals(403);
 
-    // Make sure logged in user with access remote entities overview permission
-    // can see the entity list.
+    // Make sure logged in user with `access remote entities overview`
+    // permission can see the entity list.
     $account = $this->createUser([
-      'access remote entities overview'
+      'access remote entities overview',
     ]);
     $this->drupalLogin($account);
-    $this->drupalGet('/admin/content/integrations/tpr-errand-service');
+    $this->drupalGet($adminListUrl);
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('No results found.');
   }

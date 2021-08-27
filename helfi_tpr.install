@@ -442,7 +442,7 @@ function helfi_tpr_update_8025() : void {
   $language_config_path = drupal_get_path('module', 'helfi_tpr') . '/config/language/fi';
   $language_config_source = new FileStorage($language_config_path);
 
-  // Add new config: publish and unpublish actions for 'Errand service' and 'Service channel'.
+  // Add new configs for entity publish and unpublish actions.
   $actions = [
     'system.action.tpr_errand_service_publish_action',
     'system.action.tpr_errand_service_unpublish_action',
@@ -450,12 +450,13 @@ function helfi_tpr_update_8025() : void {
     'system.action.tpr_service_channel_unpublish_action',
   ];
   foreach ($actions as $action) {
-    $config_storage->write($action, $config_source->read($action));
-    $config_factory->getEditable($action)->set('uuid', $uuid_service->generate())->save();
+    if (empty($config_factory->loadMultiple([$action]))) {
+      $config_storage->write($action, $config_source->read($action));
+      $config_factory->getEditable($action)->set('uuid', $uuid_service->generate())->save();
+    }
   }
 
-  // Install new config: 'Errand service' and 'Service channel' views.
-  // Optional configurations are only installed if they are not already present.
+  // Install new configs for 'Errand service' and 'Service channel' views.
   \Drupal::service('config.installer')->installOptionalConfig($optional_config_source);
   // Add Finnish translation for 'Errand service' and 'Service channel' views.
   $views = ['views.view.tpr_errand_service_list', 'views.view.tpr_service_channel_list'];

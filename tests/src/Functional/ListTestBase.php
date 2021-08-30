@@ -19,7 +19,7 @@ abstract class ListTestBase extends MigrationTestBase {
   /**
    * {@inheritdoc}
    */
-  protected static array $modules = [
+  protected static $modules = [
     'views',
     'helfi_tpr',
   ];
@@ -27,7 +27,7 @@ abstract class ListTestBase extends MigrationTestBase {
   /**
    * {@inheritdoc}
    */
-  protected string $defaultTheme = 'stark';
+  protected $defaultTheme = 'stark';
 
   /**
    * The path for the migrated content's list page.

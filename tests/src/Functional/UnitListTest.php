@@ -5,31 +5,17 @@ declare(strict_types = 1);
 namespace Drupal\Tests\helfi_tpr\Functional;
 
 use Drupal\helfi_tpr\Entity\Unit;
-use Drupal\Tests\helfi_api_base\Functional\MigrationTestBase;
 use Drupal\Tests\helfi_api_base\Traits\ApiTestTrait;
 use GuzzleHttp\Psr7\Response;
 
 /**
- * Tests entity list functionality.
+ * Tests Unit entity's list functionality.
  *
  * @group helfi_tpr
  */
-class UnitListTest extends MigrationTestBase {
+class UnitListTest extends ListTestBase {
 
   use ApiTestTrait;
-
-  /**
-   * {@inheritdoc}
-   */
-  protected static $modules = [
-    'views',
-    'helfi_tpr',
-  ];
-
-  /**
-   * {@inheritdoc}
-   */
-  protected $defaultTheme = 'stark';
 
   /**
    * Migrates the tpr unit entities.
@@ -52,7 +38,7 @@ class UnitListTest extends MigrationTestBase {
   }
 
   /**
-   * Asserts that the item is published or unpublishedt.
+   * Asserts that the item is published or unpublished.
    *
    * @param int $nthChild
    *   The nth child.
@@ -68,23 +54,22 @@ class UnitListTest extends MigrationTestBase {
   }
 
   /**
-   * Tests collection route (views).
+   * {@inheritdoc}
    */
-  public function testList() : void {
-    // Make sure anonymous user can't see the entity list.
-    $this->drupalGet('/admin/content/integrations/tpr-unit');
-    $this->assertSession()->statusCodeEquals(403);
-
-    // Make sure logged in user with access remote entities overview permission
-    // can see the entity list.
-    $account = $this->createUser([
+  public function setUp() : void {
+    parent::setUp();
+    $this->listPermissions = [
       'access remote entities overview',
       'administer tpr_unit',
-    ]);
-    $this->drupalLogin($account);
-    $this->drupalGet('/admin/content/integrations/tpr-unit');
-    $this->assertSession()->statusCodeEquals(200);
-    $this->assertSession()->pageTextContains('No results found.');
+    ];
+    $this->adminListPath = '/admin/content/integrations/tpr-unit';
+  }
+
+  /**
+   * Tests list view permissions, and viewing, updating, and publishing units.
+   */
+  public function testList() : void {
+    parent::testList();
 
     // Migrate entities and make sure we can see all entities from fixture.
     $this->runMigrate();

@@ -4,56 +4,29 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\helfi_tpr\Functional;
 
-use Drupal\Tests\helfi_api_base\Functional\MigrationTestBase;
-use Drupal\Tests\helfi_api_base\Traits\ApiTestTrait;
-
 /**
- * Tests entity list functionality.
+ * Tests Service Channel entity's list functionality.
  *
  * @group helfi_tpr
  */
-class ServiceChannelListTest extends MigrationTestBase {
-
-  use ApiTestTrait;
+class ServiceChannelListTest extends ListTestBase {
 
   /**
    * {@inheritdoc}
    */
-  protected static $modules = [
-    'views',
-    'helfi_tpr',
-  ];
-
-  /**
-   * {@inheritdoc}
-   */
-  protected $defaultTheme = 'stark';
-
-  /**
-   * Tests collection route (views).
-   */
-  public function testList() : void {
-    $adminListUrl = '/admin/content/integrations/tpr-service-channel';
-
-    // Make sure anonymous user can't see the entity list.
-    $this->drupalGet($adminListUrl);
-    $this->assertSession()->statusCodeEquals(403);
-
-    // Make sure logged in user without permissions can't see the entity list.
-    $account = $this->createUser();
-    $this->drupalLogin($account);
-    $this->drupalGet($adminListUrl);
-    $this->assertSession()->statusCodeEquals(403);
-
-    // Make sure logged in user with `access remote entities overview`
-    // permission can see the entity list.
-    $account = $this->createUser([
+  public function setUp() : void {
+    parent::setUp();
+    $this->listPermissions = [
       'access remote entities overview',
-    ]);
-    $this->drupalLogin($account);
-    $this->drupalGet($adminListUrl);
-    $this->assertSession()->statusCodeEquals(200);
-    $this->assertSession()->pageTextContains('No results found.');
+    ];
+    $this->adminListPath = '/admin/content/integrations/tpr-service-channel';
+  }
+
+  /**
+   * Tests list view permissions.
+   */
+  public function testListPermissions() : void {
+    parent::testList();
   }
 
 }

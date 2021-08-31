@@ -46,7 +46,7 @@ abstract class ListTestBase extends MigrationTestBase {
   /**
    * Tests list view permissions.
    */
-  protected function testList() : void {
+  public function testList() : void {
     // Make sure anonymous user can't see the entity list.
     $this->drupalGet($this->adminListPath);
     $this->assertSession()->statusCodeEquals(403);

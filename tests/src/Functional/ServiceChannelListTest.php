@@ -22,11 +22,4 @@ class ServiceChannelListTest extends ListTestBase {
     $this->adminListPath = '/admin/content/integrations/tpr-service-channel';
   }
 
-  /**
-   * Tests list view permissions.
-   */
-  public function testListPermissions() : void {
-    parent::testList();
-  }
-
 }

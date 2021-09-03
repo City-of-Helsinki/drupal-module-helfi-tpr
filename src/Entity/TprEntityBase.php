@@ -182,10 +182,10 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     // Also, deleting using the UI is not currently supported.
     // @todo Implement a safe way to delete entities.
     \Drupal::logger('helfi_tpr')->notice('Prevented deleting entity @type with ID @id. Deleting TPR entities is disabled.',
-      array(
+      [
         '@id' => $this->id(),
         '@type' => $this->getEntityTypeId(),
-      ));
+      ]);
   }
 
 }

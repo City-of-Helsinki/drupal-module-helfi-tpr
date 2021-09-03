@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\helfi_tpr\Kernel;
 
-use Drupal\Core\Entity\EntityStorageException;
 use Drupal\helfi_tpr\Entity\Unit;
 
 /**
@@ -20,10 +19,10 @@ class UnitEntityTest extends MigrationTestBase {
    * @param int $id
    *   The id.
    *
-   * @return Unit
+   * @return \Drupal\helfi_tpr\Entity\Unit
    *   The entity.
    *
-   * @throws EntityStorageException
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   protected function getEntity(int $id) : Unit {
     $entity = Unit::create([

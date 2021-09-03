@@ -53,7 +53,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   links = {
  *     "canonical" = "/tpr-service_channel/{tpr_service_channel}",
  *     "edit-form" = "/admin/content/integrations/tpr-service-channel/{tpr_service_channel}/edit",
- *     "delete-form" = "/admin/content/integrations/tpr-service-channel/{tpr_service_channel}/delete",
  *     "collection" = "/admin/content/integrations/tpr-service-channel"
  *   },
  *   field_ui_base_route = "tpr_service_channel.settings"

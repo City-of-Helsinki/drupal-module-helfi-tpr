@@ -51,7 +51,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   links = {
  *     "canonical" = "/tpr-errand-service/{tpr_errand_service}",
  *     "edit-form" = "/admin/content/integrations/tpr-errand-service/{tpr_errand_service}/edit",
- *     "delete-form" = "/admin/content/integrations/tpr-errand-service/{tpr_errand_service}/delete",
  *     "collection" = "/admin/content/integrations/tpr-errand-service"
  *   },
  *   field_ui_base_route = "tpr_errand_service.settings"

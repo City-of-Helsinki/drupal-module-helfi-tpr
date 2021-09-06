@@ -22,7 +22,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "access" = "Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess",
  *     "form" = {
  *       "default" = "Drupal\Core\Entity\ContentEntityForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm"
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
@@ -52,7 +51,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   links = {
  *     "canonical" = "/tpr-errand-service/{tpr_errand_service}",
  *     "edit-form" = "/admin/content/integrations/tpr-errand-service/{tpr_errand_service}/edit",
- *     "delete-form" = "/admin/content/integrations/tpr-errand-service/{tpr_errand_service}/delete",
  *     "collection" = "/admin/content/integrations/tpr-errand-service"
  *   },
  *   field_ui_base_route = "tpr_errand_service.settings"

@@ -35,12 +35,6 @@ entity.tpr_errand_service.edit_form:
   route_name: entity.tpr_errand_service.edit_form
   base_route: entity.tpr_errand_service.canonical
 
-entity.tpr_errand_service.delete_form:
-  title: Delete
-  route_name: entity.tpr_errand_service.delete_form
-  base_route: entity.tpr_errand_service.canonical
-  weight: 10
-
 tpr_errand_service.content_list:
   title: TPR - Errand Service
   route_name: entity.tpr_errand_service.collection
@@ -61,12 +55,6 @@ entity.tpr_service_channel.edit_form:
   title: Edit
   route_name: entity.tpr_service_channel.edit_form
   base_route: entity.tpr_service_channel.canonical
-
-entity.tpr_service_channel.delete_form:
-  title: Delete
-  route_name: entity.tpr_service_channel.delete_form
-  base_route: entity.tpr_service_channel.canonical
-  weight: 10
 
 tpr_service_channel.content_list:
   title: TPR - Service channel

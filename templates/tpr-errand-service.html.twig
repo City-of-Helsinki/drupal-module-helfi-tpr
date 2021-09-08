@@ -1,0 +1,73 @@
+{#
+/**
+ * @file
+ * Template for a TPR Service Channel entity.
+ */
+#}
+
+{%
+  set classes = [
+  'errand-service',
+  view_mode ? 'errand-service--' ~ view_mode|clean_class,
+]
+%}
+
+<article{{ attributes.addClass(classes) }}>
+
+  <div class="errand-service-header__container container">
+    <div{{ content_attributes.addClass('errand-service__header') }}>
+      <h1{{ title_attributes.addClass('errand-service__title') }}>
+        {{ content.name }}
+      </h1>
+    </div>
+
+    {% if content.description|render %}
+      <div class="errand-service__description">
+        {{ content.description }}
+      </div>
+    {% endif %}
+
+    {% if content.channels|render %}
+      <div class="errand-service__channels">
+        {{ content.channels }}
+      </div>
+    {% endif %}
+
+    {% if content.process_description|render %}
+      <div class="errand-service__process_description">
+        {{ 'Process description'|t }}
+        {{ content.process_description }}
+      </div>
+    {% endif %}
+
+    {% if content.processing_time|render %}
+      <div class="errand-service__processing_time">
+        {{ 'Processing time'|t }}
+        {{ content.processing_time }}
+      </div>
+    {% endif %}
+
+    {% if content.expiration_time|render %}
+      <div class="errand-service__expiration_time">
+        {{ 'Expiration time'|t }}
+        {{ content.expiration_time }}
+      </div>
+    {% endif %}
+
+    {% if content.costs|render %}
+      <div class="errand-service__costs">
+        {{ 'Costs'|t }}
+        {{ content.costs }}
+      </div>
+    {% endif %}
+
+    {% if content.information|render %}
+      <div class="errand-service__information">
+        {{ 'Information'|t }}
+        {{ content.information }}
+      </div>
+    {% endif %}
+
+  </div>
+
+</article>

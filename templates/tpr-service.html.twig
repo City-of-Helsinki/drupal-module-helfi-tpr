@@ -37,13 +37,27 @@
         {% block main_content %}
         {% endblock main_content %}
       </div>
-      {% if in_menu %}
+      {% if in_menu or content.links|render  %}
         <div class="service__sidebar">
-          {% block sidebar_block %}
-          {% endblock sidebar_block%}
+          {% if in_menu %}
+            {% block sidebar_block %}
+            {% endblock sidebar_block%}
+          {% endif %}
+
+          {% if content.links|render %}
+            <div class="service__links">
+              {{ content.links }}
+            </div>
+          {% endif %}
         </div>
       {% endif %}
     </div>
+
+    {% if content.errand_services|render %}
+      <div class="service__errand-services">
+        {{ content.errand_services }}
+      </div>
+    {% endif %}
 
     {% set service_units_view = drupal_view_result('service_units', 'service_units')|length %}
 

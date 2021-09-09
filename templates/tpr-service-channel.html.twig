@@ -15,141 +15,142 @@
 
 <article{{ attributes.addClass(classes) }}>
 
-  <div class="service-channel-header__container container">
-    <div{{ content_attributes.addClass('service-channel__header') }}>
-      <div {{ content_attributes.addClass('service-channel__type-string') }}>
-        {{ content.type_string}}
-      </div>
-      <h1{{ title_attributes.addClass('service-channel__title') }}>
-        {{ content.name }}
-      </h1>
+  <div{{ content_attributes.addClass('service-channel__header') }}>
+    <div {{ content_attributes.addClass('service-channel__type') }}>
+      {{ content.type_string}}
     </div>
-
-    {% if content.links|render %}
-      <div class="service-channel__links">
-        {{ content.links }}
-      </div>
-    {% endif %}
-
-    {% if content.prerequisites|render %}
-      <div class="service-channel__prerequisites">
-        {{ 'Process description'|t }}
-        {{ content.prerequisites }}
-      </div>
-    {% endif %}
-
-    {% if content.availability_summary|render %}
-      <div class="service-channel__availability_summary">
-      {{ 'Availability summary'|t }}
-        {{ content.availability_summary }}
-      </div>
-    {% endif %}
-
-    {% if content.process_description|render %}
-      <div class="service-channel__process_description">
-        {{ 'Processing time'|t }}
-        {{ content.process_description }}
-      </div>
-    {% endif %}
-
-    {% if content.langcode|render %}
-      <div class="service-channel__langcode">
-        {{ 'Language'|t }}
-        {{ content.langcode }}
-      </div>
-    {% endif %}
-
-    {% if content.email|render %}
-      <div class="service-channel__email">
-        {{ 'Email'|t }}
-        {{ content.email }}
-      </div>
-    {% endif %}
-
-    {% if content.phone|render %}
-      <div class="service-channel__phone">
-        {{ 'Phone'|t }}
-        {{ content.phone }}
-      </div>
-    {% endif %}
-
-    {% if content.address|render %}
-      <div class="service-channel__address">
-        {{ 'Address'|t }}
-        {{ content.address }}
-      </div>
-    {% endif %}
-
-    {% if content.availabilities|render %}
-      <div class="service-channel__availabilities">
-        {{ 'Availabilities'|t }}
-        {{ content.availabilities }}
-      </div>
-    {% endif %}
-
-    {% if content.expiration_time|render %}
-      <div class="service-channel__expiration_time">
-        {{ 'Expiration time'|t }}
-        {{ content.expiration_time }}
-      </div>
-    {% endif %}
-
-    {% if content.authorization_code|render %}
-      <div class="service-channel__authorization_code">
-        {{ 'Information'|t }}
-        {{ content.authorization_code }}
-      </div>
-    {% endif %}
-
-    {% if content.call_charge_info|render %}
-      <div class="service-channel__call_charge_info">
-        {{ 'Call charge info'|t }}
-        {{ content.call_charge_info }}
-      </div>
-    {% endif %}
-
-    {% if entity.requires_authentication.value == 1 %}
-      <div class="service-channel__requires_authentication">
-        {{ 'Requires authentication'|t }}
-      </div>
-    {% endif %}
-
-    {% if entity.saved_to_customer_folder.value == 1 %}
-      <div class="service-channel__saved_to_customer_folder">
-        {{ 'Saved to customer folder'|t }}
-      </div>
-    {% endif %}
-
-    {% if entity.e_processing.value == 1 %}
-      <div class="service-channel__e_processing">
-        {{ 'E-processing'|t }}
-      </div>
-    {% endif %}
-
-    {% if entity.e_decision.value == 1 %}
-      <div class="service-channel__e_decision">
-        {{ 'E-decision'|t }}
-      </div>
-    {% endif %}
-
-    {% if entity.payment_enabled.value == 1 %}
-      <div class="service-channel__payment_enabled">
-        {{ 'Payment enabled'|t }}
-      </div>
-    {% endif %}
-
-    {% if entity.for_personal_customer.value == 1 %}
-      <div class="service-channel__for_personal_customer">
-        {{ 'For personal customer'|t }}
-      </div>
-    {% endif %}
-
-    {% if entity.for_corporate_customer.value == 1 %}
-      <div class="service-channel__for_corporate_customer">
-        {{ 'For corporate customer'|t }}
-      </div>
-    {% endif %}
-
+    <h3{{ title_attributes.addClass('service-channel__title') }}>
+      {{ content.name }}
+    </h3>
   </div>
+
+  {% if entity.requires_authentication.value == 1 or content.availabilities|render %}
+    <div class="service-channel__info">
+      {% if entity.requires_authentication.value == 1 %}
+        <div class="service-channel__requires_authentication">
+          {{ 'Requires authentication'|t }}
+        </div>
+      {% endif %}
+      {% if content.availabilities|render %}
+        <div class="service-channel__availabilities">
+          {{ content.availabilities }}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if content.links|render %}
+    <div class="service-channel__links">
+      {{ content.links }}
+    </div>
+  {% endif %}
+
+  {#
+  {% if content.prerequisites|render %}
+    <div class="service-channel__prerequisites">
+      {{ 'Process description'|t }}
+      {{ content.prerequisites }}
+    </div>
+  {% endif %}
+
+  {% if content.availability_summary|render %}
+    <div class="service-channel__availability_summary">
+    {{ 'Availability summary'|t }}
+      {{ content.availability_summary }}
+    </div>
+  {% endif %}
+
+  {% if content.process_description|render %}
+    <div class="service-channel__process_description">
+      {{ 'Processing description'|t }}
+      {{ content.process_description }}
+    </div>
+  {% endif %}
+
+  {% if content.langcode|render %}
+    <div class="service-channel__langcode">
+      {{ 'Language'|t }}
+      {{ content.langcode }}
+    </div>
+  {% endif %}
+
+  {% if content.email|render %}
+    <div class="service-channel__email">
+      {{ 'Email'|t }}
+      {{ content.email }}
+    </div>
+  {% endif %}
+
+  {% if content.phone|render %}
+    <div class="service-channel__phone">
+      {{ 'Phone'|t }}
+      {{ content.phone }}
+    </div>
+  {% endif %}
+
+  {% if content.address|render %}
+    <div class="service-channel__address">
+      {{ 'Address'|t }}
+      {{ content.address }}
+    </div>
+  {% endif %}
+
+  {% if content.expiration_time|render %}
+    <div class="service-channel__expiration_time">
+      {{ 'Expiration time'|t }}
+      {{ content.expiration_time }}
+    </div>
+  {% endif %}
+
+  {% if content.authorization_code|render %}
+    <div class="service-channel__authorization_code">
+      {{ 'Information'|t }}
+      {{ content.authorization_code }}
+    </div>
+  {% endif %}
+
+  {% if content.call_charge_info|render %}
+    <div class="service-channel__call_charge_info">
+      {{ 'Call charge info'|t }}
+      {{ content.call_charge_info }}
+    </div>
+  {% endif %}
+
+  {% if entity.saved_to_customer_folder.value == 1 %}
+    <div class="service-channel__saved_to_customer_folder">
+      {{ 'Saved to customer folder'|t }}
+    </div>
+  {% endif %}
+
+  {% if entity.e_processing.value == 1 %}
+    <div class="service-channel__e_processing">
+      {{ 'E-processing'|t }}
+    </div>
+  {% endif %}
+
+  {% if entity.e_decision.value == 1 %}
+    <div class="service-channel__e_decision">
+      {{ 'E-decision'|t }}
+    </div>
+  {% endif %}
+
+  {% if entity.payment_enabled.value == 1 %}
+    <div class="service-channel__payment_enabled">
+      {{ 'Payment enabled'|t }}
+    </div>
+  {% endif %}
+
+  {% if entity.for_personal_customer.value == 1 %}
+    <div class="service-channel__for_personal_customer">
+      {{ 'For personal customer'|t }}
+    </div>
+  {% endif %}
+
+  {% if entity.for_corporate_customer.value == 1 %}
+    <div class="service-channel__for_corporate_customer">
+      {{ 'For corporate customer'|t }}
+    </div>
+  {% endif %}
+  #}
 
 </article>

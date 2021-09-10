@@ -84,11 +84,6 @@
       <h3 class="service__title">
         {{ entity.label }}
       </h3>
-      {% if content.description_summary|render %}
-        <div class="service__short-desc">
-          {{ content.description_summary }}
-        </div>
-      {% endif %}
       {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'arrow-right'} %}
     </a>
   </div>

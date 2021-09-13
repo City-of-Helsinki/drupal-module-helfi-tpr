@@ -73,6 +73,7 @@ process:
     source: phone
     delimiter: ','
     strict: false
+  email: email
   changed:
     -
       plugin: format_date

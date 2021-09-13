@@ -212,7 +212,11 @@ class Unit extends TprEntityBase {
       ->setTranslatable(FALSE);
     $fields['accessibility_email'] = static::createStringField('Accessibility email')
       ->setTranslatable(FALSE);
-    $fields['www'] = static::createLinkField('Website link');
+    $fields['www'] = static::createLinkField('Website link')
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'link',
+      ]);
     $fields['accessibility_www'] = static::createLinkField('Accessibility website link')
       ->setTranslatable(FALSE);
     $fields['description'] = BaseFieldDefinition::create('text_with_summary')

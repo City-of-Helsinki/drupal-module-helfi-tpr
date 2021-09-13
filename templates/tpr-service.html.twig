@@ -36,11 +36,19 @@
 
         {% block main_content %}
         {% endblock main_content %}
+
+        {% if content.errand_services|render %}
+          <div class="service__errand-services">
+            {{ content.errand_services }}
+          </div>
+        {% endif %}
       </div>
       {% if in_menu %}
         <div class="service__sidebar">
-          {% block sidebar_block %}
-          {% endblock sidebar_block%}
+          {% if in_menu %}
+            {% block sidebar_block %}
+            {% endblock sidebar_block%}
+          {% endif %}
         </div>
       {% endif %}
     </div>
@@ -70,11 +78,6 @@
       <h3 class="service__title">
         {{ entity.label }}
       </h3>
-      {% if content.description_summary|render %}
-        <div class="service__short-desc">
-          {{ content.description_summary }}
-        </div>
-      {% endif %}
       {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'arrow-right'} %}
     </a>
   </div>

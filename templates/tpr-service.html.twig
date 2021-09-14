@@ -45,7 +45,7 @@
       </div>
       {% if in_menu %}
         <div class="service__sidebar">
-          {% if in_menu %}
+          {% if in_menu or sidebar_content %}
             {% block sidebar_block %}
             {% endblock sidebar_block%}
           {% endif %}

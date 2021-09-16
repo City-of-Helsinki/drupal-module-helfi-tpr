@@ -296,6 +296,12 @@ class Unit extends TprEntityBase {
       ->setTranslatable(TRUE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE);
+    $fields['provided_languages'] = BaseFieldDefinition::create('string')
+      ->setLabel(new TranslatableMarkup('Provided languages'))
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setTranslatable(FALSE)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
 
     return $fields;
   }

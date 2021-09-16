@@ -20,7 +20,7 @@ source:
     - desc
     - short_desc
   track_changes: true
-  url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/'
+  url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/?newfeatures=yes'
   accessibility_sentences_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/accessibility_sentence/'
   connections_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/connection/'
 process:
@@ -74,6 +74,7 @@ process:
     delimiter: ','
     strict: false
   email: email
+  provided_languages: provided_languages
   changed:
     -
       plugin: format_date

@@ -464,3 +464,20 @@ function helfi_tpr_update_8025() : void {
     $config_storage->createCollection('language.fi')->write($view, $language_config_source->read($view));
   }
 }
+
+/**
+ * Adds 'service_languages' field to 'tpr_unit'
+ */
+function helfi_tpr_update_8026() : void {
+  $fields['provided_languages'] = BaseFieldDefinition::create('string')
+    ->setLabel(new TranslatableMarkup('Provided languages'))
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setTranslatable(FALSE)
+    ->setDisplayConfigurable('view', TRUE)
+    ->setDisplayConfigurable('form', TRUE);
+
+  foreach ($fields as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
+  }
+}

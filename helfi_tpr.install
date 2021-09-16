@@ -466,7 +466,7 @@ function helfi_tpr_update_8025() : void {
 }
 
 /**
- * Adds 'service_languages' field to 'tpr_unit'
+ * Adds 'provided_languages' field to 'tpr_unit' entity
  */
 function helfi_tpr_update_8026() : void {
   $fields['provided_languages'] = BaseFieldDefinition::create('string')

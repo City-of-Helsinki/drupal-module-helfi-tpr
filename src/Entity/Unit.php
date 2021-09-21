@@ -300,6 +300,9 @@ class Unit extends TprEntityBase {
       ->setLabel(new TranslatableMarkup('Provided languages'))
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setTranslatable(FALSE)
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
 

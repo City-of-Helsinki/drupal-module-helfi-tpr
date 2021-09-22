@@ -118,6 +118,11 @@ final class Unit extends FixtureBase {
             'www_fi' => 'https://link.fi',
           ],
         ],
+        'provided_languages' => [
+          'fi',
+          'sv',
+          'en',
+        ],
       ],
     ];
   }

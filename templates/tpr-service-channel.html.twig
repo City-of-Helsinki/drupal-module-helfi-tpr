@@ -13,6 +13,10 @@
 ]
 %}
 
+{% if entity.type.value|lower == 'local' or entity.type.value|lower == 'mail' %}
+  {% set show_mail = true %}
+{% endif %}
+
 <article{{ attributes.addClass(classes) }}>
 
   <div{{ content_attributes.addClass('service-channel__header') }}>
@@ -58,7 +62,7 @@
     </div>
   {% endif %}
 
-  {% if entity.type.value|lower == 'local' and content.address|render %}
+  {% if show_mail and content.address|render %}
     <div class="service-channel__address">
       {{ content.address }}
     </div>

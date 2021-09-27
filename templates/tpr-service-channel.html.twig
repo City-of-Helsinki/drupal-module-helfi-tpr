@@ -5,17 +5,23 @@
  */
 #}
 
+{% if entity.type.value|lower == 'local' or entity.type.value|lower == 'mail' %}
+  {% set show_mail = true %}
+{% endif %}
+
+{% if content.name|render %}
+  {% set title_set = true %}
+{% endif %}
+
+
 {%
   set classes = [
   'service-channel',
   view_mode ? 'service-channel--' ~ view_mode|clean_class,
-  'service-channel--' ~ entity.type.value|lower
+  'service-channel--' ~ entity.type.value|lower,
+  not title_set ? 'service-channel--no-title'
 ]
 %}
-
-{% if entity.type.value|lower == 'local' or entity.type.value|lower == 'mail' %}
-  {% set show_mail = true %}
-{% endif %}
 
 <article{{ attributes.addClass(classes) }}>
 
@@ -23,9 +29,11 @@
     <div {{ content_attributes.addClass('service-channel__type') }}>
       {{ content.type_string}}
     </div>
-    <h3{{ title_attributes.addClass('service-channel__title') }}>
-      {{ content.name }}
-    </h3>
+    {% if title_set %}
+      <h3{{ title_attributes.addClass('service-channel__title') }}>
+        {{ content.name }}
+      </h3>
+    {% endif %}
   </div>
 
   {% if content.phone|render %}

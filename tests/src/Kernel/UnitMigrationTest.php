@@ -40,6 +40,14 @@ class UnitMigrationTest extends MigrationTestBase {
 
       $this->assertEquals(2, $translation->get('accessibility_sentences')->count());
 
+      $provided_languages = [];
+
+      foreach ($translation->get('provided_languages')->getValue() as $value) {
+        $provided_languages[] = $value['value'];
+      }
+
+      $this->assertEquals(['fi', 'sv', 'en'], $provided_languages);
+
       for ($i = 0; $i < 2; $i++) {
         $delta = $i + 1;
         $this->assertEquals("Group $langcode $delta", $translation->get('accessibility_sentences')->get($i)->group);

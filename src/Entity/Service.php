@@ -210,6 +210,7 @@ class Service extends TprEntityBase {
         'type' => 'readonly_field_widget',
       ])
       ->setRevisionable(FALSE)
+      ->setTranslatable(TRUE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);

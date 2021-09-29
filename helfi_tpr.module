@@ -188,11 +188,15 @@ function helfi_tpr_form_alter(&$form, FormStateInterface $form_state, $form_id) 
  * Custom submit handler for TPR Unit and TPR Service entity edit forms.
  */
 function helfi_tpr_form_submit(array $form, FormStateInterface $form_state) {
-  $entity = $form_state->getFormObject()->getEntity();
+  $form_object = $form_state->getFormObject();
 
-  \Drupal::messenger()->addStatus(t('%title saved.', ['%title' => $entity->label()]));
+  if ($form_object instanceof \Drupal\Core\Entity\EntityFormInterface) {
+    $entity = $form_object->getEntity();
 
-  $url = $entity->toUrl()->toString();
-  $redirect = new RedirectResponse($url);
-  $redirect->send();
+    \Drupal::messenger()->addStatus(t('%title saved.', ['%title' => $entity->label()]));
+
+    $url = $entity->toUrl()->toString();
+    $redirect = new RedirectResponse($url);
+    $redirect->send();
+  }
 }

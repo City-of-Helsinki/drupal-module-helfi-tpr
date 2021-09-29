@@ -14,6 +14,14 @@
   ]
 %}
 
+{% set supports_swedish %}
+  {% if 'sv' in provided_languages %}
+    <div class="unit__supports_language_sv">
+      {{ 'Service in Swedish'|t({}, {'context': 'TPR unit also offers service in Swedish'}) }}
+    </div>
+  {% endif %}
+{% endset %}
+
 {% if view_mode == 'full' %}
 
   <article{{ attributes.addClass(classes) }}>
@@ -28,6 +36,7 @@
           </div>
         {% endif %}
         <span class="unit__divider"></span>
+        {{ supports_swedish }}
         {% if content.picture_url_override|render %}
           <div class="unit__image">
             {{ content.picture_url_override }}
@@ -170,6 +179,7 @@
           </span>
         </div>
       {% endif %}
+      {{ supports_swedish }}
     </div>
     <a href="{{ url('entity.tpr_unit.canonical', { 'tpr_unit': entity.id() }) }}" class="unit__link">
       <span class="is-hidden">{% trans with {'context': 'Unit teaser link'} %}Go to{% endtrans %} {{ content.name }}</span>
@@ -224,6 +234,7 @@
             </div>
           {% endif %}
         </div>
+        {{ supports_swedish }}
       </div>
       <a href="{{ url('entity.tpr_unit.canonical', { 'tpr_unit': entity.id() }) }}" class="unit__link">
         <span class="is-hidden">{% trans with {'context': 'Unit teaser link'} %}Go to{% endtrans %} {{ content.name }}</span>

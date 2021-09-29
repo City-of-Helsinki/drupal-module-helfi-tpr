@@ -42,6 +42,10 @@
             {{ content.description }}
           </div>
         {% endif %}
+
+        {% block main_content %}
+        {% endblock main_content %}
+
         {% if content.service_map_embed|render %}
           <div class="unit__map">
             <label class="unit__map__label">
@@ -51,9 +55,6 @@
             {{ content.service_map_embed }}
           </div>
         {% endif %}
-
-        {% block main_content %}
-        {% endblock main_content %}
 
       </div>
 

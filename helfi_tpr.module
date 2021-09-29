@@ -106,6 +106,13 @@ function template_preprocess_tpr_unit(array &$variables) {
   if (isset($variables['elements']['#tpr_unit'])) {
     $variables['entity'] = $variables['elements']['#tpr_unit'];
     $variables['content']['description_summary'] = $variables['elements']['#tpr_unit']->get('description')->summary;
+
+    // Get provided languages for the template.
+    $provided_languages = $variables['entity']->get('provided_languages')->getValue();
+
+    foreach ($provided_languages as $provided_language) {
+      $variables['provided_languages'][] = $provided_language['value'];
+    }
   }
 }
 

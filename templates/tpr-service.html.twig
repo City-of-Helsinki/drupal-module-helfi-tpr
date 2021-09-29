@@ -34,14 +34,14 @@
           </div>
         {% endif %}
 
-        {% block main_content %}
-        {% endblock main_content %}
-
         {% if content.errand_services|render %}
           <div class="service__errand-services">
             {{ content.errand_services }}
           </div>
         {% endif %}
+
+        {% block main_content %}
+        {% endblock main_content %}
       </div>
       {% if in_menu or sidebar_content %}
         <div class="service__sidebar">

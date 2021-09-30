@@ -173,30 +173,3 @@ function template_preprocess_tpr_errand_service(array &$variables) {
     //$variables['content']['description_summary'] = $variables['elements']['#tpr_service_channel']->get('description')->summary;
   }
 }
-
-/**
- * Implements hook_form_alter().
- */
-function helfi_tpr_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // Add a custom submit handler for TPR Unit and TPR Service entity edit forms.
-  if ($form_id == 'tpr_unit_form' || $form_id == 'tpr_service_form') {
-    $form['actions']['submit']['#submit'][] = 'helfi_tpr_form_submit';
-  }
-}
-
-/**
- * Custom submit handler for TPR Unit and TPR Service entity edit forms.
- */
-function helfi_tpr_form_submit(array $form, FormStateInterface $form_state) {
-  $form_object = $form_state->getFormObject();
-
-  if ($form_object instanceof \Drupal\Core\Entity\EntityFormInterface) {
-    $entity = $form_object->getEntity();
-
-    \Drupal::messenger()->addStatus(t('%title saved.', ['%title' => $entity->label()]));
-
-    $url = $entity->toUrl()->toString();
-    $redirect = new RedirectResponse($url);
-    $redirect->send();
-  }
-}

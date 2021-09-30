@@ -70,6 +70,15 @@ trait ServiceMapTrait {
       if (isset($item['accessibility_sentences'])) {
         $item['accessibility_sentences'] = $this->normalizeAccessibilitySentences($item['accessibility_sentences'], $language);
       }
+
+      // Add scheme to www URL if missing from TPR data.
+      if (isset($item['www'])) {
+        $scheme = parse_url($item['www'], PHP_URL_SCHEME);
+        if (empty($scheme)) {
+          $item['www'] = 'https://' . $item['www'];
+        }
+      }
+
       yield $item;
     }
   }

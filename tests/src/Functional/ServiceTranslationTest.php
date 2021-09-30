@@ -42,6 +42,9 @@ class ServiceTranslationTest extends MigrationTestBase {
       $this->submitForm([
         'content_translation[status]' => $expected_status,
       ], 'Save');
+      $this->drupalGet(Url::fromRoute('entity.tpr_service.edit_form', ['tpr_service' => 1]), [
+        'query' => ['language' => 'fi'],
+      ]);
       $this->assertSession()->fieldValueEquals('content_translation[status]', $expected_status);
     }
 
@@ -59,6 +62,9 @@ class ServiceTranslationTest extends MigrationTestBase {
         $this->submitForm([
           'content_translation[status]' => $expected_status,
         ], 'Save');
+        $this->drupalGet(Url::fromRoute('entity.tpr_service.edit_form', ['tpr_service' => 1]), [
+          'query' => ['language' => $language],
+        ]);
         $this->assertSession()->fieldValueEquals('content_translation[status]', $expected_status);
       }
     }

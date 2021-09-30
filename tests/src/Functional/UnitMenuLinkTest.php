@@ -60,6 +60,10 @@ class UnitMenuLinkTest extends MigrationTestBase {
         'menu[title]' => "Menu link $language",
       ], 'Save');
 
+      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 1]), [
+        'query' => ['language' => $language],
+      ]);
+
       $this->assertSession()->checkboxChecked('menu[enabled]');
       $this->assertSession()->fieldValueEquals('menu[title]', "Menu link $language");
 

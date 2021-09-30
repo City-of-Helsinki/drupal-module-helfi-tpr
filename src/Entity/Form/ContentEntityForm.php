@@ -122,4 +122,21 @@ class ContentEntityForm extends CoreContentEntityForm {
     return $form;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function save(array $form, FormStateInterface $form_state) {
+    $entity_type = $this->entity->getEntityTypeId();
+
+    if ($entity_type == 'tpr_unit' || $entity_type == 'tpr_service') {
+      parent::save($form, $form_state);
+
+      $this->messenger()->addStatus(t('%title saved.', ['%title' => $this->entity->label()]));
+
+      $form_state->setRedirect('entity.' . $entity_type . '.canonical', [
+        $entity_type => $this->entity->id(),
+      ]);
+    }
+  }
+
 }

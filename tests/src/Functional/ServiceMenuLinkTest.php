@@ -61,6 +61,10 @@ class ServiceMenuLinkTest extends MigrationTestBase {
         'menu[title]' => "Menu link $language",
       ], 'Save');
 
+      $this->drupalGet(Url::fromRoute('entity.tpr_service.edit_form', ['tpr_service' => 1]), [
+        'query' => ['language' => $language],
+      ]);
+
       $this->assertSession()->checkboxChecked('menu[enabled]');
       $this->assertSession()->fieldValueEquals('menu[title]', "Menu link $language");
 

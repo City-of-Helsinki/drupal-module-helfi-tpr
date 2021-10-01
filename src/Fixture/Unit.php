@@ -37,9 +37,9 @@ final class Unit extends FixtureBase {
         'call_charge_info_fi' => 'pvm fi 1',
         'call_charge_info_en' => 'pvm en 1',
         'call_charge_info_sv' => 'pvm sv 1',
-        'www_fi' => 'https://localhost/fi/1',
-        'www_sv' => 'https://localhost/sv/1',
-        'www_en' => 'https://localhost/en/1',
+        'www_fi' => 'localhost/fi/1',
+        'www_sv' => 'localhost/sv/1',
+        'www_en' => 'localhost/en/1',
         'created_time' => '2015-11-03T12:03:45',
         'modified_time' => '2015-11-03T12:03:45',
         'accessibility_sentences' => [

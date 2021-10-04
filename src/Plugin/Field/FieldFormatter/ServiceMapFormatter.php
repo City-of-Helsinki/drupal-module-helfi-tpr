@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Plugin\Field\FieldFormatter;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -80,7 +81,7 @@ final class ServiceMapFormatter extends FormatterBase {
    */
   protected function generateUrl(Unit $entity, ?string $type = NULL) : string {
     $type = $type ? sprintf('%s/', $type) : NULL;
-    return sprintf('%s/%sunit/%s', static::BASE_URL, $type, $entity->id());
+    return sprintf('%s/%sunit/%s', self::BASE_URL, $type, $entity->id());
   }
 
   /**
@@ -104,13 +105,13 @@ final class ServiceMapFormatter extends FormatterBase {
           '#attributes' => [
             'src' => $this->generateUrl($entity, 'embed'),
             'frameborder' => 0,
-            'title' => $this->getSetting('iframe_title'),
+            'title' => Html::escape($this->getSetting('iframe_title')),
           ],
         ],
         'link' => [
           '#type' => 'html_tag',
           '#tag' => 'a',
-          '#value' => $this->getSetting('link_title'),
+          '#value' => Html::escape($this->getSetting('link_title')),
           '#attributes' => [
             'href' => $this->generateUrl($entity),
             'target' => $this->getSetting('target') ? '_blank' : '',

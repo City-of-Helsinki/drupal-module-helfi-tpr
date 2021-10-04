@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Entity\Form;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\ContentEntityForm as CoreContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
@@ -107,7 +108,7 @@ class ContentEntityForm extends CoreContentEntityForm {
     $form['meta']['author'] = [
       '#type' => 'item',
       '#title' => $this->t('Publisher'),
-      '#markup' => $entity->getOwner() ? $entity->getOwner()->getAccountName() : '',
+      '#markup' => $entity->getOwner() ? Html::escape($entity->getOwner()->getAccountName()) : '',
       '#wrapper_attributes' => ['class' => ['entity-meta__author']],
     ];
 
@@ -131,7 +132,7 @@ class ContentEntityForm extends CoreContentEntityForm {
     if ($entity_type == 'tpr_unit' || $entity_type == 'tpr_service') {
       parent::save($form, $form_state);
 
-      $this->messenger()->addStatus(t('%title saved.', ['%title' => $this->entity->label()]));
+      $this->messenger()->addStatus($this->t('%title saved.', ['%title' => $this->entity->label()]));
 
       $form_state->setRedirect('entity.' . $entity_type . '.canonical', [
         $entity_type => $this->entity->id(),

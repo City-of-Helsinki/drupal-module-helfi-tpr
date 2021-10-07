@@ -66,7 +66,7 @@ use Webmozart\Assert\Assert;
  *     "edit-form" = "/admin/content/integrations/tpr-unit/{tpr_unit}/edit",
  *     "collection" = "/admin/content/integrations/tpr-unit",
  *     "version-history" = "/admin/content/integrations/tpr-unit/{tpr_unit}/revisions",
- *     "revision" = "/admin/content/integrations/tpr-unit/{tpr_unit}/revisions/{tpr_unit_revision}/view",
+ *     "revision" = "/tpr-unit/{tpr_unit}/revisions/{tpr_unit_revision}/view",
  *     "revision-revert-language-form" = "/admin/content/integrations/tpr-unit/{tpr_unit}/revisions/{tpr_unit_revision}/revert/{langcode}",
  *   },
  *   field_ui_base_route = "tpr_unit.settings"

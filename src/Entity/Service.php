@@ -63,7 +63,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "edit-form" = "/admin/content/integrations/tpr-service/{tpr_service}/edit",
  *     "collection" = "/admin/content/integrations/tpr-service",
  *     "version-history" = "/admin/content/integrations/tpr-service/{tpr_service}/revisions",
- *     "revision" = "/admin/content/integrations/tpr-service/{tpr_service}/revisions/{tpr_service_revision}/view",
+ *     "revision" = "/tpr-service/{tpr_service}/revisions/{tpr_service_revision}/view",
  *     "revision-revert-language-form" = "/admin/content/integrations/tpr-service/{tpr_service}/revisions/{tpr_service_revision}/revert/{langcode}",
  *   },
  *   field_ui_base_route = "tpr_service.settings"

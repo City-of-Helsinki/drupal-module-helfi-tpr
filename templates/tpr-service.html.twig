@@ -43,10 +43,17 @@
         {% block main_content %}
         {% endblock main_content %}
       </div>
-      {% if in_menu or sidebar_content %}
+      {% if in_menu or sidebar_content or content.links|render %}
         <div class="service__sidebar">
           {% block sidebar_block %}
           {% endblock sidebar_block%}
+
+          {% if content.links|render %}
+            <div class="service__links">
+              {{ 'Important links'|t }}
+              {{ content.links }}
+            </div>
+          {% endif %}
         </div>
       {% endif %}
     </div>

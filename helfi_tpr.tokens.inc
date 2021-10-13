@@ -112,8 +112,11 @@ function helfi_tpr_tokens(
           $titles = [];
 
           foreach (array_reverse($parents) as $parent) {
-            $title = $menu_link_manager->createInstance($parent)->getTitle();
-            $titles[] = \Drupal::service('pathauto.alias_cleaner')->cleanString($title, $options);
+            $menu_link_item = $menu_link_manager->createInstance($parent);
+            $titles[] = \Drupal::service('pathauto.alias_cleaner')->cleanString(
+              token_menu_link_translated_title($menu_link_item, $options['langcode']),
+              $options
+            );
           }
 
           // Return the titles as a string separated with /'s.

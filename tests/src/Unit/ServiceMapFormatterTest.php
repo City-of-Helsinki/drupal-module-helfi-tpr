@@ -46,6 +46,7 @@ class ServiceMapFormatterTest extends UnitTestCase {
     // Mock the field type manager and place it in the container.
     $container = new ContainerBuilder();
     $container->set('plugin.manager.field.field_type', $this->prophesize(FieldTypePluginManagerInterface::class)->reveal());
+    $container->set('string_translation', $this->getStringTranslationStub());
     \Drupal::setContainer($container);
 
     $this->fieldDefinition = $this->createMock(FieldDefinitionInterface::class);

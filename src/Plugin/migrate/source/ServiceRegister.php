@@ -17,6 +17,11 @@ use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
 class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
 
   /**
+   * {@inheritdoc}
+   */
+  protected bool $useRequestCache = FALSE;
+
+  /**
    * The total count.
    *
    * @var int
@@ -44,7 +49,10 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public function getIds() : array {
-    return ['id' => ['type' => 'string']];
+    return [
+      'id' => ['type' => 'string'],
+      'language' => ['type' => 'string'],
+    ];
   }
 
   /**
@@ -69,19 +77,17 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
       }
 
       foreach (['fi', 'en', 'sv'] as $language) {
-        $url = $this->buildCanonicalUrl(sprintf('%s?language=%s', $item['id'], $language));
-
-        if (!$data = $this->getContent($url)) {
-          // If getting Finnish data was unsuccessful, do not get data for
-          // other languages.
+        if (!$data = $item[$language]) {
           if ($language === 'fi') {
+            // If getting Finnish data was unsuccessful, do not get data for
+            // other languages.
             break;
           }
           continue;
         }
 
-        // Always use Finnish as service's default language.
         if ($language === 'fi') {
+          // Always use Finnish as service's default language.
           $data['default_langcode'] = TRUE;
         }
         $data['language'] = $language;

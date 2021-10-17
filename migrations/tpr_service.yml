@@ -11,7 +11,7 @@ label: 'TPR service'
 source:
   plugin: tpr_service_register
   track_changes: true
-  url: 'https://www.hel.fi/palvelukarttaws/rest/vpalvelurekisteri/description/'
+  url: 'https://city-of-helsinki.github.io/drupal-tpr-aggregator/services.json'
 process:
   id: id
   name: title

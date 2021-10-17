@@ -484,3 +484,17 @@ function helfi_tpr_update_8026() : void {
       ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
   }
 }
+
+/**
+ * Drop migrate map tables to add second id map field.
+ */
+function helfi_tpr_update_8027() : void {
+  foreach (['unit', 'service', 'errand_service', 'service_channel'] as $type) {
+    $query = \Drupal::database()->schema();
+    $table = "migrate_map_tpr_$type";
+
+    if (!$query->fieldExists($table, 'sourceid2')) {
+      $query->dropTable($table);
+    }
+  }
+}

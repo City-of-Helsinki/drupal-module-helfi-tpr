@@ -39,11 +39,8 @@ final class ErrandService extends FixtureBase {
       ['id' => 2],
       ['id' => 3],
     ];
-    $responses = [
-      new Response(200, [], json_encode($eservices)),
-    ];
 
-    foreach ($eservices as $service) {
+    foreach ($eservices as $key => $service) {
       $id = $service['id'];
 
       foreach (['fi', 'en', 'sv'] as $language) {
@@ -97,11 +94,13 @@ final class ErrandService extends FixtureBase {
         foreach ($this->getFields() as $field) {
           $service[$field] = sprintf('%s %s %s', $field, $language, $id);
         }
-        $responses[] = new Response(200, [], json_encode($service));
+        $eservices[$key][$language] = $service;
       }
     }
 
-    return $responses;
+    return [
+      new Response(200, [], json_encode($eservices)),
+    ];
   }
 
 }

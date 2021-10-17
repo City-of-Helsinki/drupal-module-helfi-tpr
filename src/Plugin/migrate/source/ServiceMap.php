@@ -34,15 +34,18 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
   /**
    * {@inheritdoc}
    */
-  public function __toString() {
+  public function __toString() : string {
     return 'TprServiceMap';
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getIds() {
-    return ['id' => ['type' => 'string']];
+  public function getIds() : array {
+    return [
+      'id' => ['type' => 'string'],
+      'language' => ['type' => 'string'],
+    ];
   }
 
   /**
@@ -58,7 +61,7 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
   /**
    * {@inheritdoc}
    */
-  public function fields() {
+  public function fields() : array {
     return [];
   }
 

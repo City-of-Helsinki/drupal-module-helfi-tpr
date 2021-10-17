@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Field\Connection;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Url;
 
 /**
@@ -34,7 +35,7 @@ final class OpeningHour extends Connection {
   public function build(): array {
     $build = [
       'name' => [
-        '#markup' => $this->get('name'),
+        '#markup' => Html::escape($this->get('name')),
       ],
     ];
 

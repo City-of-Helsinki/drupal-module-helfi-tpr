@@ -22,9 +22,16 @@ class UnitMigrationTest extends MigrationTestBase {
     $entities = Unit::loadMultiple();
     $this->assertCount(1, $entities);
 
+    $expectedMapHashes = [];
+
     foreach ($this->expectedUnitData() as $langcode => $expected) {
       /** @var \Drupal\helfi_tpr\Entity\Unit $translation */
       $translation = $entities[1]->getTranslation($langcode);
+
+      $expectedMapHashes[$langcode] = [
+        'id' => $translation->id(),
+        'expected_hash' => $this->getMigrateMapRowHash('tpr_unit', $translation->id(), $langcode),
+      ];
 
       $this->assertEquals($expected['id'], $translation->id());
       $this->assertEquals($expected['name'], $translation->label());
@@ -57,6 +64,13 @@ class UnitMigrationTest extends MigrationTestBase {
       $opening_hour = $translation->get('opening_hours')->get(1)->data;
       $this->assertInstanceOf(OpeningHour::class, $opening_hour);
       $this->assertEquals("https://localhost/$langcode", $opening_hour->get('www'));
+    }
+
+    // Re-run migrate and make sure migrate map hash doesn't change.
+    $this->runUnitMigrate();
+
+    foreach ($expectedMapHashes as $langcode => $data) {
+      $this->assertMigrateMapRowHash('tpr_unit', $data['expected_hash'], $data['id'], $langcode);
     }
   }
 

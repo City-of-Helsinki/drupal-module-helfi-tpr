@@ -19,27 +19,23 @@ final class Service extends FixtureBase {
     $services = [
       [
         'id' => 1,
-        'title' => 'Service 1',
         'unit_ids' => ['1'],
       ],
       [
         'id' => 2,
-        'title' => 'Service 2',
       ],
       [
         'id' => 3,
-        'title' => 'Service 3',
       ],
     ];
-    $responses = [
-      new Response(200, [], json_encode($services)),
-    ];
 
-    foreach ($services as $service) {
+    foreach ($services as $key => $service) {
       $id = $service['id'];
 
       foreach (['fi', 'en', 'sv'] as $language) {
-        $item = array_merge($service, [
+        $services[$key][$language] = $service;
+
+        $services[$key][$language] += [
           'title' => sprintf('Service %s %s', $language, $id),
           'description_short' => sprintf('Description short %s %s', $language, $id),
           'description_long' => sprintf('Description long %s %s', $language, $id),
@@ -59,11 +55,12 @@ final class Service extends FixtureBase {
               'url' => sprintf('https://localhost/2/%s/%s', $language, $id),
             ],
           ],
-        ]);
-        $responses[] = new Response(200, [], json_encode($item));
+        ];
       }
     }
-    return $responses;
+    return [
+      new Response(200, [], json_encode($services)),
+    ];
   }
 
 }

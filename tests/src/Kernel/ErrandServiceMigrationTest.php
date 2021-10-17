@@ -48,9 +48,16 @@ class ErrandServiceMigrationTest extends MigrationTestBase {
     $entities = ErrandService::loadMultiple();
     $this->assertCount(3, $entities);
 
+    $expectedMapHashes = [];
+
     foreach (['fi', 'sv', 'en'] as $langcode) {
       foreach ($entities as $entity) {
         $translation = $entity->getTranslation($langcode);
+
+        $expectedMapHashes[$langcode] = [
+          'id' => $translation->id(),
+          'expected_hash' => $this->getMigrateMapRowHash('tpr_errand_service', $translation->id(), $langcode),
+        ];
 
         $this->assertEquals($langcode, $translation->language()->getId());
 
@@ -68,6 +75,13 @@ class ErrandServiceMigrationTest extends MigrationTestBase {
           $this->assertEquals(sprintf('https://localhost/%s/%s/%s', $i, $langcode, $translation->id()), $link->uri);
         }
       }
+    }
+
+    // Re-run migrate and make sure migrate map hash doesn't change.
+    $this->runErrandServiceMigration();
+
+    foreach ($expectedMapHashes as $langcode => $data) {
+      $this->assertMigrateMapRowHash('tpr_errand_service', $data['expected_hash'], $data['id'], $langcode);
     }
   }
 

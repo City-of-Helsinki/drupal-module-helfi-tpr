@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
 
 /**
  * Source plugin for retrieving data from Tpr.
@@ -14,7 +13,7 @@ use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
  *   id = "tpr_service_register"
  * )
  */
-class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
+class ServiceRegister extends TprSourceBase implements ContainerFactoryPluginInterface {
 
   /**
    * The total count.
@@ -43,15 +42,62 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
   /**
    * {@inheritdoc}
    */
-  public function getIds() : array {
-    return ['id' => ['type' => 'string']];
+  protected function getCanonicalBaseUrl() : string {
+    if (!isset($this->configuration['canonical_url'])) {
+      throw new \InvalidArgumentException('The "canonical_url" configuration is missing.');
+    }
+    return $this->configuration['canonical_url'];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function fields() : array {
-    return [];
+  protected function initializeSingleImportIterator(): \Iterator {
+    foreach ($this->entityIds as $entityId) {
+      $content = [];
+      // We don't know which translation we're trying to update so make sure
+      // to update every translation.
+      foreach (['fi', 'en', 'sv'] as $language) {
+        $url = $this->buildCanonicalUrl($entityId) . '?language=' . $language;
+
+        if (!$data = $this->getContent($url)) {
+          continue;
+        }
+        $content[$language] = $data;
+      }
+      yield from $this->normalizeMultilingualData($content);
+    }
+  }
+
+  /**
+   * Converts one multilingual object into multiple objects.
+   *
+   * @param array $content
+   *   The data from API.
+   *
+   * @return \Generator
+   *   The iterator.
+   */
+  protected function normalizeMultilingualData(array $content) : \Generator {
+    foreach (['fi', 'en', 'sv'] as $language) {
+      if (empty($content[$language])) {
+        if ($language === 'fi') {
+          // If getting Finnish data was unsuccessful, do not get data for
+          // other languages.
+          break;
+        }
+        continue;
+      }
+      $data = $content[$language];
+
+      if ($language === 'fi') {
+        // Always use Finnish as service's default language.
+        $data['default_langcode'] = TRUE;
+      }
+      $data['language'] = $language;
+
+      yield $data;
+    }
   }
 
   /**
@@ -67,27 +113,7 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
       if (($this->getLimit() > 0) && $processed > $this->getLimit()) {
         break;
       }
-
-      foreach (['fi', 'en', 'sv'] as $language) {
-        $url = $this->buildCanonicalUrl(sprintf('%s?language=%s', $item['id'], $language));
-
-        if (!$data = $this->getContent($url)) {
-          // If getting Finnish data was unsuccessful, do not get data for
-          // other languages.
-          if ($language === 'fi') {
-            break;
-          }
-          continue;
-        }
-
-        // Always use Finnish as service's default language.
-        if ($language === 'fi') {
-          $data['default_langcode'] = TRUE;
-        }
-        $data['language'] = $language;
-
-        yield $data;
-      }
+      yield from $this->normalizeMultilingualData($item);
     }
   }
 

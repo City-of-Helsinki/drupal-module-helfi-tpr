@@ -50,6 +50,8 @@ class ServiceMigrationTest extends MigrationTestBase {
     $entities = Service::loadMultiple();
     $this->assertCount(3, $entities);
 
+    $expectedMapHashes = [];
+
     // Make sure unit_ids are mapped properly.
     $this->assertTrue(Unit::load(1)->hasService($entities[1]));
 
@@ -58,6 +60,11 @@ class ServiceMigrationTest extends MigrationTestBase {
       foreach ($entities as $entity) {
         /** @var \Drupal\helfi_tpr\Entity\Service $translation */
         $translation = $entity->getTranslation($langcode);
+
+        $expectedMapHashes[$langcode] = [
+          'id' => $translation->id(),
+          'expected_hash' => $this->getMigrateMapRowHash('tpr_service', $translation->id(), $langcode),
+        ];
 
         $this->assertEquals($langcode, $translation->language()->getId());
         $this->assertEquals(sprintf('Service %s %s', $langcode, $translation->id()), $translation->label());
@@ -73,6 +80,13 @@ class ServiceMigrationTest extends MigrationTestBase {
           $this->assertEquals($id, $translation->get('errand_services')->get($key)->target_id);
         }
       }
+    }
+
+    // Re-run migrate and make sure migrate map hash doesn't change.
+    $this->runServiceMigrate();
+
+    foreach ($expectedMapHashes as $langcode => $data) {
+      $this->assertMigrateMapRowHash('tpr_service', $data['expected_hash'], $data['id'], $langcode);
     }
   }
 

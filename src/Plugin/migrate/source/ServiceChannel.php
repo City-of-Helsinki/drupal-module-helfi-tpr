@@ -63,8 +63,17 @@ class ServiceChannel extends SourcePluginBase implements ContainerFactoryPluginI
   /**
    * {@inheritdoc}
    */
-  public function getIds() {
-    return ['id' => ['type' => 'string']];
+  public function getIds() : array {
+    return [
+      'id' => [
+        'type' => 'string',
+        'entity_key' => 'id',
+      ],
+      'language' => [
+        'type' => 'string',
+        'entity_key' => 'langcode',
+      ],
+    ];
   }
 
   /**

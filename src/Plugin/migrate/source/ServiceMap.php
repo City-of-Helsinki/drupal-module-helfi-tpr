@@ -6,7 +6,6 @@ namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
 use Drupal\Component\Datetime\DateTimePlus;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
 
 /**
  * Source plugin for retrieving data from Tpr.
@@ -15,7 +14,7 @@ use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
  *   id = "tpr_service_map"
  * )
  */
-class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
+class ServiceMap extends TprSourceBase implements ContainerFactoryPluginInterface {
 
   use ServiceMapTrait;
 
@@ -29,20 +28,8 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
   /**
    * {@inheritdoc}
    */
-  protected bool $useRequestCache = FALSE;
-
-  /**
-   * {@inheritdoc}
-   */
-  public function __toString() {
+  public function __toString() : string {
     return 'TprServiceMap';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getIds() {
-    return ['id' => ['type' => 'string']];
   }
 
   /**
@@ -53,13 +40,6 @@ class ServiceMap extends HttpSourcePluginBase implements ContainerFactoryPluginI
       $this->count = count($this->getContent($this->configuration['url']));
     }
     return $this->count;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function fields() {
-    return [];
   }
 
   /**

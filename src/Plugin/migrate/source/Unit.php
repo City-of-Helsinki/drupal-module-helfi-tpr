@@ -6,7 +6,6 @@ namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -17,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "tpr_unit",
  * )
  */
-class Unit extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
+class Unit extends TprSourceBase implements ContainerFactoryPluginInterface {
 
   use ServiceMapTrait;
 
@@ -63,20 +62,6 @@ class Unit extends HttpSourcePluginBase implements ContainerFactoryPluginInterfa
 
       yield from $this->normalizeMultilingualData($data);
     }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function fields() {
-    return [];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getIds() {
-    return ['id' => ['type' => 'string']];
   }
 
 }

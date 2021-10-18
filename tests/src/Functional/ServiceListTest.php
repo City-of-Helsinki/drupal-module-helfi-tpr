@@ -4,37 +4,35 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\helfi_tpr\Functional;
 
-use Drupal\helfi_tpr\Entity\Unit;
+use Drupal\helfi_tpr\Entity\Service;
 use Drupal\Tests\helfi_api_base\Traits\ApiTestTrait;
 use GuzzleHttp\Psr7\Response;
 
 /**
- * Tests Unit entity's list functionality.
+ * Tests Service entity's list functionality.
  *
  * @group helfi_tpr
  */
-class UnitListTest extends ListTestBase {
+class ServiceListTest extends ListTestBase {
 
   use ApiTestTrait;
 
   /**
-   * Migrates the tpr unit entities.
+   * Migrates the tpr service entities.
    */
   private function runMigrate() : void {
-    $units = $this->getFixture('helfi_tpr', 'unit.json');
+    $fixture = $this->getFixture('helfi_tpr', 'service.json');
     $responses = [
-      new Response(200, [], $units),
+      new Response(200, [], $fixture),
     ];
 
-    foreach (json_decode($units, TRUE) as $unit) {
-      $responses[] = new Response(200, [], json_encode($unit));
-      // Connections and accessibility sentences requests.
-      $responses[] = new Response(200, [], json_encode([]));
-      $responses[] = new Response(200, [], json_encode([]));
+    foreach (json_decode($fixture, TRUE) as $item) {
+      // Update actions.
+      $responses[] = new Response(200, [], json_encode($item));
     }
 
     $this->container->set('http_client', $this->createMockHttpClient($responses));
-    $this->executeMigration('tpr_unit');
+    $this->executeMigration('tpr_service');
   }
 
   /**
@@ -44,20 +42,20 @@ class UnitListTest extends ListTestBase {
     parent::setUp();
     $this->listPermissions = [
       'access remote entities overview',
-      'administer tpr_unit',
+      'administer tpr_service',
     ];
-    $this->adminListPath = '/admin/content/integrations/tpr-unit';
+    $this->adminListPath = '/admin/content/integrations/tpr-service';
   }
 
   /**
-   * Tests list view permissions, and viewing, updating, and publishing units.
+   * Tests list view permissions, updating, and publishing services.
    */
   public function testList() : void {
     parent::testList();
 
     // Migrate entities and make sure we can see all entities from fixture.
     $this->runMigrate();
-    $expected = ['fi' => 6, 'en' => 0, 'sv' => 4];
+    $expected = ['fi' => 2, 'en' => 2, 'sv' => 1];
 
     foreach ($expected as $language => $total) {
       $this->drupalGet($this->adminListPath, [
@@ -70,8 +68,7 @@ class UnitListTest extends ListTestBase {
     }
 
     // Make sure we can run 'update' action on multiple entities.
-    Unit::load('22736')->set('name', 'Test 1')->save();
-    Unit::load('57331')->set('name', 'Test 2')->save();
+    Service::load('2773')->set('name', 'Test 1')->save();
     $query = [
       'language' => 'fi',
       'langcode' => 'fi',
@@ -81,25 +78,24 @@ class UnitListTest extends ListTestBase {
     $this->drupalGet($this->adminListPath, [
       'query' => $query,
     ]);
+
     $this->assertSession()->pageTextContains('Test 1');
-    $this->assertSession()->pageTextContains('Test 2');
+    $this->assertSession()->pageTextContains('Koulun kerhotoiminta');
 
     $form_data = [
-      'action' => 'tpr_unit_update_action',
+      'action' => 'tpr_service_update_action',
       // The list is sorted by changed timestamp so our updated entities
       // should be at the top of the list.
-      'tpr_unit_bulk_form[0]' => 1,
-      'tpr_unit_bulk_form[1]' => 1,
+      'tpr_service_bulk_form[0]' => 1,
     ];
     $this->submitForm($form_data, 'Apply to selected items');
 
     $this->assertSession()->pageTextNotContains('Test 1');
-    $this->assertSession()->pageTextNotContains('Test 2');
-    $this->assertSession()->pageTextContains('Esteetön testireitti / Leppävaara');
-    $this->assertSession()->pageTextContains('InnoOmnia');
+    $this->assertSession()->pageTextContains('Perusopetus');
+    $this->assertSession()->pageTextContains('Koulun kerhotoiminta');
 
     // Make sure we can use actions to publish and unpublish content.
-    $this->assertPublishAction('tpr_unit', $query);
+    $this->assertPublishAction('tpr_service', $query);
   }
 
 }

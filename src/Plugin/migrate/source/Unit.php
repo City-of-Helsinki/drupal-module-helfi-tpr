@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "tpr_unit",
  * )
  */
-class Unit extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
+class Unit extends TprSourceBase implements ContainerFactoryPluginInterface {
 
   use ServiceMapTrait;
 
@@ -63,23 +63,6 @@ class Unit extends HttpSourcePluginBase implements ContainerFactoryPluginInterfa
 
       yield from $this->normalizeMultilingualData($data);
     }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function fields() {
-    return [];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getIds() : array {
-    return [
-      'id' => ['type' => 'string'],
-      'language' => ['type' => 'string'],
-    ];
   }
 
 }

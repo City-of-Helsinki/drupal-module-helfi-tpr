@@ -12,6 +12,7 @@ source:
   plugin: tpr_service_register
   track_changes: true
   url: 'https://city-of-helsinki.github.io/drupal-tpr-aggregator/errandservices.json'
+  canonical_url: 'https://www.hel.fi/palvelukarttaws/rest/vpalvelurekisteri/errandservice/'
 process:
   name: name
   id: id

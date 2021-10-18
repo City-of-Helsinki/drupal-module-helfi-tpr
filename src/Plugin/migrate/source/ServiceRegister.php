@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
 
 /**
  * Source plugin for retrieving data from Tpr.
@@ -14,12 +13,7 @@ use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
  *   id = "tpr_service_register"
  * )
  */
-class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
-
-  /**
-   * {@inheritdoc}
-   */
-  protected bool $useRequestCache = FALSE;
+class ServiceRegister extends TprSourceBase implements ContainerFactoryPluginInterface {
 
   /**
    * The total count.
@@ -48,18 +42,11 @@ class ServiceRegister extends HttpSourcePluginBase implements ContainerFactoryPl
   /**
    * {@inheritdoc}
    */
-  public function getIds() : array {
-    return [
-      'id' => ['type' => 'string'],
-      'language' => ['type' => 'string'],
-    ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function fields() : array {
-    return [];
+  protected function getCanonicalBaseUrl() : string {
+    if (!isset($this->configuration['canonical_url'])) {
+      throw new \InvalidArgumentException('The "canonical_url" configuration is missing.');
+    }
+    return $this->configuration['canonical_url'];
   }
 
   /**

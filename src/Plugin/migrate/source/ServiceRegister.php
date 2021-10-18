@@ -52,6 +52,57 @@ class ServiceRegister extends TprSourceBase implements ContainerFactoryPluginInt
   /**
    * {@inheritdoc}
    */
+  protected function initializeSingleImportIterator(): \Iterator {
+    foreach ($this->entityIds as $entityId) {
+      $content = [];
+      // We don't know which translation we're trying to update so make sure
+      // to update every translation.
+      foreach (['fi', 'en', 'sv'] as $language) {
+        $url = $this->buildCanonicalUrl($entityId) . '?language=' . $language;
+
+        if (!$data = $this->getContent($url)) {
+          continue;
+        }
+        $content[$language] = $data;
+      }
+      yield from $this->normalizeMultilingualData($content);
+    }
+  }
+
+  /**
+   * Converts one multilingual object into multiple objects.
+   *
+   * @param array $content
+   *   The data from API.
+   *
+   * @return \Generator
+   *   The iterator.
+   */
+  protected function normalizeMultilingualData(array $content) : \Generator {
+    foreach (['fi', 'en', 'sv'] as $language) {
+      if (empty($content[$language])) {
+        if ($language === 'fi') {
+          // If getting Finnish data was unsuccessful, do not get data for
+          // other languages.
+          break;
+        }
+        continue;
+      }
+      $data = $content[$language];
+
+      if ($language === 'fi') {
+        // Always use Finnish as service's default language.
+        $data['default_langcode'] = TRUE;
+      }
+      $data['language'] = $language;
+
+      yield $data;
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   protected function initializeListIterator() : \Iterator {
     $content = $this->getContent($this->configuration['url']);
     $processed = 0;
@@ -62,25 +113,7 @@ class ServiceRegister extends TprSourceBase implements ContainerFactoryPluginInt
       if (($this->getLimit() > 0) && $processed > $this->getLimit()) {
         break;
       }
-
-      foreach (['fi', 'en', 'sv'] as $language) {
-        if (!$data = $item[$language]) {
-          if ($language === 'fi') {
-            // If getting Finnish data was unsuccessful, do not get data for
-            // other languages.
-            break;
-          }
-          continue;
-        }
-
-        if ($language === 'fi') {
-          // Always use Finnish as service's default language.
-          $data['default_langcode'] = TRUE;
-        }
-        $data['language'] = $language;
-
-        yield $data;
-      }
+      yield from $this->normalizeMultilingualData($item);
     }
   }
 

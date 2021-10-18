@@ -66,4 +66,20 @@ abstract class ListTestBase extends MigrationTestBase {
     $this->assertSession()->pageTextContains('No results found.');
   }
 
+  /**
+   * Asserts that the item is published or unpublished.
+   *
+   * @param int $nthChild
+   *   The nth child.
+   * @param bool $published
+   *   TRUE if expected to be published.
+   */
+  protected function assertPublished(int $nthChild, bool $published) : void {
+    $element = $this->getSession()
+      ->getPage()
+      ->find('css', "table tbody tr:nth-of-type($nthChild) .views-field-content-translation-status");
+
+    $this->assertEquals($published ? 'Published' : 'Unpublished', $element->getText());
+  }
+
 }

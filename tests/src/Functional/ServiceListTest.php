@@ -69,14 +69,16 @@ class ServiceListTest extends ListTestBase {
 
     // Make sure we can run 'update' action on multiple entities.
     Service::load('2773')->set('name', 'Test 1')->save();
+    $query = [
+      'language' => 'fi',
+      'langcode' => 'fi',
+      'order' => 'changed',
+      'sort' => 'desc',
+    ];
     $this->drupalGet($this->adminListPath, [
-      'query' => [
-        'language' => 'fi',
-        'langcode' => 'fi',
-        'order' => 'changed',
-        'sort' => 'desc',
-      ],
+      'query' => $query,
     ]);
+
     $this->assertSession()->pageTextContains('Test 1');
     $this->assertSession()->pageTextContains('Koulun kerhotoiminta');
 
@@ -93,23 +95,7 @@ class ServiceListTest extends ListTestBase {
     $this->assertSession()->pageTextContains('Koulun kerhotoiminta');
 
     // Make sure we can use actions to publish and unpublish content.
-    $actions = [
-      'tpr_service_publish_action' => TRUE,
-      'tpr_service_unpublish_action' => FALSE,
-    ];
-
-    foreach ($actions as $action => $published) {
-      $form_data = [
-        'action' => $action,
-        'tpr_service_bulk_form[0]' => 1,
-        'tpr_service_bulk_form[1]' => 1,
-      ];
-      $this->submitForm($form_data, 'Apply to selected items');
-
-      for ($i = 1; $i <= 2; $i++) {
-        $this->assertPublished($i, $published);
-      }
-    }
+    $this->assertPublishAction('tpr_service', $query);
   }
 
 }

@@ -67,6 +67,38 @@ abstract class ListTestBase extends MigrationTestBase {
   }
 
   /**
+   * Make sure publish action works.
+   *
+   * @param string $migrationId
+   *   The migration id.
+   * @param array $query
+   *   The query parameters.
+   */
+  protected function assertPublishAction(string $migrationId, array $query) : void {
+    $this->drupalGet($this->adminListPath, [
+      'query' => $query,
+    ]);
+    // Make sure we can use actions to publish and unpublish content.
+    $actions = [
+      "{$migrationId}_publish_action" => TRUE,
+      "{$migrationId}_unpublish_action" => FALSE,
+    ];
+
+    foreach ($actions as $action => $published) {
+      $form_data = [
+        'action' => $action,
+        $migrationId . '_bulk_form[0]' => 1,
+        $migrationId . '_bulk_form[1]' => 1,
+      ];
+      $this->submitForm($form_data, 'Apply to selected items');
+
+      for ($i = 1; $i <= 2; $i++) {
+        $this->assertPublished($i, $published);
+      }
+    }
+  }
+
+  /**
    * Asserts that the item is published or unpublished.
    *
    * @param int $nthChild

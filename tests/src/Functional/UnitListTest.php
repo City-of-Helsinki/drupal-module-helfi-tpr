@@ -60,7 +60,7 @@ class UnitListTest extends ListTestBase {
     $expected = ['fi' => 6, 'en' => 0, 'sv' => 4];
 
     foreach ($expected as $language => $total) {
-      $this->drupalGet('/admin/content/integrations/tpr-unit', [
+      $this->drupalGet($this->adminListPath, [
         'query' => [
           'langcode' => $language,
           'language' => $language,
@@ -72,13 +72,14 @@ class UnitListTest extends ListTestBase {
     // Make sure we can run 'update' action on multiple entities.
     Unit::load('22736')->set('name', 'Test 1')->save();
     Unit::load('57331')->set('name', 'Test 2')->save();
-    $this->drupalGet('/admin/content/integrations/tpr-unit', [
-      'query' => [
-        'language' => 'fi',
-        'langcode' => 'fi',
-        'order' => 'changed',
-        'sort' => 'desc',
-      ],
+    $query = [
+      'language' => 'fi',
+      'langcode' => 'fi',
+      'order' => 'changed',
+      'sort' => 'desc',
+    ];
+    $this->drupalGet($this->adminListPath, [
+      'query' => $query,
     ]);
     $this->assertSession()->pageTextContains('Test 1');
     $this->assertSession()->pageTextContains('Test 2');
@@ -98,23 +99,7 @@ class UnitListTest extends ListTestBase {
     $this->assertSession()->pageTextContains('InnoOmnia');
 
     // Make sure we can use actions to publish and unpublish content.
-    $actions = [
-      'tpr_unit_publish_action' => TRUE,
-      'tpr_unit_unpublish_action' => FALSE,
-    ];
-
-    foreach ($actions as $action => $published) {
-      $form_data = [
-        'action' => $action,
-        'tpr_unit_bulk_form[0]' => 1,
-        'tpr_unit_bulk_form[1]' => 1,
-      ];
-      $this->submitForm($form_data, 'Apply to selected items');
-
-      for ($i = 1; $i <= 2; $i++) {
-        $this->assertPublished($i, $published);
-      }
-    }
+    $this->assertPublishAction('tpr_unit', $query);
   }
 
 }

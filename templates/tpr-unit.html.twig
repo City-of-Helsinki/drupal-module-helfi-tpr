@@ -81,7 +81,7 @@
         %}
           <div class="unit__contact">
             <h3 class="unit__contact__title">
-              {% trans with {'context': 'Contact card title'} %}Contact{% endtrans %}
+              {% trans with {'context': 'Contact card title'} %}Contact information{% endtrans %}
             </h3>
             {% if content.address|render %}
               <div class="unit__contact-row unit__contact-row--address">
@@ -105,7 +105,7 @@
               <div class="unit__contact-row unit__contact-row--phone">
                 <label class="unit__contact-row__label">
                   {% include '@hdbt/misc/icon.twig' ignore missing with {icon: 'phone'} %}
-                  {{ 'Phone number'|t }}:
+                  {{ 'Telephone number'|t }}:
                 </label>
                 {{ content.phone }}
               </div>

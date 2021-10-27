@@ -498,3 +498,28 @@ function helfi_tpr_update_8027() : void {
     }
   }
 }
+
+/**
+ * Make service channels translatable.
+ */
+function helfi_tpr_update_8028() : void {
+  drupal_flush_all_caches();
+  $entityManager = \Drupal::entityTypeManager();
+
+  $published = [];
+  /** @var \Drupal\helfi_tpr\Entity\Channel $entity */
+  // Delete service channels and store published status to state.
+  foreach ($entityManager->getStorage('tpr_service_channel')->loadMultiple() as $entity) {
+    if ($entity->isPublished()) {
+      $published[] = $entity->id();
+    }
+    $entity->delete(TRUE);
+  }
+  \Drupal::state()->set('published_service_channels', $published);
+
+  // Reset errand service channels.
+  foreach ($entityManager->getStorage('tpr_errand_service')->loadMultiple() as $entity) {
+    $entity->setData('channels', [])
+      ->save();
+  }
+}

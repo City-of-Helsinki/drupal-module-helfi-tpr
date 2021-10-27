@@ -205,6 +205,7 @@ class ErrandService extends TprEntityBase {
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
       ])
+      ->setTranslatable(TRUE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);

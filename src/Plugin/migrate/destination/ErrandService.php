@@ -33,7 +33,7 @@ final class ErrandService extends TprDestinationBase {
       $existing_channels = $entity->getData('channels', []);
 
       foreach ($channels as $channel) {
-        $existing_channels[$row->getSourceProperty('language')] = $channel;
+        $existing_channels[$channel['id']][$row->getSourceProperty('language')] = $channel;
       }
       $entity->setData('channels', $existing_channels);
     }

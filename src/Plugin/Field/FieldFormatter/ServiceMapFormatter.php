@@ -75,6 +75,8 @@ final class ServiceMapFormatter extends FormatterBase {
    *   The tpr unit entity.
    * @param string|null $type
    *   The url type (embed or null).
+   * @param string $langcode
+   *   Entity language code.
    *
    * @return string
    *   The url.

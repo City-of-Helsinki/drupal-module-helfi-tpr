@@ -43,7 +43,7 @@ final class ErrandService extends FixtureBase {
     foreach ($eservices as $key => $service) {
       $id = $service['id'];
 
-      foreach (['fi', 'en', 'sv'] as $language) {
+      foreach (['fi', 'sv', 'en'] as $language) {
         $service['links'] = [
           [
             'title' => sprintf('0:%s link title %s', $language, $id),
@@ -55,29 +55,34 @@ final class ErrandService extends FixtureBase {
           ],
         ];
 
-        $service['channels'] = [
-          [
-            'id' => $id,
-            'type_string' => sprintf('email %s %s', $language, $id),
-            'email' => sprintf('email.%s.%s@hel.fi', $language, $id),
-            'phone' => sprintf('123456-%s-%s', $language, $id),
-            'call_charge_info' => sprintf('call_charge_info %s %s', $language, $id),
+        $channelId = $id * 3;
+        $channels = [];
+
+        for ($i = 1; $i <= 2; $i++) {
+          $channelId++;
+
+          $channels[] = [
+            'id' => $channelId,
+            'type_string' => sprintf('%s email %s %s', $id, $language, $channelId),
+            'email' => sprintf('%s.email.%s.%s@hel.fi', $id, $language, $channelId),
+            'phone' => sprintf('%s-123456-%s-%s', $id, $language, $channelId),
+            'call_charge_info' => sprintf('call_charge_info %s %s %s', $id, $language, $channelId),
             'availabilities' => [
               [
-                'availability_string' => sprintf('0:test %s %s', $language, $id),
+                'availability_string' => sprintf('0:%s:test %s %s', $id, $language, $channelId),
               ],
               [
-                'availability_string' => sprintf('1:test %s %s', $language, $id),
+                'availability_string' => sprintf('1:%s:test %s %s', $id, $language, $channelId),
               ],
             ],
             'links' => [
               [
-                'title' => sprintf('0:%s link title %s', $language, $id),
-                'url' => sprintf('https://localhost/0/%s/%s', $language, $id),
+                'title' => sprintf('0:%s:%s link title %s', $id, $language, $channelId),
+                'url' => sprintf('https://localhost/0/%s/%s/%s', $id, $language, $channelId),
               ],
               [
-                'title' => sprintf('1:%s link title %s', $language, $id),
-                'url' => sprintf('https://localhost/1/%s/%s', $language, $id),
+                'title' => sprintf('1:%s:%s link title %s', $id, $language, $channelId),
+                'url' => sprintf('https://localhost/1/%s/%s/%s', $id, $language, $channelId),
               ],
             ],
             'type' => 'EMAIL',
@@ -88,8 +93,9 @@ final class ErrandService extends FixtureBase {
             'payment_enabled' => TRUE,
             'for_personal_customer' => TRUE,
             'for_corporate_customer' => TRUE,
-          ],
-        ];
+          ];
+        }
+        $service['channels'] = $channels;
 
         foreach ($this->getFields() as $field) {
           $service[$field] = sprintf('%s %s %s', $field, $language, $id);

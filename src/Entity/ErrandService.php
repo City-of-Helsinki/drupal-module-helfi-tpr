@@ -165,6 +165,16 @@ class ErrandService extends TprEntityBase {
   }
 
   /**
+   * Gets the service channel entities.
+   *
+   * @return \Drupal\helfi_tpr\Entity\Channel[]
+   *   An array of service channel entities.
+   */
+  public function getChannels() : array {
+    return $this->get('channels')->referencedEntities();
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {

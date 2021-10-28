@@ -80,13 +80,13 @@ class ServiceMapFormatterTest extends UnitTestCase {
     $this->assertCount(1, $result);
 
     $this->assertEquals([
-      'src' => 'https://palvelukartta.hel.fi/embed/unit/1',
+      'src' => 'https://palvelukartta.hel.fi/en/embed/unit/1',
       'frameborder' => 0,
       'title' => 'Service map',
     ], $result[0]['iframe']['#attributes']);
 
     $this->assertEquals([
-      'href' => 'https://palvelukartta.hel.fi/unit/1',
+      'href' => 'https://palvelukartta.hel.fi/en/unit/1',
       'target' => '_blank',
       'class' => 'link',
     ], $result[0]['link']['#attributes']);

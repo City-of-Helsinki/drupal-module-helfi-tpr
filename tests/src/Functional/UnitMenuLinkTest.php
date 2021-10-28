@@ -69,15 +69,6 @@ class UnitMenuLinkTest extends MigrationTestBase {
 
       // Make sure link is disabled by default.
       $this->assertMenuLink("Menu link $language", $language, FALSE);
-
-      // Make sure publishing entity also publishes the menu link.
-      $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 1]), [
-        'query' => ['language' => $language],
-      ]);
-      $this->submitForm([
-        'content_translation[status]' => TRUE,
-      ], 'Save');
-      $this->assertMenuLink("Menu link $language", $language, TRUE);
     }
   }
 

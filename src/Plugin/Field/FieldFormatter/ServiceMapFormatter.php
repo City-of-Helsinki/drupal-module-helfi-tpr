@@ -81,7 +81,7 @@ final class ServiceMapFormatter extends FormatterBase {
    */
   protected function generateUrl(Unit $entity, ?string $type = NULL) : string {
     $type = $type ? sprintf('%s/', $type) : NULL;
-    return sprintf('%s/%sunit/%s', self::BASE_URL, $type, $entity->id());
+    return sprintf('%s/%s/%sunit/%s', self::BASE_URL, $entity->language()->getId(), $type, $entity->id());
   }
 
   /**

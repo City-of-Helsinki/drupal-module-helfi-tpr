@@ -79,9 +79,9 @@ final class ServiceMapFormatter extends FormatterBase {
    * @return string
    *   The url.
    */
-  protected function generateUrl(Unit $entity, ?string $type = NULL) : string {
+  protected function generateUrl(Unit $entity, ?string $type = NULL, string $langcode) : string {
     $type = $type ? sprintf('%s/', $type) : NULL;
-    return sprintf('%s/%s/%sunit/%s', self::BASE_URL, $entity->language()->getId(), $type, $entity->id());
+    return sprintf('%s/%s/%sunit/%s', self::BASE_URL, $langcode, $type, $entity->id());
   }
 
   /**
@@ -103,7 +103,7 @@ final class ServiceMapFormatter extends FormatterBase {
           '#tag' => 'iframe',
           '#value' => '',
           '#attributes' => [
-            'src' => $this->generateUrl($entity, 'embed'),
+            'src' => $this->generateUrl($entity, 'embed', $langcode),
             'frameborder' => 0,
             'title' => Html::escape($this->getSetting('iframe_title')),
           ],
@@ -113,7 +113,7 @@ final class ServiceMapFormatter extends FormatterBase {
           '#tag' => 'a',
           '#value' => Html::escape($this->getSetting('link_title')),
           '#attributes' => [
-            'href' => $this->generateUrl($entity),
+            'href' => $this->generateUrl($entity, NULL, $langcode),
             'target' => $this->getSetting('target') ? '_blank' : '',
             'class' => 'link',
           ],

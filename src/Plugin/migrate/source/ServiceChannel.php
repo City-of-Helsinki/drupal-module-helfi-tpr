@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
@@ -24,7 +25,7 @@ class ServiceChannel extends SourcePluginBase implements ContainerFactoryPluginI
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface
    */
-  protected $storage;
+  protected EntityStorageInterface $storage;
 
   /**
    * {@inheritdoc}
@@ -50,7 +51,7 @@ class ServiceChannel extends SourcePluginBase implements ContainerFactoryPluginI
     $plugin_id,
     $plugin_definition,
     MigrationInterface $migration = NULL
-  ) {
+  ) : static {
     return new static(
       $configuration,
       $plugin_id,
@@ -79,28 +80,33 @@ class ServiceChannel extends SourcePluginBase implements ContainerFactoryPluginI
   /**
    * {@inheritdoc}
    */
-  public function fields() {
+  public function fields() : array {
     return [];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function __toString() {
+  public function __toString() : string {
     return 'TprServiceChannel';
   }
 
   /**
    * {@inheritdoc}
    */
-  protected function initializeIterator() {
+  protected function initializeIterator(): \Iterator|\Generator {
     /** @var \Drupal\helfi_tpr\Entity\ErrandService $entity */
     foreach ($this->storage->loadMultiple() ?? [] as $entity) {
       $channels = $entity->getData('channels', []);
 
-      foreach ($channels as $langcode => $data) {
-        $data['language'] = $langcode;
-        yield $data;
+      foreach ($channels as $channel) {
+        foreach ($channel as $langcode => $data) {
+          if ($langcode === 'fi') {
+            $data['default_langcode'] = TRUE;
+          }
+          $data['language'] = $langcode;
+          yield $data;
+        }
       }
     }
   }

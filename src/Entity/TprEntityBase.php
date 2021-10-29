@@ -177,10 +177,12 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   /**
    * {@inheritdoc}
    */
-  public function delete() {
+  public function delete(bool $forceDelete = FALSE) {
+    if ($forceDelete) {
+      return parent::delete();
+    }
     // Disable deleting entities to prevent accidental automatic deletions.
     // Also, deleting using the UI is not currently supported.
-    // @todo Implement a safe way to delete entities.
     \Drupal::logger('helfi_tpr')->notice('Prevented deleting entity @type with ID @id. Deleting TPR entities is disabled.',
       [
         '@id' => $this->id(),

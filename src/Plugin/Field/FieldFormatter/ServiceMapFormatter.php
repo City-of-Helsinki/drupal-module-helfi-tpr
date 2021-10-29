@@ -83,6 +83,11 @@ final class ServiceMapFormatter extends FormatterBase {
    */
   protected function generateUrl(Unit $entity, string $langcode, ?string $type = NULL) : string {
     $type = $type ? sprintf('%s/', $type) : NULL;
+
+    if (!in_array($langcode, ['fi', 'sv', 'en'])) {
+      $langcode = 'en';
+    }
+
     return sprintf('%s/%s/%sunit/%s', self::BASE_URL, $langcode, $type, $entity->id());
   }
 

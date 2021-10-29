@@ -73,15 +73,15 @@ final class ServiceMapFormatter extends FormatterBase {
    *
    * @param \Drupal\helfi_tpr\Entity\Unit $entity
    *   The tpr unit entity.
-   * @param string|null $type
-   *   The url type (embed or null).
    * @param string $langcode
    *   Entity language code.
+   * @param string|null $type
+   *   The url type (embed or null).
    *
    * @return string
    *   The url.
    */
-  protected function generateUrl(Unit $entity, ?string $type = NULL, string $langcode) : string {
+  protected function generateUrl(Unit $entity, string $langcode, ?string $type = NULL) : string {
     $type = $type ? sprintf('%s/', $type) : NULL;
     return sprintf('%s/%s/%sunit/%s', self::BASE_URL, $langcode, $type, $entity->id());
   }
@@ -105,7 +105,7 @@ final class ServiceMapFormatter extends FormatterBase {
           '#tag' => 'iframe',
           '#value' => '',
           '#attributes' => [
-            'src' => $this->generateUrl($entity, 'embed', $langcode),
+            'src' => $this->generateUrl($entity, $langcode, 'embed'),
             'frameborder' => 0,
             'title' => Html::escape($this->getSetting('iframe_title')),
           ],
@@ -115,7 +115,7 @@ final class ServiceMapFormatter extends FormatterBase {
           '#tag' => 'a',
           '#value' => Html::escape($this->getSetting('link_title')),
           '#attributes' => [
-            'href' => $this->generateUrl($entity, NULL, $langcode),
+            'href' => $this->generateUrl($entity, $langcode),
             'target' => $this->getSetting('target') ? '_blank' : '',
             'class' => 'link',
           ],

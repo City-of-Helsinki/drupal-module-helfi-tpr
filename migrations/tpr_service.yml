@@ -22,8 +22,12 @@ process:
     plugin: default_value
     default_value: plain_text
   errand_services:
-    plugin: get
-    source: exact_errand_services
+    -
+      plugin: get
+      source:
+        - exact_errand_services
+        - errand_services
+    - plugin: flatten
   links:
     plugin: sub_process
     source: links

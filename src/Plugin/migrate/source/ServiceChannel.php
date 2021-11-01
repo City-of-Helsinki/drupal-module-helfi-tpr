@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "tpr_service_channel",
  * )
  */
-class ServiceChannel extends SourcePluginBase implements ContainerFactoryPluginInterface {
+final class ServiceChannel extends SourcePluginBase implements ContainerFactoryPluginInterface {
 
   /**
    * The entity storage.

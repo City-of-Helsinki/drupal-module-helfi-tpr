@@ -13,9 +13,9 @@ use Drupal\Core\Routing\RedirectDestinationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a list controller for the tpr entity types.
+ * Provides a list controller for TPR entity types.
  */
-class ListBuilder extends EntityListBuilder {
+final class ListBuilder extends EntityListBuilder {
 
   /**
    * The date formatter service.
@@ -45,7 +45,7 @@ class ListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
+  public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) : static {
     return new static(
       $entity_type,
       $container->get('entity_type.manager')->getStorage($entity_type->id()),
@@ -57,7 +57,7 @@ class ListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function render() {
+  public function render() : array {
     $build['table'] = parent::render();
 
     $total = $this->getStorage()
@@ -72,7 +72,7 @@ class ListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function buildHeader() {
+  public function buildHeader() : array {
     $header['id'] = $this->t('ID');
     $header['created'] = $this->t('Created');
     $header['changed'] = $this->t('Updated');
@@ -82,7 +82,7 @@ class ListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function buildRow(EntityInterface $entity) {
+  public function buildRow(EntityInterface $entity) : array {
     /** @var \Drupal\helfi_tpr\Entity\TprEntityBase $entity */
     $row['id'] = $entity->toLink($entity->id());
     $row['created'] = $this->dateFormatter->format($entity->getCreatedTime());
@@ -93,7 +93,7 @@ class ListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  protected function getDefaultOperations(EntityInterface $entity) {
+  protected function getDefaultOperations(EntityInterface $entity) : array {
     $operations = parent::getDefaultOperations($entity);
     $destination = $this->redirectDestination->getAsArray();
     foreach ($operations as $key => $operation) {

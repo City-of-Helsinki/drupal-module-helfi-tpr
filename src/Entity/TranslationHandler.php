@@ -5,13 +5,35 @@ declare(strict_types = 1);
 namespace Drupal\helfi_tpr\Entity;
 
 use Drupal\content_translation\ContentTranslationHandler;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Translation handler for TPR entities.
  */
 final class TranslationHandler extends ContentTranslationHandler {
+
+  /**
+   * The config factory interface.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  private ConfigFactoryInterface $configFactory;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function createInstance(
+    ContainerInterface $container,
+    EntityTypeInterface $entity_type
+  ) : self {
+    $instance = parent::createInstance($container, $entity_type);
+    $instance->configFactory = $container->get('config.factory');
+    return $instance;
+  }
 
   /**
    * {@inheritdoc}
@@ -49,7 +71,7 @@ final class TranslationHandler extends ContentTranslationHandler {
       '#validate_reference' => FALSE,
       '#maxlength' => 60,
       '#description' => $this->t('Leave blank for %anonymous.', [
-        '%anonymous' => \Drupal::config('user.settings')->get('anonymous'),
+        '%anonymous' => $this->configFactory->get('user.settings')->get('anonymous'),
       ]),
     ];
 

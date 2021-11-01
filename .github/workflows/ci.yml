@@ -47,4 +47,4 @@ jobs:
           cd $DRUPAL_ROOT
           vendor/bin/drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
           chromedriver --port=4444 > /dev/null 2>&1 &
-          composer test-ci --verbose --group $MODULE_NAME
+          composer test-ci --verbose public/modules/contrib/$MODULE_NAME

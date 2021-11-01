@@ -47,4 +47,4 @@ jobs:
           cd $DRUPAL_ROOT
           vendor/bin/drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
           chromedriver --port=4444 > /dev/null 2>&1 &
-          composer test-ci --verbose public/modules/contrib/$MODULE_NAME
+          vendor/bin/phpunit -c $DRUPAL_ROOT/phpunit.platform.xml --verbose

@@ -136,7 +136,7 @@ class Unit extends TprEntityBase {
    * @return int|bool
    *   The index of the given service, or FALSE if not found.
    */
-  protected function getServiceIndex(Service $service) {
+  protected function getServiceIndex(Service $service) : int|bool {
     $values = $this->get('services')->getValue();
     $ids = array_map(function ($value) {
       return $value['target_id'];
@@ -152,15 +152,18 @@ class Unit extends TprEntityBase {
    *   The picture url.
    */
   public function getPictureUrl() : ? string {
-    /** @var \Drupal\media\MediaInterface $picture_url */
+    /** @var \Drupal\media\MediaInterface|null $picture_url */
+    /* @phpstan-ignore-next-line */
     $picture_url = $this->get('picture_url_override')->entity;
 
     // Fallback to default picture url if override is not set.
-    if (!$picture_url) {
+    if ($picture_url === NULL) {
+      /* @phpstan-ignore-next-line */
       return $this->get('picture_url')->value;
     }
 
     /** @var \Drupal\file\FileInterface $file */
+    /* @phpstan-ignore-next-line */
     if ($file = $picture_url->get('field_media_image')->entity) {
       return $file->createFileUrl(FALSE) ?: NULL;
     }
@@ -191,7 +194,7 @@ class Unit extends TprEntityBase {
         'weight' => -19,
       ]);
     $fields['picture_url_override'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(new TranslatableMarkup('Override: Picture'))
+      ->setLabel((string) new TranslatableMarkup('Override: Picture'))
       ->setSettings([
         'target_type' => 'media',
         'handler_settings' => [
@@ -222,14 +225,14 @@ class Unit extends TprEntityBase {
     $fields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
       ->setRevisionable(FALSE)
-      ->setLabel(new TranslatableMarkup('Description'))
+      ->setLabel((string) new TranslatableMarkup('Description'))
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
     $fields['address'] = BaseFieldDefinition::create('address')
-      ->setLabel(new TranslatableMarkup('Address'))
+      ->setLabel((string) new TranslatableMarkup('Address'))
       ->setTranslatable(TRUE)
       ->setRevisionable(FALSE)
       ->setSetting('field_overrides', [
@@ -246,7 +249,7 @@ class Unit extends TprEntityBase {
     $fields['call_charge_info'] = BaseFieldDefinition::create('text_long')
       ->setTranslatable(TRUE)
       ->setRevisionable(FALSE)
-      ->setLabel(new TranslatableMarkup('Call charge info'))
+      ->setLabel((string) new TranslatableMarkup('Call charge info'))
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
       ])
@@ -268,7 +271,7 @@ class Unit extends TprEntityBase {
         'type' => 'service_map_embed',
       ]);
     $fields['services'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(new TranslatableMarkup('Services'))
+      ->setLabel((string) new TranslatableMarkup('Services'))
       ->setSettings([
         'target_type' => 'tpr_service',
       ])
@@ -280,24 +283,24 @@ class Unit extends TprEntityBase {
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
     $fields['menu_link'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(new TranslatableMarkup('Menu link'))
+      ->setLabel((string) new TranslatableMarkup('Menu link'))
       ->setSettings([
         'target_type' => 'menu_link_content',
       ])
       ->setRevisionable(FALSE)
       ->setTranslatable(TRUE);
     $fields['accessibility_sentences'] = BaseFieldDefinition::create('tpr_accessibility_sentence')
-      ->setLabel(new TranslatableMarkup('Accessibility sentences'))
+      ->setLabel((string) new TranslatableMarkup('Accessibility sentences'))
       ->setTranslatable(TRUE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE);
     $fields['opening_hours'] = BaseFieldDefinition::create('tpr_connection')
-      ->setLabel(new TranslatableMarkup('Opening hours'))
+      ->setLabel((string) new TranslatableMarkup('Opening hours'))
       ->setTranslatable(TRUE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE);
     $fields['provided_languages'] = BaseFieldDefinition::create('string')
-      ->setLabel(new TranslatableMarkup('Provided languages'))
+      ->setLabel((string) new TranslatableMarkup('Provided languages'))
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setTranslatable(FALSE)
       ->setDisplayOptions('form', [

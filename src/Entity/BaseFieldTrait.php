@@ -48,7 +48,7 @@ trait BaseFieldTrait {
   protected static function createBaseField(BaseFieldDefinition $field, string $label) : BaseFieldDefinition {
     return $field
       // @codingStandardsIgnoreLine
-      ->setLabel(new TranslatableMarkup($label))
+      ->setLabel((string) new TranslatableMarkup($label))
       ->setTranslatable(TRUE)
       ->setRevisionable(FALSE)
       ->setDisplayConfigurable('view', TRUE)

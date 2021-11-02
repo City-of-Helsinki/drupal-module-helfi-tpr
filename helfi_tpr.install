@@ -347,9 +347,7 @@ function helfi_tpr_update_8020() : void {
   ];
   foreach ($entity_types as $type) {
     foreach (['created', 'changed'] as $field) {
-      if (!$definition = $manager->getFieldStorageDefinition($field, $type)) {
-        continue;
-      }
+      $definition = $manager->getFieldStorageDefinition($field, $type);
       $manager->uninstallFieldStorageDefinition($definition);
     }
   }
@@ -395,11 +393,10 @@ function helfi_tpr_update_8022() : void {
     foreach (['uid', 'status'] as $field) {
       $field_name = 'content_translation_' . $field;
 
-      if ($definition = $manager->getFieldStorageDefinition($field_name, $type)) {
-        $manager->uninstallFieldStorageDefinition($definition);
-        field_purge_batch(1000);
-        $manager->installFieldStorageDefinition($field_name, $type, 'content_translation', $definition);
-      }
+      $definition = $manager->getFieldStorageDefinition($field_name, $type);
+      $manager->uninstallFieldStorageDefinition($definition);
+      field_purge_batch(1000);
+      $manager->installFieldStorageDefinition($field_name, $type, 'content_translation', $definition);
     }
   }
 }
@@ -518,6 +515,7 @@ function helfi_tpr_update_8028() : void {
   \Drupal::state()->set('published_service_channels', $published);
 
   // Reset errand service channels.
+  /** @var \Drupal\helfi_tpr\Entity\ErrandService $entity */
   foreach ($entityManager->getStorage('tpr_errand_service')->loadMultiple() as $entity) {
     $entity->setData('channels', [])
       ->save();

@@ -48,9 +48,10 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   /**
    * {@inheritdoc}
    */
-  public function label() {
+  public function label() : string {
     // Use overridden name field as default label when possible.
     if (!$this->get('name_override')->isEmpty()) {
+      /* @phpstan-ignore-next-line */
       return $this->get('name_override')->value;
     }
     return parent::label();
@@ -83,7 +84,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
           'weight' => $weight++,
         ])
         ->setLabel(
-          new TranslatableMarkup('Override: @field_name', [
+          (string) new TranslatableMarkup('Override: @field_name', [
             '@field_name' => $field->getLabel(),
           ])
         );
@@ -133,6 +134,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
    *   The timestmap.
    */
   public function getChangedTime() : ? int {
+    /* @phpstan-ignore-next-line */
     $value = $this->get('content_translation_changed')->value;
 
     return $value ? (int) $value : NULL;
@@ -145,6 +147,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
    *   The timestamp.
    */
   public function getCreatedTime() : ? int {
+    /* @phpstan-ignore-next-line */
     $value = $this->get('content_translation_created')->value;
 
     return $value ? (int) $value : NULL;

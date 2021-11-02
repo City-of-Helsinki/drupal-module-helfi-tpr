@@ -42,7 +42,7 @@ jobs:
         run: |
           cd $DRUPAL_ROOT
           composer lint-php public/modules/contrib/$MODULE_NAME
-          php -d memory_limit=-1 vendor/bin/phpstan analyze public/modules/contrib/$MODULE_NAME
+          php -d memory_limit=-1 vendor/bin/phpstan --level=5 analyze public/modules/contrib/$MODULE_NAME
 
       - name: Run PHPUnit tests
         run: |

@@ -171,6 +171,7 @@ class ErrandService extends TprEntityBase {
    *   An array of service channel entities.
    */
   public function getChannels() : array {
+    /* @phpstan-ignore-next-line */
     return $this->get('channels')->referencedEntities();
   }
 
@@ -178,6 +179,7 @@ class ErrandService extends TprEntityBase {
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
+    /** @var \Drupal\Core\Field\BaseFieldDefinition[] $fields */
     $fields = parent::baseFieldDefinitions($entity_type);
 
     static::$overrideFields['name'] = $fields['name'];
@@ -199,7 +201,7 @@ class ErrandService extends TprEntityBase {
     foreach ($text_fields as $name => $label) {
       $fields[$name] = BaseFieldDefinition::create('text_long')
         ->setTranslatable(TRUE)
-        ->setLabel($label)
+        ->setLabel((string) $label)
         ->setDisplayOptions('form', [
           'type' => 'readonly_field_widget',
         ])
@@ -208,7 +210,7 @@ class ErrandService extends TprEntityBase {
     }
 
     $fields['channels'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(new TranslatableMarkup('Channels'))
+      ->setLabel((string) new TranslatableMarkup('Channels'))
       ->setSettings([
         'target_type' => 'tpr_service_channel',
       ])
@@ -221,8 +223,7 @@ class ErrandService extends TprEntityBase {
       ->setDisplayConfigurable('form', TRUE);
 
     $fields['data'] = BaseFieldDefinition::create('map')
-      ->setLabel(new TranslatableMarkup('Data'))
-      ->setDescription(new TranslatableMarkup('A serialized array of additional data.'));
+      ->setLabel((string) new TranslatableMarkup('Data'));
 
     return $fields;
   }

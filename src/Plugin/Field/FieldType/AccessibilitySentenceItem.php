@@ -36,10 +36,10 @@ class AccessibilitySentenceItem extends FieldItemBase {
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) : array {
     $properties['group'] = DataDefinition::create('string')
-      ->setLabel(new TranslatableMarkup('Group'))
+      ->setLabel((string) new TranslatableMarkup('Group'))
       ->setRequired(TRUE);
     $properties['value'] = DataDefinition::create('string')
-      ->setLabel(new TranslatableMarkup('Value'))
+      ->setLabel((string) new TranslatableMarkup('Value'))
       ->setRequired(TRUE);
 
     return $properties;

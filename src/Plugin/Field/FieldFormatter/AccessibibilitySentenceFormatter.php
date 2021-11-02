@@ -50,7 +50,6 @@ final class AccessibibilitySentenceFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) : array {
-    /** @var \Drupal\helfi_tpr\Plugin\Field\FieldType\AccessibilitySentenceItem[] $items */
     $element = [];
 
     foreach ($this->groupItemsByLabel($items) as $group) {

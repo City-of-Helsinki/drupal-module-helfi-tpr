@@ -186,7 +186,7 @@ class Service extends TprEntityBase {
     $fields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
       ->setRevisionable(FALSE)
-      ->setLabel(new TranslatableMarkup('Description'))
+      ->setLabel((string) new TranslatableMarkup('Description'))
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
       ])
@@ -198,11 +198,10 @@ class Service extends TprEntityBase {
 
     $fields['data'] = BaseFieldDefinition::create('map')
       ->setRevisionable(FALSE)
-      ->setLabel(new TranslatableMarkup('Data'))
-      ->setDescription(new TranslatableMarkup('A serialized array of additional data.'));
+      ->setLabel((string) new TranslatableMarkup('Data'));
 
     $fields['errand_services'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(new TranslatableMarkup('Errand Services'))
+      ->setLabel((string) new TranslatableMarkup('Errand Services'))
       ->setSettings([
         'target_type' => 'tpr_errand_service',
       ])
@@ -215,7 +214,7 @@ class Service extends TprEntityBase {
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
     $fields['menu_link'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(new TranslatableMarkup('Menu link'))
+      ->setLabel((string) new TranslatableMarkup('Menu link'))
       ->setSettings([
         'target_type' => 'menu_link_content',
       ])

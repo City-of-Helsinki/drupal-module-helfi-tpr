@@ -44,13 +44,13 @@ class ConnectionItem extends FieldItemBase {
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) : array {
     $properties['value'] = DataDefinition::create('string')
-      ->setLabel(new TranslatableMarkup('Value'))
+      ->setLabel((string) new TranslatableMarkup('Value'))
       ->setRequired(TRUE);
     $properties['type'] = DataDefinition::create('string')
-      ->setLabel(new TranslatableMarkup('Type'))
+      ->setLabel((string) new TranslatableMarkup('Type'))
       ->setRequired(TRUE);
     $properties['data'] = DataDefinition::create('tpr_connection_data')
-      ->setLabel(new TranslatableMarkup('Data'))
+      ->setLabel((string) new TranslatableMarkup('Data'))
       ->setRequired(TRUE);
 
     return $properties;

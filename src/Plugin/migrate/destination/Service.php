@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Plugin\migrate\destination;
 
-use Drupal\helfi_api_base\Entity\RemoteEntityBase;
+use Drupal\helfi_tpr\Entity\Service as ServiceEntity;
 use Drupal\helfi_tpr\Entity\Unit;
 use Drupal\migrate\Row;
 
@@ -27,7 +27,8 @@ final class Service extends TprDestinationBase {
   /**
    * {@inheritdoc}
    */
-  public function getEntity(Row $row, array $old_destination_id_values) : RemoteEntityBase {
+  public function getEntity(Row $row, array $old_destination_id_values) : ServiceEntity {
+    /** @var \Drupal\helfi_tpr\Entity\Service $entity */
     $entity = parent::getEntity($row, $old_destination_id_values);
 
     // Unit ids are not language specific so we can safely return early

@@ -33,7 +33,7 @@ class ServiceMapFormatterTest extends UnitTestCase {
   /**
    * The field definition.
    *
-   * @var \Drupal\Core\Field\FieldDefinitionInterface|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Field\FieldDefinitionInterface
    */
   protected FieldDefinitionInterface $fieldDefinition;
 

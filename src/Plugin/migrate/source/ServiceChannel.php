@@ -51,8 +51,8 @@ final class ServiceChannel extends SourcePluginBase implements ContainerFactoryP
     $plugin_id,
     $plugin_definition,
     MigrationInterface $migration = NULL
-  ) : static {
-    return new static(
+  ) : self {
+    return new self(
       $configuration,
       $plugin_id,
       $plugin_definition,
@@ -96,7 +96,7 @@ final class ServiceChannel extends SourcePluginBase implements ContainerFactoryP
    */
   protected function initializeIterator(): \Iterator|\Generator {
     /** @var \Drupal\helfi_tpr\Entity\ErrandService $entity */
-    foreach ($this->storage->loadMultiple() ?? [] as $entity) {
+    foreach ($this->storage->loadMultiple() as $entity) {
       $channels = $entity->getData('channels', []);
 
       foreach ($channels as $channel) {

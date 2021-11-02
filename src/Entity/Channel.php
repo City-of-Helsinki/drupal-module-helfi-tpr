@@ -92,7 +92,7 @@ class Channel extends TprEntityBase {
     $fields['availabilities'] = static::createStringField('Availabilities', BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
     $fields['address'] = BaseFieldDefinition::create('address')
-      ->setLabel(new TranslatableMarkup('Address'))
+      ->setLabel((string) new TranslatableMarkup('Address'))
       ->setTranslatable(TRUE)
       ->setRevisionable(FALSE)
       ->setDisplayOptions('form', [
@@ -122,7 +122,7 @@ class Channel extends TprEntityBase {
       $fields[$name] = BaseFieldDefinition::create('text_long')
         ->setTranslatable(TRUE)
         ->setRevisionable(FALSE)
-        ->setLabel($label)
+        ->setLabel((string) $label)
         ->setDisplayOptions('form', [
           'type' => 'readonly_field_widget',
         ])
@@ -144,7 +144,7 @@ class Channel extends TprEntityBase {
       $fields[$name] = BaseFieldDefinition::create('boolean')
         ->setTranslatable(TRUE)
         ->setRevisionable(FALSE)
-        ->setLabel($label)
+        ->setLabel((string) $label)
         ->setDisplayOptions('form', [
           'type' => 'readonly_field_widget',
         ])

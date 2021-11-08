@@ -28,6 +28,9 @@ process:
         - exact_errand_services
         - errand_services
     - plugin: flatten
+    -
+      plugin: callback
+      callable: array_unique
   links:
     plugin: sub_process
     source: links

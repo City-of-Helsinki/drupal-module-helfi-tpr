@@ -27,7 +27,11 @@
             {{ content.description_summary }}
           </div>
         {% endif %}
-        <span class="service__divider"></span>
+
+        {% block toc_content %}
+          <span class="service__divider"></span>
+        {% endblock toc_content %}
+
         {% if content.description|render %}
           <div class="service__long-desc">
             {{ content.description }}

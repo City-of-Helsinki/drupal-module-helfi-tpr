@@ -20,7 +20,7 @@ class UnitMigrationTest extends MigrationTestBase {
   public function testUnitMigration() : void {
     $this->runUnitMigrate();
     $entities = Unit::loadMultiple();
-    $this->assertCount(1, $entities);
+    $this->assertCount(3, $entities);
 
     $expectedMapHashes = [];
 

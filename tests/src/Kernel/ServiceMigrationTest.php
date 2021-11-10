@@ -48,7 +48,11 @@ class ServiceMigrationTest extends MigrationTestBase {
     $this->runUnitMigrate();
     $this->runServiceMigrate();
     $entities = Service::loadMultiple();
-    $this->assertCount(3, $entities);
+    $this->assertCount(6, $entities);
+
+    // We have fixture data for functional tests as well and they are not
+    // easily testable. Test only first three entities.
+    $entities = array_slice($entities, 0, 3, TRUE);
 
     $expectedMapHashes = [];
 

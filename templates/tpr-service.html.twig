@@ -17,7 +17,7 @@
 
   <article{{ attributes.addClass(classes) }}>
 
-    <div class="service-header__container container {{ in_menu ? 'has-navigation' }}">
+    <div class="service-header__container container {{ in_menu ? 'has-navigation' }} {{ has_sidebar ? 'has-sidebar' }}">
       <div{{ content_attributes.addClass('service__header') }}>
         <h1{{ title_attributes.addClass('service__title') }}>
           {{ entity.label }}
@@ -27,7 +27,11 @@
             {{ content.description_summary }}
           </div>
         {% endif %}
-        <span class="service__divider"></span>
+
+        {% block toc_content %}
+          <span class="service__divider"></span>
+        {% endblock toc_content %}
+
         {% if content.description|render %}
           <div class="service__long-desc">
             {{ content.description }}

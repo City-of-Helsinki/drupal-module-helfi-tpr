@@ -26,6 +26,11 @@ function helfi_tpr_views_pre_execute(ViewExecutable $view) {
   if ($view->id() == 'unit_search') {
     // CASE function for using the name_override field as default for sorting.
     // If that field is empty, use the name field.
-    $view->build_info['query']->addExpression('CASE WHEN tpr_unit_field_data.name_override IS NULL THEN tpr_unit_field_data.name ELSE tpr_unit_field_data.name_override END', 'name_sort');
+    $view->build_info['query']->addExpression('
+      CASE
+        WHEN tpr_unit_field_data.name_override IS NULL THEN tpr_unit_field_data.name
+        ELSE tpr_unit_field_data.name_override
+      END', 'name_sort'
+    );
   }
 }

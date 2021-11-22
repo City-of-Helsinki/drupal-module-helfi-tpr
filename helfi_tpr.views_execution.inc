@@ -30,7 +30,7 @@ function helfi_tpr_views_pre_execute(ViewExecutable $view) {
       CASE
         WHEN tpr_unit_field_data.name_override IS NULL THEN tpr_unit_field_data.name
         ELSE tpr_unit_field_data.name_override
-      END', 'name_sort'
+      END COLLATE utf8mb4_swedish_ci', 'name_sort'
     );
   }
 }

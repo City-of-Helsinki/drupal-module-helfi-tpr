@@ -47,7 +47,7 @@
             {{ content.picture_url }}
           </div>
         {% endif %}
-        {% if content.description|render %}
+        {% if content.description|render and hide_description == false %}
           <div class="unit__long-desc">
             {{ content.description }}
           </div>

@@ -113,6 +113,10 @@ function template_preprocess_tpr_unit(array &$variables) {
     foreach ($provided_languages as $provided_language) {
       $variables['provided_languages'][] = $provided_language['value'];
     }
+
+    // Get 'hide_description' field value and pass it to the template.
+    $hide_description = $variables['entity']->get('hide_description')->value;
+    $variables['hide_description'] = boolval($hide_description);
   }
 }
 

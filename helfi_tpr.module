@@ -5,7 +5,10 @@
  * Contains helfi_tpr.
  */
 
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Session\AccountInterface;
 
 /**
  * Implements hook_theme().
@@ -158,7 +161,6 @@ function template_preprocess_tpr_service_channel(array &$variables) {
   }
   if (isset($variables['elements']['#tpr_service_channel'])) {
     $variables['entity'] = $variables['elements']['#tpr_service_channel'];
-    //$variables['content']['description_summary'] = $variables['elements']['#tpr_service_channel']->get('description')->summary;
   }
 }
 
@@ -179,6 +181,29 @@ function template_preprocess_tpr_errand_service(array &$variables) {
   }
   if (isset($variables['elements']['#tpr_errand_service'])) {
     $variables['entity'] = $variables['elements']['#tpr_errand_service'];
-    //$variables['content']['description_summary'] = $variables['elements']['#tpr_service_channel']->get('description')->summary;
   }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_access().
+ */
+function helfi_tpr_tpr_unit_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  // Allow user to view unpublished unit based on permission.
+  if ($operation === 'view' && !$entity->isPublished()) {
+    return AccessResult::allowedIfHasPermission($account, 'view unpublished tpr_unit');
+  }
+
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_access().
+ */
+function helfi_tpr_tpr_service_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  // Allow user to view unpublished service based on permission.
+  if ($operation === 'view' && !$entity->isPublished()) {
+    return AccessResult::allowedIfHasPermission($account, 'view unpublished tpr_service');
+  }
+
+  return AccessResult::neutral();
 }

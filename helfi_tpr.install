@@ -521,3 +521,18 @@ function helfi_tpr_update_8028() : void {
       ->save();
   }
 }
+
+/**
+ * Add 'hide_description' field to the TPR Unit entity.
+ */
+function helfi_tpr_update_8029() : void {
+  $fields['hide_description'] = BaseFieldDefinition::create('boolean')
+    ->setLabel(new TranslatableMarkup('Hide description'))
+    ->setDisplayConfigurable('view', TRUE)
+    ->setDisplayConfigurable('form', TRUE);
+
+  foreach ($fields as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
+  }
+}

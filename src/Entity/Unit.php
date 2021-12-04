@@ -308,6 +308,10 @@ class Unit extends TprEntityBase {
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
+    $fields['hide_description'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(new TranslatableMarkup('Hide description'))
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
 
     return $fields;
   }

@@ -15,3 +15,9 @@
   'restrict access': TRUE
 'view unpublished tpr_service':
   title: 'View unpublished tpr_service'
+
+'view unpublished tpr_service_channel':
+  title: 'View unpublished tpr_service_channel'
+
+'view unpublished tpr_errand_service':
+  title: 'View unpublished tpr_errand_service'

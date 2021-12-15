@@ -538,3 +538,12 @@ function helfi_tpr_update_8029() : void {
       ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
   }
 }
+
+/**
+ * Install tpr_ontology_word_details entity type.
+ */
+function helfi_tpr_update_8030() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = \Drupal::entityTypeManager()->getDefinition('tpr_ontology_word_details');
+  $manager->installEntityType($entity_type);
+}

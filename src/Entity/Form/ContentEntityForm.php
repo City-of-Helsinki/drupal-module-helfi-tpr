@@ -129,7 +129,7 @@ class ContentEntityForm extends CoreContentEntityForm {
   public function save(array $form, FormStateInterface $form_state) {
     $entity_type = $this->entity->getEntityTypeId();
 
-    if ($entity_type == 'tpr_unit' || $entity_type == 'tpr_service') {
+    if ($entity_type == 'tpr_unit' || $entity_type == 'tpr_service' || $entity_type == 'tpr_ontology_word_details') {
       parent::save($form, $form_state);
 
       $this->messenger()->addStatus($this->t('%title saved.', ['%title' => $this->entity->label()]));

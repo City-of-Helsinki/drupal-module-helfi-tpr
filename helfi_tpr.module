@@ -15,6 +15,10 @@ function helfi_tpr_theme() {
     'tpr_accessibility_sentences' => [
       'variables' => ['name' => NULL, 'items' => []],
     ],
+    'tpr-school-details' => [
+      'variables' => ['clarification' => NULL, 'schoolyear' => NULL],
+      'template' => 'tpr-school-details',
+    ],
     'tpr_unit' => [
       'render element' => 'elements',
       'template' => 'tpr-unit',
@@ -36,6 +40,13 @@ function helfi_tpr_theme() {
     'tpr_errand_service' => [
       'render element' => 'elements',
       'template' => 'tpr-errand-service'
+    ],
+    'tpr_ontology_word_details' => [
+      'render element' => 'elements',
+      'template' => 'tpr-ontology-word-details',
+    ],
+    'tpr_ontology_word_details_form' => [
+      'render element' => 'form',
     ],
   ];
 }
@@ -121,9 +132,9 @@ function template_preprocess_tpr_unit(array &$variables) {
 }
 
 /**
- * Prepares variables for tpr_unit templates.
+ * Prepares variables for tpr_service templates.
  *
- * Default template: tpr-unit.html.twig.
+ * Default template: tpr-service.html.twig.
  *
  * @param array $variables
  *   An associative array containing:
@@ -181,4 +192,23 @@ function template_preprocess_tpr_errand_service(array &$variables) {
     $variables['entity'] = $variables['elements']['#tpr_errand_service'];
     //$variables['content']['description_summary'] = $variables['elements']['#tpr_service_channel']->get('description')->summary;
   }
+}
+
+/**
+ * Prepares variables for tpr_ontology_word_details templates.
+ *
+ * Default template: tpr-ontology-word-details.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ */
+function template_preprocess_tpr_ontology_word_details(array &$variables) {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  // Helpful $content variable for templates.
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+  if (isset($variables['elements']['#tpr_ontology_word_details'])) {
+    $variables['entity'] = $variables['elements']['#tpr_ontology_word_details'];}
 }

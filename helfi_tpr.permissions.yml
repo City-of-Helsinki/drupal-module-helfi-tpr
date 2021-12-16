@@ -4,6 +4,8 @@
 'revert all tpr_unit revisions':
   title: 'Revert all tpr_unit revisions'
   'restrict access': TRUE
+'view unpublished tpr_unit':
+  title: 'View unpublished tpr_unit'
 
 'view all tpr_service revisions':
   title: 'View all tpr_service revisions'
@@ -11,3 +13,11 @@
 'revert all tpr_service revisions':
   title: 'Revert all tpr_service revisions'
   'restrict access': TRUE
+'view unpublished tpr_service':
+  title: 'View unpublished tpr_service'
+
+'view unpublished tpr_service_channel':
+  title: 'View unpublished tpr_service_channel'
+
+'view unpublished tpr_errand_service':
+  title: 'View unpublished tpr_errand_service'

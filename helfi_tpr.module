@@ -212,3 +212,31 @@ function template_preprocess_tpr_ontology_word_details(array &$variables) {
   if (isset($variables['elements']['#tpr_ontology_word_details'])) {
     $variables['entity'] = $variables['elements']['#tpr_ontology_word_details'];}
 }
+
+/**
+ * Implements hook_views_data_alter().
+ *
+ * @param array $data
+ *   An array of all information about Views tables and fields.
+ */
+function helfi_tpr_views_data_alter(array &$data) {
+  $data['tpr_unit']['emphasis_filter'] = [
+        'title' => t('Emphasis filter'),
+        'filter' => [
+            'title' => t('Emphasis filter'),
+            'help' => 'Filters units by emphasis.',
+            'field' => 'nid',
+            'id' => 'emphasis_filter',
+        ]
+    ];
+
+  $data['tpr_unit']['educational_mission_filter'] = [
+    'title' => t('Educational mission'),
+    'filter' => [
+      'title' => t('Educational mission'),
+      'help' => 'Filters units by educational mission.',
+      'field' => 'nid',
+      'id' => 'educational_mission_filter',
+    ]
+  ];
+}

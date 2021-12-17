@@ -132,6 +132,17 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
     }
   }
 
+  /**
+   * Combine the two content sources.
+   *
+   * @param array $content
+   *   The source JSON content.
+   * @param array $detailedContent
+   *   The source JSON content.
+   *
+   * @return array
+   *   The new source content.
+   */
   private function combineWithDetails(array $content, array $detailedContent): array {
     $content = $this->removeNonExpandableContent($content);
     $detailedContent = $this->removeDetaillessContent($detailedContent);
@@ -150,7 +161,7 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
               'name_fi' => $contentItem['ontologyword_fi'] . ' – ' . $detailedItem['unit_id'],
               'name_sv' => $contentItem['ontologyword_sv'] . ' – ' . $detailedItem['unit_id'],
               'name_en' => $contentItem['ontologyword_en'] . ' – ' . $detailedItem['unit_id'],
-              'details' => []
+              'details' => [],
             ];
           }
 
@@ -162,8 +173,10 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
     return $combined;
   }
 
-  /*
-   * @todo: Remove this later?
+  /**
+   * Removes content that is not expandable in the high school context.
+   *
+   * @todo Remove this later?
    */
   private function removeNonExpandableContent(array $content): array {
     foreach ($content as $key => $item) {
@@ -174,8 +187,10 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
     return $content;
   }
 
-  /*
-   * @todo: Remove this later?
+  /**
+   * Removes details content that does not have relevant data.
+   *
+   * @todo Remove this later?
    */
   private function removeDetaillessContent(array $content): array {
     foreach ($content as $key => $item) {

@@ -5,12 +5,12 @@ namespace Drupal\helfi_tpr\Plugin\views\filter;
 use Drupal\helfi_tpr\Entity\OntologyWordDetails;
 
 /**
-* Filter high school units by educational mission.
-*
-* @ingroup views_filter_handlers
-*
-* @ViewsFilter("educational_mission_filter")
-*/
+ * Filter high school units by educational mission.
+ *
+ * @ingroup views_filter_handlers
+ *
+ * @ViewsFilter("educational_mission_filter")
+ */
 class EducationalMission extends OntologyWordDetailsBase {
 
   /**
@@ -24,7 +24,7 @@ class EducationalMission extends OntologyWordDetailsBase {
     $details = [];
     $multipleOntologyWordDetails = OntologyWordDetails::loadMultipleByWordId(157);
     foreach ($multipleOntologyWordDetails as $ontologyWordDetails) {
-      /** @var OntologyWordDetails $ontologyWordDetails */
+      /** @var \Drupal\helfi_tpr\Entity\OntologyWordDetails $ontologyWordDetails */
       $details[] = $ontologyWordDetails->getDetailByAnother('school_details', 'clarification', 'schoolyear', $schoolyear);
     }
 
@@ -32,4 +32,5 @@ class EducationalMission extends OntologyWordDetailsBase {
     asort($options);
     return $options;
   }
+
 }

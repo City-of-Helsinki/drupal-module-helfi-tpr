@@ -78,8 +78,17 @@ class OntologyWordDetails extends TprEntityBase {
     return 'tpr_ontology_word_details';
   }
 
+  /**
+   * Loads one or more entities by ontology word ID.
+   *
+   * @param int $word_id
+   *   Ontology word ID.
+   *
+   * @return array
+   *   OntologyWordDetails entities.
+   */
   public static function loadMultipleByWordId(int $word_id): array {
-    $ids = \Drupal::entityQuery('tpr_ontology_word_details')->condition('ontologyword_id',$word_id)->execute();
+    $ids = \Drupal::entityQuery('tpr_ontology_word_details')->condition('ontologyword_id', $word_id)->execute();
     return OntologyWordDetails::loadMultiple($ids);
   }
 
@@ -155,18 +164,19 @@ class OntologyWordDetails extends TprEntityBase {
   /**
    * Gets details filtered by another details using a given field.
    *
-   * @param $fieldName
+   * @param string $fieldName
    *   Name of the entity's field which is used to get the details.
-   * @param $detail
+   * @param string $detail
    *   Name of the details that are returned.
-   * @param $filterName
+   * @param string $filterName
    *   Name of the details that are used to filter the returned details.
-   * @param $filterValue
+   * @param string $filterValue
    *   The filter value that must be matched.
    *
    * @return string[]|null
+   *   Array containing the details.
    */
-  public function getDetailByAnother($fieldName, $detail, $filterName, $filterValue): ?array {
+  public function getDetailByAnother(string $fieldName, string $detail, string $filterName, string $filterValue): ?array {
     $data = [];
     if (!$this->get($fieldName)->isEmpty()) {
       foreach ($this->get($fieldName)->getValue() as $item) {
@@ -177,4 +187,5 @@ class OntologyWordDetails extends TprEntityBase {
     }
     return $data ?? NULL;
   }
+
 }

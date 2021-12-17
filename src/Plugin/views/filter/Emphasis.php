@@ -5,12 +5,12 @@ namespace Drupal\helfi_tpr\Plugin\views\filter;
 use Drupal\helfi_tpr\Entity\OntologyWordDetails;
 
 /**
-* Filter high school units by special emphasis or study programme.
-*
-* @ingroup views_filter_handlers
-*
-* @ViewsFilter("emphasis_filter")
-*/
+ * Filter high school units by special emphasis or study programme.
+ *
+ * @ingroup views_filter_handlers
+ *
+ * @ViewsFilter("emphasis_filter")
+ */
 class Emphasis extends OntologyWordDetailsBase {
 
   /**
@@ -24,7 +24,7 @@ class Emphasis extends OntologyWordDetailsBase {
     $details = [];
     $multipleOntologyWordDetails = OntologyWordDetails::loadMultipleByWordId(493);
     foreach ($multipleOntologyWordDetails as $ontologyWordDetails) {
-      /** @var OntologyWordDetails $ontologyWordDetails */
+      /** @var \Drupal\helfi_tpr\Entity\OntologyWordDetails $ontologyWordDetails */
       $details[] = $ontologyWordDetails->getDetailByAnother('school_details', 'clarification', 'schoolyear', $schoolyear);
     }
 
@@ -32,4 +32,5 @@ class Emphasis extends OntologyWordDetailsBase {
     asort($options);
     return $options;
   }
+
 }

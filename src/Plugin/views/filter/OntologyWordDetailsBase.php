@@ -8,8 +8,8 @@ use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
 
 /**
-* Base views filter class for ontology word details.
-*/
+ * Base views filter class for ontology word details.
+ */
 abstract class OntologyWordDetailsBase extends InOperator {
 
   /**
@@ -18,12 +18,11 @@ abstract class OntologyWordDetailsBase extends InOperator {
   public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL) {
     parent::init($view, $display, $options);
     $this->valueTitle = t('Allowed clarifications');
-    $this->definition['options callback'] = array($this, 'generateOptions');
+    $this->definition['options callback'] = [$this, 'generateOptions'];
   }
 
   /**
-   * Add relationships to Ontology word details related tables and use them to
-   * filter the correct units.
+   * Add relationships to Ontology word details related tables.
    */
   public function query() {
     if (empty($this->value)) {
@@ -36,7 +35,7 @@ abstract class OntologyWordDetailsBase extends InOperator {
       'field' => 'unit_id',
       'left_table' => 'tpr_unit_field_data',
       'left_field' => 'id',
-      'operator' => '='
+      'operator' => '=',
     ];
     /** @var \Drupal\views\Plugin\views\join\JoinPluginBase $owdFdJoin */
     $owdFdJoin = Views::pluginManager('join')->createInstance('standard', $owdFdConfiguration);
@@ -51,7 +50,7 @@ abstract class OntologyWordDetailsBase extends InOperator {
       'field' => 'entity_id',
       'left_table' => 'owd_fd',
       'left_field' => 'id',
-      'operator' => '='
+      'operator' => '=',
     ];
     /** @var \Drupal\views\Plugin\views\join\JoinPluginBase $owdSdJoin */
     $owdSdJoin = Views::pluginManager('join')->createInstance('standard', $owdSdConfiguration);
@@ -64,6 +63,8 @@ abstract class OntologyWordDetailsBase extends InOperator {
    * Generates the options from ontology word details.
    *
    * @return string[]
+   *   Available options for the filter.
    */
   abstract public function generateOptions(): array;
+
 }

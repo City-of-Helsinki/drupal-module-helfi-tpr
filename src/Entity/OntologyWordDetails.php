@@ -88,7 +88,10 @@ class OntologyWordDetails extends TprEntityBase {
    *   OntologyWordDetails entities.
    */
   public static function loadMultipleByWordId(int $word_id): array {
-    $ids = \Drupal::entityQuery('tpr_ontology_word_details')->condition('ontologyword_id', $word_id)->execute();
+    $ids = \Drupal::entityQuery('tpr_ontology_word_details')
+      ->condition('content_translation_status', 1)
+      ->condition('ontologyword_id', $word_id)
+      ->execute();
     return OntologyWordDetails::loadMultiple($ids);
   }
 

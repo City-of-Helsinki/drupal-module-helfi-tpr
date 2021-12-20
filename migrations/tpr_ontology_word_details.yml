@@ -28,6 +28,10 @@ process:
     process:
       clarification: clarification
       schoolyear: schoolyear
+  # Automatically publish ontology word details if the related unit is also published.
+  content_translation_status:
+    plugin: publish_by_unit
+    source: unit_id
 destination:
   plugin: tpr_ontology_word_details
 migration_dependencies: {  }

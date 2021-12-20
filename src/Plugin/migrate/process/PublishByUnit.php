@@ -21,7 +21,6 @@ use Drupal\migrate\Row;
  *   plugin: publish_by_unit
  *   source: unit_id
  * @endcode
- *
  */
 class PublishByUnit extends ProcessPluginBase {
 

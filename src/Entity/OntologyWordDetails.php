@@ -176,14 +176,16 @@ class OntologyWordDetails extends TprEntityBase {
    *   Name of the details that are used to filter the returned details.
    * @param string $filterValue
    *   The filter value that must be matched.
+   * @param string $langcode
+   *   The langcode.
    *
    * @return string[]|null
    *   Array containing the details.
    */
-  public function getDetailByAnother(string $fieldName, string $detail, string $filterName, string $filterValue): ?array {
+  public function getDetailByAnother(string $fieldName, string $detail, string $filterName, string $filterValue, string $langcode): ?array {
     $data = [];
-    if (!$this->get($fieldName)->isEmpty()) {
-      foreach ($this->get($fieldName)->getValue() as $item) {
+    if (!$this->getTranslation($langcode)->get($fieldName)->isEmpty()) {
+      foreach ($this->getTranslation($langcode)->get($fieldName)->getValue() as $item) {
         if ($item[$filterName] = $filterValue) {
           $data[$item[$detail]] = $item[$detail];
         }

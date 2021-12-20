@@ -20,12 +20,13 @@ class EducationalMission extends OntologyWordDetailsBase {
     // @todo Get the current schoolyear e.g. from State API after the year
     // selection is implemented.
     $schoolyear = '2021-2022';
+    $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
     $details = [];
     $multipleOntologyWordDetails = OntologyWordDetails::loadMultipleByWordId(157);
     foreach ($multipleOntologyWordDetails as $ontologyWordDetails) {
       /** @var \Drupal\helfi_tpr\Entity\OntologyWordDetails $ontologyWordDetails */
-      $details[] = $ontologyWordDetails->getDetailByAnother('school_details', 'clarification', 'schoolyear', $schoolyear);
+      $details[] = $ontologyWordDetails->getDetailByAnother('school_details', 'clarification', 'schoolyear', $schoolyear, $langcode);
     }
 
     $options = array_merge(...$details);

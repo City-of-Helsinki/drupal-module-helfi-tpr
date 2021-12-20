@@ -22,13 +22,6 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
   protected bool $useRequestCache = FALSE;
 
   /**
-   * The total count.
-   *
-   * @var int
-   */
-  protected int $count = 0;
-
-  /**
    * {@inheritdoc}
    */
   public function __toString() : string {
@@ -42,9 +35,11 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
     return [
       'ontologyword_id' => [
         'type' => 'string',
+        'entity_key' => 'ontologyword_id',
       ],
       'unit_id' => [
         'type' => 'string',
+        'entity_key' => 'unit_id',
       ],
     ];
   }
@@ -62,7 +57,7 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
   protected function initializeListIterator() : \Iterator {
     $originalContent = $this->getContent($this->configuration['url']);
     $detailedContent = $this->getContent($this->configuration['details_url']);
-    $content = $this->combineWithDetails($originalContent, $detailedContent);
+    $content = $this->combineContentAndDetails($originalContent, $detailedContent);
 
     $processed = 0;
 
@@ -135,8 +130,7 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
    * @return array
    *   The new source content.
    */
-  private function combineWithDetails(array $content, array $detailedContent): array {
-    $content = $this->removeNonExpandableContent($content);
+  private function combineContentAndDetails(array $content, array $detailedContent): array {
     $detailedContent = $this->removeDetaillessContent($detailedContent);
 
     $combined = [];
@@ -150,9 +144,9 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
               'id' => $id,
               'ontologyword_id' => $detailedItem['ontologyword_id'],
               'unit_id' => $detailedItem['unit_id'],
-              'name_fi' => $contentItem['ontologyword_fi'] . ' – ' . $detailedItem['unit_id'],
-              'name_sv' => $contentItem['ontologyword_sv'] . ' – ' . $detailedItem['unit_id'],
-              'name_en' => $contentItem['ontologyword_en'] . ' – ' . $detailedItem['unit_id'],
+              'name_fi' => $detailedItem['unit_id'] . ': ' . $contentItem['ontologyword_fi'],
+              'name_sv' => $detailedItem['unit_id'] . ': ' . $contentItem['ontologyword_sv'],
+              'name_en' => $detailedItem['unit_id'] . ': ' . $contentItem['ontologyword_en'],
               'details' => [],
             ];
           }
@@ -166,27 +160,13 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
   }
 
   /**
-   * Removes content that is not expandable in the high school context.
-   *
-   * @todo Remove this later?
-   */
-  private function removeNonExpandableContent(array $content): array {
-    foreach ($content as $key => $item) {
-      if ($item['can_add_schoolyear'] !== TRUE || $item['can_add_clarification'] !== TRUE) {
-        unset($content[$key]);
-      }
-    }
-    return $content;
-  }
-
-  /**
    * Removes details content that does not have relevant data.
    *
    * @todo Remove this later?
    */
   private function removeDetaillessContent(array $content): array {
     foreach ($content as $key => $item) {
-      // @todo Make this more robust.
+      // @todo Make this more general.
       if (!isset($item['schoolyear']) || !(isset($item['clarification_fi']) || isset($item['clarification_sv']) || isset($item['clarification_en']))) {
         unset($content[$key]);
       }

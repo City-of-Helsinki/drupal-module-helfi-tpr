@@ -12,6 +12,8 @@ source:
   plugin: tpr_ontology_word_details
   translatable_fields:
     - name
+  translatable_details_fields:
+    - clarification
   track_changes: true
   url: 'https://www.hel.fi/palvelukarttaws/rest/v4/ontologyword/'
   details_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/ontologyword_details/'
@@ -24,7 +26,7 @@ process:
     plugin: sub_process
     source: details
     process:
-      clarification: clarification_fi
+      clarification: clarification
       schoolyear: schoolyear
 destination:
   plugin: tpr_ontology_word_details

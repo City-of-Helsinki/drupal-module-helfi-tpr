@@ -59,20 +59,6 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
   /**
    * {@inheritdoc}
    */
-  public function count($refresh = FALSE) : int {
-    if (!$this->count) {
-      $originalContent = $this->getContent($this->configuration['url']);
-      $detailedContent = $this->getContent($this->configuration['details_url']);
-      $content = $this->combineWithDetails($originalContent, $detailedContent);
-
-      $this->count = count($content);
-    }
-    return $this->count;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   protected function initializeListIterator() : \Iterator {
     $originalContent = $this->getContent($this->configuration['url']);
     $detailedContent = $this->getContent($this->configuration['details_url']);
@@ -100,8 +86,6 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
    *   The iterator.
    */
   protected function normalizeMultilingualData(array $data) : \Generator {
-    $delta = 0;
-
     foreach (['fi', 'sv', 'en'] as $language) {
       // Skip translations without translated names.
       if (!isset($data[sprintf('name_%s', $language)])) {
@@ -109,23 +93,31 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
       }
       $item = $data;
 
-      // Mark first item as default langcode.
-      if ($delta === 0) {
+      if ($language === 'fi') {
+        // Always use Finnish as default language.
         $item['default_langcode'] = TRUE;
       }
-      $delta++;
-
       $item['language'] = $language;
 
       // 'Normalize' suffixed fields to have same name for every language.
       // For example: name_fi, name_sv => name.
       foreach ($this->configuration['translatable_fields'] ?? [] as $field) {
         $key = sprintf('%s_%s', $field, $language);
-
         if (!isset($data[$key])) {
           continue;
         }
         $item[$field] = $data[$key];
+      }
+
+      // 'Normalize' suffixed details fields.
+      foreach ($this->configuration['translatable_details_fields'] ?? [] as $detailsField) {
+        $clarificationKey = sprintf('%s_%s', $detailsField, $language);
+        foreach ($data['details'] as $detailsKey => $detailsItem) {
+          if (!isset($detailsItem[$clarificationKey])) {
+            continue;
+          }
+          $item['details'][$detailsKey][$detailsField] = trim($detailsItem[$clarificationKey]);
+        }
       }
 
       yield $item;

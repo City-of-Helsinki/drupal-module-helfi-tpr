@@ -106,6 +106,7 @@ class OntologyWordDetails extends TprEntityBase {
 
     $fields['school_details'] = BaseFieldDefinition::create('tpr_school_details')
       ->setLabel(new TranslatableMarkup('School details'))
+      ->setRevisionable(FALSE)
       ->setTranslatable(TRUE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)

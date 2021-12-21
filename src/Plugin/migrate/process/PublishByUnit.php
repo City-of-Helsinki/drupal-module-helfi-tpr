@@ -29,7 +29,7 @@ class PublishByUnit extends ProcessPluginBase {
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
     $unit = Unit::load($value);
-    if (!empty($unit) && $unit->get('content_translation_status')->getString() === '1') {
+    if (!empty($unit) && $unit->isPublished()) {
       return '1';
     }
     return '0';

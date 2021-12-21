@@ -18,7 +18,7 @@ function helfi_tpr_theme() {
     'tpr_accessibility_sentences' => [
       'variables' => ['name' => NULL, 'items' => []],
     ],
-    'tpr-school-details' => [
+    'tpr_school_details' => [
       'variables' => ['clarification' => NULL, 'schoolyear' => NULL],
       'template' => 'tpr-school-details',
     ],
@@ -222,14 +222,14 @@ function template_preprocess_tpr_ontology_word_details(array &$variables) {
  */
 function helfi_tpr_views_data_alter(array &$data) {
   $data['tpr_unit']['emphasis_filter'] = [
+    'title' => t('Emphasis filter'),
+    'filter' => [
         'title' => t('Emphasis filter'),
-        'filter' => [
-            'title' => t('Emphasis filter'),
-            'help' => 'Filters units by emphasis.',
-            'field' => 'nid',
-            'id' => 'emphasis_filter',
-        ]
-    ];
+        'help' => 'Filters units by emphasis.',
+        'field' => 'nid',
+        'id' => 'emphasis_filter',
+    ]
+  ];
 
   $data['tpr_unit']['educational_mission_filter'] = [
     'title' => t('Educational mission'),

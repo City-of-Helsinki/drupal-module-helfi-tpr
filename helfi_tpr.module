@@ -224,10 +224,10 @@ function helfi_tpr_views_data_alter(array &$data) {
   $data['tpr_unit']['emphasis_filter'] = [
     'title' => t('Emphasis filter'),
     'filter' => [
-        'title' => t('Emphasis filter'),
-        'help' => 'Filters units by emphasis.',
-        'field' => 'nid',
-        'id' => 'emphasis_filter',
+      'title' => t('Emphasis filter'),
+      'help' => 'Filters units by emphasis.',
+      'field' => 'nid',
+      'id' => 'emphasis_filter',
     ]
   ];
 

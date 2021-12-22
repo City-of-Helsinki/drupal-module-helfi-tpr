@@ -4,10 +4,8 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Entity;
 
-use Drupal\content_translation\ContentTranslationHandler;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
-use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
@@ -116,51 +114,6 @@ class OntologyWordDetails extends TprEntityBase {
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
       ]);
-
-    $fields['content_translation_source'] = BaseFieldDefinition::create('language')
-      ->setLabel(t('Translation source'))
-      ->setDescription(t('The source language from which this translation was created.'))
-      ->setDefaultValue(LanguageInterface::LANGCODE_NOT_SPECIFIED)
-      ->setInitialValue(LanguageInterface::LANGCODE_NOT_SPECIFIED)
-      ->setRevisionable(TRUE)
-      ->setTranslatable(TRUE);
-
-    $fields['content_translation_outdated'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Translation outdated'))
-      ->setDescription(t('A boolean indicating whether this translation needs to be updated.'))
-      ->setDefaultValue(FALSE)
-      ->setInitialValue(FALSE)
-      ->setRevisionable(TRUE)
-      ->setTranslatable(TRUE);
-
-    $fields['content_translation_uid'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Translation author'))
-      ->setDescription(t('The author of this translation.'))
-      ->setSetting('target_type', 'user')
-      ->setSetting('handler', 'default')
-      ->setRevisionable(TRUE)
-      ->setDefaultValueCallback(ContentTranslationHandler::class . '::getDefaultOwnerId')
-      ->setTranslatable(TRUE);
-
-    $fields['content_translation_status'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Translation status'))
-      ->setDescription(t('A boolean indicating whether the translation is visible to non-translators.'))
-      ->setDefaultValue(TRUE)
-      ->setInitialValue(TRUE)
-      ->setRevisionable(TRUE)
-      ->setTranslatable(TRUE);
-
-    $fields['content_translation_created'] = BaseFieldDefinition::create('created')
-      ->setLabel(t('Translation created time'))
-      ->setDescription(t('The Unix timestamp when the translation was created.'))
-      ->setRevisionable(TRUE)
-      ->setTranslatable(TRUE);
-
-    $fields['content_translation_changed'] = BaseFieldDefinition::create('changed')
-      ->setLabel(t('Translation changed time'))
-      ->setDescription(t('The Unix timestamp when the translation was most recently saved.'))
-      ->setRevisionable(TRUE)
-      ->setTranslatable(TRUE);
 
     return $fields;
   }

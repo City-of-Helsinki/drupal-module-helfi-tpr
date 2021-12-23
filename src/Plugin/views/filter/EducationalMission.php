@@ -31,7 +31,7 @@ class EducationalMission extends OntologyWordDetailsBase {
       $details[] = $ontologyWordDetails->getDetailByAnother('school_details', 'clarification', 'schoolyear', $schoolyear, $langcode);
     }
 
-    $options = array_merge(...$details);
+    $options = array_map('ucfirst', array_merge(...$details));
     asort($options);
     return $options;
   }

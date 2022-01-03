@@ -48,7 +48,7 @@ class ServiceRevisionTest extends MigrationTestBase {
       $this->assertSession()->pageTextContains("Description long $language 1");
       $this->assertSession()->pageTextContains("Service $language 1");
 
-      $expected_url = Url::fromRoute('entity.tpr_service.version_history', ['tpr_service' => 1], ['query' => ['language' => $language]])->toString();
+      $expected_url = Url::fromRoute('entity.tpr_service.version_history', ['tpr_service' => 1])->toString();
       // Go to revisions tab and make sure it's visible.
       $this->getSession()->getPage()->findLink('Revisions')->click();
 
@@ -70,7 +70,7 @@ class ServiceRevisionTest extends MigrationTestBase {
       $this->assertTrue(count($count) >= 3);
     }
 
-    // Update TPR data and make sure reverting revisions doens't revert TPR
+    // Update TPR data and make sure reverting revisions doesn't revert TPR
     // fields.
     Service::load(1)
       ->getTranslation('fi')

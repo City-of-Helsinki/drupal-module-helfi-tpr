@@ -50,7 +50,7 @@ class UnitRevisionTest extends MigrationTestBase {
       // Go to revisions tab and make sure it's visible.
       $this->getSession()->getPage()->findLink('Revisions')->click();
 
-      $expected_url = Url::fromRoute('entity.tpr_unit.version_history', ['tpr_unit' => 1], ['query' => ['language' => $language]])->toString();
+      $expected_url = Url::fromRoute('entity.tpr_unit.version_history', ['tpr_unit' => 1])->toString();
       $this->assertSession()->addressEquals($expected_url);
       $this->assertSession()->statusCodeEquals(200);
 
@@ -69,7 +69,7 @@ class UnitRevisionTest extends MigrationTestBase {
       $this->assertTrue(count($count) >= 3);
     }
 
-    // Update TPR data and make sure reverting revisions doens't revert TPR
+    // Update TPR data and make sure reverting revisions doesn't revert TPR
     // fields.
     Unit::load(1)
       ->getTranslation('fi')

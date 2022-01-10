@@ -22,6 +22,13 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
   protected bool $useRequestCache = FALSE;
 
   /**
+   * Include source data that has school details.
+   *
+   * @var bool
+   */
+  protected bool $limitBySchoolDetails = TRUE;
+
+  /**
    * {@inheritdoc}
    */
   public function __toString() : string {
@@ -131,12 +138,16 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
    *   The new source content.
    */
   private function combineContentAndDetails(array $content, array $detailedContent): array {
-    $detailedContent = $this->removeDetaillessContent($detailedContent);
-
     $combined = [];
+
     foreach ($content as $contentKey => $contentItem) {
       foreach ($detailedContent as $detailedKey => $detailedItem) {
         if ($contentItem['id'] === $detailedItem['ontologyword_id']) {
+          // Proceed only if detailed content has relevant data.
+          if ($this->limitBySchoolDetails ? !$this->hasSchoolDetails($detailedItem) : FALSE) {
+            continue;
+          }
+
           $id = $detailedItem['ontologyword_id'] . '_' . $detailedItem['unit_id'];
 
           if (empty($combined[$id])) {
@@ -160,18 +171,22 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
   }
 
   /**
-   * Removes details content that does not have relevant data.
+   * Checks if the array has school details.
    *
-   * @todo Remove this later?
+   * @param array $item
+   *   Array to check the school detail keys.
+   *
+   * @return bool
+   *   TRUE if school details exist.
    */
-  private function removeDetaillessContent(array $content): array {
-    foreach ($content as $key => $item) {
-      // @todo Make this more general.
-      if (!isset($item['schoolyear']) || !(isset($item['clarification_fi']) || isset($item['clarification_sv']) || isset($item['clarification_en']))) {
-        unset($content[$key]);
-      }
+  private function hasSchoolDetails(array $item): bool {
+    if (!isset($item['schoolyear']) ||
+      !(isset($item['clarification_fi']) ||
+        isset($item['clarification_sv']) ||
+        isset($item['clarification_en']))) {
+      return FALSE;
     }
-    return $content;
+    return TRUE;
   }
 
 }

@@ -39,6 +39,7 @@ abstract class MigrationTestBase extends ApiMigrationTestBase {
       'tpr_service',
       'tpr_errand_service',
       'tpr_service_channel',
+      'tpr_ontology_word_details',
     ];
 
     foreach ($entity_types as $type) {

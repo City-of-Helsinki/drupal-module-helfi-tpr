@@ -12,6 +12,60 @@ use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
+ * Helper function to get the content translation field definitions.
+ *
+ * @return array
+ */
+function _helfi_tpr_get_content_translation_fields(): array {
+  $definitions['content_translation_source'] = BaseFieldDefinition::create('language')
+    ->setLabel(t('Translation source'))
+    ->setDescription(t('The source language from which this translation was created.'))
+    ->setDefaultValue(LanguageInterface::LANGCODE_NOT_SPECIFIED)
+    ->setInitialValue(LanguageInterface::LANGCODE_NOT_SPECIFIED)
+    ->setRevisionable(TRUE)
+    ->setTranslatable(TRUE);
+
+  $definitions['content_translation_outdated'] = BaseFieldDefinition::create('boolean')
+    ->setLabel(t('Translation outdated'))
+    ->setDescription(t('A boolean indicating whether this translation needs to be updated.'))
+    ->setDefaultValue(FALSE)
+    ->setInitialValue(FALSE)
+    ->setRevisionable(TRUE)
+    ->setTranslatable(TRUE);
+
+  $definitions['content_translation_uid'] = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(t('Translation author'))
+    ->setDescription(t('The author of this translation.'))
+    ->setSetting('target_type', 'user')
+    ->setSetting('handler', 'default')
+    ->setRevisionable(TRUE)
+    ->setDefaultValueCallback(ContentTranslationHandler::class . '::getDefaultOwnerId')
+    ->setTranslatable(TRUE);
+
+  $definitions['content_translation_status'] = BaseFieldDefinition::create('boolean')
+    ->setLabel(t('Translation status'))
+    ->setDescription(t('A boolean indicating whether the translation is visible to non-translators.'))
+    ->setDefaultValue(TRUE)
+    ->setInitialValue(TRUE)
+    ->setRevisionable(TRUE)
+    ->setTranslatable(TRUE);
+
+  $definitions['content_translation_created'] = BaseFieldDefinition::create('created')
+    ->setLabel(t('Translation created time'))
+    ->setDescription(t('The Unix timestamp when the translation was created.'))
+    ->setRevisionable(TRUE)
+    ->setTranslatable(TRUE);
+
+  $definitions['content_translation_changed'] = BaseFieldDefinition::create('changed')
+    ->setLabel(t('Translation changed time'))
+    ->setDescription(t('The Unix timestamp when the translation was most recently saved.'))
+    ->setRevisionable(TRUE)
+    ->setTranslatable(TRUE);
+
+  return $definitions;
+}
+
+/**
  * Installs the service entity type.
  */
 function helfi_tpr_update_8001() : void {
@@ -165,50 +219,7 @@ function helfi_tpr_update_8008() : void {
  * Installs content translation fields for errand services and channels.
  */
 function helfi_tpr_update_8010() : void {
-  $definitions['content_translation_source'] = BaseFieldDefinition::create('language')
-    ->setLabel(t('Translation source'))
-    ->setDescription(t('The source language from which this translation was created.'))
-    ->setDefaultValue(LanguageInterface::LANGCODE_NOT_SPECIFIED)
-    ->setInitialValue(LanguageInterface::LANGCODE_NOT_SPECIFIED)
-    ->setRevisionable(TRUE)
-    ->setTranslatable(TRUE);
-
-  $definitions['content_translation_outdated'] = BaseFieldDefinition::create('boolean')
-    ->setLabel(t('Translation outdated'))
-    ->setDescription(t('A boolean indicating whether this translation needs to be updated.'))
-    ->setDefaultValue(FALSE)
-    ->setInitialValue(FALSE)
-    ->setRevisionable(TRUE)
-    ->setTranslatable(TRUE);
-
-  $definitions['content_translation_uid'] = BaseFieldDefinition::create('entity_reference')
-    ->setLabel(t('Translation author'))
-    ->setDescription(t('The author of this translation.'))
-    ->setSetting('target_type', 'user')
-    ->setSetting('handler', 'default')
-    ->setRevisionable(TRUE)
-    ->setDefaultValueCallback(ContentTranslationHandler::class . '::getDefaultOwnerId')
-    ->setTranslatable(TRUE);
-
-  $definitions['content_translation_status'] = BaseFieldDefinition::create('boolean')
-    ->setLabel(t('Translation status'))
-    ->setDescription(t('A boolean indicating whether the translation is visible to non-translators.'))
-    ->setDefaultValue(TRUE)
-    ->setInitialValue(TRUE)
-    ->setRevisionable(TRUE)
-    ->setTranslatable(TRUE);
-
-  $definitions['content_translation_created'] = BaseFieldDefinition::create('created')
-    ->setLabel(t('Translation created time'))
-    ->setDescription(t('The Unix timestamp when the translation was created.'))
-    ->setRevisionable(TRUE)
-    ->setTranslatable(TRUE);
-
-  $definitions['content_translation_changed'] = BaseFieldDefinition::create('changed')
-    ->setLabel(t('Translation changed time'))
-    ->setDescription(t('The Unix timestamp when the translation was most recently saved.'))
-    ->setRevisionable(TRUE)
-    ->setTranslatable(TRUE);
+  $definitions = _helfi_tpr_get_content_translation_fields();
 
   foreach (['tpr_errand_service', 'tpr_service_channel'] as $entity_type) {
     foreach ($definitions as $name => $field) {
@@ -536,5 +547,35 @@ function helfi_tpr_update_8029() : void {
   foreach ($fields as $name => $field) {
     \Drupal::entityDefinitionUpdateManager()
       ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
+  }
+}
+
+/**
+ * Install tpr_ontology_word_details entity type.
+ */
+function helfi_tpr_update_8030() : void {
+  // Install entity type.
+  $manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = \Drupal::entityTypeManager()->getDefinition('tpr_ontology_word_details');
+  $manager->installEntityType($entity_type);
+
+  // Enable translation support.
+  $type = 'tpr_ontology_word_details';
+  $config_storage = \Drupal::service('config.storage');
+  $config_factory = \Drupal::configFactory();
+  $uuid_service = \Drupal::service('uuid');
+
+  $config_path = drupal_get_path('module', 'helfi_tpr') . '/config/install';
+  $source = new FileStorage($config_path);
+  $config_name = sprintf('language.content_settings.%s.%s', $type, $type);
+  $config_storage->write($config_name, $source->read($config_name));
+  $config_factory->getEditable($config_name)->set('uuid', $uuid_service->generate())->save();
+
+  // Install content translation fields.
+  $definitions = _helfi_tpr_get_content_translation_fields();
+
+  foreach ($definitions as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, $type, 'helfi_tpr', $field);
   }
 }

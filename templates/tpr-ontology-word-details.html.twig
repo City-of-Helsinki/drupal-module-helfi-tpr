@@ -1,0 +1,38 @@
+{#
+/**
+ * @file
+ * Template for a TPR Ontology word details entity.
+ */
+#}
+
+{%
+  set classes = [
+  'ontology-word-details',
+  view_mode ? 'ontology-word-details--' ~ view_mode|clean_class,
+]
+%}
+<article{{ attributes.addClass(classes) }}>
+
+  <div class="ontology-word-details__container container">
+    <div{{ content_attributes.addClass('ontology-word-details__header') }}>
+      <h2{{ title_attributes.addClass('ontology-word-details__title') }}>
+        {{ content.name }}
+      </h2>
+    </div>
+    {% if content.unit_id|render %}
+      <div class="ontology-word-details__unit-id">
+        {{ content.unit_id }}
+      </div>
+    {% endif %}
+    {% if content.ontologyword_id|render %}
+      <div class="ontology-word-details__ontologyword-id">
+        {{ content.ontologyword_id }}
+      </div>
+    {% endif %}
+    {% if content.school_details|render %}
+      <div class="ontology-word-details__school-details">
+        {{ content.school_details }}
+      </div>
+    {% endif %}
+  </div>
+</article>

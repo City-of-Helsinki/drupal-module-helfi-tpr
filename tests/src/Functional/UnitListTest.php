@@ -88,15 +88,12 @@ class UnitListTest extends ListTestBase {
       'action' => 'tpr_unit_update_action',
       // The list is sorted by changed timestamp so our updated entities
       // should be at the top of the list.
-      'tpr_unit_bulk_form[0]' => 1,
       'tpr_unit_bulk_form[1]' => 1,
     ];
     $this->submitForm($form_data, 'Apply to selected items');
 
-    $this->assertSession()->pageTextNotContains('Test 1');
     $this->assertSession()->pageTextNotContains('Test 2');
     $this->assertSession()->pageTextContains('Esteetön testireitti / Leppävaara');
-    $this->assertSession()->pageTextContains('InnoOmnia');
 
     // Make sure we can use actions to publish and unpublish content.
     $this->assertPublishAction('tpr_unit', $query);

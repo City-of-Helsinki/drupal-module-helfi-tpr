@@ -45,3 +45,15 @@ tpr_service_channel.settings:
   description: Configure TPR service channel entity type
   route_name:  tpr_service_channel.settings
   parent: system.admin_structure
+
+tpr_ontology_word_details.settings:
+  title: TPR - Ontology word details settings
+  description: Configure TPR Ontology word details entity type
+  route_name:  tpr_ontology_word_details.settings
+  parent: system.admin_structure
+
+entity.tpr_ontology_word_details.collection:
+  title: TPR - Ontology word details entities
+  description: List of TPR - Ontology word details entities
+  route_name: entity.tpr_ontology_word_details.collection
+  parent: helfi_api_base.integrations

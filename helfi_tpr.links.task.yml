@@ -61,3 +61,14 @@ tpr_service_channel.content_list:
   route_name: entity.tpr_service_channel.collection
   base_route: helfi_api_base.integrations
   weight: 10
+
+tpr_ontology_word_details.settings:
+  title: Settings
+  route_name: tpr_ontology_word_details.settings
+  base_route: tpr_ontology_word_details.settings
+
+tpr_ontology_word_details.content_list:
+  title: TPR - Ontology word details
+  route_name: entity.tpr_ontology_word_details.collection
+  base_route: helfi_api_base.integrations
+  weight: 10

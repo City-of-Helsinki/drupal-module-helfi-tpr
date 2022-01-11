@@ -18,6 +18,10 @@ function helfi_tpr_theme() {
     'tpr_accessibility_sentences' => [
       'variables' => ['name' => NULL, 'items' => []],
     ],
+    'tpr_school_details' => [
+      'variables' => ['clarification' => NULL, 'schoolyear' => NULL],
+      'template' => 'tpr-school-details',
+    ],
     'tpr_unit' => [
       'render element' => 'elements',
       'template' => 'tpr-unit',
@@ -39,6 +43,13 @@ function helfi_tpr_theme() {
     'tpr_errand_service' => [
       'render element' => 'elements',
       'template' => 'tpr-errand-service'
+    ],
+    'tpr_ontology_word_details' => [
+      'render element' => 'elements',
+      'template' => 'tpr-ontology-word-details',
+    ],
+    'tpr_ontology_word_details_form' => [
+      'render element' => 'form',
     ],
   ];
 }
@@ -124,9 +135,9 @@ function template_preprocess_tpr_unit(array &$variables) {
 }
 
 /**
- * Prepares variables for tpr_unit templates.
+ * Prepares variables for tpr_service templates.
  *
- * Default template: tpr-unit.html.twig.
+ * Default template: tpr-service.html.twig.
  *
  * @param array $variables
  *   An associative array containing:
@@ -182,6 +193,53 @@ function template_preprocess_tpr_errand_service(array &$variables) {
   if (isset($variables['elements']['#tpr_errand_service'])) {
     $variables['entity'] = $variables['elements']['#tpr_errand_service'];
   }
+}
+
+/**
+ * Prepares variables for tpr_ontology_word_details templates.
+ *
+ * Default template: tpr-ontology-word-details.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ */
+function template_preprocess_tpr_ontology_word_details(array &$variables) {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  // Helpful $content variable for templates.
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+  if (isset($variables['elements']['#tpr_ontology_word_details'])) {
+    $variables['entity'] = $variables['elements']['#tpr_ontology_word_details'];}
+}
+
+/**
+ * Implements hook_views_data_alter().
+ *
+ * @param array $data
+ *   An array of all information about Views tables and fields.
+ */
+function helfi_tpr_views_data_alter(array &$data) {
+  $data['tpr_unit']['emphasis_filter'] = [
+    'title' => t('Emphasis filter'),
+    'filter' => [
+      'title' => t('Emphasis filter'),
+      'help' => 'Filters units by emphasis.',
+      'field' => 'nid',
+      'id' => 'emphasis_filter',
+    ]
+  ];
+
+  $data['tpr_unit']['educational_mission_filter'] = [
+    'title' => t('Educational mission'),
+    'filter' => [
+      'title' => t('Educational mission'),
+      'help' => 'Filters units by educational mission.',
+      'field' => 'nid',
+      'id' => 'educational_mission_filter',
+    ]
+  ];
 }
 
 /**

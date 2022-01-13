@@ -26,7 +26,6 @@ process:
       plugin: get
       source:
         - exact_errand_services
-        - errand_services
     - plugin: flatten
     -
       plugin: callback

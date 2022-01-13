@@ -34,7 +34,7 @@ class SchoolSettingsForm extends FormBase {
       '#type' => 'number',
       '#title' => $this->t('Starting year for school year'),
       '#min' => 2020,
-      '#max' => 2200,
+      '#max' => 9999,
       '#default_value' => ($currentSchoolYear ? $this->splitStartYear($currentSchoolYear) : ''),
       '#description' => t('Select the starting year for a school year period. For example, selecting "2022" would set the school year to "2022-2023".'),
     ];
@@ -46,13 +46,6 @@ class SchoolSettingsForm extends FormBase {
     ];
 
     return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-
   }
 
   /**

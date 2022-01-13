@@ -139,7 +139,7 @@ class OntologyWordDetails extends TprEntityBase {
     $data = [];
     if (!$this->getTranslation($langcode)->get($fieldName)->isEmpty()) {
       foreach ($this->getTranslation($langcode)->get($fieldName)->getValue() as $item) {
-        if ($item[$filterName] = $filterValue) {
+        if ($item[$filterName] === $filterValue) {
           $data[$item[$detail]] = $item[$detail];
         }
       }

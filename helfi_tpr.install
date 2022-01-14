@@ -559,21 +559,9 @@ function helfi_tpr_update_8030() : void {
   $entity_type = \Drupal::entityTypeManager()->getDefinition('tpr_ontology_word_details');
   $manager->installEntityType($entity_type);
 
-  // Enable translation support.
-  $type = 'tpr_ontology_word_details';
-  $config_storage = \Drupal::service('config.storage');
-  $config_factory = \Drupal::configFactory();
-  $uuid_service = \Drupal::service('uuid');
-
-  $config_path = drupal_get_path('module', 'helfi_tpr') . '/config/install';
-  $source = new FileStorage($config_path);
-  $config_name = sprintf('language.content_settings.%s.%s', $type, $type);
-  $config_storage->write($config_name, $source->read($config_name));
-  $config_factory->getEditable($config_name)->set('uuid', $uuid_service->generate())->save();
-
   // Install content translation fields.
+  $type = 'tpr_ontology_word_details';
   $definitions = _helfi_tpr_get_content_translation_fields();
-
   foreach ($definitions as $name => $field) {
     \Drupal::entityDefinitionUpdateManager()
       ->installFieldStorageDefinition($name, $type, 'helfi_tpr', $field);

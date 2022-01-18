@@ -1,0 +1,9 @@
+helfi_school_addons.admin_form:
+  path: '/admin/config/school-settings'
+  defaults:
+    _form: '\Drupal\helfi_school_addons\Form\SchoolSettingsForm'
+    _title: 'School settings'
+  requirements:
+    _permission: 'admin school settings'
+  options:
+    _admin_route: TRUE

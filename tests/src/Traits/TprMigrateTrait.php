@@ -7,7 +7,7 @@ namespace Drupal\Tests\helfi_tpr\Traits;
 use Drupal\helfi_api_base\Fixture\FixtureBase;
 
 /**
- * Provides shared functionality for unit entity tests.
+ * Provides shared functionality for TPR entity tests.
  */
 trait TprMigrateTrait {
 
@@ -55,6 +55,20 @@ trait TprMigrateTrait {
     }
     $this->container->set('http_client', $this->createMockHttpClient($responses));
     $this->executeMigration('tpr_errand_service');
+  }
+
+  /**
+   * Runs the 'tpr_ontology_word_details' migration.
+   *
+   * @param array $responses
+   *   The mock responses.
+   */
+  protected function runOntologyWordDetailsMigrate(array $responses = []): void {
+    if (empty($responses)) {
+      $responses = $this->fixture('tpr_ontology_word_details')->getMockResponses();
+    }
+    $this->container->set('http_client', $this->createMockHttpClient($responses));
+    $this->executeMigration('tpr_ontology_word_details');
   }
 
 }

@@ -80,8 +80,8 @@ class StudyProgrammeType extends InOperator {
    */
   protected function generateOptions(): array {
     return [
-      'general' => t('General programme'),
-      'adult' => t('Upper secondary school for adults and a study programme'),
+      'general' => t('The general programme or study programme'),
+      'adult' => t('The upper secondary school for adults or a study programme'),
     ];
   }
 

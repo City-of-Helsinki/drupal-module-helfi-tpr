@@ -85,6 +85,11 @@ abstract class SchoolDetailsBase extends InOperator {
     $owdSdJoin = Views::pluginManager('join')->createInstance('standard', $owdSdConfiguration);
     $this->query->addRelationship('owd_sd', $owdSdJoin, 'owd_fd');
 
+    $schoolYear = SchoolUtility::getCurrentSchoolYear();
+    if ($schoolYear) {
+      $this->query->addWhere('AND', 'owd_sd.school_details_schoolyear', $schoolYear);
+    }
+
     $this->query->addWhere('AND', 'owd_sd.school_details_clarification', $this->value);
   }
 
@@ -100,8 +105,8 @@ abstract class SchoolDetailsBase extends InOperator {
     }
 
     $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
-    $schoolyear = SchoolUtility::getCurrentSchoolYear();
-    if ($schoolyear === NULL) {
+    $schoolYear = SchoolUtility::getCurrentSchoolYear();
+    if ($schoolYear === NULL) {
       return [];
     }
 
@@ -109,7 +114,7 @@ abstract class SchoolDetailsBase extends InOperator {
     $multipleOntologyWordDetails = OntologyWordDetails::loadMultipleByWordId($this->wordId);
     foreach ($multipleOntologyWordDetails as $ontologyWordDetails) {
       /** @var \Drupal\helfi_tpr\Entity\OntologyWordDetails $ontologyWordDetails */
-      $details[] = $ontologyWordDetails->getDetailByAnother('school_details', 'clarification', 'schoolyear', $schoolyear, $langcode);
+      $details[] = $ontologyWordDetails->getDetailByAnother('school_details', 'clarification', 'schoolyear', $schoolYear, $langcode);
     }
 
     $options = array_map('ucfirst', array_merge(...$details));

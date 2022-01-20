@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_school_addons\Plugin\views\filter;
 
+use Drupal\helfi_school_addons\SchoolUtility;
 use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\filter\InOperator;
 use Drupal\views\ViewExecutable;
@@ -65,6 +66,23 @@ class StudyProgrammeType extends InOperator {
 
     $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
     $this->query->addWhere('AND', 'owd_fd_spt.langcode', $language);
+
+    // Join with tpr_ontology_word_details__school_details table.
+    $owdSdConfiguration = [
+      'table' => 'tpr_ontology_word_details__school_details',
+      'field' => 'entity_id',
+      'left_table' => 'owd_fd_spt',
+      'left_field' => 'id',
+      'operator' => '=',
+    ];
+    /** @var \Drupal\views\Plugin\views\join\JoinPluginBase $owdSdJoin */
+    $owdSdJoin = Views::pluginManager('join')->createInstance('standard', $owdSdConfiguration);
+    $this->query->addRelationship('owd_sd_spt', $owdSdJoin, 'owd_fd_spt');
+
+    $schoolYear = SchoolUtility::getCurrentSchoolYear();
+    if ($schoolYear) {
+      $this->query->addWhere('AND', 'owd_sd_spt.school_details_schoolyear', $schoolYear);
+    }
 
     $orGroup = $this->query->setWhereGroup('OR', 'OR');
     foreach ($valueToWordId[$this->value[0]] as $wordId) {

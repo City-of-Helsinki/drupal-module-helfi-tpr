@@ -1,3 +1,14 @@
+helfi_tpr.migration_settings.*:
+  type: mapping
+  label: TPR migration settings
+  mapping: &base
+    langcode:
+      type: string
+      label: Langcode
+    url:
+      type: string
+      label: Url
+
 field.value.accessibility_sentence:
   type: mapping
   label: Default value

@@ -20,7 +20,7 @@ source:
     - desc
     - short_desc
   track_changes: true
-  url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/?newfeatures=yes'
+  url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/?newfeatures=yes&arealcity=91'
   accessibility_sentences_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/accessibility_sentence/'
   connections_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/connection/'
 process:

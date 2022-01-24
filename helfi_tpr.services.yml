@@ -7,3 +7,8 @@ services:
     class: Drupal\helfi_tpr\Fixture\ErrandService
   migration_fixture.tpr_service_channel:
     class: Drupal\helfi_tpr\Fixture\ServiceChannel
+  helfi_tpr.migration_configuration_subscriber:
+    class: Drupal\helfi_tpr\EventSubscriber\MigrationConfigurationSubscriber
+    arguments: ['@config.factory']
+    tags:
+      - { name: event_subscriber }

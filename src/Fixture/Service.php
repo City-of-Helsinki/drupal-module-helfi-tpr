@@ -64,7 +64,7 @@ final class Service extends FixtureBase {
         'id' => 7822,
         'main_description' => TRUE,
         'service_id' => 10554,
-        'title' => 'Digituki 3',
+        'title' => 'Digituki',
         'name_synonyms' => 'Digineuvonta, digiopastus',
         'description_short' => 'Digitukea saa tietokoneen, tabletin ja älypuhelimen käytössä. Tukea saa myös sähköisen asioinnin, verkkopalveluiden ja yleisimpien sovellusten käyttöön liittyvissä ongelmissa.',
         'description_long' => 'Digituki ja digineuvonta tarkoittavat Helsingin kaupungilla

@@ -14,6 +14,29 @@ use Drupal\helfi_api_base\Event\MigrationConfigurationEvent;
 class MigrationConfigurationSubscriberTest extends MigrationTestBase {
 
   /**
+   * {@inheritdoc}
+   */
+  protected static $modules = ['remote_entity_test'];
+
+  /**
+   * Tests that non-tpr migration URLs cannot be changed.
+   */
+  public function testInvalidMigration() : void {
+    $migration = $this->getMigration('dummy_migrate');
+    $configuration = $migration->getSourceConfiguration();
+    $expectedUrl = $configuration['url'];
+    $this
+      ->config("helfi_tpr.migration_settings.dummy_migrate")
+      ->set('url', "http://localhost/dummy-migrate")
+      ->save();
+
+    /** @var \Drupal\helfi_tpr\EventSubscriber\MigrationConfigurationSubscriber $sut */
+    $sut = $this->container->get('helfi_tpr.migration_configuration_subscriber');
+    $sut->onMigration(new MigrationConfigurationEvent($configuration, $migration));
+    $this->assertEquals($expectedUrl, $configuration['url']);
+  }
+
+  /**
    * Tests that migration URL can be altered.
    */
   public function testOnMigration() : void {

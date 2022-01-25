@@ -9,3 +9,9 @@ services:
     class: Drupal\helfi_tpr\Fixture\ServiceChannel
   migration_fixture.tpr_ontology_word_details:
     class: Drupal\helfi_tpr\Fixture\OntologyWordDetails
+  helfi_tpr.migration_configuration_subscriber:
+    class: Drupal\helfi_tpr\EventSubscriber\MigrationConfigurationSubscriber
+    arguments: ['@config.factory']
+    tags:
+      - { name: event_subscriber }
+      

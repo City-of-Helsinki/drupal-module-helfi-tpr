@@ -5,30 +5,26 @@ declare(strict_types = 1);
 namespace Drupal\helfi_school_addons\Plugin\views\filter;
 
 use Drupal\helfi_school_addons\SchoolUtility;
-use Drupal\helfi_tpr\Entity\OntologyWordDetails;
 use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\filter\InOperator;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
 
 /**
- * Base views filter class for school details.
+ * Filter school units by study programme type.
+ *
+ * @ingroup views_filter_handlers
+ *
+ * @ViewsFilter("study_programme_type_filter")
  */
-abstract class SchoolDetailsBase extends InOperator {
-
-  /**
-   * Ontology word ID used to limit filter options and results.
-   *
-   * @var int|null
-   */
-  protected ?int $wordId = NULL;
+class StudyProgrammeType extends InOperator {
 
   /**
    * {@inheritdoc}
    */
   public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL) {
     parent::init($view, $display, $options);
-    $this->valueTitle = t('Allowed clarifications');
+    $this->valueTitle = t('Allowed values');
     $this->definition['options callback'] = [$this, 'generateOptions'];
   }
 
@@ -42,21 +38,20 @@ abstract class SchoolDetailsBase extends InOperator {
       return;
     }
 
-    if ($this->wordId === NULL) {
+    $valueToWordId = [
+      'general' => [
+        816,
+      ],
+      'adult' => [
+        650,
+        590,
+      ],
+    ];
+
+    if (!isset($this->value[0]) || !array_key_exists($this->value[0], $valueToWordId)) {
       return;
     }
-    $this->queryByWordId($this->wordId);
-  }
 
-  /**
-   * Add relationships to ontology word details and school details tables.
-   *
-   * @param int $wordId
-   *   Ontology word details ID.
-   *
-   * @throws \Drupal\Component\Plugin\Exception\PluginException
-   */
-  protected function queryByWordId(int $wordId) {
     // Join with tpr_ontology_word_details_field_data table.
     $owdFdConfiguration = [
       'table' => 'tpr_ontology_word_details_field_data',
@@ -67,59 +62,45 @@ abstract class SchoolDetailsBase extends InOperator {
     ];
     /** @var \Drupal\views\Plugin\views\join\JoinPluginBase $owdFdJoin */
     $owdFdJoin = Views::pluginManager('join')->createInstance('standard', $owdFdConfiguration);
-    $this->query->addRelationship('owd_fd', $owdFdJoin, 'tpr_unit_field_data');
+    $this->query->addRelationship('owd_fd_spt', $owdFdJoin, 'tpr_unit_field_data');
 
     $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
-    $this->query->addWhere('AND', 'owd_fd.langcode', $language);
-    $this->query->addWhere('AND', 'owd_fd.ontologyword_id', $wordId);
+    $this->query->addWhere('AND', 'owd_fd_spt.langcode', $language);
 
     // Join with tpr_ontology_word_details__school_details table.
     $owdSdConfiguration = [
       'table' => 'tpr_ontology_word_details__school_details',
       'field' => 'entity_id',
-      'left_table' => 'owd_fd',
+      'left_table' => 'owd_fd_spt',
       'left_field' => 'id',
       'operator' => '=',
     ];
     /** @var \Drupal\views\Plugin\views\join\JoinPluginBase $owdSdJoin */
     $owdSdJoin = Views::pluginManager('join')->createInstance('standard', $owdSdConfiguration);
-    $this->query->addRelationship('owd_sd', $owdSdJoin, 'owd_fd');
+    $this->query->addRelationship('owd_sd_spt', $owdSdJoin, 'owd_fd_spt');
 
     $schoolYear = SchoolUtility::getCurrentSchoolYear();
     if ($schoolYear) {
-      $this->query->addWhere('AND', 'owd_sd.school_details_schoolyear', $schoolYear);
+      $this->query->addWhere('AND', 'owd_sd_spt.school_details_schoolyear', $schoolYear);
     }
 
-    $this->query->addWhere('AND', 'owd_sd.school_details_clarification', $this->value);
+    $orGroup = $this->query->setWhereGroup('OR', 'OR');
+    foreach ($valueToWordId[$this->value[0]] as $wordId) {
+      $this->query->addWhere($orGroup, 'owd_fd_spt.ontologyword_id', $wordId);
+    }
   }
 
   /**
-   * Generates options from ontology word details.
+   * Generates options for the filter.
    *
    * @return string[]
    *   Available options for the filter.
    */
   protected function generateOptions(): array {
-    if ($this->wordId === NULL) {
-      return [];
-    }
-
-    $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
-    $schoolYear = SchoolUtility::getCurrentSchoolYear();
-    if ($schoolYear === NULL) {
-      return [];
-    }
-
-    $details = [];
-    $multipleOntologyWordDetails = OntologyWordDetails::loadMultipleByWordId($this->wordId);
-    foreach ($multipleOntologyWordDetails as $ontologyWordDetails) {
-      /** @var \Drupal\helfi_tpr\Entity\OntologyWordDetails $ontologyWordDetails */
-      $details[] = $ontologyWordDetails->getDetailByAnother('school_details', 'clarification', 'schoolyear', $schoolYear, $langcode);
-    }
-
-    $options = array_map('ucfirst', array_merge(...$details));
-    asort($options);
-    return $options;
+    return [
+      'general' => t('The general programme or study programme'),
+      'adult' => t('The upper secondary school for adults or a study programme'),
+    ];
   }
 
 }

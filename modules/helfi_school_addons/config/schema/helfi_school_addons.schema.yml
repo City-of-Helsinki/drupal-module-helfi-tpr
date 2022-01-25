@@ -1,0 +1,14 @@
+# Schema definition for emphasis filter.
+views.filter.emphasis_filter:
+  type: views.filter.in_operator
+  label: 'Allowed clarifications'
+
+# Schema definition for educational mission filter.
+views.filter.educational_mission_filter:
+  type: views.filter.in_operator
+  label: 'Allowed clarifications'
+
+# Schema definition for study programme type filter.
+views.filter.study_programme_type_filter:
+  type: views.filter.in_operator
+  label: 'Allowed values'

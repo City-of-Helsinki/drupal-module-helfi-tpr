@@ -27,8 +27,9 @@ class SchoolDetailsItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public function isEmpty() : bool {
-    $value = $this->get('clarification')->getValue();
-    return $value === NULL || $value === '';
+    $clarification = $this->get('clarification')->getValue();
+    $schoolyear = $this->get('schoolyear')->getValue();
+    return ($clarification === NULL || $clarification === '') && ($schoolyear === NULL || $schoolyear === '');
   }
 
   /**
@@ -37,10 +38,10 @@ class SchoolDetailsItem extends FieldItemBase {
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) : array {
     $properties['clarification'] = DataDefinition::create('string')
       ->setLabel(new TranslatableMarkup('Clarification'))
-      ->setRequired(TRUE);
+      ->setRequired(FALSE);
     $properties['schoolyear'] = DataDefinition::create('string')
       ->setLabel(new TranslatableMarkup('Schoolyear'))
-      ->setRequired(TRUE);
+      ->setRequired(FALSE);
 
     return $properties;
   }
@@ -56,7 +57,6 @@ class SchoolDetailsItem extends FieldItemBase {
       ],
       'schoolyear' => [
         'type' => 'varchar',
-        'not null' => FALSE,
         'length' => 255,
       ],
     ];

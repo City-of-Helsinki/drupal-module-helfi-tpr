@@ -44,13 +44,3 @@ field.value.tpr_connection:
     value:
       type: label
       label: Value
-
-# Schema definition for emphasis filter.
-views.filter.emphasis_filter:
-  type: views.filter.in_operator
-  label: 'Allowed clarifications'
-
-# Schema definition for educational mission filter.
-views.filter.educational_mission_filter:
-  type: views.filter.in_operator
-  label: 'Allowed clarifications'

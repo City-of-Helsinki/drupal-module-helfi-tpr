@@ -567,3 +567,18 @@ function helfi_tpr_update_8030() : void {
       ->installFieldStorageDefinition($name, $type, 'helfi_tpr', $field);
   }
 }
+
+/**
+ * Re-install school_details field.
+ */
+function helfi_tpr_update_8031() : void {
+  drupal_flush_all_caches();
+  $manager = \Drupal::entityDefinitionUpdateManager();
+
+  if ($definition = $manager->getFieldStorageDefinition('school_details', 'tpr_ontology_word_details')) {
+    // Removes all field data. However, the data is fetched using
+    // tpr_ontology_word_details migration so importing it again should be easy.
+    $manager->uninstallFieldStorageDefinition($definition);
+    $manager->installFieldStorageDefinition('school_details', 'tpr_ontology_word_details', 'helfi_tpr', $definition);
+  }
+}

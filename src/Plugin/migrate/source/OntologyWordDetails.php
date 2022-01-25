@@ -26,7 +26,18 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
    *
    * @var bool
    */
-  protected bool $limitBySchoolDetails = TRUE;
+  protected bool $includeSchoolDetails = TRUE;
+
+  /**
+   * Include source data with selected ontology IDs.
+   *
+   * @var int[]
+   */
+  protected array $includeOntologyIds = [
+    816,
+    650,
+    590,
+  ];
 
   /**
    * {@inheritdoc}
@@ -143,8 +154,15 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
     foreach ($content as $contentKey => $contentItem) {
       foreach ($detailedContent as $detailedKey => $detailedItem) {
         if ($contentItem['id'] === $detailedItem['ontologyword_id']) {
-          // Proceed only if detailed content has relevant data.
-          if ($this->limitBySchoolDetails ? !$this->hasSchoolDetails($detailedItem) : FALSE) {
+          // Only process pre-selected source data.
+          $process = FALSE;
+          if ($this->includeSchoolDetails ? $this->hasSchoolDetails($detailedItem) : FALSE) {
+            $process = TRUE;
+          }
+          if (!empty($this->includeOntologyIds) ? in_array($contentItem['id'], $this->includeOntologyIds) : FALSE) {
+            $process = TRUE;
+          }
+          if (!$process) {
             continue;
           }
 

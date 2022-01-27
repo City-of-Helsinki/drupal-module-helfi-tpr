@@ -309,6 +309,10 @@ class Unit extends TprEntityBase {
       ->setLabel(new TranslatableMarkup('Hide description'))
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
+    $fields['show_www'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(new TranslatableMarkup('Show website link'))
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE);
 
     return $fields;
   }

@@ -40,3 +40,9 @@ msgstr "Vaatii tunnistautumisen"
 
 msgid "Important links"
 msgstr "Tärkeitä linkkejä"
+
+msgid "The general programme or study programme"
+msgstr "Yleislukio tai -linja"
+
+msgid "The upper secondary school for adults or a study programme"
+msgstr "Aikuislukio tai -linja"

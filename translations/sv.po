@@ -25,3 +25,9 @@ msgstr "Kräver identifiering"
 
 msgid "Important links"
 msgstr "Viktiga länkar"
+
+msgid "The general programme or study programme"
+msgstr "Allmänt gymnasium eller -linje"
+
+msgid "The upper secondary school for adults or a study programme"
+msgstr "Vuxengymnasium eller -linje"

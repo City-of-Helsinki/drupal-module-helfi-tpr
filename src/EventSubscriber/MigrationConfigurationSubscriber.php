@@ -44,11 +44,9 @@ final class MigrationConfigurationSubscriber implements EventSubscriberInterface
   /**
    * {@inheritdoc}
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents() : array {
     return [
-      '\Drupal\helfi_api_base\Event\MigrationConfigurationEvent' => [
-        ['onMigration'],
-      ],
+      'Drupal\helfi_api_base\Event\MigrationConfigurationEvent' => ['onMigration'],
     ];
   }
 

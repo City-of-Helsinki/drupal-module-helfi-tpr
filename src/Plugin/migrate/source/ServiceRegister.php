@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-
 /**
  * Source plugin for retrieving data from Tpr.
  *
@@ -13,7 +11,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
  *   id = "tpr_service_register"
  * )
  */
-class ServiceRegister extends TprSourceBase implements ContainerFactoryPluginInterface {
+class ServiceRegister extends TprSourceBase {
 
   /**
    * The total count.
@@ -88,15 +86,9 @@ class ServiceRegister extends TprSourceBase implements ContainerFactoryPluginInt
         }
         continue;
       }
-      $data = $content[$language];
-
-      if ($language === 'fi') {
-        // Always use Finnish as service's default language.
-        $data['default_langcode'] = TRUE;
-      }
-      $data['language'] = $language;
-
-      yield $data;
+      yield $content[$language] + [
+        'language' => $language,
+      ];
     }
   }
 

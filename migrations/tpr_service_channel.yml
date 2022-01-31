@@ -11,6 +11,7 @@ label: 'TPR service channel'
 source:
   plugin: tpr_service_channel
   track_changes: true
+  url: 'https://city-of-helsinki.github.io/drupal-tpr-aggregator/errandservices.json'
 process:
   name: name
   id: id
@@ -67,7 +68,10 @@ process:
   for_personal_customer: for_personal_customer
   for_corporate_customer: for_corporate_customer
 destination:
-  plugin: tpr_service_channel
+  plugin: translatable_entity:tpr_service_channel
+  default_values:
+    content_translation_uid: 1
+    content_translation_status: false
 migration_dependencies:
   optional:
     - tpr_errand_service

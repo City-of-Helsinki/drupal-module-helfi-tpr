@@ -52,7 +52,10 @@ process:
     plugin: default_value
     default_value: plain_text
 destination:
-  plugin: tpr_errand_service
+  plugin: translatable_entity:tpr_errand_service
+  default_values:
+    content_translation_uid: 1
+    content_translation_status: false
 migration_dependencies:
   optional:
     - tpr_service

@@ -33,5 +33,8 @@ process:
     plugin: publish_by_unit
     source: unit_id
 destination:
-  plugin: tpr_ontology_word_details
+  plugin: translatable_entity:tpr_ontology_word_details
+  default_values:
+    content_translation_uid: 1
+    content_translation_status: false
 migration_dependencies: {  }

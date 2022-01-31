@@ -11,6 +11,8 @@ use Drupal\Tests\media\Traits\MediaTypeCreationTrait;
 
 /**
  * Tests custom tokens.
+ *
+ * @group helfi_tpr
  */
 class TokenTest extends MigrationTestBase {
 

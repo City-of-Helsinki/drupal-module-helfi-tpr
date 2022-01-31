@@ -31,7 +31,10 @@ process:
       title: title
       uri: url
 destination:
-  plugin: tpr_service
+  plugin: translatable_entity:tpr_service
+  default_values:
+    content_translation_uid: 1
+    content_translation_status: false
 migration_dependencies:
   optional:
     - tpr_unit

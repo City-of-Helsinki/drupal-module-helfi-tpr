@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Plugin\migrate\destination;
 
+use Drupal\helfi_api_base\Plugin\migrate\destination\TranslatableEntity;
 use Drupal\migrate\Row;
 
 /**
@@ -13,7 +14,7 @@ use Drupal\migrate\Row;
  *   id = "tpr_errand_service",
  * )
  */
-final class ErrandService extends TprDestinationBase {
+final class ErrandService extends TranslatableEntity {
 
   /**
    * {@inheritdoc}

@@ -135,7 +135,10 @@ class ServiceMap extends TprSourceBase implements ContainerFactoryPluginInterfac
 
       // Flatten services.
       if (isset($object['services'])) {
-        $object['services'] = NestedArray::getValue($object['services'], [0, 'services']);
+        $object['services'] = NestedArray::getValue(
+          $object['services'],
+          [0, 'services']
+        );
       }
 
       yield from $this->normalizeMultilingualData($object);

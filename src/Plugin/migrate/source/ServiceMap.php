@@ -108,12 +108,6 @@ class ServiceMap extends TprSourceBase implements ContainerFactoryPluginInterfac
       if (($this->getLimit() > 0) && $processed > $this->getLimit()) {
         break;
       }
-      // Skip entire migration once we've reached the number of maximum
-      // ignored (not changed) rows.
-      // @see static::NUM_IGNORED_ROWS_BEFORE_STOPPING.
-      if ($this->isPartialMigrate() && ($this->ignoredRows >= static::NUM_IGNORED_ROWS_BEFORE_STOPPING)) {
-        break;
-      }
 
       $extraData = [
         'accessibility_sentences_url' => 'accessibility_sentences',

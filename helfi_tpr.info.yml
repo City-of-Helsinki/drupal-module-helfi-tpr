@@ -17,3 +17,6 @@ dependencies:
   - twig_tweak
   - telephone
   - views
+'interface translation project': helfi_tpr
+'interface translation server pattern': modules/contrib/helfi_tpr/translations/%language.po
+

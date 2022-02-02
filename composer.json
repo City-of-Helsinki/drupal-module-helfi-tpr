@@ -6,7 +6,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^8.0",
-        "drupal/helfi_api_base": "*",
+        "drupal/helfi_api_base": "^1.0",
         "drupal/address": "~1.0",
         "drupal/readonly_field_widget": "^1.0",
         "drupal/twig_tweak": "^2.0 || ^3.0",

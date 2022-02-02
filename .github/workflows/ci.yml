@@ -34,7 +34,7 @@ jobs:
           cd $DRUPAL_ROOT
           php -d sendmail_path=$(which true); vendor/bin/drush --yes -v site-install minimal --db-url="$SIMPLETEST_DB"
           echo "$(jq --indent 4 '.repositories |= [{"type": "path", "url": "'$GITHUB_WORKSPACE'"}] + .' composer.json)" > composer.json
-          composer require drupal/$MODULE_NAME
+          composer require drupal/$MODULE_NAME -W
           vendor/bin/drush en $MODULE_NAME -y
 
       - name: Run PHPCS

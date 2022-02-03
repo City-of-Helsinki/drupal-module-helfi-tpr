@@ -1,0 +1,48 @@
+msgid ""
+msgstr ""
+
+msgctxt "TPR unit also offers service in Swedish"
+msgid "Service in Swedish"
+msgstr "Ruotsinkielistä palvelua"
+
+msgid "Visiting address"
+msgstr "Käyntiosoite"
+
+msgid "Opening hours"
+msgstr "Aukioloajat"
+
+msgid "Postal address"
+msgstr "Postiosoite"
+
+msgid "Website link"
+msgstr "Verkkosivun linkki"
+
+msgid "Show website link"
+msgstr "Näytä verkkosivun linkki"
+
+msgid "Process description"
+msgstr "Prosessin kuvaus"
+
+msgid "Processing time"
+msgstr "Käsittelyaika"
+
+msgid "Expiration time"
+msgstr "Voimassaoloaika"
+
+msgid "Costs"
+msgstr "Maksut"
+
+msgid "Additional information"
+msgstr "Lisätietoja"
+
+msgid "Requires authentication"
+msgstr "Vaatii tunnistautumisen"
+
+msgid "Important links"
+msgstr "Tärkeitä linkkejä"
+
+msgid "The general programme or study programme"
+msgstr "Yleislukio tai -linja"
+
+msgid "The upper secondary school for adults or a study programme"
+msgstr "Aikuislukio tai -linja"

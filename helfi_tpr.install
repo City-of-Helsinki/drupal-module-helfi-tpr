@@ -582,3 +582,18 @@ function helfi_tpr_update_8031() : void {
     $manager->installFieldStorageDefinition('school_details', 'tpr_ontology_word_details', 'helfi_tpr', $definition);
   }
 }
+
+/**
+ * Add 'show_www' field to the TPR Unit entity.
+ */
+function helfi_tpr_update_8032() : void {
+  $fields['show_www'] = BaseFieldDefinition::create('boolean')
+    ->setLabel(new TranslatableMarkup('Show website link'))
+    ->setDisplayConfigurable('view', TRUE)
+    ->setDisplayConfigurable('form', TRUE);
+
+  foreach ($fields as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
+  }
+}

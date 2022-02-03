@@ -131,6 +131,10 @@ function template_preprocess_tpr_unit(array &$variables) {
     // Get 'hide_description' field value and pass it to the template.
     $hide_description = $variables['entity']->get('hide_description')->value;
     $variables['hide_description'] = boolval($hide_description);
+
+    // Get 'show_www' field value and pass it to the template.
+    $show_www = $variables['entity']->get('show_www')->value;
+    $variables['show_www'] = boolval($show_www);
   }
 }
 

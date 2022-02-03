@@ -1,0 +1,33 @@
+msgid ""
+msgstr ""
+
+msgctxt "TPR unit also offers service in Swedish"
+msgid "Service in Swedish"
+msgstr "Service på svenska"
+
+msgid "Visiting address"
+msgstr "Besöksadress"
+
+msgid "Opening hours"
+msgstr "Öppettider"
+
+msgid "Postal address"
+msgstr "Postadress"
+
+msgid "Website link"
+msgstr "Webbplatslänk"
+
+msgid "Show website link"
+msgstr "Visa webbplatslänk"
+
+msgid "Requires authentication"
+msgstr "Kräver identifiering"
+
+msgid "Important links"
+msgstr "Viktiga länkar"
+
+msgid "The general programme or study programme"
+msgstr "Allmänt gymnasium eller -linje"
+
+msgid "The upper secondary school for adults or a study programme"
+msgstr "Vuxengymnasium eller -linje"

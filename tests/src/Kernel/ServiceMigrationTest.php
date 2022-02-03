@@ -44,13 +44,13 @@ class ServiceMigrationTest extends MigrationTestBase {
    * Tests service migration.
    */
   public function testServiceMigration() : void {
-    // Services has soft dependency on unit migration.
+    // Service migration has a soft dependency on unit migration.
     $this->runUnitMigrate();
     $this->runServiceMigrate();
     $entities = Service::loadMultiple();
     $this->assertCount(6, $entities);
 
-    // We have fixture data for functional tests as well and they are not
+    // We have fixture data for functional tests as well, and they are not
     // easily testable. Test only first three entities.
     $entities = array_slice($entities, 0, 3, TRUE);
 

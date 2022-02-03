@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\helfi_tpr\Kernel;
 
-
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\helfi_tpr\Entity\Channel;
 use Drupal\helfi_tpr\Entity\ErrandService;

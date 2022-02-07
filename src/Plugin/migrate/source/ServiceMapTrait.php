@@ -14,7 +14,7 @@ trait ServiceMapTrait {
   /**
    * Converts one multilingual object into multiple objects.
    *
-   * By default a TPR entity has langcode suffixed fields for multilingual
+   * By default, a TPR entity has langcode suffixed fields for multilingual
    * data, like:
    * @code
    * name_fi => Name in finnish
@@ -33,8 +33,6 @@ trait ServiceMapTrait {
    *   The iterator.
    */
   protected function normalizeMultilingualData(array $data) : \Generator {
-    $delta = 0;
-
     foreach (['fi', 'sv', 'en'] as $language) {
       // Skip translations without translated names.
       if (!isset($data[sprintf('name_%s', $language)])) {
@@ -42,15 +40,9 @@ trait ServiceMapTrait {
       }
       $item = $data;
 
-      // Mark first item as default langcode.
-      if ($delta === 0) {
-        $item['default_langcode'] = TRUE;
-      }
-      $delta++;
-
       $item['language'] = $language;
 
-      // 'Normalize' suffixed fields to have same name for every language.
+      // 'Normalize' suffixed fields to have a same name for every language.
       // For example: name_fi, name_sv => name.
       foreach ($this->configuration['translatable_fields'] ?? [] as $field) {
         $key = sprintf('%s_%s', $field, $language);
@@ -149,7 +141,7 @@ trait ServiceMapTrait {
         "sentence_group_$language",
         "sentence_$language",
       ];
-      // Skip untranslated sentencens.
+      // Skip untranslated sentences.
       if (!isset($sentence[$sentence_group_key], $sentence[$sentence_key])) {
         continue;
       }

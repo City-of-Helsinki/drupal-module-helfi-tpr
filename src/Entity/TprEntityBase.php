@@ -130,7 +130,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
    * Gets the changed time.
    *
    * @return int|null
-   *   The timestmap.
+   *   The timestamp.
    */
   public function getChangedTime() : ? int {
     $value = $this->get('content_translation_changed')->value;
@@ -156,6 +156,8 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
     $fields += static::revisionLogBaseFieldDefinitions($entity_type);
+    $fields += static::ownerBaseFieldDefinitions($entity_type);
+    $fields += static::publishedBaseFieldDefinitions($entity_type);
 
     static::$overrideFields['name'] = static::createStringField('Name');
 
@@ -172,22 +174,6 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     }
 
     return $fields;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function delete(bool $forceDelete = FALSE) {
-    if ($forceDelete) {
-      return parent::delete();
-    }
-    // Disable deleting entities to prevent accidental automatic deletions.
-    // Also, deleting using the UI is not currently supported.
-    \Drupal::logger('helfi_tpr')->notice('Prevented deleting entity @type with ID @id. Deleting TPR entities is disabled.',
-      [
-        '@id' => $this->id(),
-        '@type' => $this->getEntityTypeId(),
-      ]);
   }
 
 }

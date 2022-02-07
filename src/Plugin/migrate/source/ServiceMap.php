@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
 use Drupal\Component\Datetime\DateTimePlus;
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 
 /**
@@ -51,13 +52,6 @@ class ServiceMap extends TprSourceBase implements ContainerFactoryPluginInterfac
 
       yield from $this->normalizeMultilingualData($content);
     }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function getFieldNormalizers(): array {
-    return [];
   }
 
   /**
@@ -114,30 +108,33 @@ class ServiceMap extends TprSourceBase implements ContainerFactoryPluginInterfac
       if (($this->getLimit() > 0) && $processed > $this->getLimit()) {
         break;
       }
-      // Skip entire migration once we've reached the number of maximum
-      // ignored (not changed) rows.
-      // @see static::NUM_IGNORED_ROWS_BEFORE_STOPPING.
-      if ($this->isPartialMigrate() && ($this->ignoredRows >= static::NUM_IGNORED_ROWS_BEFORE_STOPPING)) {
-        break;
-      }
 
-      if (isset($this->configuration['accessibility_sentences_url'])) {
-        // Fetch and combine accessibility sentences if configured to do so.
-        $object['accessibility_sentences'] = $this->getExtraUnitData(
+      $extraData = [
+        'accessibility_sentences_url' => 'accessibility_sentences',
+        'connections_url' => 'connections',
+        'services_url' => 'services',
+      ];
+
+      // Combine all extra unit data from other endpoints into one.
+      foreach ($extraData as $urlKey => $keyName) {
+        if (!isset($this->configuration[$urlKey])) {
+          continue;
+        }
+        $object[$keyName] = $this->getExtraUnitData(
           $object['id'],
-          'accessibility_sentences',
-          $this->configuration['accessibility_sentences_url']
+          $keyName,
+          $this->configuration[$urlKey]
         );
       }
 
-      if (isset($this->configuration['connections_url'])) {
-        // Fetch and combine connections if configured to do so.
-        $object['connections'] = $this->getExtraUnitData(
-          $object['id'],
-          'connections',
-          $this->configuration['connections_url']
+      // Flatten services.
+      if (isset($object['services'])) {
+        $object['services'] = NestedArray::getValue(
+          $object['services'],
+          [0, 'services']
         );
       }
+
       yield from $this->normalizeMultilingualData($object);
     }
   }

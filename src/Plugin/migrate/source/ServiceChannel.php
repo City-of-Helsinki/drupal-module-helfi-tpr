@@ -4,13 +4,6 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
-use Drupal\migrate\Plugin\MigrationInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
  * Source plugin for retrieving service channel data from errand services.
  *
@@ -18,71 +11,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "tpr_service_channel",
  * )
  */
-class ServiceChannel extends SourcePluginBase implements ContainerFactoryPluginInterface {
+class ServiceChannel extends TprSourceBase {
 
   /**
-   * The entity storage.
+   * The total count.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var int
    */
-  protected EntityStorageInterface $storage;
-
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct(
-    array $configuration,
-    $plugin_id,
-    $plugin_definition,
-    MigrationInterface $migration,
-    EntityTypeManagerInterface $entity_type_manager
-  ) {
-    $this->storage = $entity_type_manager->getStorage('tpr_errand_service');
-
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $migration);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(
-    ContainerInterface $container,
-    array $configuration,
-    $plugin_id,
-    $plugin_definition,
-    MigrationInterface $migration = NULL
-  ) : static {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $migration,
-      $container->get('entity_type.manager')
-    );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getIds() : array {
-    return [
-      'id' => [
-        'type' => 'string',
-        'entity_key' => 'id',
-      ],
-      'language' => [
-        'type' => 'string',
-        'entity_key' => 'langcode',
-      ],
-    ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function fields() : array {
-    return [];
-  }
+  protected int $count = 0;
 
   /**
    * {@inheritdoc}
@@ -94,20 +30,59 @@ class ServiceChannel extends SourcePluginBase implements ContainerFactoryPluginI
   /**
    * {@inheritdoc}
    */
-  protected function initializeIterator(): \Iterator|\Generator {
-    /** @var \Drupal\helfi_tpr\Entity\ErrandService $entity */
-    foreach ($this->storage->loadMultiple() ?? [] as $entity) {
-      $channels = $entity->getData('channels', []);
+  public function count($refresh = FALSE) : int {
+    return $this->count;
+  }
 
-      foreach ($channels as $channel) {
-        foreach ($channel as $langcode => $data) {
-          if ($langcode === 'fi') {
-            $data['default_langcode'] = TRUE;
-          }
-          $data['language'] = $langcode;
-          yield $data;
+  /**
+   * {@inheritdoc}
+   */
+  protected function initializeSingleImportIterator(): \Iterator {
+    throw new \LogicException('Not supported.');
+  }
+
+  /**
+   * Converts one multilingual object into multiple objects.
+   *
+   * @param array $content
+   *   The data from API.
+   *
+   * @return \Generator
+   *   The iterator.
+   */
+  protected function normalizeMultilingualData(array $content) : \Generator {
+    foreach (['fi', 'en', 'sv'] as $language) {
+      if (empty($content[$language])) {
+        if ($language === 'fi') {
+          // If getting Finnish data was unsuccessful, do not get data for
+          // other languages.
+          break;
         }
+        continue;
       }
+
+      foreach ($content[$language]['channels'] as $channel) {
+        yield $channel + [
+          'language' => $language,
+        ];
+      }
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function initializeListIterator() : \Iterator {
+    $content = $this->getContent($this->configuration['url']);
+    $processed = 0;
+
+    foreach ($content as $item) {
+      $processed++;
+      // Allow number of items to be limited by using an env variable.
+      if (($this->getLimit() > 0) && $processed > $this->getLimit()) {
+        break;
+      }
+      yield from $this->normalizeMultilingualData($item);
     }
   }
 

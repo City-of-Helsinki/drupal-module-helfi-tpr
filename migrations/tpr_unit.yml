@@ -23,9 +23,11 @@ source:
   url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/?newfeatures=yes'
   accessibility_sentences_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/accessibility_sentence/'
   connections_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/connection/'
+  services_url: 'https://city-of-helsinki.github.io/drupal-tpr-aggregator/unitservices.json'
 process:
   id: id
   name: name
+  services: services
   opening_hours:
     plugin: sub_process
     source: connections
@@ -91,5 +93,8 @@ process:
     from_timezone: Europe/Helsinki
     to_timezone: UTC
 destination:
-  plugin: tpr_unit
+  plugin: translatable_entity:tpr_unit
+  default_values:
+    content_translation_uid: 1
+    content_translation_status: false
 migration_dependencies: {  }

@@ -58,6 +58,18 @@ trait TprMigrateTrait {
   }
 
   /**
+   * Runs the `tpr_service_channel' migration.
+   */
+  protected function runServiceChannelMigration(array $responses = []) : void {
+    // Service channel migration uses the same data as errand service.
+    if (empty($responses)) {
+      $responses = $this->fixture('tpr_errand_service')->getMockResponses();
+    }
+    $this->container->set('http_client', $this->createMockHttpClient($responses));
+    $this->executeMigration('tpr_service_channel');
+  }
+
+  /**
    * Runs the 'tpr_ontology_word_details' migration.
    *
    * @param array $responses

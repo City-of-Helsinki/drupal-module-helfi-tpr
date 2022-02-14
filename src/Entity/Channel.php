@@ -51,7 +51,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "revision_log_message" = "revision_log"
  *   },
  *   links = {
- *     "canonical" = "/tpr-service_channel/{tpr_service_channel}",
  *     "edit-form" = "/admin/content/integrations/tpr-service-channel/{tpr_service_channel}/edit",
  *     "collection" = "/admin/content/integrations/tpr-service-channel"
  *   },

@@ -25,11 +25,6 @@ tpr_errand_service.settings:
   route_name: tpr_errand_service.settings
   base_route: tpr_errand_service.settings
 
-entity.tpr_errand_service.view:
-  title: View
-  route_name: entity.tpr_errand_service.canonical
-  base_route: entity.tpr_errand_service.canonical
-
 entity.tpr_errand_service.edit_form:
   title: Edit
   route_name: entity.tpr_errand_service.edit_form
@@ -45,11 +40,6 @@ tpr_service_channel.settings:
   title: Settings
   route_name: tpr_service_channel.settings
   base_route: tpr_service_channel.settings
-
-entity.tpr_service_channel.view:
-  title: View
-  route_name: entity.tpr_service_channel.canonical
-  base_route: entity.tpr_service_channel.canonical
 
 entity.tpr_service_channel.edit_form:
   title: Edit

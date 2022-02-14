@@ -49,7 +49,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "revision_log_message" = "revision_log"
  *   },
  *   links = {
- *     "canonical" = "/tpr-errand-service/{tpr_errand_service}",
  *     "edit-form" = "/admin/content/integrations/tpr-errand-service/{tpr_errand_service}/edit",
  *     "collection" = "/admin/content/integrations/tpr-errand-service"
  *   },

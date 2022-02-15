@@ -6,14 +6,13 @@
  */
 #}
 
-{%
-  set classes = [
-    'unit',
-    view_mode == 'teaser_with_image' ? 'unit--teaser',
-    view_mode == 'wide_teaser' ? 'unit--teaser',
-    view_mode ? 'unit--' ~ view_mode|clean_class,
-  ]
-%}
+{% if not block_name %}
+  {% set block_name = 'main_navigation_level_2' %}
+{% endif %}
+
+{% if drupal_entity('block', block_name, check_access=false)|render|striptags|trim is not empty %}
+  {% set in_menu =  TRUE %}
+{% endif %}
 
 {% set supports_swedish %}
   {% if 'sv' in provided_languages %}
@@ -24,6 +23,13 @@
 {% endset %}
 
 {% if view_mode == 'full' %}
+
+  {%
+    set classes = [
+    'unit',
+    'unit--full'
+  ]
+  %}
 
   <article{{ attributes.addClass(classes) }}>
     <div class="unit-header__container container {{ in_menu ? 'has-navigation' }}">
@@ -81,9 +87,9 @@
           content.www|render
         %}
           <div class="unit__contact">
-            <h3 class="unit__contact__title">
+            <h2 class="unit__contact__title">
               {% trans with {'context': 'Contact card title'} %}Contact information{% endtrans %}
-            </h3>
+            </h2>
             {% if content.address|render %}
               <div class="unit__contact-row unit__contact-row--address">
                 <label class="unit__contact-row__label">
@@ -170,7 +176,8 @@
 
   </article>
 
-{% else %}
+{# TODO: We should simplify these to have only one style instead of two identical ones #}
+{% elseif view_mode == 'teaser_with_image' or view_mode == 'teaser' %}
 
   {% set image_attributes = create_attribute() %}
 
@@ -185,7 +192,7 @@
   ]
   %}
 
-  <div{{ attributes.addClass(classes) }}>
+  <div class="unit unit--teaser unit--teaser_with_image">
     <div{{ image_attributes.addClass(picture_classes) }}>
       {% if content.picture_url_override|render %}
         {{ content.picture_url_override }}
@@ -218,4 +225,9 @@
       </div>
     </div>
   </div>
+
+{% elseif view_mode == 'wide_teaser' %}
+
+  {% include '@hdbt/module/helfi_tpr/tpr-content-liftup.html.twig' %}
+
 {% endif %}

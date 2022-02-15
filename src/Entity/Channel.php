@@ -22,6 +22,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "list_builder" = "Drupal\helfi_tpr\Entity\Listing\ListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "access" = "Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess",
+ *     "translation" = "Drupal\helfi_tpr\Entity\TranslationHandler",
  *     "form" = {
  *       "default" = "Drupal\Core\Entity\ContentEntityForm",
  *     },
@@ -29,6 +30,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
  *     },
  *   },
+ *   content_translation_ui_skip = TRUE,
  *   base_table = "tpr_service_channel",
  *   data_table = "tpr_service_channel_field_data",
  *   revision_table = "tpr_service_channel_revision",
@@ -51,7 +53,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "revision_log_message" = "revision_log"
  *   },
  *   links = {
- *     "canonical" = "/tpr-service_channel/{tpr_service_channel}",
  *     "edit-form" = "/admin/content/integrations/tpr-service-channel/{tpr_service_channel}/edit",
  *     "collection" = "/admin/content/integrations/tpr-service-channel"
  *   },

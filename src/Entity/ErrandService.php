@@ -20,6 +20,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "list_builder" = "Drupal\helfi_tpr\Entity\Listing\ListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "access" = "Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess",
+ *     "translation" = "Drupal\helfi_tpr\Entity\TranslationHandler",
  *     "form" = {
  *       "default" = "Drupal\Core\Entity\ContentEntityForm",
  *     },
@@ -27,6 +28,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
  *     },
  *   },
+ *   content_translation_ui_skip = TRUE,
  *   base_table = "tpr_errand_service",
  *   data_table = "tpr_errand_service_field_data",
  *   revision_table = "tpr_errand_service_revision",
@@ -49,7 +51,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "revision_log_message" = "revision_log"
  *   },
  *   links = {
- *     "canonical" = "/tpr-errand-service/{tpr_errand_service}",
  *     "edit-form" = "/admin/content/integrations/tpr-errand-service/{tpr_errand_service}/edit",
  *     "collection" = "/admin/content/integrations/tpr-errand-service"
  *   },

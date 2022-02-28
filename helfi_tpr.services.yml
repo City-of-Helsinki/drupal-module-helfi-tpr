@@ -6,7 +6,7 @@ services:
   migration_fixture.tpr_errand_service:
     class: Drupal\helfi_tpr\Fixture\ErrandService
   migration_fixture.tpr_service_channel:
-    class: Drupal\helfi_tpr\Fixture\ServiceChannel
+    class: Drupal\helfi_tpr\Fixture\ErrandService
   migration_fixture.tpr_ontology_word_details:
     class: Drupal\helfi_tpr\Fixture\OntologyWordDetails
   helfi_tpr.migration_configuration_subscriber:
@@ -14,4 +14,4 @@ services:
     arguments: ['@config.factory']
     tags:
       - { name: event_subscriber }
-      
+

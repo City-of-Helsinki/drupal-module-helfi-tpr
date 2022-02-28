@@ -7,9 +7,6 @@
 
 /**
  * Implements hook_views_data_alter().
- *
- * @param array $data
- *   An array of all information about Views tables and fields.
  */
 function helfi_school_addons_views_data_alter(array &$data) {
   $data['tpr_unit']['emphasis_filter'] = [
@@ -19,7 +16,7 @@ function helfi_school_addons_views_data_alter(array &$data) {
       'help' => 'Filters units by emphasis.',
       'field' => 'nid',
       'id' => 'emphasis_filter',
-    ]
+    ],
   ];
 
   $data['tpr_unit']['educational_mission_filter'] = [
@@ -29,7 +26,7 @@ function helfi_school_addons_views_data_alter(array &$data) {
       'help' => 'Filters units by educational mission.',
       'field' => 'nid',
       'id' => 'educational_mission_filter',
-    ]
+    ],
   ];
 
   $data['tpr_unit']['study_programme_type_filter'] = [
@@ -39,6 +36,6 @@ function helfi_school_addons_views_data_alter(array &$data) {
       'help' => 'Filters units by study programme type.',
       'field' => 'nid',
       'id' => 'study_programme_type_filter',
-    ]
+    ],
   ];
 }

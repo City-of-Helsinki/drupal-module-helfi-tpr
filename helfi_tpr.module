@@ -5,6 +5,8 @@
  * Contains helfi_tpr.
  */
 
+declare(strict_types = 1);
+
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Render\Element;
@@ -38,11 +40,11 @@ function helfi_tpr_theme() {
     ],
     'tpr_service_channel' => [
       'render element' => 'elements',
-      'template' => 'tpr-service-channel'
+      'template' => 'tpr-service-channel',
     ],
     'tpr_errand_service' => [
       'render element' => 'elements',
-      'template' => 'tpr-errand-service'
+      'template' => 'tpr-errand-service',
     ],
     'tpr_ontology_word_details' => [
       'render element' => 'elements',
@@ -215,7 +217,8 @@ function template_preprocess_tpr_ontology_word_details(array &$variables) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
   if (isset($variables['elements']['#tpr_ontology_word_details'])) {
-    $variables['entity'] = $variables['elements']['#tpr_ontology_word_details'];}
+    $variables['entity'] = $variables['elements']['#tpr_ontology_word_details'];
+  }
 }
 
 /**

@@ -5,6 +5,8 @@
  * Contains helfi_tpr installation procedures.
  */
 
+declare(strict_types = 1);
+
 use Drupal\content_translation\ContentTranslationHandler;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Field\BaseFieldDefinition;
@@ -15,6 +17,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  * Helper function to get the content translation field definitions.
  *
  * @return array
+ *   The translation fields.
  */
 function _helfi_tpr_get_content_translation_fields(): array {
   $definitions['content_translation_source'] = BaseFieldDefinition::create('language')
@@ -327,7 +330,7 @@ function helfi_tpr_update_8018() : void {
  * Install publish and unpublish actions for TPR unit and service.
  */
 function helfi_tpr_update_8019() : void {
-  $config_path = drupal_get_path('module', 'helfi_tpr').'/config/install';
+  $config_path = drupal_get_path('module', 'helfi_tpr') . '/config/install';
   $source = new FileStorage($config_path);
   $config_storage = \Drupal::service('config.storage');
 
@@ -446,7 +449,7 @@ function helfi_tpr_update_8025() : void {
   $uuid_service = \Drupal::service('uuid');
 
   // Create file storages.
-  $config_path = drupal_get_path('module', 'helfi_tpr').'/config/install';
+  $config_path = drupal_get_path('module', 'helfi_tpr') . '/config/install';
   $config_source = new FileStorage($config_path);
   $optional_config_path = drupal_get_path('module', 'helfi_tpr') . '/config/optional';
   $optional_config_source = new FileStorage($optional_config_path);
@@ -470,14 +473,17 @@ function helfi_tpr_update_8025() : void {
   // Install new configs for 'Errand service' and 'Service channel' views.
   \Drupal::service('config.installer')->installOptionalConfig($optional_config_source);
   // Add Finnish translation for 'Errand service' and 'Service channel' views.
-  $views = ['views.view.tpr_errand_service_list', 'views.view.tpr_service_channel_list'];
+  $views = [
+    'views.view.tpr_errand_service_list',
+    'views.view.tpr_service_channel_list',
+  ];
   foreach ($views as $view) {
     $config_storage->createCollection('language.fi')->write($view, $language_config_source->read($view));
   }
 }
 
 /**
- * Adds 'provided_languages' field to 'tpr_unit' entity
+ * Adds 'provided_languages' field to 'tpr_unit' entity.
  */
 function helfi_tpr_update_8026() : void {
   $fields['provided_languages'] = BaseFieldDefinition::create('string')

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
-  bootstrap="./core/tests/bootstrap.php" colors="true"
+  bootstrap="../..//core/tests/bootstrap.php" colors="true"
   cacheResultFile=".phpunit.cache/test-results"
   executionOrder="depends,defects"
   forceCoversAnnotation="true"
@@ -23,16 +23,16 @@
 </php>
 <testsuites>
   <testsuite name="unit">
-    <directory>./modules/*/*/tests/src/Unit</directory>
+    <directory>./tests/src/Unit</directory>
   </testsuite>
   <testsuite name="kernel">
-    <directory>./modules/*/*/tests/src/Kernel</directory>
+    <directory>./tests/src/Kernel</directory>
   </testsuite>
   <testsuite name="functional">
-    <directory>./modules/*/*/tests/src/Functional</directory>
+    <directory>./tests/src/Functional</directory>
   </testsuite>
   <testsuite name="functional-javascript">
-    <directory>./modules/*/*/tests/src/FunctionalJavascript</directory>
+    <directory>./src/FunctionalJavascript</directory>
   </testsuite>
 </testsuites>
 <listeners>
@@ -41,8 +41,8 @@
 </listeners>
 <coverage cacheDirectory=".phpunit.cache/code-coverage" processUncoveredFiles="true">
   <include>
-    <directory suffix=".php">./modules/*/*/src</directory>
-    <file>./modules/*/*/*.module</file>
+    <directory suffix=".php">./src</directory>
+    <file>./*.module</file>
   </include>
 </coverage>
 </phpunit>

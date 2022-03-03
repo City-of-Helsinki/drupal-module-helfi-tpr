@@ -57,6 +57,7 @@ jobs:
       - name: Run PHPCS
         run: |
           cd $DRUPAL_ROOT
+          mkdir modules/contrib/${{ secret.MODULE_NAME }}/results
           vendor/bin/phpcs modules/contrib/${{ secrets.MODULE_NAME }} --standard=Drupal --extensions=php,module,inc,install,test,info
 
       - name: Run PHPUnit tests
@@ -64,4 +65,12 @@ jobs:
           cd $DRUPAL_ROOT
           vendor/bin/drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
           chromedriver --port=4444 > /dev/null 2>&1 &
-          XDEBUG_MODE=coverage vendor/bin/phpunit --bootstrap $DRUPAL_ROOT/core/tests/bootstrap.php -c modules/contrib/${{ secrets.MODULE_NAME }}/phpunit.xml --coverage-xml reports
+          vendor/bin/phpunit --bootstrap $DRUPAL_ROOT/core/tests/bootstrap.php -c modules/contrib/${{ secrets.MODULE_NAME }}/phpunit.xml
+
+      - name: Create an artifact from test report
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: results
+          path: modules/contrib/${{ secret.MODULE_NAME }}/results
+          retention-days: 2

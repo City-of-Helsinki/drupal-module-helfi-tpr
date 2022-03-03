@@ -75,5 +75,5 @@ jobs:
         if: always()
         with:
           name: results
-          path: modules/contrib/${{ secrets.MODULE_NAME }}/results
-          retention-days: 2
+          path: reports/
+          retention-days: 1

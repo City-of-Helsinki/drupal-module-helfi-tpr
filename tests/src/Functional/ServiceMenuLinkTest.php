@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\Tests\helfi_tpr\Functional;
 
 use Drupal\Core\Url;
+use Drupal\Tests\helfi_tpr\Traits\MenuLinkTestTrait;
 use Drupal\Tests\helfi_tpr\Traits\TprMigrateTrait;
 
 /**
@@ -15,6 +16,7 @@ use Drupal\Tests\helfi_tpr\Traits\TprMigrateTrait;
 class ServiceMenuLinkTest extends MigrationTestBase {
 
   use TprMigrateTrait;
+  use MenuLinkTestTrait;
 
   /**
    * {@inheritdoc}
@@ -23,6 +25,17 @@ class ServiceMenuLinkTest extends MigrationTestBase {
     'menu_link_content',
     'menu_ui',
   ];
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp() : void {
+    parent::setUp();
+
+    $this->placeMainMenuBlock();
+    $this->enableTranslation(['menu_link_content']);
+    $this->rebuildContainer();
+  }
 
   /**
    * Tests menu link creation.
@@ -68,8 +81,24 @@ class ServiceMenuLinkTest extends MigrationTestBase {
       $this->assertSession()->checkboxChecked('menu[enabled]');
       $this->assertSession()->fieldValueEquals('menu[title]', "Menu link $language");
 
-      // Make sure link is disabled by default.
-      $this->assertMenuLink("Menu link $language", $language, FALSE);
+      // Make sure link is enabled by default.
+      $this->assertMenuLinkEnabled("Menu link $language", $language, TRUE);
+
+      // Make sure menu link is visible in main menu.
+      $this->drupalGet(Url::fromRoute('<front>'), [
+        'query' => ['language' => $language],
+      ]);
+      $this->assertMainMenuLinkExists("Menu link $language");
+    }
+
+    // Make sure menu link to unpublished entity is not visible to logged-out
+    // user.
+    $this->drupalLogout();
+    foreach (['fi', 'sv'] as $language) {
+      $this->drupalGet(Url::fromRoute('<front>'), [
+        'query' => ['language' => $language],
+      ]);
+      $this->assertMainMenuLinkNotExists("Menu link $language");
     }
   }
 

@@ -5,7 +5,7 @@ env:
   SIMPLETEST_BASE_URL: "http://127.0.0.1:8888"
   DRUPAL_CORE_VERSION: 9.3.x
   SYMFONY_DEPRECATIONS_HELPER: disabled
-  BROWSERTEST_OUTPUT_DIRECTORY: './reports'
+  BROWSERTEST_OUTPUT_DIRECTORY: 'sites/simpletest'
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -75,5 +75,5 @@ jobs:
         if: always()
         with:
           name: results
-          path: reports/
+          path: sites/simpletest/browser_output/
           retention-days: 1

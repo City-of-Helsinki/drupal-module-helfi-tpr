@@ -47,6 +47,7 @@ jobs:
           composer require "drush/drush ^10.0"
           composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
           composer require --dev "drupal/coder"
+          mkdir modules/contrib/${{ secrets.MODULE_NAME }}/results
 
       - name: Install Drupal
         run: |
@@ -57,7 +58,6 @@ jobs:
       - name: Run PHPCS
         run: |
           cd $DRUPAL_ROOT
-          mkdir modules/contrib/${{ secrets.MODULE_NAME }}/results
           vendor/bin/phpcs modules/contrib/${{ secrets.MODULE_NAME }} --standard=Drupal --extensions=php,module,inc,install,test,info
 
       - name: Run PHPUnit tests

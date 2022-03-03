@@ -32,7 +32,7 @@
     <directory>./tests/src/Functional</directory>
   </testsuite>
   <testsuite name="functional-javascript">
-    <directory>./src/FunctionalJavascript</directory>
+    <directory>./tests/src/FunctionalJavascript</directory>
   </testsuite>
 </testsuites>
 <listeners>

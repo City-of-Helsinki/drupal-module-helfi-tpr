@@ -57,30 +57,4 @@ abstract class MigrationTestBase extends ApiMigrationTestBase {
     ]);
   }
 
-  /**
-   * Asserts that given menu link exists and is enabled or disabled.
-   *
-   * @param string $expected_link
-   *   The expected link label.
-   * @param string $language
-   *   The language.
-   * @param bool $is_checked
-   *   Whether the checkbox is expected to be checked or not.
-   */
-  protected function assertMenuLink(string $expected_link, string $language, bool $is_checked) : void {
-    $this->drupalGet('/admin/structure/menu/manage/main', [
-      'query' => ['language' => $language],
-    ]);
-    $this->assertSession()->linkExists($expected_link);
-    $element = $this->getSession()->getPage()->find('css', '.checkbox.menu-enabled input[type="checkbox"]');
-    $this->assertNotNull($element);
-
-    if ($is_checked) {
-      $this->assertTrue($element->isChecked());
-    }
-    else {
-      $this->assertTrue(!$element->isChecked());
-    }
-  }
-
 }

@@ -36,7 +36,7 @@ class ConnectionRepositoryTest extends UnitTestCase {
   /**
    * Tests the repository mapping.
    *
-   * @coversClass \Drupal\helfi_tpr\Field\Connection\Repository
+   * @covers ::get
    */
   public function testInvalidRepository() : void {
     $this->assertNull($this->repository->get('invalid'));
@@ -46,7 +46,7 @@ class ConnectionRepositoryTest extends UnitTestCase {
    * Tests the Repository::get() method.
    *
    * @dataProvider getTestData
-   * @coversClass \Drupal\helfi_tpr\Field\Connection\Repository
+   * @covers ::get
    */
   public function testGet(string $type) : void {
     $object = $this->repository->get($type);

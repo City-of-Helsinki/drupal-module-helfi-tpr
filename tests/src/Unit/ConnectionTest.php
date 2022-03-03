@@ -18,7 +18,11 @@ class ConnectionTest extends UnitTestCase {
   /**
    * Tests opening hours.
    *
-   * @coversClass \Drupal\helfi_tpr\Field\Connection\OpeningHours
+   * @coversClass \Drupal\helfi_tpr\Field\Connection\OpeningHour
+   * @covers ::build
+   * @covers ::set
+   * @covers ::get
+   * @covers ::isValidField
    */
   public function testOpeningHours() : void {
     $object = new OpeningHour();
@@ -40,6 +44,9 @@ class ConnectionTest extends UnitTestCase {
 
   /**
    * Tests invalid field name.
+   *
+   * @covers ::set
+   * @covers ::isValidField
    */
   public function testInvalidFieldName() : void {
     $this->expectException(\InvalidArgumentException::class);
@@ -52,6 +59,8 @@ class ConnectionTest extends UnitTestCase {
    * Tests invalid data type.
    *
    * @dataProvider invalidFieldValueData
+   * @covers ::set
+   * @covers ::isValidField
    */
   public function testInvalidFieldValue($value) : void {
     $this->expectException(\InvalidArgumentException::class);
@@ -77,6 +86,9 @@ class ConnectionTest extends UnitTestCase {
    * Tests valid values.
    *
    * @dataProvider validFieldValueData
+   * @covers ::set
+   * @covers ::get
+   * @covers ::isValidField
    */
   public function testValidFieldValue($value) : void {
     $object = new OpeningHour();

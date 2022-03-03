@@ -31,9 +31,6 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Create reports folder
-        run: mkdir $BROWSERTEST_OUTPUT_DIRECTORY
-
       - name: Set variables
         run: echo "DRUPAL_ROOT=$HOME/drupal" >> $GITHUB_ENV
 

@@ -64,4 +64,4 @@ jobs:
           cd $DRUPAL_ROOT
           vendor/bin/drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
           chromedriver --port=4444 > /dev/null 2>&1 &
-          php ./core/scripts/run-tests.sh --dburl $SIMPLETEST_DB --php /usr/local/bin/php --color --verbose --sqlite /tmp/test.sqlite --url $SIMPLETEST_BASE_URL ${{ secrets.MODULE_NAME }}
+          XDEBUG_MODE=coverage vendor/bin/phpunit -c modules/contrib/${{ secrets.MODULE_NAME }}/phpunit.xml --coverage-xml reports

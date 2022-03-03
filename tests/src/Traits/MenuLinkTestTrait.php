@@ -42,8 +42,6 @@ trait MenuLinkTestTrait {
   /**
    * Asserts that given menu link exists in main menu.
    *
-   * @param string $link
-   *   The link url.
    * @param string $expectedValue
    *   The expected value.
    */

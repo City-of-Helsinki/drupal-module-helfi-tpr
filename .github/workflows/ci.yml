@@ -57,7 +57,7 @@ jobs:
       - name: Run PHPCS
         run: |
           cd $DRUPAL_ROOT
-          mkdir modules/contrib/${{ secret.MODULE_NAME }}/results
+          mkdir modules/contrib/${{ secrets.MODULE_NAME }}/results
           vendor/bin/phpcs modules/contrib/${{ secrets.MODULE_NAME }} --standard=Drupal --extensions=php,module,inc,install,test,info
 
       - name: Run PHPUnit tests

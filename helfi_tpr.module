@@ -11,6 +11,8 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\helfi_tpr\Plugin\views\filter\AddressSearch;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_theme().
@@ -267,4 +269,27 @@ function helfi_tpr_tpr_errand_service_access(EntityInterface $entity, $operation
   }
 
   return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function helfi_tpr_views_data_alter(array &$data) {
+  $data['tpr_unit']['address_search'] = [
+    'title' => t('Address search'),
+    'filter' => [
+      'title' => t('Address search'),
+      'help' => 'Filters units by address.',
+      'id' => 'address_search',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function helfi_tpr_views_pre_render(ViewExecutable $view) {
+  if (isset($view->filter["address_search"])) {
+    $view->result = AddressSearch::getSortedResultsByAddress($view);
+  }
 }

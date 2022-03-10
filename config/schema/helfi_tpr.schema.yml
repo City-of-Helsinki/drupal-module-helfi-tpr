@@ -44,3 +44,7 @@ field.value.tpr_connection:
     value:
       type: label
       label: Value
+
+views.filter_value.address_search:
+  type: string
+  label: 'Address search'

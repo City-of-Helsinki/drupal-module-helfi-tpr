@@ -22,4 +22,11 @@ class ErrandServiceListTest extends ListTestBase {
     $this->adminListPath = '/admin/content/integrations/tpr-errand-service';
   }
 
+  /**
+   * Tests list view permissions, and viewing, updating, and publishing units.
+   */
+  public function testList() : void {
+    $this->assertListPermissions();
+  }
+
 }

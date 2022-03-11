@@ -64,11 +64,8 @@ trait ServiceMapTrait {
       }
 
       // Add scheme to www URL if missing from TPR data.
-      if (isset($item['www'])) {
-        $scheme = parse_url($item['www'], PHP_URL_SCHEME);
-        if (empty($scheme)) {
-          $item['www'] = 'https://' . $item['www'];
-        }
+      if (isset($item['www']) && !parse_url($item['www'], PHP_URL_SCHEME)) {
+        $item['www'] = 'https://' . $item['www'];
       }
 
       yield $item;

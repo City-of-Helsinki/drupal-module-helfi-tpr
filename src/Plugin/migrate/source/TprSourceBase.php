@@ -35,6 +35,16 @@ abstract class TprSourceBase extends HttpSourcePluginBase implements ContainerFa
   /**
    * {@inheritdoc}
    */
+  protected function getCanonicalBaseUrl() : string {
+    if (!isset($this->configuration['canonical_url'])) {
+      throw new \InvalidArgumentException('The "canonical_url" configuration is missing.');
+    }
+    return $this->configuration['canonical_url'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function fields() : array {
     return [];
   }

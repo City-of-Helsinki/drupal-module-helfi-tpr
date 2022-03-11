@@ -128,7 +128,7 @@ final class Unit extends FixtureBase {
         ],
         'service_descriptions' => [
           [
-            'id' => 7470,
+            'id' => 7822,
             'available_languages' => [
               'en',
               'fi',
@@ -301,7 +301,7 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
         ],
         'service_descriptions' => [
           [
-            'id' => 6608,
+            'id' => 7822,
             'available_languages' => [
               'fi',
             ],
@@ -486,7 +486,7 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
         ],
         'service_descriptions' => [
           [
-            'id' => 7470,
+            'id' => 7822,
             'available_languages' => [
               'en',
               'fi',

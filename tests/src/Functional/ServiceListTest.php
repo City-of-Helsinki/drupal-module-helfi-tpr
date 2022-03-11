@@ -6,6 +6,7 @@ namespace Drupal\Tests\helfi_tpr\Functional;
 
 use Drupal\helfi_tpr\Entity\Service;
 use Drupal\Tests\helfi_api_base\Traits\ApiTestTrait;
+use Drupal\Tests\helfi_tpr\Traits\TprMigrateTrait;
 use GuzzleHttp\Psr7\Response;
 
 /**
@@ -16,24 +17,7 @@ use GuzzleHttp\Psr7\Response;
 class ServiceListTest extends ListTestBase {
 
   use ApiTestTrait;
-
-  /**
-   * Migrates the tpr service entities.
-   */
-  private function runMigrate() : void {
-    $fixture = $this->getFixture('helfi_tpr', 'service.json');
-    $responses = [
-      new Response(200, [], $fixture),
-    ];
-
-    foreach (json_decode($fixture, TRUE) as $item) {
-      // Update actions.
-      $responses[] = new Response(200, [], json_encode($item));
-    }
-
-    $this->container->set('http_client', $this->createMockHttpClient($responses));
-    $this->executeMigration('tpr_service');
-  }
+  use TprMigrateTrait;
 
   /**
    * {@inheritdoc}
@@ -47,15 +31,52 @@ class ServiceListTest extends ListTestBase {
     $this->adminListPath = '/admin/content/integrations/tpr-service';
   }
 
+  private function updateService(int $id, string $langcode) : void {
+    $expected = [
+      'name' => sprintf('Service %s %s', $id, $langcode),
+      'description' => sprintf('Description %s %s', $id, $langcode),
+      'summary' => sprintf('Summary %s %s', $id, $langcode),
+    ];
+    $service = Service::load($id)->getTranslation($langcode);
+    $service->set('name', $expected['name'])
+      ->set('description', [
+        'value' => $expected['description'],
+        'summary' => $expected['summary'],
+      ])
+      ->set('errand_services', [])
+      ->set('links', [])
+      ->save();
+
+    $service = Service::load($id)->getTranslation($langcode);
+    $this->assertEquals($expected['name'], $service->label());
+    $this->assertEquals($expected['description'], $service->get('description')->value);
+    $this->assertEquals($expected['summary'], $service->get('description')->summary);
+    $this->assertEquals(0, $service->get('errand_services')->count());
+    $this->assertEquals(0, $service->get('links')->count());
+
+  }
+
   /**
    * Tests list view permissions, updating, and publishing services.
    */
   public function testList() : void {
-    parent::testList();
+    $this->assertListPermissions();
 
     // Migrate entities and make sure we can see all entities from fixture.
-    $this->runMigrate();
-    $expected = ['fi' => 2, 'en' => 2, 'sv' => 1];
+    $responses = $this->fixture('tpr_service')->getMockResponses();
+
+    // Responses for migrate update action.
+    $services = array_filter($this->fixture('tpr_service')->getMockData(), function (array $service) {
+      return $service['fi']['id'] === 7822 || $service['fi']['id'] === 7716;
+    });
+
+    foreach ($services as $service) {
+      $responses[] = new Response(200, [], json_encode($service));
+    }
+
+    $this->runServiceMigrate($responses);
+
+    $expected = ['fi' => 6, 'en' => 4, 'sv' => 4];
 
     foreach ($expected as $language => $total) {
       $this->drupalGet($this->adminListPath, [
@@ -68,31 +89,45 @@ class ServiceListTest extends ListTestBase {
     }
 
     // Make sure we can run 'update' action on multiple entities.
-    Service::load('2773')->set('name', 'Test 1')->save();
+    $this->updateService(7822, 'fi');
+    $this->updateService(7716, 'fi');
     $query = [
       'language' => 'fi',
       'langcode' => 'fi',
-      'order' => 'changed',
+      'order' => 'id',
       'sort' => 'desc',
     ];
     $this->drupalGet($this->adminListPath, [
       'query' => $query,
     ]);
-
-    $this->assertSession()->pageTextContains('Test 1');
-    $this->assertSession()->pageTextContains('Koulun kerhotoiminta');
+    $this->assertSession()->linkExists('Service 7822 fi');
+    $this->assertSession()->linkExists('Service 7716 fi');
 
     $form_data = [
       'action' => 'tpr_service_update_action',
-      // The list is sorted by changed timestamp so our updated entities
-      // should be at the top of the list.
       'tpr_service_bulk_form[0]' => 1,
+      'tpr_service_bulk_form[1]' => 1,
     ];
     $this->submitForm($form_data, 'Apply to selected items');
 
-    $this->assertSession()->pageTextNotContains('Test 1');
-    $this->assertSession()->pageTextContains('Perusopetus');
-    $this->assertSession()->pageTextContains('Koulun kerhotoiminta');
+    // Make sure data is updated visually when we run the individual
+    // migration.
+    $this->assertSession()->linkNotExists('Service 7822 fi');
+    $this->assertSession()->linkNotExists('Service 7716 fi');
+    $this->assertSession()->linkExists('Digituki');
+    $this->assertSession()->linkExists('Parkletit');
+
+    $storage = \Drupal::entityTypeManager()->getStorage('tpr_service');
+    // Make sure service data is updated back to normal.
+    foreach ($services as $service) {
+      $service = $service['fi'];
+      $storage->resetCache([$service['id']]);
+      $entity = $storage->load($service['id'])->getTranslation('fi');
+
+      $this->assertEquals($service['title'], $entity->label());
+      $this->assertEquals(count($service['exact_errand_services']), $entity->get('errand_services')->count());
+      $this->assertEquals(count($service['links']), $entity->get('links')->count());
+    }
 
     // Make sure we can use actions to publish and unpublish content.
     $this->assertPublishAction('tpr_service', $query);

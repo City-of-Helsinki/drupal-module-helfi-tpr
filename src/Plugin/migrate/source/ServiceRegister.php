@@ -40,16 +40,6 @@ class ServiceRegister extends TprSourceBase {
   /**
    * {@inheritdoc}
    */
-  protected function getCanonicalBaseUrl() : string {
-    if (!isset($this->configuration['canonical_url'])) {
-      throw new \InvalidArgumentException('The "canonical_url" configuration is missing.');
-    }
-    return $this->configuration['canonical_url'];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   protected function initializeSingleImportIterator(): \Iterator {
     foreach ($this->entityIds as $entityId) {
       $content = [];

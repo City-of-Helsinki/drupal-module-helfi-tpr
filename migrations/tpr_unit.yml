@@ -21,6 +21,7 @@ source:
     - short_desc
   track_changes: true
   url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/?newfeatures=yes'
+  canonical_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/?newfeatures=yes'
   accessibility_sentences_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/accessibility_sentence/'
   connections_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/connection/'
   services_url: 'https://city-of-helsinki.github.io/drupal-tpr-aggregator/unitservices.json'

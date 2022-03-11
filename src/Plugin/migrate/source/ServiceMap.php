@@ -48,7 +48,14 @@ class ServiceMap extends TprSourceBase implements ContainerFactoryPluginInterfac
    */
   protected function initializeSingleImportIterator(): \Iterator {
     foreach ($this->entityIds as $entityId) {
-      $content = $this->getContent($this->buildCanonicalUrl($entityId));
+      $content = $this->getContent($this->buildCanonicalUrl((string) $entityId));
+
+      // Map service descriptions.
+      if (isset($content['service_descriptions'])) {
+        $content['services'] = array_map(function (array $description) {
+          return $description['id'];
+        }, $content['service_descriptions']);
+      }
 
       yield from $this->normalizeMultilingualData($content);
     }

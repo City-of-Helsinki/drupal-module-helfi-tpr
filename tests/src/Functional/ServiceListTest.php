@@ -31,6 +31,14 @@ class ServiceListTest extends ListTestBase {
     $this->adminListPath = '/admin/content/integrations/tpr-service';
   }
 
+  /**
+   * Update service data.
+   *
+   * @param int $id
+   *   The id.
+   * @param string $langcode
+   *   The langcode.
+   */
   private function updateService(int $id, string $langcode) : void {
     $expected = [
       'name' => sprintf('Service %s %s', $id, $langcode),

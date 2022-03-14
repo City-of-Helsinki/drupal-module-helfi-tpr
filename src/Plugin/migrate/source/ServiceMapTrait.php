@@ -63,6 +63,10 @@ trait ServiceMapTrait {
         $item['accessibility_sentences'] = $this->normalizeAccessibilitySentences($item['accessibility_sentences'], $language);
       }
 
+      if (isset($item['service_descriptions'])) {
+        $item['service_descriptions'] = $this->normalizeServices($item['service_descriptions']);
+      }
+
       // Add scheme to www URL if missing from TPR data.
       if (isset($item['www']) && !parse_url($item['www'], PHP_URL_SCHEME)) {
         $item['www'] = 'https://' . $item['www'];
@@ -70,6 +74,29 @@ trait ServiceMapTrait {
 
       yield $item;
     }
+  }
+
+  /**
+   * Normalizes the services.
+   *
+   * @param array $services
+   *   The services to normalize.
+   *
+   * @return int[]
+   *   An array of service ids.
+   */
+  protected function normalizeServices(array $services) : array {
+    $items = [];
+
+    foreach ($services as $service) {
+      // Unit list endpoint doesn't return services, so we have to
+      // aggregate them and fetch separately from our custom endpoint.
+      if (isset($service['services'])) {
+        return $service['services'];
+      }
+      $items[] = $service['id'];
+    }
+    return $items;
   }
 
   /**

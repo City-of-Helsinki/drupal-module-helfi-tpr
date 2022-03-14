@@ -4,10 +4,8 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\helfi_tpr\Functional;
 
+use donatj\MockWebServer\Response;
 use Drupal\helfi_tpr\Entity\Service;
-use Drupal\Tests\helfi_api_base\Traits\ApiTestTrait;
-use Drupal\Tests\helfi_tpr\Traits\TprMigrateTrait;
-use GuzzleHttp\Psr7\Response;
 
 /**
  * Tests Service entity's list functionality.
@@ -16,8 +14,10 @@ use GuzzleHttp\Psr7\Response;
  */
 class ServiceListTest extends ListTestBase {
 
-  use ApiTestTrait;
-  use TprMigrateTrait;
+  /**
+   * {@inheritdoc}
+   */
+  protected string $entityType = 'tpr_service';
 
   /**
    * {@inheritdoc}
@@ -32,6 +32,17 @@ class ServiceListTest extends ListTestBase {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  protected function populateMockQueue(): void {
+    foreach ($this->fixture($this->entityType)->getMockData() as $item) {
+      $url = sprintf('/%s/%s', $this->entityType, $item['fi']['id']);
+      $this->webServer
+        ->setResponseOfPath($url, new Response(json_encode($item['fi'])));
+    }
+  }
+
+  /**
    * Update service data.
    *
    * @param int $id
@@ -39,14 +50,14 @@ class ServiceListTest extends ListTestBase {
    * @param string $langcode
    *   The langcode.
    */
-  private function updateService(int $id, string $langcode) : void {
+  private function updateListEntity(int $id, string $langcode) : void {
     $expected = [
       'name' => sprintf('Service %s %s', $id, $langcode),
       'description' => sprintf('Description %s %s', $id, $langcode),
       'summary' => sprintf('Summary %s %s', $id, $langcode),
     ];
-    $service = Service::load($id)->getTranslation($langcode);
-    $service->set('name', $expected['name'])
+    $entity = Service::load($id)->getTranslation($langcode);
+    $entity->set('name', $expected['name'])
       ->set('description', [
         'value' => $expected['description'],
         'summary' => $expected['summary'],
@@ -55,12 +66,12 @@ class ServiceListTest extends ListTestBase {
       ->set('links', [])
       ->save();
 
-    $service = Service::load($id)->getTranslation($langcode);
-    $this->assertEquals($expected['name'], $service->label());
-    $this->assertEquals($expected['description'], $service->get('description')->value);
-    $this->assertEquals($expected['summary'], $service->get('description')->summary);
-    $this->assertEquals(0, $service->get('errand_services')->count());
-    $this->assertEquals(0, $service->get('links')->count());
+    $entity = Service::load($id)->getTranslation($langcode);
+    $this->assertEquals($expected['name'], $entity->label());
+    $this->assertEquals($expected['description'], $entity->get('description')->value);
+    $this->assertEquals($expected['summary'], $entity->get('description')->summary);
+    $this->assertEquals(0, $entity->get('errand_services')->count());
+    $this->assertEquals(0, $entity->get('links')->count());
 
   }
 
@@ -69,20 +80,7 @@ class ServiceListTest extends ListTestBase {
    */
   public function testList() : void {
     $this->assertListPermissions();
-
-    // Migrate entities and make sure we can see all entities from fixture.
-    $responses = $this->fixture('tpr_service')->getMockResponses();
-
-    // Responses for migrate update action.
-    $services = array_filter($this->fixture('tpr_service')->getMockData(), function (array $service) {
-      return $service['fi']['id'] === 7822 || $service['fi']['id'] === 7716;
-    });
-
-    foreach ($services as $service) {
-      $responses[] = new Response(200, [], json_encode($service));
-    }
-
-    $this->runServiceMigrate($responses);
+    $this->runServiceMigrate();
 
     $expected = ['fi' => 6, 'en' => 4, 'sv' => 4];
 
@@ -97,8 +95,8 @@ class ServiceListTest extends ListTestBase {
     }
 
     // Make sure we can run 'update' action on multiple entities.
-    $this->updateService(7822, 'fi');
-    $this->updateService(7716, 'fi');
+    $this->updateListEntity(7822, 'fi');
+    $this->updateListEntity(7716, 'fi');
     $query = [
       'language' => 'fi',
       'langcode' => 'fi',
@@ -125,20 +123,21 @@ class ServiceListTest extends ListTestBase {
     $this->assertSession()->linkExists('Digituki');
     $this->assertSession()->linkExists('Parkletit');
 
-    $storage = \Drupal::entityTypeManager()->getStorage('tpr_service');
+    $storage = \Drupal::entityTypeManager()->getStorage($this->entityType);
+    $items = $this->fixture($this->entityType)->getMockData();
     // Make sure service data is updated back to normal.
-    foreach ($services as $service) {
-      $service = $service['fi'];
-      $storage->resetCache([$service['id']]);
-      $entity = $storage->load($service['id'])->getTranslation('fi');
+    foreach ($items as $item) {
+      $item = $item['fi'];
+      $storage->resetCache([$item['id']]);
+      $entity = $storage->load($item['id'])->getTranslation('fi');
 
-      $this->assertEquals($service['title'], $entity->label());
-      $this->assertEquals(count($service['exact_errand_services']), $entity->get('errand_services')->count());
-      $this->assertEquals(count($service['links']), $entity->get('links')->count());
+      $this->assertEquals($item['title'], $entity->label());
+      $this->assertEquals(count($item['exact_errand_services']), $entity->get('errand_services')->count());
+      $this->assertEquals(count($item['links']), $entity->get('links')->count());
     }
 
     // Make sure we can use actions to publish and unpublish content.
-    $this->assertPublishAction('tpr_service', $query);
+    $this->assertPublishAction($this->entityType, $query);
   }
 
 }

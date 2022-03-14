@@ -35,10 +35,17 @@ final class MigrationConfigurationSubscriber implements EventSubscriberInterface
     $config = $this->configFactory
       ->get('helfi_tpr.migration_settings.' . $event->migration->id());
 
-    if (!$config || !$url = $config->get('url')) {
+    if (!$config) {
       return;
     }
-    $event->configuration['url'] = $url;
+
+    if ($url = $config->get('url')) {
+      $event->configuration['url'] = $url;
+    }
+
+    if ($canonicalUrl = $config->get('canonical_url')) {
+      $event->configuration['canonical_url'] = $canonicalUrl;
+    }
   }
 
   /**

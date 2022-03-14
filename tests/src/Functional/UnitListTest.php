@@ -4,10 +4,8 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\helfi_tpr\Functional;
 
+use donatj\MockWebServer\Response;
 use Drupal\helfi_tpr\Entity\Unit;
-use Drupal\Tests\helfi_api_base\Traits\ApiTestTrait;
-use Drupal\Tests\helfi_tpr\Traits\TprMigrateTrait;
-use GuzzleHttp\Psr7\Response;
 
 /**
  * Tests Unit entity's list functionality.
@@ -16,8 +14,10 @@ use GuzzleHttp\Psr7\Response;
  */
 class UnitListTest extends ListTestBase {
 
-  use ApiTestTrait;
-  use TprMigrateTrait;
+  /**
+   * {@inheritdoc}
+   */
+  protected string $entityType = 'tpr_unit';
 
   /**
    * {@inheritdoc}
@@ -32,6 +32,17 @@ class UnitListTest extends ListTestBase {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  protected function populateMockQueue(): void {
+    foreach ($this->fixture($this->entityType)->getMockData() as $item) {
+      $url = sprintf('/%s/%s', $this->entityType, $item['id']);
+      $this->webServer
+        ->setResponseOfPath($url, new Response(json_encode($item)));
+    }
+  }
+
+  /**
    * Modifies the unit with random data.
    *
    * @param int $unitId
@@ -41,14 +52,14 @@ class UnitListTest extends ListTestBase {
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  private function updateUnit(int $unitId, string $langcode) : void {
+  private function updateListEntity(int $unitId, string $langcode) : void {
     $expected = [
       'name' => sprintf('Test %s %s', $unitId, $langcode),
       'description' => sprintf('Description %s %s', $unitId, $langcode),
       'summary' => sprintf('Summary %s %s', $unitId, $langcode),
     ];
-    $unit = Unit::load($unitId)->getTranslation($langcode);
-    $unit->set('name', $expected['name'])
+    $entity = Unit::load($unitId)->getTranslation($langcode);
+    $entity->set('name', $expected['name'])
       ->set('services', [])
       ->set('description', [
         'value' => $expected['description'],
@@ -57,12 +68,12 @@ class UnitListTest extends ListTestBase {
       ->set('accessibility_sentences', [])
       ->save();
 
-    $unit = Unit::load($unitId)->getTranslation($langcode);
-    $this->assertEquals($expected['name'], $unit->label());
-    $this->assertEquals($expected['description'], $unit->get('description')->value);
-    $this->assertEquals($expected['summary'], $unit->get('description')->summary);
-    $this->assertEquals(0, $unit->get('accessibility_sentences')->count());
-    $this->assertEquals(0, $unit->get('services')->count());
+    $entity = Unit::load($unitId)->getTranslation($langcode);
+    $this->assertEquals($expected['name'], $entity->label());
+    $this->assertEquals($expected['description'], $entity->get('description')->value);
+    $this->assertEquals($expected['summary'], $entity->get('description')->summary);
+    $this->assertEquals(0, $entity->get('accessibility_sentences')->count());
+    $this->assertEquals(0, $entity->get('services')->count());
   }
 
   /**
@@ -70,23 +81,7 @@ class UnitListTest extends ListTestBase {
    */
   public function testList() : void {
     $this->assertListPermissions();
-
-    // Response for initial migration.
-    $responses = $this->fixture('tpr_unit')->getMockResponses();
-
-    $units = array_filter($this->fixture('tpr_unit')->getMockData(), function (array $unit) {
-      return $unit['id'] === 67763 || $unit['id'] === 63115;
-    });
-
-    // Responses for migrate update action.
-    foreach ($units as $unit) {
-      $responses[] = new Response(200, [], json_encode($unit));
-      // Connections and accessibility sentences requests.
-      $responses[] = new Response(200, [], json_encode([]));
-      $responses[] = new Response(200, [], json_encode([]));
-    }
-    // Migrate entities and make sure we can see all entities from fixture.
-    $this->runUnitMigrate($responses);
+    $this->runUnitMigrate();
 
     $expected = ['fi' => 5, 'en' => 4, 'sv' => 4];
 
@@ -101,8 +96,8 @@ class UnitListTest extends ListTestBase {
     }
 
     // Make sure we can run 'update' action on multiple entities.
-    $this->updateUnit(67763, 'fi');
-    $this->updateUnit(63115, 'fi');
+    $this->updateListEntity(67763, 'fi');
+    $this->updateListEntity(63115, 'fi');
     $query = [
       'language' => 'fi',
       'langcode' => 'fi',
@@ -129,21 +124,23 @@ class UnitListTest extends ListTestBase {
     $this->assertSession()->linkExists('Peijaksen sairaala');
     $this->assertSession()->linkExists('Lippulaivan kirjasto');
 
-    $storage = \Drupal::entityTypeManager()->getStorage('tpr_unit');
-    // Make sure unit data is updated back to normal.
-    foreach ($units as $unit) {
-      $storage->resetCache([$unit['id']]);
-      $entity = $storage->load($unit['id'])->getTranslation('fi');
+    $storage = \Drupal::entityTypeManager()->getStorage($this->entityType);
+    $items = $this->fixture($this->entityType)->getMockData();
 
-      $this->assertEquals($unit['name_fi'], $entity->label());
-      $this->assertNotEquals(sprintf('Description %s fi', $unit['id']), $entity->get('description')->value);
-      $this->assertNotEquals(sprintf('Summary %s fi', $unit['id']), $entity->get('description')->summary);
-      $this->assertEquals(count($unit['service_descriptions']), $entity->get('services')->count());
-      $this->assertEquals(count($unit['accessibility_sentences']), $entity->get('accessibility_sentences')->count());
+    // Make sure entity data is updated back to normal.
+    foreach ($items as $item) {
+      $storage->resetCache([$item['id']]);
+      $entity = $storage->load($item['id'])->getTranslation('fi');
+
+      $this->assertEquals($item['name_fi'], $entity->label());
+      $this->assertNotEquals(sprintf('Description %s fi', $item['id']), $entity->get('description')->value);
+      $this->assertNotEquals(sprintf('Summary %s fi', $item['id']), $entity->get('description')->summary);
+      $this->assertEquals(count($item['service_descriptions']), $entity->get('services')->count());
+      $this->assertEquals(count($item['accessibility_sentences']), $entity->get('accessibility_sentences')->count());
     }
 
     // Make sure we can use actions to publish and unpublish content.
-    $this->assertPublishAction('tpr_unit', $query);
+    $this->assertPublishAction($this->entityType, $query);
   }
 
 }

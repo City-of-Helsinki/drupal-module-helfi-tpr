@@ -4,8 +4,11 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\helfi_tpr\Functional;
 
+use donatj\MockWebServer\Response;
 use Drupal\Tests\helfi_api_base\Functional\MigrationTestBase;
 use Drupal\Tests\helfi_api_base\Traits\ApiTestTrait;
+use Drupal\Tests\helfi_api_base\Traits\WebServerTestTrait;
+use Drupal\Tests\helfi_tpr\Traits\TprMigrateTrait;
 
 /**
  * Tests entity list functionality.
@@ -15,6 +18,8 @@ use Drupal\Tests\helfi_api_base\Traits\ApiTestTrait;
 abstract class ListTestBase extends MigrationTestBase {
 
   use ApiTestTrait;
+  use WebServerTestTrait;
+  use TprMigrateTrait;
 
   /**
    * {@inheritdoc}
@@ -42,6 +47,32 @@ abstract class ListTestBase extends MigrationTestBase {
    * @var array
    */
   protected array $listPermissions;
+
+  /**
+   * The entity type.
+   *
+   * @var string
+   */
+  protected string $entityType;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp(): void {
+    parent::setUp();
+    $this->startWebServer();
+
+    // Use our mock server as canonical url.
+    $this->config('helfi_tpr.migration_settings.' . $this->entityType)
+      ->set('canonical_url', $this->getMockWebServerBaseUrl($this->entityType))
+      ->save();
+    $this->populateMockQueue();
+  }
+
+  /**
+   * Populates the mock queue.
+   */
+  abstract protected function populateMockQueue() : void;
 
   /**
    * Tests list view permissions.

@@ -46,7 +46,7 @@ class ServiceRegister extends TprSourceBase {
       // We don't know which translation we're trying to update so make sure
       // to update every translation.
       foreach (['fi', 'en', 'sv'] as $language) {
-        $url = $this->buildCanonicalUrl($entityId) . '?language=' . $language;
+        $url = $this->buildCanonicalUrl((string) $entityId) . '?language=' . $language;
 
         if (!$data = $this->getContent($url)) {
           continue;

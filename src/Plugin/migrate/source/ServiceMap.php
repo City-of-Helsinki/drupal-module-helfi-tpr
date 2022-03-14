@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
 use Drupal\Component\Datetime\DateTimePlus;
-use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 
 /**
@@ -34,12 +33,16 @@ class ServiceMap extends TprSourceBase implements ContainerFactoryPluginInterfac
   }
 
   /**
+   * The extra unit data.
+   *
+   * @var array
+   */
+  protected static array $extraUnitData = [];
+
+  /**
    * {@inheritdoc}
    */
   public function count($refresh = FALSE) {
-    if (!$this->count) {
-      $this->count = count($this->getContent($this->configuration['url']));
-    }
     return $this->count;
   }
 
@@ -49,13 +52,6 @@ class ServiceMap extends TprSourceBase implements ContainerFactoryPluginInterfac
   protected function initializeSingleImportIterator(): \Iterator {
     foreach ($this->entityIds as $entityId) {
       $content = $this->getContent($this->buildCanonicalUrl((string) $entityId));
-
-      // Map service descriptions.
-      if (isset($content['service_descriptions'])) {
-        $content['services'] = array_map(function (array $description) {
-          return $description['id'];
-        }, $content['service_descriptions']);
-      }
 
       yield from $this->normalizeMultilingualData($content);
     }
@@ -75,7 +71,7 @@ class ServiceMap extends TprSourceBase implements ContainerFactoryPluginInterfac
    *   The data.
    */
   protected function getExtraUnitData(int $unitId, string $type, string $url) : array {
-    static $data;
+    static $data = [];
 
     if (!isset($data[$type])) {
       $content = $this->getContent($url);
@@ -119,7 +115,7 @@ class ServiceMap extends TprSourceBase implements ContainerFactoryPluginInterfac
       $extraData = [
         'accessibility_sentences_url' => 'accessibility_sentences',
         'connections_url' => 'connections',
-        'services_url' => 'services',
+        'services_url' => 'service_descriptions',
       ];
 
       // Combine all extra unit data from other endpoints into one.
@@ -131,14 +127,6 @@ class ServiceMap extends TprSourceBase implements ContainerFactoryPluginInterfac
           $object['id'],
           $keyName,
           $this->configuration[$urlKey]
-        );
-      }
-
-      // Flatten services.
-      if (isset($object['services'])) {
-        $object['services'] = NestedArray::getValue(
-          $object['services'],
-          [0, 'services']
         );
       }
 

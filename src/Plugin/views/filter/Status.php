@@ -14,14 +14,16 @@ use Drupal\views\Plugin\views\filter\FilterPluginBase;
  */
 class Status extends FilterPluginBase {
 
-  public function adminSummary() {}
-
-  protected function operatorForm(&$form, FormStateInterface $form_state) {}
-
+  /**
+   * {@inheritdoc}
+   */
   public function canExpose() {
     return FALSE;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function query() {
     $table = $this->ensureMyTable();
     $snippet = "$table.content_translation_status = 1 OR ***VIEW_UNPUBLISHED_TPR_ENTITIES*** = 1";

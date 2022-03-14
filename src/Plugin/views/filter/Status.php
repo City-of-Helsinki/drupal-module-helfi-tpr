@@ -2,7 +2,6 @@
 
 namespace Drupal\helfi_tpr\Plugin\views\filter;
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
 
 /**

@@ -20,7 +20,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\helfi_tpr\Entity\Listing\ListBuilder",
- *     "views_data" = "Drupal\views\EntityViewsData",
+ *     "views_data" = "Drupal\helfi_tpr\TprViewsData",
  *     "access" = "Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess",
  *     "translation" = "Drupal\helfi_tpr\Entity\TranslationHandler",
  *     "form" = {

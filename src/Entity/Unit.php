@@ -21,7 +21,7 @@ use Webmozart\Assert\Assert;
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\helfi_tpr\Entity\Listing\ListBuilder",
- *     "views_data" = "Drupal\views\EntityViewsData",
+ *     "views_data" = "Drupal\helfi_tpr\TprViewsData",
  *     "access" = "Drupal\entity\EntityAccessControlHandler",
  *     "permission_provider" = "Drupal\entity\EntityPermissionProvider",
  *     "translation" = "Drupal\helfi_tpr\Entity\TranslationHandler",

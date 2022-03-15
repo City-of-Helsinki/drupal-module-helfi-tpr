@@ -66,6 +66,7 @@ final class ErrandService extends FixtureBase {
 
           $channels[] = [
             'id' => $channelId,
+            'name' => sprintf('Channel %s %s %s', $id, $language, $channelId),
             'type_string' => sprintf('%s email %s %s', $id, $language, $channelId),
             'email' => sprintf('%s.email.%s.%s@hel.fi', $id, $language, $channelId),
             'phone' => sprintf('%s-123456-%s-%s', $id, $language, $channelId),

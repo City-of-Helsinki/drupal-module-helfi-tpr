@@ -4,9 +4,8 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\helfi_tpr\Functional;
 
+use donatj\MockWebServer\Response;
 use Drupal\helfi_tpr\Entity\Service;
-use Drupal\Tests\helfi_api_base\Traits\ApiTestTrait;
-use GuzzleHttp\Psr7\Response;
 
 /**
  * Tests Service entity's list functionality.
@@ -15,25 +14,10 @@ use GuzzleHttp\Psr7\Response;
  */
 class ServiceListTest extends ListTestBase {
 
-  use ApiTestTrait;
-
   /**
-   * Migrates the tpr service entities.
+   * {@inheritdoc}
    */
-  private function runMigrate() : void {
-    $fixture = $this->getFixture('helfi_tpr', 'service.json');
-    $responses = [
-      new Response(200, [], $fixture),
-    ];
-
-    foreach (json_decode($fixture, TRUE) as $item) {
-      // Update actions.
-      $responses[] = new Response(200, [], json_encode($item));
-    }
-
-    $this->container->set('http_client', $this->createMockHttpClient($responses));
-    $this->executeMigration('tpr_service');
-  }
+  protected string $entityType = 'tpr_service';
 
   /**
    * {@inheritdoc}
@@ -48,54 +32,112 @@ class ServiceListTest extends ListTestBase {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  protected function populateMockQueue(): void {
+    foreach ($this->fixture($this->entityType)->getMockData() as $item) {
+      $url = sprintf('/%s/%s', $this->entityType, $item['fi']['id']);
+      $this->webServer
+        ->setResponseOfPath($url, new Response(json_encode($item['fi'])));
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function assertUpdateListEntity(string $langcode) : array {
+    $assertionData = [];
+
+    foreach ([7822, 7716] as $id) {
+      $expected = [
+        'name' => sprintf('Service %s %s', $id, $langcode),
+        'description' => sprintf('Description %s %s', $id, $langcode),
+        'summary' => sprintf('Summary %s %s', $id, $langcode),
+      ];
+      $entity = Service::load($id)->getTranslation($langcode);
+
+      $assertionData[$id] = [
+        'label' => $entity->label(),
+        'placeholderLabel' => $expected['name'],
+      ];
+
+      $entity->set('name', $expected['name'])
+        ->set('description', [
+          'value' => $expected['description'],
+          'summary' => $expected['summary'],
+        ])
+        ->set('errand_services', [])
+        ->set('links', [])
+        ->save();
+
+      $entity = Service::load($id)->getTranslation($langcode);
+      $this->assertEquals($expected['name'], $entity->label());
+      $this->assertEquals($expected['description'], $entity->get('description')->value);
+      $this->assertEquals($expected['summary'], $entity->get('description')->summary);
+      $this->assertEquals(0, $entity->get('errand_services')->count());
+      $this->assertEquals(0, $entity->get('links')->count());
+    }
+    return $assertionData;
+  }
+
+  /**
    * Tests list view permissions, updating, and publishing services.
    */
   public function testList() : void {
-    parent::testList();
+    $this->assertListPermissions();
+    $this->runServiceMigrate();
 
-    // Migrate entities and make sure we can see all entities from fixture.
-    $this->runMigrate();
-    $expected = ['fi' => 2, 'en' => 2, 'sv' => 1];
-
-    foreach ($expected as $language => $total) {
-      $this->drupalGet($this->adminListPath, [
-        'query' => [
-          'langcode' => $language,
-          'language' => $language,
+    $this->assertExpectedListItems([
+      'fi' => [
+        'numItems' => 6,
+        'expectedTitles' => [
+          'Service fi 1',
+          'Service fi 2',
+          'Service fi 3',
+          'Sosiaalineuvonta',
+          'Parkletit',
+          'Digituki',
         ],
-      ]);
-      $this->assertSession()->pageTextContains(sprintf('Displaying %d - %d of %d', ($total > 0 ? 1 : 0), $total, $total));
-    }
-
-    // Make sure we can run 'update' action on multiple entities.
-    Service::load('2773')->set('name', 'Test 1')->save();
-    $query = [
-      'language' => 'fi',
-      'langcode' => 'fi',
-      'order' => 'changed',
-      'sort' => 'desc',
-    ];
-    $this->drupalGet($this->adminListPath, [
-      'query' => $query,
+      ],
+      'en' => [
+        'numItems' => 4,
+        'expectedTitles' => [
+          'Service en 1',
+          'Service en 2',
+          'Service en 3',
+          'Social welfare counselling',
+        ],
+      ],
+      'sv' => [
+        'numItems' => 4,
+        'expectedTitles' => [
+          'Service sv 1',
+          'Service sv 2',
+          'Service sv 3',
+          'Socialrådgivning',
+        ],
+      ],
     ]);
 
-    $this->assertSession()->pageTextContains('Test 1');
-    $this->assertSession()->pageTextContains('Koulun kerhotoiminta');
+    // Make sure we can run 'update' action.
+    // @todo Test other languages as well.
+    $this->assertUpdateAction(['fi']);
 
-    $form_data = [
-      'action' => 'tpr_service_update_action',
-      // The list is sorted by changed timestamp so our updated entities
-      // should be at the top of the list.
-      'tpr_service_bulk_form[0]' => 1,
-    ];
-    $this->submitForm($form_data, 'Apply to selected items');
+    $storage = \Drupal::entityTypeManager()->getStorage($this->entityType);
+    $items = $this->fixture($this->entityType)->getMockData();
+    // Make sure service data is updated back to normal.
+    foreach ($items as $item) {
+      $item = $item['fi'];
+      $storage->resetCache([$item['id']]);
+      $entity = $storage->load($item['id'])->getTranslation('fi');
 
-    $this->assertSession()->pageTextNotContains('Test 1');
-    $this->assertSession()->pageTextContains('Perusopetus');
-    $this->assertSession()->pageTextContains('Koulun kerhotoiminta');
+      $this->assertEquals($item['title'], $entity->label());
+      $this->assertEquals(count($item['exact_errand_services']), $entity->get('errand_services')->count());
+      $this->assertEquals(count($item['links']), $entity->get('links')->count());
+    }
 
     // Make sure we can use actions to publish and unpublish content.
-    $this->assertPublishAction('tpr_service', $query);
+    $this->assertPublishAction();
   }
 
 }

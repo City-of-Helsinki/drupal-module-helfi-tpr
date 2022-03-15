@@ -13,13 +13,15 @@ use GuzzleHttp\Psr7\Response;
 final class Service extends FixtureBase {
 
   /**
-   * {@inheritdoc}
+   * Gets the mock data.
+   *
+   * @return array
+   *   The mock data.
    */
-  public function getMockResponses() : array {
+  public function getMockData() : array {
     $services = [
       [
         'id' => 1,
-        'unit_ids' => ['1'],
       ],
       [
         'id' => 2,
@@ -342,7 +344,14 @@ Clients of social welfare counselling can be directed to other services in accor
         ],
       ],
     ];
+    return $services;
+  }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getMockResponses() : array {
+    $services = $this->getMockData();
     return [
       new Response(200, [], json_encode($services)),
     ];

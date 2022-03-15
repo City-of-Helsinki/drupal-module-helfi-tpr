@@ -603,3 +603,21 @@ function helfi_tpr_update_8032() : void {
       ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
   }
 }
+
+/**
+ * Adds update action for errand services.
+ */
+function helfi_tpr_update_8035() : void {
+  $config_path = \Drupal::service('extension.list.module')
+    ->getPath('helfi_tpr') . '/config/install';
+  $source = new FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+
+  $actions = [
+    'system.action.tpr_errand_service_update_action',
+  ];
+
+  foreach ($actions as $action) {
+    $config_storage->write($action, $source->read($action));
+  }
+}

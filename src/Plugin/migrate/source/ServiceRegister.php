@@ -31,20 +31,7 @@ class ServiceRegister extends TprSourceBase {
    * {@inheritdoc}
    */
   public function count($refresh = FALSE) : int {
-    if (!$this->count) {
-      $this->count = count($this->getContent($this->configuration['url']));
-    }
     return $this->count;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function getCanonicalBaseUrl() : string {
-    if (!isset($this->configuration['canonical_url'])) {
-      throw new \InvalidArgumentException('The "canonical_url" configuration is missing.');
-    }
-    return $this->configuration['canonical_url'];
   }
 
   /**
@@ -56,7 +43,7 @@ class ServiceRegister extends TprSourceBase {
       // We don't know which translation we're trying to update so make sure
       // to update every translation.
       foreach (['fi', 'en', 'sv'] as $language) {
-        $url = $this->buildCanonicalUrl($entityId) . '?language=' . $language;
+        $url = $this->buildCanonicalUrl((string) $entityId) . '?language=' . $language;
 
         if (!$data = $this->getContent($url)) {
           continue;

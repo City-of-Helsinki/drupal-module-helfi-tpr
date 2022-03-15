@@ -65,8 +65,10 @@ class AddressSearch extends FilterPluginBase {
     }
 
     // Calculate distances for each view result.
+    $results = $view->result;
     $distances = [];
-    foreach ($view->result as $result) {
+    foreach ($results as $result) {
+      /** @var $result \Drupal\views\ResultRow */
       if (empty($result->_entity->get('latitude')) || empty($result->_entity->get('longitude'))) {
         continue;
       }
@@ -75,10 +77,12 @@ class AddressSearch extends FilterPluginBase {
         (float) $coordinates['lon'],
         (float) $result->_entity->get('latitude')->getString(),
         (float) $result->_entity->get('longitude')->getString());
+
+      // Set the distance to computed field.
+      $result->_entity->set('distance', $distances[$result->_entity->get('id')->getString()]);
     }
 
     // Sort results by distances: nearest first.
-    $results = $view->result;
     uasort($results, function ($left, $right) use ($distances) {
       return match ($distances[$left->_entity->get('id')->getString()] >= $distances[$right->_entity->get('id')->getString()]) {
         FALSE => (-1),
@@ -139,10 +143,10 @@ class AddressSearch extends FilterPluginBase {
    * @param float $lonB
    *   Point B longitude.
    *
-   * @return float|int
+   * @return int
    *   Returns the distance in meters.
    */
-  protected static function calculateDistance(float $latA, float $lonA, float $latB, float $lonB): float|int {
+  protected static function calculateDistance(float $latA, float $lonA, float $latB, float $lonB): int {
     $rad = M_PI / 180;
     $radius = 6371000;
 
@@ -155,8 +159,8 @@ class AddressSearch extends FilterPluginBase {
     $lonDelta = $lonB - $lonA;
 
     // Calculate distance using the Haversine formula.
-    return 2 * $radius * asin(sqrt(pow(sin($latDelta / 2), 2) +
-        cos($latA) * cos($latB) * pow(sin($lonDelta / 2), 2)));
+    return (int) round(2 * $radius * asin(sqrt(pow(sin($latDelta / 2), 2) +
+        cos($latA) * cos($latB) * pow(sin($lonDelta / 2), 2))), 0);
   }
 
 }

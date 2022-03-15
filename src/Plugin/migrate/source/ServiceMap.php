@@ -33,13 +33,6 @@ class ServiceMap extends TprSourceBase implements ContainerFactoryPluginInterfac
   }
 
   /**
-   * The extra unit data.
-   *
-   * @var array
-   */
-  protected static array $extraUnitData = [];
-
-  /**
    * {@inheritdoc}
    */
   public function count($refresh = FALSE) {

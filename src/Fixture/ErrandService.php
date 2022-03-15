@@ -113,8 +113,9 @@ final class ErrandService extends FixtureBase {
    * {@inheritdoc}
    */
   public function getMockResponses() : array {
+    $services = $this->getMockData();
     return [
-      new Response(200, [], json_encode($this->getMockData())),
+      new Response(200, [], json_encode($services)),
     ];
   }
 

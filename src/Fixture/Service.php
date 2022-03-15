@@ -22,7 +22,6 @@ final class Service extends FixtureBase {
     $services = [
       [
         'id' => 1,
-        'unit_ids' => ['1'],
       ],
       [
         'id' => 2,
@@ -352,8 +351,9 @@ Clients of social welfare counselling can be directed to other services in accor
    * {@inheritdoc}
    */
   public function getMockResponses() : array {
+    $services = $this->getMockData();
     return [
-      new Response(200, [], json_encode($this->getMockData())),
+      new Response(200, [], json_encode($services)),
     ];
   }
 

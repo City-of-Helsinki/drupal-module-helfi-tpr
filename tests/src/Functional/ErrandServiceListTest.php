@@ -26,6 +26,7 @@ class ErrandServiceListTest extends ListTestBase {
     parent::setUp();
     $this->listPermissions = [
       'access remote entities overview',
+      'administer remote entities',
       'edit remote entities',
     ];
     $this->adminListPath = '/admin/content/integrations/tpr-errand-service';
@@ -43,33 +44,39 @@ class ErrandServiceListTest extends ListTestBase {
   }
 
   /**
-   * Updates the list entity.
-   *
-   * @param int $id
-   *   The entity id.
-   * @param string $langcode
-   *   The langcode.
+   * {@inheritdoc}
    */
-  private function updateListEntity(int $id, string $langcode) : void {
-    $expected = [
-      'name' => sprintf('Test %s %s', $id, $langcode),
-      'description' => sprintf('Description %s %s', $id, $langcode),
-    ];
-    $entity = ErrandService::load($id)->getTranslation($langcode);
-    $entity->set('name', $expected['name'])
-      ->set('channels', [])
-      ->set('description', [
-        'value' => $expected['description'],
-      ])
-      ->set('links', [])
-      ->save();
+  protected function assertUpdateListEntity(string $langcode) : array {
+    $assertionData = [];
 
-    $entity = ErrandService::load($id)->getTranslation($langcode);
+    foreach ([3, 2] as $id) {
+      $expected = [
+        'name' => sprintf('Test %s %s', $id, $langcode),
+        'description' => sprintf('Description %s %s', $id, $langcode),
+      ];
+      $entity = ErrandService::load($id)->getTranslation($langcode);
 
-    $this->assertEquals($expected['name'], $entity->label());
-    $this->assertEquals($expected['description'], $entity->get('description')->value);
-    $this->assertEquals(0, $entity->get('channels')->count());
-    $this->assertEquals(0, $entity->get('links')->count());
+      $assertionData[$id] = [
+        'label' => $entity->label(),
+        'placeholderLabel' => $expected['name'],
+      ];
+
+      $entity->set('name', $expected['name'])
+        ->set('channels', [])
+        ->set('description', [
+          'value' => $expected['description'],
+        ])
+        ->set('links', [])
+        ->save();
+
+      $entity = ErrandService::load($id)->getTranslation($langcode);
+
+      $this->assertEquals($expected['name'], $entity->label());
+      $this->assertEquals($expected['description'], $entity->get('description')->value);
+      $this->assertEquals(0, $entity->get('channels')->count());
+      $this->assertEquals(0, $entity->get('links')->count());
+    }
+    return $assertionData;
   }
 
   /**
@@ -79,48 +86,36 @@ class ErrandServiceListTest extends ListTestBase {
     $this->assertListPermissions();
     $this->runErrandServiceMigration();
 
-    $expected = ['fi' => 3, 'en' => 3, 'sv' => 3];
-
-    foreach ($expected as $language => $total) {
-      $this->drupalGet($this->adminListPath, [
-        'query' => [
-          'langcode' => $language,
-          'language' => $language,
+    $this->assertExpectedListItems([
+      'fi' => [
+        'numItems' => 3,
+        'expectedTitles' => [
+          'name fi 1',
+          'name fi 2',
+          'name fi 3',
         ],
-      ]);
-      $this->assertSession()->pageTextContains(sprintf('Displaying %d - %d of %d', ($total > 0 ? 1 : 0), $total, $total));
-    }
-
-    // Make sure we can run 'update' action on multiple entities.
-    $this->updateListEntity(3, 'fi');
-    $this->updateListEntity(2, 'fi');
-
-    $query = [
-      'language' => 'fi',
-      'langcode' => 'fi',
-      'order' => 'id',
-      'sort' => 'desc',
-    ];
-
-    $this->drupalGet($this->adminListPath, [
-      'query' => $query,
+      ],
+      'en' => [
+        'numItems' => 3,
+        'expectedTitles' => [
+          'name en 1',
+          'name en 2',
+          'name en 3',
+        ],
+      ],
+      'sv' => [
+        'numItems' => 3,
+        'expectedTitles' => [
+          'name sv 1',
+          'name sv 2',
+          'name sv 3',
+        ],
+      ],
     ]);
-    $this->assertSession()->pageTextContains('Test 3 fi');
-    $this->assertSession()->pageTextContains('Test 2 fi');
 
-    $form_data = [
-      'action' => 'tpr_errand_service_update_action',
-      'tpr_errand_service_bulk_form[0]' => 1,
-      'tpr_errand_service_bulk_form[1]' => 1,
-    ];
-    $this->submitForm($form_data, 'Apply to selected items');
-
-    // Make sure data is updated visually when we run the individual
-    // migration.
-    $this->assertSession()->pageTextNotContains('Test 3 fi');
-    $this->assertSession()->pageTextNotContains('Test 2 fi');
-    $this->assertSession()->pageTextContains('name fi 3');
-    $this->assertSession()->pageTextContains('name fi 2');
+    // Make sure we can run 'update' action.
+    // @todo Test other languages as well.
+    $this->assertUpdateAction(['fi']);
 
     $storage = \Drupal::entityTypeManager()->getStorage('tpr_errand_service');
     $items = $this->fixture('tpr_errand_service')->getMockData();
@@ -138,7 +133,7 @@ class ErrandServiceListTest extends ListTestBase {
     }
 
     // Make sure we can use actions to publish and unpublish content.
-    $this->assertPublishAction('tpr_errand_service', $query);
+    $this->assertPublishAction();
   }
 
 }

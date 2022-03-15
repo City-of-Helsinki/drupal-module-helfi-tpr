@@ -43,37 +43,42 @@ class UnitListTest extends ListTestBase {
   }
 
   /**
-   * Modifies the unit with random data.
-   *
-   * @param int $unitId
-   *   The unit id to update.
-   * @param string $langcode
-   *   The langcode.
-   *
-   * @throws \Drupal\Core\Entity\EntityStorageException
+   * {@inheritdoc}
    */
-  private function updateListEntity(int $unitId, string $langcode) : void {
-    $expected = [
-      'name' => sprintf('Test %s %s', $unitId, $langcode),
-      'description' => sprintf('Description %s %s', $unitId, $langcode),
-      'summary' => sprintf('Summary %s %s', $unitId, $langcode),
-    ];
-    $entity = Unit::load($unitId)->getTranslation($langcode);
-    $entity->set('name', $expected['name'])
-      ->set('services', [])
-      ->set('description', [
-        'value' => $expected['description'],
-        'summary' => $expected['summary'],
-      ])
-      ->set('accessibility_sentences', [])
-      ->save();
+  protected function assertUpdateListEntity(string $langcode) : array {
+    $assertionData = [];
 
-    $entity = Unit::load($unitId)->getTranslation($langcode);
-    $this->assertEquals($expected['name'], $entity->label());
-    $this->assertEquals($expected['description'], $entity->get('description')->value);
-    $this->assertEquals($expected['summary'], $entity->get('description')->summary);
-    $this->assertEquals(0, $entity->get('accessibility_sentences')->count());
-    $this->assertEquals(0, $entity->get('services')->count());
+    foreach ([67763, 63115] as $id) {
+      $expected = [
+        'name' => sprintf('Test %s %s', $id, $langcode),
+        'description' => sprintf('Description %s %s', $id, $langcode),
+        'summary' => sprintf('Summary %s %s', $id, $langcode),
+      ];
+      $entity = Unit::load($id)->getTranslation($langcode);
+
+      $assertionData[$id] = [
+        'label' => $entity->label(),
+        'placeholderLabel' => $expected['name'],
+      ];
+
+      $entity->set('name', $expected['name'])
+        ->set('services', [])
+        ->set('description', [
+          'value' => $expected['description'],
+          'summary' => $expected['summary'],
+        ])
+        ->set('accessibility_sentences', [])
+        ->save();
+
+      $entity = Unit::load($id)->getTranslation($langcode);
+      $this->assertEquals($expected['name'], $entity->label());
+      $this->assertEquals($expected['description'], $entity->get('description')->value);
+      $this->assertEquals($expected['summary'], $entity->get('description')->summary);
+      $this->assertEquals(0, $entity->get('accessibility_sentences')->count());
+      $this->assertEquals(0, $entity->get('services')->count());
+    }
+
+    return $assertionData;
   }
 
   /**
@@ -83,46 +88,40 @@ class UnitListTest extends ListTestBase {
     $this->assertListPermissions();
     $this->runUnitMigrate();
 
-    $expected = ['fi' => 5, 'en' => 4, 'sv' => 4];
-
-    foreach ($expected as $language => $total) {
-      $this->drupalGet($this->adminListPath, [
-        'query' => [
-          'langcode' => $language,
-          'language' => $language,
+    $this->assertExpectedListItems([
+      'fi' => [
+        'numItems' => 5,
+        'expectedTitles' => [
+          'Name fi 1',
+          'Viikin kampuskirjasto',
+          'Otaniemen kirjasto',
+          'Lippulaivan kirjasto',
+          'Peijaksen sairaala',
         ],
-      ]);
-      $this->assertSession()->pageTextContains(sprintf('Displaying %d - %d of %d', ($total > 0 ? 1 : 0), $total, $total));
-    }
-
-    // Make sure we can run 'update' action on multiple entities.
-    $this->updateListEntity(67763, 'fi');
-    $this->updateListEntity(63115, 'fi');
-    $query = [
-      'language' => 'fi',
-      'langcode' => 'fi',
-      'order' => 'id',
-      'sort' => 'desc',
-    ];
-    $this->drupalGet($this->adminListPath, [
-      'query' => $query,
+      ],
+      'en' => [
+        'numItems' => 4,
+        'expectedTitles' => [
+          'Name en 1',
+          'Viikin kampuskirjasto',
+          'Otaniemi library',
+          'Lippulaiva library',
+        ],
+      ],
+      'sv' => [
+        'numItems' => 4,
+        'expectedTitles' => [
+          'Name sv 1',
+          'Viikin kampuskirjasto',
+          'Otnäs bibliotek',
+          'Lippulaivabiblioteket',
+        ],
+      ],
     ]);
-    $this->assertSession()->linkExists('Test 67763 fi');
-    $this->assertSession()->linkExists('Test 63115 fi');
 
-    $form_data = [
-      'action' => 'tpr_unit_update_action',
-      'tpr_unit_bulk_form[0]' => 1,
-      'tpr_unit_bulk_form[1]' => 1,
-    ];
-    $this->submitForm($form_data, 'Apply to selected items');
-
-    // Make sure data is updated visually when we run the individual
-    // migration.
-    $this->assertSession()->linkNotExists('Test 67763 fi');
-    $this->assertSession()->linkNotExists('Test 63115 fi');
-    $this->assertSession()->linkExists('Peijaksen sairaala');
-    $this->assertSession()->linkExists('Lippulaivan kirjasto');
+    // Make sure we can run 'update' action.
+    // @todo Test other languages as well.
+    $this->assertUpdateAction(['fi']);
 
     $storage = \Drupal::entityTypeManager()->getStorage($this->entityType);
     $items = $this->fixture($this->entityType)->getMockData();
@@ -140,7 +139,7 @@ class UnitListTest extends ListTestBase {
     }
 
     // Make sure we can use actions to publish and unpublish content.
-    $this->assertPublishAction($this->entityType, $query);
+    $this->assertPublishAction();
   }
 
 }

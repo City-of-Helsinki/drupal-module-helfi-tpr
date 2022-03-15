@@ -31,9 +31,6 @@ class ServiceRegister extends TprSourceBase {
    * {@inheritdoc}
    */
   public function count($refresh = FALSE) : int {
-    if (!$this->count) {
-      $this->count = count($this->getContent($this->configuration['url']));
-    }
     return $this->count;
   }
 

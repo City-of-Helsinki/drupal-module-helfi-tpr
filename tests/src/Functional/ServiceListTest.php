@@ -43,36 +43,41 @@ class ServiceListTest extends ListTestBase {
   }
 
   /**
-   * Update service data.
-   *
-   * @param int $id
-   *   The id.
-   * @param string $langcode
-   *   The langcode.
+   * {@inheritdoc}
    */
-  private function updateListEntity(int $id, string $langcode) : void {
-    $expected = [
-      'name' => sprintf('Service %s %s', $id, $langcode),
-      'description' => sprintf('Description %s %s', $id, $langcode),
-      'summary' => sprintf('Summary %s %s', $id, $langcode),
-    ];
-    $entity = Service::load($id)->getTranslation($langcode);
-    $entity->set('name', $expected['name'])
-      ->set('description', [
-        'value' => $expected['description'],
-        'summary' => $expected['summary'],
-      ])
-      ->set('errand_services', [])
-      ->set('links', [])
-      ->save();
+  protected function assertUpdateListEntity(string $langcode) : array {
+    $assertionData = [];
 
-    $entity = Service::load($id)->getTranslation($langcode);
-    $this->assertEquals($expected['name'], $entity->label());
-    $this->assertEquals($expected['description'], $entity->get('description')->value);
-    $this->assertEquals($expected['summary'], $entity->get('description')->summary);
-    $this->assertEquals(0, $entity->get('errand_services')->count());
-    $this->assertEquals(0, $entity->get('links')->count());
+    foreach ([7822, 7716] as $id) {
+      $expected = [
+        'name' => sprintf('Service %s %s', $id, $langcode),
+        'description' => sprintf('Description %s %s', $id, $langcode),
+        'summary' => sprintf('Summary %s %s', $id, $langcode),
+      ];
+      $entity = Service::load($id)->getTranslation($langcode);
 
+      $assertionData[$id] = [
+        'label' => $entity->label(),
+        'placeholderLabel' => $expected['name'],
+      ];
+
+      $entity->set('name', $expected['name'])
+        ->set('description', [
+          'value' => $expected['description'],
+          'summary' => $expected['summary'],
+        ])
+        ->set('errand_services', [])
+        ->set('links', [])
+        ->save();
+
+      $entity = Service::load($id)->getTranslation($langcode);
+      $this->assertEquals($expected['name'], $entity->label());
+      $this->assertEquals($expected['description'], $entity->get('description')->value);
+      $this->assertEquals($expected['summary'], $entity->get('description')->summary);
+      $this->assertEquals(0, $entity->get('errand_services')->count());
+      $this->assertEquals(0, $entity->get('links')->count());
+    }
+    return $assertionData;
   }
 
   /**
@@ -82,46 +87,41 @@ class ServiceListTest extends ListTestBase {
     $this->assertListPermissions();
     $this->runServiceMigrate();
 
-    $expected = ['fi' => 6, 'en' => 4, 'sv' => 4];
-
-    foreach ($expected as $language => $total) {
-      $this->drupalGet($this->adminListPath, [
-        'query' => [
-          'langcode' => $language,
-          'language' => $language,
+    $this->assertExpectedListItems([
+      'fi' => [
+        'numItems' => 6,
+        'expectedTitles' => [
+          'Service fi 1',
+          'Service fi 2',
+          'Service fi 3',
+          'Sosiaalineuvonta',
+          'Parkletit',
+          'Digituki',
         ],
-      ]);
-      $this->assertSession()->pageTextContains(sprintf('Displaying %d - %d of %d', ($total > 0 ? 1 : 0), $total, $total));
-    }
-
-    // Make sure we can run 'update' action on multiple entities.
-    $this->updateListEntity(7822, 'fi');
-    $this->updateListEntity(7716, 'fi');
-    $query = [
-      'language' => 'fi',
-      'langcode' => 'fi',
-      'order' => 'id',
-      'sort' => 'desc',
-    ];
-    $this->drupalGet($this->adminListPath, [
-      'query' => $query,
+      ],
+      'en' => [
+        'numItems' => 4,
+        'expectedTitles' => [
+          'Service en 1',
+          'Service en 2',
+          'Service en 3',
+          'Social welfare counselling',
+        ],
+      ],
+      'sv' => [
+        'numItems' => 4,
+        'expectedTitles' => [
+          'Service sv 1',
+          'Service sv 2',
+          'Service sv 3',
+          'Socialrådgivning',
+        ],
+      ],
     ]);
-    $this->assertSession()->linkExists('Service 7822 fi');
-    $this->assertSession()->linkExists('Service 7716 fi');
 
-    $form_data = [
-      'action' => 'tpr_service_update_action',
-      'tpr_service_bulk_form[0]' => 1,
-      'tpr_service_bulk_form[1]' => 1,
-    ];
-    $this->submitForm($form_data, 'Apply to selected items');
-
-    // Make sure data is updated visually when we run the individual
-    // migration.
-    $this->assertSession()->linkNotExists('Service 7822 fi');
-    $this->assertSession()->linkNotExists('Service 7716 fi');
-    $this->assertSession()->linkExists('Digituki');
-    $this->assertSession()->linkExists('Parkletit');
+    // Make sure we can run 'update' action.
+    // @todo Test other languages as well.
+    $this->assertUpdateAction(['fi']);
 
     $storage = \Drupal::entityTypeManager()->getStorage($this->entityType);
     $items = $this->fixture($this->entityType)->getMockData();
@@ -137,7 +137,7 @@ class ServiceListTest extends ListTestBase {
     }
 
     // Make sure we can use actions to publish and unpublish content.
-    $this->assertPublishAction($this->entityType, $query);
+    $this->assertPublishAction();
   }
 
 }

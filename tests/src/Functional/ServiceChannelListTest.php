@@ -18,6 +18,11 @@ class ServiceChannelListTest extends ListTestBase {
   /**
    * {@inheritdoc}
    */
+  protected string $entityType = 'tpr_service_channel';
+
+  /**
+   * {@inheritdoc}
+   */
   public function setUp() : void {
     parent::setUp();
     $this->listPermissions = [
@@ -33,14 +38,8 @@ class ServiceChannelListTest extends ListTestBase {
   public function testList() : void {
     $this->assertListPermissions();
     $this->runServiceChannelMigration();
-    $query = [
-      'language' => 'fi',
-      'langcode' => 'fi',
-      'order' => 'id',
-      'sort' => 'desc',
-    ];
     // Make sure we can use actions to publish and unpublish content.
-    $this->assertPublishAction('tpr_service_channel', $query);
+    $this->assertPublishAction();
   }
 
 }

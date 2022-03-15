@@ -74,5 +74,7 @@ jobs:
         if: always()
         with:
           name: results
-          path: ${{ env.DRUPAL_ROOT }}/sites/simpletest/browser_output/
+          path: |
+            ${{ env.DRUPAL_ROOT }}/sites/simpletest/browser_output/
+            ${{ env.DRUPAL_ROOT }}/coverage.xml
           retention-days: 1

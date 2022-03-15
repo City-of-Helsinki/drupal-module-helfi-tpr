@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\helfi_tpr\Plugin\views\filter;
+namespace Drupal\helfi_address_search\Plugin\views\filter;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Form\FormStateInterface;
@@ -68,7 +68,6 @@ class AddressSearch extends FilterPluginBase {
     $results = $view->result;
     $distances = [];
     foreach ($results as $result) {
-      /** @var $result \Drupal\views\ResultRow */
       if (empty($result->_entity->get('latitude')) || empty($result->_entity->get('longitude'))) {
         continue;
       }

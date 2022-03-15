@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\helfi_tpr\Plugin\views\field;
+namespace Drupal\helfi_address_search\Plugin\views\field;
 
 use Drupal\views\Plugin\views\field\FieldPluginBase;
 

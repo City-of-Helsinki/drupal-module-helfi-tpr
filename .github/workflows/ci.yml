@@ -5,6 +5,7 @@ env:
   SIMPLETEST_BASE_URL: "http://127.0.0.1:8888"
   DRUPAL_CORE_VERSION: 9.3.x
   SYMFONY_DEPRECATIONS_HELPER: disabled
+  BROWSERTEST_OUTPUT_DIRECTORY: 'sites/simpletest'
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -46,6 +47,7 @@ jobs:
           composer run-script drupal-phpunit-upgrade
           composer require "drush/drush ^10.0"
           composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+          composer require --dev donatj/mock-webserver
           composer require --dev "drupal/coder"
 
       - name: Install Drupal
@@ -64,4 +66,12 @@ jobs:
           cd $DRUPAL_ROOT
           vendor/bin/drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
           chromedriver --port=4444 > /dev/null 2>&1 &
-          php ./core/scripts/run-tests.sh --dburl $SIMPLETEST_DB --php /usr/local/bin/php --color --verbose --sqlite /tmp/test.sqlite --url $SIMPLETEST_BASE_URL ${{ secrets.MODULE_NAME }}
+          vendor/bin/phpunit --bootstrap $DRUPAL_ROOT/core/tests/bootstrap.php -c modules/contrib/${{ secrets.MODULE_NAME }}/phpunit.xml
+
+      - name: Create an artifact from test report
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: results
+          path: ${{ env.DRUPAL_ROOT }}/sites/simpletest/browser_output/
+          retention-days: 1

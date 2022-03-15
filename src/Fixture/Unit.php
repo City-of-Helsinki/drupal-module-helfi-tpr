@@ -79,7 +79,6 @@ final class Unit extends FixtureBase {
         'accessibility_viewpoints' => '00:unknown,11:red,12:red,13:red,21:green,22:green,23:green,31:red,32:red,33:red,41:green,51:red,52:red,61:red',
         'created_time' => '2019-09-18T10:32:56',
         'modified_time' => '2021-11-23T00:32:37',
-        'services' => [],
         'connections' => [
           [
             'section_type' => 'OPENING_HOURS',
@@ -128,7 +127,7 @@ final class Unit extends FixtureBase {
         ],
         'service_descriptions' => [
           [
-            'id' => 7470,
+            'id' => 7822,
             'available_languages' => [
               'en',
               'fi',
@@ -289,7 +288,6 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
         'accessibility_viewpoints' => '00:unknown,11:green,12:green,13:green,21:green,22:green,23:green,31:green,32:green,33:green,41:green,51:red,52:red,61:red',
         'created_time' => '2021-10-11T11:03:55',
         'modified_time' => '2021-10-28T14:40:08',
-        'services' => [],
         'connections' => [],
         'ontologyword_details' => [
           [
@@ -301,7 +299,7 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
         ],
         'service_descriptions' => [
           [
-            'id' => 6608,
+            'id' => 7822,
             'available_languages' => [
               'fi',
             ],
@@ -449,7 +447,6 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
         'accessibility_viewpoints' => '00:unknown,11:unknown,12:unknown,13:unknown,21:unknown,22:unknown,23:unknown,31:unknown,32:unknown,33:unknown,41:unknown,51:unknown,52:unknown,61:unknown',
         'created_time' => '2020-10-09T21:38:01',
         'modified_time' => '2021-11-10T00:32:39',
-        'services' => [],
         'connections' => [
           [
             'section_type' => 'OPENING_HOURS',
@@ -486,7 +483,7 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
         ],
         'service_descriptions' => [
           [
-            'id' => 7470,
+            'id' => 7822,
             'available_languages' => [
               'en',
               'fi',
@@ -546,7 +543,7 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
             'sentence_en' => 'Sentence en 2',
           ],
         ],
-        'services' => [
+        'service_descriptions' => [
           [
             'unit_id' => 1,
             'services' => [1 => 1],
@@ -659,7 +656,7 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
         'accessibility_viewpoints' => '00:unknown,11:unknown,12:unknown,13:unknown,21:unknown,22:unknown,23:unknown,31:unknown,32:unknown,33:unknown,41:unknown,51:unknown,52:unknown,61:unknown',
         'created_time' => '2015-02-11T13:36:50',
         'modified_time' => '2021-11-10T00:32:35',
-        'services' => [],
+        'service_descriptions' => [],
         'connections' => [
           [
             'section_type' => 'OPENING_HOURS',
@@ -673,7 +670,6 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
             'id' => 879,
           ],
         ],
-        'service_descriptions' => [],
         'accessibility_sentences' => [],
       ],
     ];
@@ -684,16 +680,29 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
    */
   public function getMockResponses() : array {
     $units = $this->getMockData();
-    $responses = [
-      new Response(200, [], json_encode($units)),
-    ];
 
+    $types = [
+      'accessibility_sentences',
+      'connections',
+      'service_descriptions',
+    ];
+    $extraData = [];
     foreach ($units as $unit) {
-      $responses[] = new Response(200, [], json_encode($unit['accessibility_sentences']));
-      $responses[] = new Response(200, [], json_encode($unit['connections']));
-      $responses[] = new Response(200, [], json_encode($unit['services']));
+      foreach ($types as $type) {
+        if (!isset($unit[$type])) {
+          continue;
+        }
+        foreach ($unit[$type] as $item) {
+          $extraData[$type][] = $item + ['unit_id' => $unit['id']];
+        }
+      }
     }
-    return $responses;
+    return [
+      new Response(200, [], json_encode($units)),
+      new Response(200, [], json_encode($extraData['accessibility_sentences'])),
+      new Response(200, [], json_encode($extraData['connections'])),
+      new Response(200, [], json_encode($extraData['service_descriptions'])),
+    ];
   }
 
 }

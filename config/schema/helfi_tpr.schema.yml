@@ -5,6 +5,9 @@ helfi_tpr.migration_settings.*:
     langcode:
       type: string
       label: Langcode
+    canonical_url:
+      type: string
+      label: Canonical URL
     url:
       type: string
       label: Url

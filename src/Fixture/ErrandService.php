@@ -31,16 +31,19 @@ final class ErrandService extends FixtureBase {
   }
 
   /**
-   * {@inheritdoc}
+   * Gets the mock data.
+   *
+   * @return array
+   *   The mock data.
    */
-  public function getMockResponses() : array {
-    $eservices = [
+  public function getMockData() : array {
+    $eServices = [
       ['id' => 1],
       ['id' => 2],
       ['id' => 3],
     ];
 
-    foreach ($eservices as $key => $service) {
+    foreach ($eServices as $key => $service) {
       $id = $service['id'];
 
       foreach (['fi', 'sv', 'en'] as $language) {
@@ -63,6 +66,7 @@ final class ErrandService extends FixtureBase {
 
           $channels[] = [
             'id' => $channelId,
+            'name' => sprintf('Channel %s %s %s', $id, $language, $channelId),
             'type_string' => sprintf('%s email %s %s', $id, $language, $channelId),
             'email' => sprintf('%s.email.%s.%s@hel.fi', $id, $language, $channelId),
             'phone' => sprintf('%s-123456-%s-%s', $id, $language, $channelId),
@@ -100,12 +104,19 @@ final class ErrandService extends FixtureBase {
         foreach ($this->getFields() as $field) {
           $service[$field] = sprintf('%s %s %s', $field, $language, $id);
         }
-        $eservices[$key][$language] = $service;
+        $eServices[$key][$language] = $service;
       }
     }
+    return $eServices;
+  }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getMockResponses() : array {
+    $services = $this->getMockData();
     return [
-      new Response(200, [], json_encode($eservices)),
+      new Response(200, [], json_encode($services)),
     ];
   }
 

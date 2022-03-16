@@ -63,11 +63,15 @@ jobs:
           cd $DRUPAL_ROOT
           vendor/bin/phpcs $MODULE_FOLDER --standard=Drupal --extensions=php,module,inc,install,test,info
 
-      - name: Run PHPUnit tests
+      - name: Start services
         run: |
           cd $DRUPAL_ROOT
           vendor/bin/drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
           chromedriver --port=4444 > /dev/null 2>&1 &
+
+      - name: Run PHPUnit tests
+        run: |
+          cd $DRUPAL_ROOT
           php -d pcov.directory=$MODULE_FOLDER \
             vendor/bin/phpunit \
             --bootstrap $DRUPAL_ROOT/core/tests/bootstrap.php \

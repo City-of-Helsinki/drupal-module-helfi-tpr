@@ -66,7 +66,7 @@ jobs:
           cd $DRUPAL_ROOT
           vendor/bin/drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
           chromedriver --port=4444 > /dev/null 2>&1 &
-          php -d pcov.directory=$DRUPAL_ROOT/modules/contrib/${{ secrets.MODULE_NAME }} vendor/bin/phpunit --bootstrap $DRUPAL_ROOT/core/tests/bootstrap.php -c $DRUPAL_ROOT/modules/contrib/${{ secrets.MODULE_NAME }}/phpunit.xml --coverage-clover=coverage.xml $DRUPAL_ROOT/modules/contrib/${{ secrets.MODULE_NAME }}
+          php -d pcov.directory=$DRUPAL_ROOT/modules/contrib/${{ secrets.MODULE_NAME }} vendor/bin/phpunit --bootstrap $DRUPAL_ROOT/core/tests/bootstrap.php -c $DRUPAL_ROOT/modules/contrib/${{ secrets.MODULE_NAME }}/phpunit.xml --coverage-clover=coverage.xml $DRUPAL_ROOT/modules/contrib/${{ secrets.MODULE_NAME }}/tests/src/Unit
           codecov
 
       - name: Create an artifact from test report

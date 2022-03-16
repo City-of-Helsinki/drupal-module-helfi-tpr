@@ -19,6 +19,7 @@ class ConnectionTest extends UnitTestCase {
    * Tests opening hours.
    *
    * @coversClass \Drupal\helfi_tpr\Field\Connection\OpeningHour
+   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHour::build
    * @covers ::build
    * @covers ::set
    * @covers ::get

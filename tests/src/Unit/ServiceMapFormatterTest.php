@@ -58,6 +58,7 @@ class ServiceMapFormatterTest extends UnitTestCase {
    *
    * @covers ::generateUrl
    * @covers ::viewElements
+   * @covers ::defaultSettings
    */
   public function testInvalidEntity() : void {
     $this->expectException(\InvalidArgumentException::class);
@@ -72,6 +73,7 @@ class ServiceMapFormatterTest extends UnitTestCase {
    *
    * @covers ::generateUrl
    * @covers ::viewElements
+   * @covers ::defaultSettings
    */
   public function testRenderArray() : void {
     $entity = $this->prophesize(Unit::class);

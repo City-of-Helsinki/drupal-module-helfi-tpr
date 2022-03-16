@@ -31,8 +31,11 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Set variables
+      - name: Set Drupal root
         run: echo "DRUPAL_ROOT=$HOME/drupal" >> $GITHUB_ENV
+
+      - name: Set module folder
+        run: echo "MODULE_FOLDER=$DRUPAL_ROOT/modules/contrib/${{ secrets.MODULE_NAME }}" >> $GITHUB_ENV
 
       - name: Clone drupal
         run: git clone --depth 1 --branch "$DRUPAL_CORE_VERSION" http://git.drupal.org/project/drupal.git/ $DRUPAL_ROOT
@@ -59,19 +62,31 @@ jobs:
       - name: Run PHPCS
         run: |
           cd $DRUPAL_ROOT
-          vendor/bin/phpcs modules/contrib/${{ secrets.MODULE_NAME }} --standard=Drupal --extensions=php,module,inc,install,test,info
+          vendor/bin/phpcs $MODULE_FOLDER --standard=Drupal --extensions=php,module,inc,install,test,info
 
-      - name: Run PHPUnit tests
+      - name: Start services
         run: |
           cd $DRUPAL_ROOT
           vendor/bin/drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
           chromedriver --port=4444 > /dev/null 2>&1 &
-          vendor/bin/phpunit --bootstrap $DRUPAL_ROOT/core/tests/bootstrap.php -c modules/contrib/${{ secrets.MODULE_NAME }}/phpunit.xml
+
+      - name: Run PHPUnit tests
+        run: |
+          cd $DRUPAL_ROOT
+          php -d pcov.directory=$MODULE_FOLDER \
+            vendor/bin/phpunit \
+            --bootstrap $DRUPAL_ROOT/core/tests/bootstrap.php \
+            -c $MODULE_FOLDER/phpunit.xml \
+            --coverage-clover=coverage.xml \
+            $MODULE_FOLDER
+          codecov
 
       - name: Create an artifact from test report
         uses: actions/upload-artifact@v2
         if: always()
         with:
           name: results
-          path: ${{ env.DRUPAL_ROOT }}/sites/simpletest/browser_output/
+          path: |
+            ${{ env.DRUPAL_ROOT }}/sites/simpletest/browser_output/
+            ${{ env.DRUPAL_ROOT }}/coverage.xml
           retention-days: 1

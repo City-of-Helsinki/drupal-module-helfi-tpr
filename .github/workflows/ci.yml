@@ -31,10 +31,11 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Set variables
-        run: |
-          echo "DRUPAL_ROOT=$HOME/drupal" >> $GITHUB_ENV
-          echo "MODULE_FOLDER=$HOME/drupal/modules/contrib/${{ secrets.MODULE_NAME }} >> $GITHUB_ENV"
+      - name: Set Drupal root
+        run: echo "DRUPAL_ROOT=$HOME/drupal" >> $GITHUB_ENV
+
+      - name: Set module folder
+        run: echo "MODULE_FOLDER=$DRUPAL_ROOT/modules/contrib/${{ secrets.MODULE_NAME }} >> $GITHUB_ENV"
 
       - name: Clone drupal
         run: git clone --depth 1 --branch "$DRUPAL_CORE_VERSION" http://git.drupal.org/project/drupal.git/ $DRUPAL_ROOT

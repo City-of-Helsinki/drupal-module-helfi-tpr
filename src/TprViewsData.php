@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\helfi_tpr;
 
 use Drupal\views\EntityViewsData;

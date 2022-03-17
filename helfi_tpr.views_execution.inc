@@ -5,6 +5,7 @@
  * Views alter for helfi_tpr.
  */
 
+use Drupal\Core\Entity\EntityType;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ViewExecutable;
 
@@ -33,4 +34,25 @@ function helfi_tpr_views_pre_execute(ViewExecutable $view) {
       END COLLATE utf8mb4_swedish_ci', 'name_sort'
     );
   }
+}
+
+/**
+ * Implements hook_views_query_substitutions().
+ */
+function helfi_tpr_views_query_substitutions(ViewExecutable $view) {
+
+  // Get permission name dynamically.
+  $base_entity = $view->getBaseEntityType();
+  if ($base_entity instanceof EntityType) {
+    $entity_permission = 'view unpublished ' . $base_entity->id();
+  }
+  // Default to no access if entity type can't be loaded.
+  else {
+    return ['***VIEW_UNPUBLISHED_TPR_ENTITIES***' => 0];
+  }
+
+  $account = \Drupal::currentUser();
+  return [
+    '***VIEW_UNPUBLISHED_TPR_ENTITIES***' => intval($account->hasPermission($entity_permission)),
+  ];
 }

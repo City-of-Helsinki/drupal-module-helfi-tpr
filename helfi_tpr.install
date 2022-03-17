@@ -621,3 +621,17 @@ function helfi_tpr_update_8035() : void {
     $config_storage->write($action, $source->read($action));
   }
 }
+
+/**
+ * Enable new status or permission filter on TPR views.
+ */
+function helfi_tpr_update_8034() {
+  /** @var \Drupal\update_helper\Updater $updateHelper */
+  $updateHelper = \Drupal::service('update_helper.updater');
+
+  // Execute configuration update definitions with logging of success.
+  $updateHelper->executeUpdate('helfi_tpr', 'helfi_tpr_update_8034');
+
+  // Output logged messages to related channel of update execution.
+  return $updateHelper->logger()->output();
+}

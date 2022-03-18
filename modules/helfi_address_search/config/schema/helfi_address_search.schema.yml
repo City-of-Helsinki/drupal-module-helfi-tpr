@@ -1,0 +1,4 @@
+# Schema definition for address_search.
+views.filter_value.address_search:
+  type: string
+  label: 'Address search'

@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * @file
+ * Contains helfi_address_search.
+ */
+
+declare(strict_types = 1);
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\helfi_address_search\Plugin\views\filter\AddressSearch;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function helfi_address_search_views_data_alter(array &$data) {
+  $data['tpr_unit']['address_search'] = [
+    'title' => t('Address search'),
+    'filter' => [
+      'title' => t('Address search'),
+      'help' => 'Filters units by address.',
+      'id' => 'address_search',
+    ],
+  ];
+  $data['tpr_unit']['distance'] = [
+    'title' => t('Computed distance'),
+    'group' => t('TPR - Unit'),
+    'field' => [
+      'title' => t('Computed distance'),
+      'help' => t('Computes the distance to given location.'),
+      'id' => 'distance',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function helfi_address_search_views_pre_render(ViewExecutable $view) {
+  if (isset($view->filter["address_search"])) {
+    $view->result = AddressSearch::getSortedResultsByAddress($view);
+  }
+}
+
+/**
+ * Implements hook_entity_bundle_field_info_alter().
+ */
+function helfi_address_search_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+  if ($entity_type->id() !== 'tpr_unit') {
+    return;
+  }
+
+  $fields['distance'] = BaseFieldDefinition::create('integer')
+    ->setName('distance')
+    ->setLabel(t('Computed distance'))
+    ->setComputed(TRUE)
+    ->setTargetEntityTypeId('tpr_unit')
+    ->setCardinality(1)
+    ->setTranslatable(FALSE)
+    ->setRequired(FALSE)
+    ->setDisplayOptions('view', [
+      'type' => 'number',
+      'label' => 'hidden',
+      'weight' => 0,
+    ])
+    ->setSettings([
+      'suffix' => ' m',
+      'placeholder' => '',
+    ])
+    ->setDisplayConfigurable('form', FALSE)
+    ->setDisplayConfigurable('view', FALSE);
+}

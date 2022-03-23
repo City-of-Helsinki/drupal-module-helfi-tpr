@@ -88,7 +88,11 @@ class AddressSearch extends FilterPluginBase {
         TRUE => 1,
       };
     });
-    return array_values($results);
+    $results = array_values($results);
+    foreach ($results as $key => $row) {
+      $row->index = $key;
+    }
+    return $results;
   }
 
   /**

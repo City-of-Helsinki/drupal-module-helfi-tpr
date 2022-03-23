@@ -61,7 +61,7 @@ function helfi_address_search_entity_bundle_field_info_alter(&$fields, EntityTyp
     ->setTranslatable(FALSE)
     ->setRequired(FALSE)
     ->setDisplayOptions('view', [
-      'type' => 'number',
+      'type' => 'number_integer',
       'label' => 'hidden',
       'weight' => 0,
     ])

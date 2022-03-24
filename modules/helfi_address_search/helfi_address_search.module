@@ -42,10 +42,6 @@ function helfi_address_search_views_pre_execute(ViewExecutable $view) {
   if (!isset($view->filter["address_search"])) {
     return;
   }
-  $exposedInput = $view->getExposedInput();
-  if (empty($exposedInput['address_search'])) {
-    return;
-  }
 
   // Query all results as the sorting and paging is done with
   // AddressSearch::getSortedResultsByAddress().

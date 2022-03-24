@@ -187,7 +187,7 @@ class AddressSearch extends FilterPluginBase {
    *   Array subset.
    */
   private static function limitByPaging(array $results, PagerPluginBase $pager): array {
-    if ($pager->getItemsPerPage() === 0) {
+    if (!is_int($pager->getItemsPerPage()) || $pager->getItemsPerPage() === 0) {
       return $results;
     }
 

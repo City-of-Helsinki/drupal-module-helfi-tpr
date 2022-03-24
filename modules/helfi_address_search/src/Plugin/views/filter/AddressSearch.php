@@ -7,12 +7,17 @@ namespace Drupal\helfi_address_search\Plugin\views\filter;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
+use Drupal\views\Plugin\views\pager\PagerPluginBase;
 use Drupal\views\ViewExecutable;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
 /**
- * Address search is used to sort the results to show the nearest results first.
+ * Address search for sorting the results to show the nearest units first.
+ *
+ * Instead of altering the query, this unconventional way of sorting the results
+ * is used because the information used for sorting is not stored in the
+ * database as such.
  *
  * @ingroup views_filter_handlers
  *
@@ -55,13 +60,14 @@ class AddressSearch extends FilterPluginBase {
   public static function getSortedResultsByAddress(ViewExecutable $view): array {
     $exposedInput = $view->getExposedInput();
     if (empty($exposedInput['address_search'])) {
-      return $view->result;
+      return AddressSearch::limitByPaging($view->result, $view->pager);
     }
 
     // Get the coordinates.
     $coordinates = AddressSearch::fetchAddressCoordinates($exposedInput['address_search']);
     if (empty($coordinates)) {
-      return $view->result;
+      // @todo Show message when the address is not found.
+      return AddressSearch::limitByPaging($view->result, $view->pager);
     }
 
     // Calculate distances for each view result.
@@ -81,13 +87,16 @@ class AddressSearch extends FilterPluginBase {
       $result->_entity->set('distance', $distances[$result->_entity->get('id')->getString()]);
     }
 
-    // Sort results by distances: nearest first.
+    // Sort results array by distances: nearest first.
     uasort($results, function ($left, $right) use ($distances) {
       return match ($distances[$left->_entity->get('id')->getString()] >= $distances[$right->_entity->get('id')->getString()]) {
         FALSE => (-1),
         TRUE => 1,
       };
     });
+
+    $results = AddressSearch::limitByPaging($results, $view->pager);
+
     $results = array_values($results);
     foreach ($results as $key => $row) {
       $row->index = $key;
@@ -164,6 +173,27 @@ class AddressSearch extends FilterPluginBase {
     // Calculate distance using the Haversine formula.
     return (int) round(2 * $radius * asin(sqrt(pow(sin($latDelta / 2), 2) +
         cos($latA) * cos($latB) * pow(sin($lonDelta / 2), 2))), 0);
+  }
+
+  /**
+   * Slice results to smaller array using the pager settings.
+   *
+   * @param \Drupal\views\ResultRow[] $results
+   *   Array of ResultRow.
+   * @param \Drupal\views\Plugin\views\pager\PagerPluginBase $pager
+   *   Pager.
+   *
+   * @return \Drupal\views\ResultRow[]
+   *   Array subset.
+   */
+  private static function limitByPaging(array $results, PagerPluginBase $pager): array {
+    if ($pager->getItemsPerPage() === 0) {
+      return $results;
+    }
+
+    $itemsPerPage = $pager->getItemsPerPage();
+    $offset = ($pager->getCurrentPage() * $itemsPerPage);
+    return array_slice($results, $offset, $itemsPerPage, TRUE);
   }
 
 }

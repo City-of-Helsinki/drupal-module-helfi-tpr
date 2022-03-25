@@ -19,6 +19,9 @@ use Drupal\helfi_tpr\Entity\TprEntityBase;
  */
 class ServiceChannelFormatterTest extends CustomFieldFormatterTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected function getUserPermissions(): array {
     $permissions = parent::getUserPermissions();
     return $permissions + [
@@ -67,6 +70,12 @@ class ServiceChannelFormatterTest extends CustomFieldFormatterTestBase {
     return $entity;
   }
 
+  /**
+   * Asserts that channels are sorted in given order.
+   *
+   * @param array $expectedOrder
+   *   The expected order.
+   */
   private function assertChannelOrder(array $expectedOrder) : void {
     foreach ($expectedOrder as $id => $element) {
       $selector = sprintf('.field--name-channels div.field__item:nth-of-type(%d) .field--name-type', $element['weight']);

@@ -75,13 +75,14 @@ function helfi_address_search_entity_bundle_field_info_alter(&$fields, EntityTyp
     ->setTranslatable(FALSE)
     ->setRequired(FALSE)
     ->setDisplayOptions('view', [
-      'type' => 'number_integer',
+      'type' => 'number_decimal_kilo',
       'label' => 'hidden',
       'weight' => 0,
     ])
     ->setSettings([
-      'suffix' => ' m',
+      'suffix' => ' km',
       'placeholder' => '',
+      'minimum_value' => '0.1',
     ])
     ->setDisplayConfigurable('form', FALSE)
     ->setDisplayConfigurable('view', FALSE);

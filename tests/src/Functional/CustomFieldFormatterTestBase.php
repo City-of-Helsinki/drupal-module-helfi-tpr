@@ -20,13 +20,14 @@ abstract class CustomFieldFormatterTestBase extends MigrationTestBase {
    */
   protected static $modules = [
     'field',
+    'field_ui',
     'helfi_tpr',
   ];
 
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'stark';
+  protected $defaultTheme = 'claro';
 
   /**
    * The entity to test.

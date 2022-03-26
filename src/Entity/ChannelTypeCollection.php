@@ -79,7 +79,7 @@ final class ChannelTypeCollection implements \ArrayAccess, \Iterator, \Countable
 
     $weight = 0;
     foreach ($reflection->getConstants() as $value) {
-      $types[$value] = new ChannelType($value, $weight);
+      $types[$value] = new ChannelType($value, $weight++);
     }
     return new self($types);
   }

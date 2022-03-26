@@ -48,6 +48,31 @@ class ChannelTypeCollectionTest extends UnitTestCase {
   }
 
   /**
+   * @covers ::__construct
+   * @covers ::createFromArray
+   * @covers ::all
+   * @covers ::sort
+   * @covers ::offsetGet
+   * @covers ::valid
+   * @covers ::sort
+   * @covers ::next
+   * @covers ::rewind
+   * @covers ::current
+   * @covers ::key
+   * @covers ::count
+   * @covers \Drupal\helfi_tpr\Entity\ChannelType::__construct
+   */
+  public function testDefaultWeight() : void {
+    $sut = ChannelTypeCollection::all();
+    $weights = array_map(function (ChannelType $type) {
+      return $type->weight;
+    }, iterator_to_array($sut));
+
+    // Make sure we have unique weight for all items.
+    $this->assertEquals(count($sut), count(array_unique($weights)));
+  }
+
+  /**
    * Tests array access functions.
    *
    * @covers ::__construct

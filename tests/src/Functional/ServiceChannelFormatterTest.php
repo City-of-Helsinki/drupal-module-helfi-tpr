@@ -107,6 +107,8 @@ class ServiceChannelFormatterTest extends CustomFieldFormatterTestBase {
     }
     $this->assertChannelOrder($expectedOrder);
 
+    // Sort channels by name, then test that changing the order in
+    // widget settings changes the order in TPR service display.
     $channelsSortedByName = iterator_to_array($channelTypes);
     usort($channelsSortedByName, function (ChannelType $a, ChannelType $b) {
       return strnatcmp($a->id, $b->id);

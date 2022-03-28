@@ -159,7 +159,11 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     $fields += static::ownerBaseFieldDefinitions($entity_type);
     $fields += static::publishedBaseFieldDefinitions($entity_type);
 
-    static::$overrideFields['name'] = static::createStringField('Name');
+    static::$overrideFields['name'] = static::createStringField('Name')
+      ->setDisplayOptions('view', [
+        'type' => 'string',
+        'label' => 'hidden',
+      ]);
 
     // Add overridable fields as base fields.
     $fields += static::$overrideFields;

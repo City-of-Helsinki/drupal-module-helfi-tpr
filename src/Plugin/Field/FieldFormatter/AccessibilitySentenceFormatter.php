@@ -8,7 +8,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 
 /**
- * Plugin implementation of the 'Accessibibility sentence' formatter.
+ * Plugin implementation of the 'Accessibility sentence' formatter.
  *
  * @FieldFormatter(
  *   id = "tpr_accessibility_sentence",
@@ -18,7 +18,7 @@ use Drupal\Core\Field\FormatterBase;
  *   }
  * )
  */
-final class AccessibibilitySentenceFormatter extends FormatterBase {
+final class AccessibilitySentenceFormatter extends FormatterBase {
 
   /**
    * Groups item by group label.

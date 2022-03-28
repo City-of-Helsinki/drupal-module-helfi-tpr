@@ -176,6 +176,10 @@ class Service extends TprEntityBase {
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
       ])
+      ->setDisplayOptions('view', [
+        'type' => 'entity_reference_entity_view',
+        'label' => 'hidden',
+      ])
       ->setRevisionable(FALSE)
       ->setTranslatable(TRUE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)

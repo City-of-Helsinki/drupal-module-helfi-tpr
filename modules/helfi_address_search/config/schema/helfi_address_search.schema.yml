@@ -2,3 +2,14 @@
 views.filter_value.address_search:
   type: string
   label: 'Address search'
+
+views.area.address_search_info:
+  type: views_area
+  label: 'Address search info'
+  mapping:
+    succeed:
+      type: text_format
+      label: 'The shown text for successful address search'
+    failed:
+      type: text_format
+      label: 'The shown text for failed address search'

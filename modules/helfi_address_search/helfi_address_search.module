@@ -24,6 +24,7 @@ function helfi_address_search_views_data_alter(array &$data) {
       'id' => 'address_search',
     ],
   ];
+
   $data['tpr_unit']['distance'] = [
     'title' => t('Computed distance'),
     'group' => t('TPR - Unit'),
@@ -31,6 +32,14 @@ function helfi_address_search_views_data_alter(array &$data) {
       'title' => t('Computed distance'),
       'help' => t('Computes the distance to given location.'),
       'id' => 'distance',
+    ],
+  ];
+
+  $data['views']['area_address_search_info'] = [
+    'title' => t('Address search information'),
+    'help' => t('Provide markup for successful and failed address search.'),
+    'area' => [
+      'id' => 'address_search_info',
     ],
   ];
 }
@@ -54,7 +63,7 @@ function helfi_address_search_views_pre_execute(ViewExecutable $view) {
  */
 function helfi_address_search_views_pre_render(ViewExecutable $view) {
   if (isset($view->filter["address_search"])) {
-    $view->result = AddressSearch::getSortedResultsByAddress($view);
+    $view = AddressSearch::sortByAddress($view);
   }
 }
 

@@ -54,20 +54,22 @@ class AddressSearch extends FilterPluginBase {
    * @param \Drupal\views\ViewExecutable $view
    *   The ViewExecutable from the hook's parameter.
    *
-   * @return \Drupal\views\ResultRow[]
+   * @return \Drupal\views\ViewExecutable
    *   Sorted results or original results when there is no address input.
    */
-  public static function getSortedResultsByAddress(ViewExecutable $view): array {
+  public static function sortByAddress(ViewExecutable $view): ViewExecutable {
     $exposedInput = $view->getExposedInput();
     if (empty($exposedInput['address_search'])) {
-      return AddressSearch::limitByPaging($view->result, $view->pager);
+      $view->result = AddressSearch::limitByPaging($view->result, $view->pager);
+      return $view;
     }
 
     // Get the coordinates.
     $coordinates = AddressSearch::fetchAddressCoordinates($exposedInput['address_search']);
     if (empty($coordinates)) {
-      // @todo Show message when the address is not found.
-      return AddressSearch::limitByPaging($view->result, $view->pager);
+      $view->result = AddressSearch::limitByPaging($view->result, $view->pager);
+      $view->element = AddressSearch::storeSearchStatus($view->element, FALSE);
+      return $view;
     }
 
     // Calculate distances for each view result.
@@ -101,7 +103,10 @@ class AddressSearch extends FilterPluginBase {
     foreach ($results as $key => $row) {
       $row->index = $key;
     }
-    return $results;
+    $view->result = $results;
+
+    $view->element = AddressSearch::storeSearchStatus($view->element, TRUE);
+    return $view;
   }
 
   /**
@@ -186,7 +191,7 @@ class AddressSearch extends FilterPluginBase {
    * @return \Drupal\views\ResultRow[]
    *   Array subset.
    */
-  private static function limitByPaging(array $results, PagerPluginBase $pager): array {
+  protected static function limitByPaging(array $results, PagerPluginBase $pager): array {
     if (!is_int($pager->getItemsPerPage()) || $pager->getItemsPerPage() === 0) {
       return $results;
     }
@@ -194,6 +199,24 @@ class AddressSearch extends FilterPluginBase {
     $itemsPerPage = $pager->getItemsPerPage();
     $offset = ($pager->getCurrentPage() * $itemsPerPage);
     return array_slice($results, $offset, $itemsPerPage, TRUE);
+  }
+
+  /**
+   * Store the search status to element array.
+   *
+   * @param array $element
+   *   ViewExecutable element array.
+   * @param bool $succeed
+   *   TRUE if the search was successful, FALSE if the address was not found.
+   *
+   * @return array
+   *   ViewExecutable element array.
+   */
+  protected static function storeSearchStatus(array $element, bool $succeed): array {
+    if (!isset($element['address_search_succeed'])) {
+      $element['address_search_succeed'] = $succeed;
+    }
+    return $element;
   }
 
 }

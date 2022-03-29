@@ -68,7 +68,7 @@ class AddressSearch extends FilterPluginBase {
     $coordinates = AddressSearch::fetchAddressCoordinates($exposedInput['address_search']);
     if (empty($coordinates)) {
       $view->result = AddressSearch::limitByPaging($view->result, $view->pager);
-      $view->element = AddressSearch::storeSearchStatus($view->element, FALSE);
+      $view->element = AddressSearch::setSearchStatus($view->element, FALSE);
       return $view;
     }
 
@@ -105,7 +105,7 @@ class AddressSearch extends FilterPluginBase {
     }
     $view->result = $results;
 
-    $view->element = AddressSearch::storeSearchStatus($view->element, TRUE);
+    $view->element = AddressSearch::setSearchStatus($view->element, TRUE);
     return $view;
   }
 
@@ -202,7 +202,7 @@ class AddressSearch extends FilterPluginBase {
   }
 
   /**
-   * Store the search status to element array.
+   * Set the search status to element array.
    *
    * @param array $element
    *   ViewExecutable element array.
@@ -212,7 +212,7 @@ class AddressSearch extends FilterPluginBase {
    * @return array
    *   ViewExecutable element array.
    */
-  protected static function storeSearchStatus(array $element, bool $succeed): array {
+  protected static function setSearchStatus(array $element, bool $succeed): array {
     if (!isset($element['address_search_succeed'])) {
       $element['address_search_succeed'] = $succeed;
     }

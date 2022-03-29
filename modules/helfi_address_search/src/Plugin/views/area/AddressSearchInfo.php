@@ -84,13 +84,14 @@ class AddressSearchInfo extends AreaPluginBase {
       return [];
     }
 
+    $classes = ['unit-search__additional-information'];
     if ($this->getSearchStatus() === TRUE) {
-      $classes = ['unit-search__address-found'];
+      $classes[] = 'unit-search__address-found';
       $text = $this->options['succeed']['value'];
       $format = $this->options['succeed']['format'] ?? filter_default_format();
     }
     else {
-      $classes = ['unit-search__address-not-found'];
+      $classes[] = 'unit-search__address-not-found';
       $text = $this->options['failed']['value'];
       $format = $this->options['failed']['format'] ?? filter_default_format();
     }

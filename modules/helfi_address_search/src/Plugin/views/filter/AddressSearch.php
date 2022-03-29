@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\helfi_address_search\Plugin\views\filter;
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Component\Utility\Xss;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
 use Drupal\views\Plugin\views\pager\PagerPluginBase;
@@ -65,7 +66,8 @@ class AddressSearch extends FilterPluginBase {
     }
 
     // Get the coordinates.
-    $coordinates = AddressSearch::fetchAddressCoordinates($exposedInput['address_search']);
+    $address = Xss::filter($exposedInput['address_search']);
+    $coordinates = AddressSearch::fetchAddressCoordinates($address);
     if (empty($coordinates)) {
       $view->result = AddressSearch::limitByPaging($view->result, $view->pager);
       $view->element = AddressSearch::setSearchStatus($view->element, FALSE);

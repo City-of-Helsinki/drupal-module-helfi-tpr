@@ -27,7 +27,7 @@ class KiloFormatter extends DecimalFormatter {
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings() {
+  public static function defaultSettings(): array {
     return [
       'thousand_separator' => ' ',
       'decimal_separator' => ',',
@@ -40,7 +40,7 @@ class KiloFormatter extends DecimalFormatter {
   /**
    * {@inheritdoc}
    */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
+  public function settingsForm(array $form, FormStateInterface $form_state): array {
     $elements = parent::settingsForm($form, $form_state);
 
     $elements['minimum_value'] = [
@@ -60,7 +60,7 @@ class KiloFormatter extends DecimalFormatter {
   /**
    * {@inheritdoc}
    */
-  protected function numberFormat($number) {
+  protected function numberFormat($number): string {
     $number = $number / 1000;
     if (!empty($this->getSetting('minimum_value')) && ($number < $this->getSetting('minimum_value'))) {
       (float) $number = $this->getSetting('minimum_value');

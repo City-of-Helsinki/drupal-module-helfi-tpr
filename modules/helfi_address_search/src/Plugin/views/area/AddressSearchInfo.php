@@ -34,7 +34,7 @@ class AddressSearchInfo extends AreaPluginBase {
   /**
    * {@inheritdoc}
    */
-  protected function defineOptions() {
+  protected function defineOptions(): array {
     $options = parent::defineOptions();
     $options['succeed'] = [
       'contains' => [
@@ -54,7 +54,7 @@ class AddressSearchInfo extends AreaPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function buildOptionsForm(&$form, FormStateInterface $form_state) {
+  public function buildOptionsForm(&$form, FormStateInterface $form_state): void {
     parent::buildOptionsForm($form, $form_state);
 
     $form['succeed'] = [
@@ -79,7 +79,7 @@ class AddressSearchInfo extends AreaPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function render($empty = FALSE) {
+  public function render($empty = FALSE): array {
     if ($this->getSearchStatus() === NULL) {
       return [];
     }

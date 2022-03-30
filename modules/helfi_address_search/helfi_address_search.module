@@ -15,7 +15,7 @@ use Drupal\views\ViewExecutable;
 /**
  * Implements hook_views_data_alter().
  */
-function helfi_address_search_views_data_alter(array &$data) {
+function helfi_address_search_views_data_alter(array &$data): void {
   $data['tpr_unit']['address_search'] = [
     'title' => t('Address search'),
     'filter' => [
@@ -47,7 +47,7 @@ function helfi_address_search_views_data_alter(array &$data) {
 /**
  * Implements hook_views_pre_execute().
  */
-function helfi_address_search_views_pre_execute(ViewExecutable $view) {
+function helfi_address_search_views_pre_execute(ViewExecutable $view): void {
   if (!isset($view->filter["address_search"])) {
     return;
   }
@@ -61,7 +61,7 @@ function helfi_address_search_views_pre_execute(ViewExecutable $view) {
 /**
  * Implements hook_views_pre_render().
  */
-function helfi_address_search_views_pre_render(ViewExecutable $view) {
+function helfi_address_search_views_pre_render(ViewExecutable $view): void {
   if (isset($view->filter["address_search"])) {
     $view = AddressSearch::sortByAddress($view);
   }
@@ -70,7 +70,7 @@ function helfi_address_search_views_pre_render(ViewExecutable $view) {
 /**
  * Implements hook_entity_bundle_field_info_alter().
  */
-function helfi_address_search_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+function helfi_address_search_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type): void {
   if ($entity_type->id() !== 'tpr_unit') {
     return;
   }

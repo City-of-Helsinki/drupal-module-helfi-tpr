@@ -69,13 +69,22 @@ class Channel extends TprEntityBase {
   }
 
   /**
+   * Gets the type.
+   *
+   * @return string
+   *   The type.
+   */
+  public function getType() : string {
+    return $this->get('type')->value;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $fields['name_synonyms'] = static::createStringField('Name synonyms', BaseFieldDefinition::CARDINALITY_UNLIMITED);
-
     $fields['email'] = static::createStringField('Email');
 
     $string_fields = [
@@ -85,7 +94,11 @@ class Channel extends TprEntityBase {
     ];
 
     foreach ($string_fields as $name => $label) {
-      $fields[$name] = static::createStringField($label);
+      $fields[$name] = static::createStringField($label)
+        ->setDisplayOptions('view', [
+          'type' => 'string',
+          'label' => 'hidden',
+        ]);
     }
 
     $fields['phone'] = static::createPhoneField('Phone');

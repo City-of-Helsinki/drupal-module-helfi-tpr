@@ -23,6 +23,23 @@ field.value.accessibility_sentence:
       type: string
       label: Value
 
+field.formatter.settings.tpr_service_channel_formatter:
+  type: mapping
+  mapping:
+    view_mode:
+      type: string
+      label: 'View mode'
+    link:
+      type: boolean
+      label: 'Show links'
+    sort_order:
+      type: sequence
+      sequence:
+        type: mapping
+        mapping:
+          weight:
+            type: integer
+
 field.formatter.settings.service_map_embed:
   type: mapping
   label: 'Service map embed'

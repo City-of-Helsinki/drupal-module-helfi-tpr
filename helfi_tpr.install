@@ -12,6 +12,7 @@ use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\helfi_tpr\Entity\ChannelTypeCollection;
 
 /**
  * Helper function to get the content translation field definitions.
@@ -620,4 +621,24 @@ function helfi_tpr_update_8035() : void {
   foreach ($actions as $action) {
     $config_storage->write($action, $source->read($action));
   }
+}
+
+/**
+ * Changes the default service channel display formatter for Errand service.
+ */
+function helfi_tpr_update_8036() : void {
+  $expectedOrder = [];
+  foreach (ChannelTypeCollection::all() as $item) {
+    $expectedOrder[$item->id] = ['weight' => $item->weight];
+  }
+  /** @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface $display_repository */
+  $display_repository = \Drupal::service('entity_display.repository');
+  $display_repository->getViewDisplay('tpr_errand_service', 'tpr_errand_service')
+    ->setComponent('channels', [
+      'type' => 'tpr_service_channel_formatter',
+      'settings' => [
+        'sort_order' => $expectedOrder,
+      ],
+    ])
+    ->save();
 }

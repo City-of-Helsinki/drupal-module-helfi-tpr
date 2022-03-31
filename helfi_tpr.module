@@ -15,7 +15,7 @@ use Drupal\Core\Session\AccountInterface;
 /**
  * Implements hook_theme().
  */
-function helfi_tpr_theme() {
+function helfi_tpr_theme() : array {
   return [
     'tpr_accessibility_sentences' => [
       'variables' => ['name' => NULL, 'items' => []],
@@ -59,7 +59,7 @@ function helfi_tpr_theme() {
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
-function helfi_tpr_theme_suggestions_tpr_unit(array $variables) {
+function helfi_tpr_theme_suggestions_tpr_unit(array $variables) : array {
   $suggestions = [];
   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
 
@@ -71,7 +71,7 @@ function helfi_tpr_theme_suggestions_tpr_unit(array $variables) {
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
-function helfi_tpr_theme_suggestions_tpr_service(array $variables) {
+function helfi_tpr_theme_suggestions_tpr_service(array $variables) : array {
   $suggestions = [];
   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
 
@@ -83,7 +83,7 @@ function helfi_tpr_theme_suggestions_tpr_service(array $variables) {
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
-function helfi_tpr_theme_suggestions_tpr_service_channel(array $variables) {
+function helfi_tpr_theme_suggestions_tpr_service_channel(array $variables) : array {
   $suggestions = [];
   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
 
@@ -95,7 +95,7 @@ function helfi_tpr_theme_suggestions_tpr_service_channel(array $variables) {
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
-function helfi_tpr_theme_suggestions_tpr_errand_service(array $variables) {
+function helfi_tpr_theme_suggestions_tpr_errand_service(array $variables) : array {
   $suggestions = [];
   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
 
@@ -113,7 +113,7 @@ function helfi_tpr_theme_suggestions_tpr_errand_service(array $variables) {
  *   An associative array containing:
  *   - elements: An array of elements to display in view mode.
  */
-function template_preprocess_tpr_unit(array &$variables) {
+function template_preprocess_tpr_unit(array &$variables) : void {
   $variables['view_mode'] = $variables['elements']['#view_mode'];
   // Helpful $content variable for templates.
   foreach (Element::children($variables['elements']) as $key) {
@@ -122,13 +122,6 @@ function template_preprocess_tpr_unit(array &$variables) {
   if (isset($variables['elements']['#tpr_unit'])) {
     $variables['entity'] = $variables['elements']['#tpr_unit'];
     $variables['content']['description_summary'] = $variables['elements']['#tpr_unit']->get('description')->summary;
-
-    // Get provided languages for the template.
-    $provided_languages = $variables['entity']->get('provided_languages')->getValue();
-
-    foreach ($provided_languages as $provided_language) {
-      $variables['provided_languages'][] = $provided_language['value'];
-    }
 
     // Get 'hide_description' field value and pass it to the template.
     $hide_description = $variables['entity']->get('hide_description')->value;
@@ -149,7 +142,7 @@ function template_preprocess_tpr_unit(array &$variables) {
  *   An associative array containing:
  *   - elements: An array of elements to display in view mode.
  */
-function template_preprocess_tpr_service(array &$variables) {
+function template_preprocess_tpr_service(array &$variables) : void {
   $variables['view_mode'] = $variables['elements']['#view_mode'];
   // Helpful $content variable for templates.
   foreach (Element::children($variables['elements']) as $key) {
@@ -170,7 +163,7 @@ function template_preprocess_tpr_service(array &$variables) {
  *   An associative array containing:
  *   - elements: An array of elements to display in view mode.
  */
-function template_preprocess_tpr_service_channel(array &$variables) {
+function template_preprocess_tpr_service_channel(array &$variables) : void {
   $variables['view_mode'] = $variables['elements']['#view_mode'];
   // Helpful $content variable for templates.
   foreach (Element::children($variables['elements']) as $key) {
@@ -190,7 +183,7 @@ function template_preprocess_tpr_service_channel(array &$variables) {
  *   An associative array containing:
  *   - elements: An array of elements to display in view mode.
  */
-function template_preprocess_tpr_errand_service(array &$variables) {
+function template_preprocess_tpr_errand_service(array &$variables) : void {
   $variables['view_mode'] = $variables['elements']['#view_mode'];
   // Helpful $content variable for templates.
   foreach (Element::children($variables['elements']) as $key) {
@@ -210,7 +203,7 @@ function template_preprocess_tpr_errand_service(array &$variables) {
  *   An associative array containing:
  *   - elements: An array of elements to display in view mode.
  */
-function template_preprocess_tpr_ontology_word_details(array &$variables) {
+function template_preprocess_tpr_ontology_word_details(array &$variables) : void {
   $variables['view_mode'] = $variables['elements']['#view_mode'];
   // Helpful $content variable for templates.
   foreach (Element::children($variables['elements']) as $key) {
@@ -224,7 +217,7 @@ function template_preprocess_tpr_ontology_word_details(array &$variables) {
 /**
  * Implements hook_ENTITY_TYPE_access().
  */
-function helfi_tpr_tpr_unit_access(EntityInterface $entity, $operation, AccountInterface $account) {
+function helfi_tpr_tpr_unit_access(EntityInterface $entity, $operation, AccountInterface $account) : AccessResult {
   // Allow user to view unpublished Units based on permission.
   if ($operation === 'view' && !$entity->isPublished()) {
     return AccessResult::allowedIfHasPermission($account, 'view unpublished tpr_unit');
@@ -236,7 +229,7 @@ function helfi_tpr_tpr_unit_access(EntityInterface $entity, $operation, AccountI
 /**
  * Implements hook_ENTITY_TYPE_access().
  */
-function helfi_tpr_tpr_service_access(EntityInterface $entity, $operation, AccountInterface $account) {
+function helfi_tpr_tpr_service_access(EntityInterface $entity, $operation, AccountInterface $account) : AccessResult {
   // Allow user to view unpublished Services based on permission.
   if ($operation === 'view' && !$entity->isPublished()) {
     return AccessResult::allowedIfHasPermission($account, 'view unpublished tpr_service');
@@ -248,7 +241,7 @@ function helfi_tpr_tpr_service_access(EntityInterface $entity, $operation, Accou
 /**
  * Implements hook_ENTITY_TYPE_access().
  */
-function helfi_tpr_tpr_service_channel_access(EntityInterface $entity, $operation, AccountInterface $account) {
+function helfi_tpr_tpr_service_channel_access(EntityInterface $entity, $operation, AccountInterface $account) : AccessResult {
   // Allow user to view unpublished Service channels based on permission.
   if ($operation === 'view' && !$entity->isPublished()) {
     return AccessResult::allowedIfHasPermission($account, 'view unpublished tpr_service_channel');
@@ -260,7 +253,7 @@ function helfi_tpr_tpr_service_channel_access(EntityInterface $entity, $operatio
 /**
  * Implements hook_ENTITY_TYPE_access().
  */
-function helfi_tpr_tpr_errand_service_access(EntityInterface $entity, $operation, AccountInterface $account) {
+function helfi_tpr_tpr_errand_service_access(EntityInterface $entity, $operation, AccountInterface $account) : AccessResult {
   // Allow user to view unpublished Errand services based on permission.
   if ($operation === 'view' && !$entity->isPublished()) {
     return AccessResult::allowedIfHasPermission($account, 'view unpublished tpr_errand_service');

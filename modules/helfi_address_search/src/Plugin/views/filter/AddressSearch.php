@@ -5,14 +5,20 @@ declare(strict_types = 1);
 namespace Drupal\helfi_address_search\Plugin\views\filter;
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Component\Utility\Xss;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
+use Drupal\views\Plugin\views\pager\PagerPluginBase;
 use Drupal\views\ViewExecutable;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
 /**
- * Address search is used to sort the results to show the nearest results first.
+ * Address search for sorting the results to show the nearest units first.
+ *
+ * Instead of altering the query, this unconventional way of sorting the results
+ * is used because the information used for sorting is not stored in the
+ * database as such.
  *
  * @ingroup views_filter_handlers
  *
@@ -49,19 +55,23 @@ class AddressSearch extends FilterPluginBase {
    * @param \Drupal\views\ViewExecutable $view
    *   The ViewExecutable from the hook's parameter.
    *
-   * @return \Drupal\views\ResultRow[]
+   * @return \Drupal\views\ViewExecutable
    *   Sorted results or original results when there is no address input.
    */
-  public static function getSortedResultsByAddress(ViewExecutable $view): array {
+  public static function sortByAddress(ViewExecutable $view): ViewExecutable {
     $exposedInput = $view->getExposedInput();
     if (empty($exposedInput['address_search'])) {
-      return $view->result;
+      $view->result = AddressSearch::limitByPaging($view->result, $view->pager);
+      return $view;
     }
 
     // Get the coordinates.
-    $coordinates = AddressSearch::fetchAddressCoordinates($exposedInput['address_search']);
+    $address = Xss::filter($exposedInput['address_search']);
+    $coordinates = AddressSearch::fetchAddressCoordinates($address);
     if (empty($coordinates)) {
-      return $view->result;
+      $view->result = AddressSearch::limitByPaging($view->result, $view->pager);
+      $view->element = AddressSearch::setSearchStatus($view->element, FALSE);
+      return $view;
     }
 
     // Calculate distances for each view result.
@@ -81,14 +91,24 @@ class AddressSearch extends FilterPluginBase {
       $result->_entity->set('distance', $distances[$result->_entity->get('id')->getString()]);
     }
 
-    // Sort results by distances: nearest first.
+    // Sort results array by distances: nearest first.
     uasort($results, function ($left, $right) use ($distances) {
       return match ($distances[$left->_entity->get('id')->getString()] >= $distances[$right->_entity->get('id')->getString()]) {
         FALSE => (-1),
         TRUE => 1,
       };
     });
-    return array_values($results);
+
+    $results = AddressSearch::limitByPaging($results, $view->pager);
+
+    $results = array_values($results);
+    foreach ($results as $key => $row) {
+      $row->index = $key;
+    }
+    $view->result = $results;
+
+    $view->element = AddressSearch::setSearchStatus($view->element, TRUE);
+    return $view;
   }
 
   /**
@@ -160,6 +180,45 @@ class AddressSearch extends FilterPluginBase {
     // Calculate distance using the Haversine formula.
     return (int) round(2 * $radius * asin(sqrt(pow(sin($latDelta / 2), 2) +
         cos($latA) * cos($latB) * pow(sin($lonDelta / 2), 2))), 0);
+  }
+
+  /**
+   * Slice results to smaller array using the pager settings.
+   *
+   * @param \Drupal\views\ResultRow[] $results
+   *   Array of ResultRow.
+   * @param \Drupal\views\Plugin\views\pager\PagerPluginBase $pager
+   *   Pager.
+   *
+   * @return \Drupal\views\ResultRow[]
+   *   Array subset.
+   */
+  protected static function limitByPaging(array $results, PagerPluginBase $pager): array {
+    if (!is_int($pager->getItemsPerPage()) || $pager->getItemsPerPage() === 0) {
+      return $results;
+    }
+
+    $itemsPerPage = $pager->getItemsPerPage();
+    $offset = ($pager->getCurrentPage() * $itemsPerPage);
+    return array_slice($results, $offset, $itemsPerPage, TRUE);
+  }
+
+  /**
+   * Set the search status to element array.
+   *
+   * @param array $element
+   *   ViewExecutable element array.
+   * @param bool $succeed
+   *   TRUE if the search was successful, FALSE if the address was not found.
+   *
+   * @return array
+   *   ViewExecutable element array.
+   */
+  protected static function setSearchStatus(array $element, bool $succeed): array {
+    if (!isset($element['address_search_succeed'])) {
+      $element['address_search_succeed'] = $succeed;
+    }
+    return $element;
   }
 
 }

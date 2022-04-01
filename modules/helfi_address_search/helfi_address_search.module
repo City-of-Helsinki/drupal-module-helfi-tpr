@@ -15,7 +15,7 @@ use Drupal\views\ViewExecutable;
 /**
  * Implements hook_views_data_alter().
  */
-function helfi_address_search_views_data_alter(array &$data) {
+function helfi_address_search_views_data_alter(array &$data): void {
   $data['tpr_unit']['address_search'] = [
     'title' => t('Address search'),
     'filter' => [
@@ -24,6 +24,7 @@ function helfi_address_search_views_data_alter(array &$data) {
       'id' => 'address_search',
     ],
   ];
+
   $data['tpr_unit']['distance'] = [
     'title' => t('Computed distance'),
     'group' => t('TPR - Unit'),
@@ -33,21 +34,43 @@ function helfi_address_search_views_data_alter(array &$data) {
       'id' => 'distance',
     ],
   ];
+
+  $data['views']['area_address_search_info'] = [
+    'title' => t('Address search information'),
+    'help' => t('Provide markup for successful and failed address search.'),
+    'area' => [
+      'id' => 'address_search_info',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_views_pre_execute().
+ */
+function helfi_address_search_views_pre_execute(ViewExecutable $view): void {
+  if (!isset($view->filter["address_search"])) {
+    return;
+  }
+
+  // Query all results as the sorting and paging is done with
+  // AddressSearch::getSortedResultsByAddress().
+  $view->query->setLimit(NULL);
+  $view->query->setOffset(NULL);
 }
 
 /**
  * Implements hook_views_pre_render().
  */
-function helfi_address_search_views_pre_render(ViewExecutable $view) {
+function helfi_address_search_views_pre_render(ViewExecutable $view): void {
   if (isset($view->filter["address_search"])) {
-    $view->result = AddressSearch::getSortedResultsByAddress($view);
+    $view = AddressSearch::sortByAddress($view);
   }
 }
 
 /**
  * Implements hook_entity_bundle_field_info_alter().
  */
-function helfi_address_search_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+function helfi_address_search_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type): void {
   if ($entity_type->id() !== 'tpr_unit') {
     return;
   }
@@ -61,13 +84,14 @@ function helfi_address_search_entity_bundle_field_info_alter(&$fields, EntityTyp
     ->setTranslatable(FALSE)
     ->setRequired(FALSE)
     ->setDisplayOptions('view', [
-      'type' => 'number',
+      'type' => 'number_decimal_kilo',
       'label' => 'hidden',
       'weight' => 0,
     ])
     ->setSettings([
-      'suffix' => ' m',
+      'suffix' => ' km',
       'placeholder' => '',
+      'minimum_value' => '0.1',
     ])
     ->setDisplayConfigurable('form', FALSE)
     ->setDisplayConfigurable('view', FALSE);

@@ -642,3 +642,35 @@ function helfi_tpr_update_8036() : void {
     ])
     ->save();
 }
+
+/**
+ * Rename the school_details field to detail_items.
+ */
+function helfi_tpr_update_8037() : void {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+
+  if ($oldDefinition = $manager->getFieldStorageDefinition('school_details', 'tpr_ontology_word_details')) {
+    drupal_flush_all_caches();
+
+    // Remove the current field with all field data. However, the data is
+    // fetched using the tpr_ontology_word_details migration, so it's easy to
+    // re-import.
+    $manager->uninstallFieldStorageDefinition($oldDefinition);
+
+    // Install the renamed field.
+    $fields['detail_items'] = BaseFieldDefinition::create('tpr_ontology_word_detail_item')
+      ->setLabel(new TranslatableMarkup('Details'))
+      ->setRevisionable(FALSE)
+      ->setTranslatable(TRUE)
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ]);
+
+    foreach ($fields as $name => $field) {
+      \Drupal::entityDefinitionUpdateManager()
+        ->installFieldStorageDefinition($name, 'tpr_ontology_word_details', 'helfi_tpr', $field);
+    }
+  }
+}

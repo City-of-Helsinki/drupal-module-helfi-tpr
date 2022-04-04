@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Site\Settings;
 use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
 
 /**
@@ -22,21 +23,31 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
   protected bool $useRequestCache = FALSE;
 
   /**
-   * Include source data that has school details.
+   * Default value for ontology IDs limit.
    *
-   * @var bool
-   */
-  protected bool $includeSchoolDetails = TRUE;
-
-  /**
-   * Include source data with selected ontology IDs.
+   * The source data is limited using this default, if the limit is not
+   * configured in the settings.php file. If the value is empty array, the
+   * migration is not limited by ontology IDs.
    *
    * @var int[]
    */
-  protected array $includeOntologyIds = [
-    816,
-    650,
+  protected array $defaultOntologyIdsLimit = [
+    // School related.
+    157,
+    472,
+    493,
     590,
+    650,
+    816,
+    872,
+    873,
+    892,
+    // Daycare related.
+    86,
+    200,
+    294,
+    489,
+    831,
   ];
 
   /**
@@ -67,6 +78,24 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
    */
   public function fields() : array {
     return [];
+  }
+
+  /**
+   * Gets the ontology ids that are included to the migration.
+   *
+   * It's possible to set which ontology ids are included using the
+   * settings.php file.
+   * @code
+   * $settings['helfi_migrate_limit_ontology_ids'] = [1, 2, 3];
+   * @endcode
+   * If given empty array, migrate does not limit by ontology ids.
+   * If not set, default ids are used.
+   *
+   * @return array
+   *   List of ontology ids.
+   */
+  public function getOntologyIdsLimit(): array {
+    return Settings::get('helfi_migrate_limit_ontology_ids', $this->defaultOntologyIdsLimit);
   }
 
   /**
@@ -138,7 +167,7 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
   }
 
   /**
-   * Combine the two content sources.
+   * Combine the two content sources and optionally limit with given IDs.
    *
    * @param array $content
    *   The source JSON content.
@@ -150,19 +179,15 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
    */
   private function combineContentAndDetails(array $content, array $detailedContent): array {
     $combined = [];
+    $ontologyIdsLimit = $this->getOntologyIdsLimit();
+    $useLimit = (count($ontologyIdsLimit) !== 0);
 
-    foreach ($content as $contentKey => $contentItem) {
-      foreach ($detailedContent as $detailedKey => $detailedItem) {
+    foreach ($content as $contentItem) {
+      foreach ($detailedContent as $detailedItem) {
         if ($contentItem['id'] === $detailedItem['ontologyword_id']) {
-          // Only process pre-selected source data.
-          $process = FALSE;
-          if ($this->includeSchoolDetails ? $this->hasSchoolDetails($detailedItem) : FALSE) {
-            $process = TRUE;
-          }
-          if (!empty($this->includeOntologyIds) ? in_array($contentItem['id'], $this->includeOntologyIds) : FALSE) {
-            $process = TRUE;
-          }
-          if (!$process) {
+          // Skip source when limit is set and the ontology ID is not found from
+          // the list.
+          if ($useLimit && !in_array($contentItem['id'], $ontologyIdsLimit)) {
             continue;
           }
 
@@ -186,25 +211,6 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
     }
 
     return $combined;
-  }
-
-  /**
-   * Checks if the array has school details.
-   *
-   * @param array $item
-   *   Array to check the school detail keys.
-   *
-   * @return bool
-   *   TRUE if school details exist.
-   */
-  private function hasSchoolDetails(array $item): bool {
-    if (!isset($item['schoolyear']) ||
-      !(isset($item['clarification_fi']) ||
-        isset($item['clarification_sv']) ||
-        isset($item['clarification_en']))) {
-      return FALSE;
-    }
-    return TRUE;
   }
 
 }

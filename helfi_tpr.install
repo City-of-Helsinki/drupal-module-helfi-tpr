@@ -639,14 +639,23 @@ function helfi_tpr_update_8036() : void {
       'settings' => [
         'sort_order' => $expectedOrder,
       ],
+      'label' => 'hidden',
     ])
     ->save();
 }
 
 /**
- * Rename the school_details field to detail_items.
+ * Hide service channel label.
  */
 function helfi_tpr_update_8037() : void {
+  // Re-run previous update with label = 'hidden' added.
+  helfi_tpr_update_8036();
+}
+
+/**
+ * Rename the school_details field to detail_items.
+ */
+function helfi_tpr_update_8038() : void {
   $manager = \Drupal::entityDefinitionUpdateManager();
 
   if ($oldDefinition = $manager->getFieldStorageDefinition('school_details', 'tpr_ontology_word_details')) {

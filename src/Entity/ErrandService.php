@@ -185,6 +185,7 @@ class ErrandService extends TprEntityBase {
       ])
       ->setDisplayOptions('view', [
         'type' => 'tpr_service_channel_formatter',
+        'label' => 'hidden',
       ])
       ->setTranslatable(TRUE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)

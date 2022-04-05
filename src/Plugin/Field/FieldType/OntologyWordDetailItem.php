@@ -70,7 +70,7 @@ class OntologyWordDetailItem extends FieldItemBase {
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) : array {
     $random = new Random();
     foreach (['clarification', 'schoolyear'] as $key) {
-      $values[$key] = $random->word(mt_rand(1, 50));
+      $values[$key] = $random->word(random_int(1, 10));
     }
     return $values;
   }

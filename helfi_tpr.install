@@ -638,7 +638,16 @@ function helfi_tpr_update_8036() : void {
       'type' => 'tpr_service_channel_formatter',
       'settings' => [
         'sort_order' => $expectedOrder,
+        'label' => 'hidden',
       ],
     ])
     ->save();
+}
+
+/**
+ * Hide service channel label.
+ */
+function helfi_tpr_update_8037() : void {
+  // Re-run previous update with label = 'hidden' added.
+  helfi_tpr_update_8036();
 }

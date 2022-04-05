@@ -638,8 +638,8 @@ function helfi_tpr_update_8036() : void {
       'type' => 'tpr_service_channel_formatter',
       'settings' => [
         'sort_order' => $expectedOrder,
-        'label' => 'hidden',
       ],
+      'label' => 'hidden',
     ])
     ->save();
 }

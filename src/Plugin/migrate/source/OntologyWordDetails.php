@@ -4,8 +4,11 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
+use Drupal\migrate\Plugin\MigrationInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Source plugin for retrieving data from Tpr.
@@ -15,6 +18,13 @@ use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
  * )
  */
 class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * The configuration factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected ConfigFactoryInterface $configFactory;
 
   /**
    * {@inheritdoc}
@@ -31,6 +41,21 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
    * @var int[]
    */
   protected array $defaultOntologyIdsLimit = [];
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    MigrationInterface $migration = NULL
+  ) {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition, $migration);
+    $instance->configFactory = $container->get('config.factory');
+    return $instance;
+  }
 
   /**
    * {@inheritdoc}
@@ -74,9 +99,9 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
    *   List of ontology ids.
    */
   public function getOntologyIdsLimit(): array {
-    if ($config = \Drupal::configFactory()->get('helfi_tpr.limit_ontology_words')) {
+    if ($config = $this->configFactory->get('helfi_tpr.limit_ontology_words')) {
       if ($ids = $config->get('ids')) {
-        return $ids;
+        $this->defaultOntologyIdsLimit = $ids;
       }
     }
 

@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\Site\Settings;
 use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
 
 /**
@@ -25,30 +24,13 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
   /**
    * Default value for ontology IDs limit.
    *
-   * The source data is limited using this default, if the limit is not
-   * configured in the settings.php file. If the value is empty array, the
-   * migration is not limited by ontology IDs.
+   * The source data is limited using this default, if the limit is not set
+   * in 'helfi_tpr.limit_ontology_words:ids' config. If the value is empty
+   * array, the migration is not limited by ontology IDs.
    *
    * @var int[]
    */
-  protected array $defaultOntologyIdsLimit = [
-    // School related.
-    157,
-    472,
-    493,
-    590,
-    650,
-    816,
-    872,
-    873,
-    892,
-    // Daycare related.
-    86,
-    200,
-    294,
-    489,
-    831,
-  ];
+  protected array $defaultOntologyIdsLimit = [];
 
   /**
    * {@inheritdoc}
@@ -83,19 +65,22 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
   /**
    * Gets the ontology ids that are included to the migration.
    *
-   * It's possible to set which ontology ids are included using the
-   * settings.php file.
-   * @code
-   * $settings['helfi_migrate_limit_ontology_ids'] = [1, 2, 3];
-   * @endcode
-   * If given empty array, migrate does not limit by ontology ids.
-   * If not set, default ids are used.
+   * Set ontology ID limit using 'helfi_tpr.limit_ontology_words:ids' config.
+   * If the config is not set, $defaultOntologyIdsLimit is used.
+   *
+   * If given an empty array, migrate does not limit by ontology ids.
    *
    * @return array
    *   List of ontology ids.
    */
   public function getOntologyIdsLimit(): array {
-    return Settings::get('helfi_migrate_limit_ontology_ids', $this->defaultOntologyIdsLimit);
+    if ($config = \Drupal::configFactory()->get('helfi_tpr.limit_ontology_words')) {
+      if ($ids = $config->get('ids')) {
+        return $ids;
+      }
+    }
+
+    return $this->defaultOntologyIdsLimit;
   }
 
   /**

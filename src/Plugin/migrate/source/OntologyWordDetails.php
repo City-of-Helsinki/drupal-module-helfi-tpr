@@ -32,17 +32,6 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
   protected bool $useRequestCache = FALSE;
 
   /**
-   * Default value for ontology IDs limit.
-   *
-   * The source data is limited using this default, if the limit is not set
-   * in 'helfi_tpr.limit_ontology_words:ids' config. If the value is empty
-   * array, the migration is not limited by ontology IDs.
-   *
-   * @var int[]
-   */
-  protected array $defaultOntologyIdsLimit = [];
-
-  /**
    * {@inheritdoc}
    */
   public static function create(
@@ -90,22 +79,21 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
   /**
    * Gets the ontology ids that are included to the migration.
    *
-   * Set ontology ID limit using 'helfi_tpr.limit_ontology_words:ids' config.
-   * If the config is not set, $defaultOntologyIdsLimit is used.
-   *
-   * If given an empty array, migrate does not limit by ontology ids.
+   * Ontology ID limit is set using 'helfi_tpr.limit_ontology_words:ids' config.
+   * If the config does not exist, empty array is returned, indicating that the
+   * migrate does not limit by ontology ids.
    *
    * @return array
-   *   List of ontology ids.
+   *   List of ontology ids or empty array.
    */
-  public function getOntologyIdsLimit(): array {
+  public function getOntologyIdsLimit() : array {
     if ($config = $this->configFactory->get('helfi_tpr.limit_ontology_words')) {
       if ($ids = $config->get('ids')) {
-        $this->defaultOntologyIdsLimit = $ids;
+        return $ids;
       }
     }
 
-    return $this->defaultOntologyIdsLimit;
+    return [];
   }
 
   /**

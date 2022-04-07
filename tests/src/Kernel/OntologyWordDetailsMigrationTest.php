@@ -29,7 +29,7 @@ class OntologyWordDetailsMigrationTest extends MigrationTestBase {
       $this->assertEquals($expected['name'], $translation->label());
       $this->assertEquals($expected['ontologyword_id'], $translation->get('ontologyword_id')->value);
       $this->assertEquals($expected['unit_id'], $translation->get('unit_id')->value);
-      $this->assertEquals(1, $translation->get('school_details')->count());
+      $this->assertEquals(1, $translation->get('detail_items')->count());
     }
   }
 

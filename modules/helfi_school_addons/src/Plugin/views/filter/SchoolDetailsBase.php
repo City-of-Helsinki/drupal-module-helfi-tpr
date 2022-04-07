@@ -49,7 +49,7 @@ abstract class SchoolDetailsBase extends InOperator {
   }
 
   /**
-   * Add relationships to ontology word details and school details tables.
+   * Add relationships to ontology_word_details and detail_items tables.
    *
    * @param int $wordId
    *   Ontology word details ID.
@@ -73,24 +73,24 @@ abstract class SchoolDetailsBase extends InOperator {
     $this->query->addWhere('AND', 'owd_fd.langcode', $language);
     $this->query->addWhere('AND', 'owd_fd.ontologyword_id', $wordId);
 
-    // Join with tpr_ontology_word_details__school_details table.
-    $owdSdConfiguration = [
-      'table' => 'tpr_ontology_word_details__school_details',
+    // Join with tpr_ontology_word_details__detail_items table.
+    $diConfiguration = [
+      'table' => 'tpr_ontology_word_details__detail_items',
       'field' => 'entity_id',
       'left_table' => 'owd_fd',
       'left_field' => 'id',
       'operator' => '=',
     ];
-    /** @var \Drupal\views\Plugin\views\join\JoinPluginBase $owdSdJoin */
-    $owdSdJoin = Views::pluginManager('join')->createInstance('standard', $owdSdConfiguration);
-    $this->query->addRelationship('owd_sd', $owdSdJoin, 'owd_fd');
+    /** @var \Drupal\views\Plugin\views\join\JoinPluginBase $diJoin */
+    $diJoin = Views::pluginManager('join')->createInstance('standard', $diConfiguration);
+    $this->query->addRelationship('di', $diJoin, 'owd_fd');
 
     $schoolYear = SchoolUtility::getCurrentSchoolYear();
     if ($schoolYear) {
-      $this->query->addWhere('AND', 'owd_sd.school_details_schoolyear', $schoolYear);
+      $this->query->addWhere('AND', 'di.detail_items_schoolyear', $schoolYear);
     }
 
-    $this->query->addWhere('AND', 'owd_sd.school_details_clarification', $this->value);
+    $this->query->addWhere('AND', 'di.detail_items_clarification', $this->value);
   }
 
   /**
@@ -114,7 +114,7 @@ abstract class SchoolDetailsBase extends InOperator {
     $multipleOntologyWordDetails = OntologyWordDetails::loadMultipleByWordId($this->wordId);
     foreach ($multipleOntologyWordDetails as $ontologyWordDetails) {
       /** @var \Drupal\helfi_tpr\Entity\OntologyWordDetails $ontologyWordDetails */
-      $details[] = $ontologyWordDetails->getDetailByAnother('school_details', 'clarification', 'schoolyear', $schoolYear, $langcode);
+      $details[] = $ontologyWordDetails->getDetailByAnother('detail_items', 'clarification', 'schoolyear', $schoolYear, $langcode);
     }
 
     $options = array_map('ucfirst', array_merge(...$details));

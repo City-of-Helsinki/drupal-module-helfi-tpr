@@ -12,16 +12,16 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\DataDefinition;
 
 /**
- * Defines the 'tpr_school_details' field type.
+ * Defines the 'tpr_ontology_word_detail_item' field type.
  *
  * @FieldType(
- *   id = "tpr_school_details",
- *   label = @Translation("School details"),
+ *   id = "tpr_ontology_word_detail_item",
+ *   label = @Translation("Ontology word detail item"),
  *   no_ui = TRUE,
- *   default_formatter = "tpr_school_details"
+ *   default_formatter = "tpr_ontology_word_detail_item"
  * )
  */
-class SchoolDetailsItem extends FieldItemBase {
+class OntologyWordDetailItem extends FieldItemBase {
 
   /**
    * {@inheritdoc}
@@ -29,7 +29,7 @@ class SchoolDetailsItem extends FieldItemBase {
   public function isEmpty() : bool {
     $clarification = $this->get('clarification')->getValue();
     $schoolyear = $this->get('schoolyear')->getValue();
-    return ($clarification === NULL || $clarification === '') && ($schoolyear === NULL || $schoolyear === '');
+    return empty($clarification) && empty($schoolyear);
   }
 
   /**
@@ -70,7 +70,7 @@ class SchoolDetailsItem extends FieldItemBase {
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) : array {
     $random = new Random();
     foreach (['clarification', 'schoolyear'] as $key) {
-      $values[$key] = $random->word(mt_rand(1, 50));
+      $values[$key] = $random->word(random_int(1, 10));
     }
     return $values;
   }

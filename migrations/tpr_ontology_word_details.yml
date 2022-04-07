@@ -22,7 +22,7 @@ process:
   name: name
   unit_id: unit_id
   ontologyword_id: ontologyword_id
-  school_details:
+  detail_items:
     plugin: sub_process
     source: details
     process:

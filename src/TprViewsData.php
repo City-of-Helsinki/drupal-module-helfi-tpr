@@ -31,6 +31,17 @@ class TprViewsData extends EntityViewsData {
       ];
     }
 
+    // Filter by TPR Unit's provided_languages field.
+    $data['tpr_unit__provided_languages']['tpr_provided_languages'] = [
+      'title' => $this->t('Provided languages'),
+      'filter' => [
+        'id' => 'tpr_provided_languages',
+        'field' => 'provided_languages_value',
+        'label' => $this->t('Provided languages'),
+        'help' => 'Filter units by provided languages.',
+      ],
+    ];
+
     return $data;
   }
 

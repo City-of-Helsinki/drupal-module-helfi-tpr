@@ -91,7 +91,9 @@ class AddressSearchInfo extends AreaPluginBase {
       $format = $this->options['succeed']['format'] ?? filter_default_format();
     }
     else {
-      $classes[] = 'unit-search__address-not-found hds-notification hds-notification--alert';
+      $classes[] = 'unit-search__address-not-found';
+      $classes[] = 'hds-notification';
+      $classes[] = 'hds-notification--alert';
       $text = $this->options['failed']['value'];
       $format = $this->options['failed']['format'] ?? filter_default_format();
     }

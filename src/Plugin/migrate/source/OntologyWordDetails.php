@@ -4,8 +4,11 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
+use Drupal\migrate\Plugin\MigrationInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Source plugin for retrieving data from Tpr.
@@ -17,27 +20,31 @@ use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
 class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
 
   /**
+   * The configuration factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected ConfigFactoryInterface $configFactory;
+
+  /**
    * {@inheritdoc}
    */
   protected bool $useRequestCache = FALSE;
 
   /**
-   * Include source data that has school details.
-   *
-   * @var bool
+   * {@inheritdoc}
    */
-  protected bool $includeSchoolDetails = TRUE;
-
-  /**
-   * Include source data with selected ontology IDs.
-   *
-   * @var int[]
-   */
-  protected array $includeOntologyIds = [
-    816,
-    650,
-    590,
-  ];
+  public static function create(
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    MigrationInterface $migration = NULL
+  ) {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition, $migration);
+    $instance->configFactory = $container->get('config.factory');
+    return $instance;
+  }
 
   /**
    * {@inheritdoc}
@@ -66,6 +73,26 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
    * {@inheritdoc}
    */
   public function fields() : array {
+    return [];
+  }
+
+  /**
+   * Gets the ontology ids that are included to the migration.
+   *
+   * Ontology ID limit is set using 'helfi_tpr.limit_ontology_words:ids' config.
+   * If the config does not exist, empty array is returned, indicating that the
+   * migrate does not limit by ontology ids.
+   *
+   * @return array
+   *   List of ontology ids or empty array.
+   */
+  public function getOntologyIdsLimit() : array {
+    if ($config = $this->configFactory->get('helfi_tpr.limit_ontology_words')) {
+      if ($ids = $config->get('ids')) {
+        return $ids;
+      }
+    }
+
     return [];
   }
 
@@ -138,7 +165,7 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
   }
 
   /**
-   * Combine the two content sources.
+   * Combine the two content sources and optionally limit with given IDs.
    *
    * @param array $content
    *   The source JSON content.
@@ -150,19 +177,15 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
    */
   private function combineContentAndDetails(array $content, array $detailedContent): array {
     $combined = [];
+    $ontologyIdsLimit = $this->getOntologyIdsLimit();
+    $useLimit = (count($ontologyIdsLimit) !== 0);
 
-    foreach ($content as $contentKey => $contentItem) {
-      foreach ($detailedContent as $detailedKey => $detailedItem) {
+    foreach ($content as $contentItem) {
+      foreach ($detailedContent as $detailedItem) {
         if ($contentItem['id'] === $detailedItem['ontologyword_id']) {
-          // Only process pre-selected source data.
-          $process = FALSE;
-          if ($this->includeSchoolDetails ? $this->hasSchoolDetails($detailedItem) : FALSE) {
-            $process = TRUE;
-          }
-          if (!empty($this->includeOntologyIds) ? in_array($contentItem['id'], $this->includeOntologyIds) : FALSE) {
-            $process = TRUE;
-          }
-          if (!$process) {
+          // Skip source when limit is set and the ontology ID is not found from
+          // the list.
+          if ($useLimit && !in_array($contentItem['id'], $ontologyIdsLimit)) {
             continue;
           }
 
@@ -186,25 +209,6 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
     }
 
     return $combined;
-  }
-
-  /**
-   * Checks if the array has school details.
-   *
-   * @param array $item
-   *   Array to check the school detail keys.
-   *
-   * @return bool
-   *   TRUE if school details exist.
-   */
-  private function hasSchoolDetails(array $item): bool {
-    if (!isset($item['schoolyear']) ||
-      !(isset($item['clarification_fi']) ||
-        isset($item['clarification_sv']) ||
-        isset($item['clarification_en']))) {
-      return FALSE;
-    }
-    return TRUE;
   }
 
 }

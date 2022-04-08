@@ -8,28 +8,28 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 
 /**
- * Plugin implementation of the 'School details' formatter.
+ * Plugin implementation of the 'Ontology word detail item' formatter.
  *
  * @FieldFormatter(
- *   id = "tpr_school_details",
- *   label = @Translation("School details"),
+ *   id = "tpr_ontology_word_detail_item",
+ *   label = @Translation("Ontology word detail item"),
  *   field_types = {
- *     "tpr_school_details"
+ *     "tpr_ontology_word_detail_item"
  *   }
  * )
  */
-final class SchoolDetailsFormatter extends FormatterBase {
+final class OntologyWordDetailFormatter extends FormatterBase {
 
   /**
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) : array {
-    /** @var \Drupal\helfi_tpr\Plugin\Field\FieldType\SchoolDetailsItem[] $items */
+    /** @var \Drupal\helfi_tpr\Plugin\Field\FieldType\OntologyWordDetailItem[] $items */
     $elements = [];
 
     foreach ($items as $delta => $item) {
       $elements[$delta] = [
-        '#theme' => 'tpr_school_details',
+        '#theme' => 'tpr_ontology_word_detail_item',
         '#clarification' => $item->get('clarification')->getValue(),
         '#schoolyear' => $item->get('schoolyear')->getValue(),
       ];

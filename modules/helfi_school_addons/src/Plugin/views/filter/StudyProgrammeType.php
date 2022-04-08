@@ -67,21 +67,21 @@ class StudyProgrammeType extends InOperator {
     $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
     $this->query->addWhere('AND', 'owd_fd_spt.langcode', $language);
 
-    // Join with tpr_ontology_word_details__school_details table.
-    $owdSdConfiguration = [
-      'table' => 'tpr_ontology_word_details__school_details',
+    // Join with tpr_ontology_word_details__detail_items table.
+    $diConfiguration = [
+      'table' => 'tpr_ontology_word_details__detail_items',
       'field' => 'entity_id',
       'left_table' => 'owd_fd_spt',
       'left_field' => 'id',
       'operator' => '=',
     ];
-    /** @var \Drupal\views\Plugin\views\join\JoinPluginBase $owdSdJoin */
-    $owdSdJoin = Views::pluginManager('join')->createInstance('standard', $owdSdConfiguration);
-    $this->query->addRelationship('owd_sd_spt', $owdSdJoin, 'owd_fd_spt');
+    /** @var \Drupal\views\Plugin\views\join\JoinPluginBase $diJoin */
+    $diJoin = Views::pluginManager('join')->createInstance('standard', $diConfiguration);
+    $this->query->addRelationship('di_spt', $diJoin, 'owd_fd_spt');
 
     $schoolYear = SchoolUtility::getCurrentSchoolYear();
     if ($schoolYear) {
-      $this->query->addWhere('AND', 'owd_sd_spt.school_details_schoolyear', $schoolYear);
+      $this->query->addWhere('AND', 'di_spt.detail_items_schoolyear', $schoolYear);
     }
 
     $orGroup = $this->query->setWhereGroup('OR', 'OR');

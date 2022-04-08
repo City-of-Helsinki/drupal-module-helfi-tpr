@@ -65,6 +65,16 @@ field.value.tpr_connection:
       type: label
       label: Value
 
+helfi_tpr.limit_ontology_words:
+  type: mapping
+  mapping:
+    ids:
+      type: sequence
+      label: 'List of ontology word IDs to limit the migration'
+      sequence:
+        type: integer
+        label: 'Ontology word ID'
+
 views.filter.tpr_provided_languages:
   type: views.filter.in_operator
   label: 'Allowed languages'

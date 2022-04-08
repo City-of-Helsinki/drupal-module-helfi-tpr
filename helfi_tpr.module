@@ -20,9 +20,9 @@ function helfi_tpr_theme() : array {
     'tpr_accessibility_sentences' => [
       'variables' => ['name' => NULL, 'items' => []],
     ],
-    'tpr_school_details' => [
+    'tpr_ontology_word_detail_item' => [
       'variables' => ['clarification' => NULL, 'schoolyear' => NULL],
-      'template' => 'tpr-school-details',
+      'template' => 'tpr-ontology-word-detail-item',
     ],
     'tpr_unit' => [
       'render element' => 'elements',

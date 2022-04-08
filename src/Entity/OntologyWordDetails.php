@@ -105,13 +105,16 @@ class OntologyWordDetails extends TprEntityBase {
     $fields['ontologyword_id'] = static::createStringField('Ontology word ID')
       ->setTranslatable(FALSE);
 
-    $fields['school_details'] = BaseFieldDefinition::create('tpr_school_details')
-      ->setLabel(new TranslatableMarkup('School details'))
+    $fields['detail_items'] = BaseFieldDefinition::create('tpr_ontology_word_detail_item')
+      ->setLabel(new TranslatableMarkup('Details'))
       ->setRevisionable(FALSE)
       ->setTranslatable(TRUE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
+      ->setDisplayOptions('view', [
         'type' => 'readonly_field_widget',
       ]);
 

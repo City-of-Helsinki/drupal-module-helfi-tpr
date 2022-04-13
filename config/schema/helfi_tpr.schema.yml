@@ -74,3 +74,7 @@ helfi_tpr.limit_ontology_words:
       sequence:
         type: integer
         label: 'Ontology word ID'
+
+views.filter.tpr_provided_languages:
+  type: views.filter.in_operator
+  label: 'Allowed languages'

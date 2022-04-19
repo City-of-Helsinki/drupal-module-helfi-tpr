@@ -52,6 +52,10 @@ all garbage collection tasks (such as cleaning removed remote entities), so you 
 
 `drush helfi:migrate-fixture {migrate_id}`.
 
+### Overwriting `url` and `canonical_url`
+
+It's possible to overwrite `url` and `canonical_url` per project by adding a configuration file named `helfi_tpr.migration_settings.{migrate_id}.yml` and defining the URLs there.
+
 ## Contact
 
 Slack: #helfi-drupal (http://helsinkicity.slack.com/)

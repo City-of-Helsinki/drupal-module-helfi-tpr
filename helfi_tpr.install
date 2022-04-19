@@ -675,9 +675,6 @@ function helfi_tpr_update_8038() : void {
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
-      ])
-      ->setDisplayOptions('view', [
-        'type' => 'readonly_field_widget',
       ]);
 
     foreach ($fields as $name => $field) {

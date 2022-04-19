@@ -113,9 +113,6 @@ class OntologyWordDetails extends TprEntityBase {
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
-      ])
-      ->setDisplayOptions('view', [
-        'type' => 'readonly_field_widget',
       ]);
 
     return $fields;

@@ -36,7 +36,7 @@ class ProvidedLanguages extends InOperator {
     return [
       'fi' => t('Finnish'),
       'sv' => t('Swedish'),
-      'se' => t('Northern Sami'),
+      'se' => t('North Sami'),
     ];
   }
 

@@ -47,37 +47,7 @@
         {% block main_content %}
         {% endblock main_content %}
       </div>
-      {% if in_menu or sidebar_content or content.links|render %}
-        <div class="service__sidebar">
-          {% block sidebar_block %}
-          {% endblock sidebar_block%}
-
-          {% if content.links|render %}
-            <div class="sidebar-text sidebar-text--service-links has-title ">
-              <h2 class="sidebar-text__title">{{ 'Important links'|t }}</h2>
-              <div class="sidebar-text__text-content">{{ content.links }}</div>
-            </div>
-          {% endif %}
-        </div>
-      {% endif %}
     </div>
-
-    {% set service_units_view = drupal_view_result('service_units', 'service_units')|length %}
-
-    {% if service_units_view > 0 %}
-      <div class="service__content">
-    {% endif %}
-
-      {% if service_units_view > 0 %}
-        <div class="service__units">
-          {{ drupal_view('service_units', 'service_units') }}
-        </div>
-      {% endif %}
-
-    {% if service_units_view > 0 %}
-      </div>
-    {% endif %}
-
   </article>
 
 {% elseif view_mode == 'teaser' %}

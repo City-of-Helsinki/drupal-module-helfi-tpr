@@ -8,6 +8,7 @@
 declare(strict_types = 1);
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Database\Query\AlterableInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountInterface;
@@ -260,4 +261,11 @@ function helfi_tpr_tpr_errand_service_access(EntityInterface $entity, $operation
   }
 
   return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_query_TAG_alter().
+ */
+function helfi_tpr_query_owd_relationship_alter(AlterableInterface $query) : void {
+  $query->groupBy('id');
 }

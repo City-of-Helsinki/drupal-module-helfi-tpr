@@ -48,8 +48,9 @@ class TprViewsData extends EntityViewsData {
       'relationship' => [
         'base' => 'tpr_ontology_word_details_field_data',
         'base field' => 'unit_id',
-        'field' => 'id',
-        'id' => 'standard',
+        'table' => 'tpr_unit',
+        'real field' => 'id',
+        'id' => 'tag_owd_relationship',
         'label' => t('Ontology word details field data'),
       ],
     ];

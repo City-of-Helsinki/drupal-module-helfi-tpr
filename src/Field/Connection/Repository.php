@@ -16,6 +16,7 @@ final class Repository {
    */
   protected array $map = [
     OpeningHour::TYPE_NAME => OpeningHour::class,
+    Highlight::TYPE_NAME => Highlight::class,
   ];
 
   /**

@@ -46,7 +46,6 @@ abstract class CustomFieldFormatterTestBase extends MigrationTestBase {
 
     $account = $this->createUser($this->getUserPermissions());
     $this->drupalLogin($account);
-
   }
 
   /**

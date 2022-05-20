@@ -570,16 +570,16 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
           [
             'unit_id' => 1,
             'section_type' => 'HIGHLIGHT',
-            'name_fi' => 'hilight fi 1',
-            'name_en' => 'hilight en 1',
-            'name_sv' => 'hilight sv 1',
+            'name_fi' => 'highlight fi 1',
+            'name_en' => 'highlight en 1',
+            'name_sv' => 'highlight sv 1',
           ],
           [
             'unit_id' => 1,
             'section_type' => 'HIGHLIGHT',
-            'name_fi' => 'hilight fi 2',
-            'name_en' => 'hilight en 2',
-            'name_sv' => 'hilight sv 2',
+            'name_fi' => 'highlight fi 2',
+            'name_en' => 'highlight en 2',
+            'name_sv' => 'highlight sv 2',
           ],
           [
             'unit_id' => 1,

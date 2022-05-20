@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\Tests\helfi_tpr\Kernel;
 
 use Drupal\helfi_tpr\Entity\Unit;
+use Drupal\helfi_tpr\Field\Connection\Highlight;
 use Drupal\helfi_tpr\Field\Connection\OpeningHour;
 
 /**
@@ -64,6 +65,9 @@ class UnitMigrationTest extends MigrationTestBase {
       $opening_hour = $translation->get('opening_hours')->get(1)->data;
       $this->assertInstanceOf(OpeningHour::class, $opening_hour);
       $this->assertEquals("https://localhost/$langcode", $opening_hour->get('www'));
+      $highlight = $translation->get('highlights')->get(0)->data;
+      $this->assertInstanceOf(Highlight::class, $highlight);
+      $this->assertEquals("highlight $langcode 1", $highlight->get('name'));
     }
 
     // Re-run migrate and make sure migrate map hash doesn't change.

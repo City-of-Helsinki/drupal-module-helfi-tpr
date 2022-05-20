@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\Tests\helfi_tpr\Unit;
 
 use Drupal\helfi_tpr\Field\Connection\Connection;
+use Drupal\helfi_tpr\Field\Connection\Highlight;
 use Drupal\helfi_tpr\Field\Connection\OpeningHour;
 use Drupal\helfi_tpr\Field\Connection\Repository;
 use Drupal\Tests\UnitTestCase;
@@ -62,6 +63,7 @@ class ConnectionRepositoryTest extends UnitTestCase {
   public function getTestData() : array {
     return [
       [OpeningHour::TYPE_NAME],
+      [Highlight::TYPE_NAME],
     ];
   }
 

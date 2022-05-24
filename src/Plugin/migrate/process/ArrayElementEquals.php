@@ -45,10 +45,12 @@ class ArrayElementEquals extends ProcessPluginBase {
     $matchValue = $this->configuration['value'];
     $key = $this->configuration['key'];
 
-    if (is_array($value) || $value instanceof \Traversable) {
-      if (!empty($value[$key]) && $value[$key] === $matchValue) {
-        return $value;
-      }
+    if (empty($value) || !is_array($value)) {
+      return [];
+    }
+
+    if (!empty($value[$key]) && $value[$key] === $matchValue) {
+      return $value;
     }
 
     return [];

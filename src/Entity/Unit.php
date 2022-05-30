@@ -317,6 +317,11 @@ class Unit extends TprEntityBase {
       ->setLabel(new TranslatableMarkup('Show website link'))
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
+    $fields['highlights'] = BaseFieldDefinition::create('tpr_connection')
+      ->setLabel(new TranslatableMarkup('Highlights'))
+      ->setTranslatable(TRUE)
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }

@@ -683,3 +683,19 @@ function helfi_tpr_update_8038() : void {
     }
   }
 }
+
+/**
+ * Add 'highlights' field to the TPR Unit entity.
+ */
+function helfi_tpr_update_8039() : void {
+  $fields['highlights'] = BaseFieldDefinition::create('tpr_connection')
+    ->setLabel(new TranslatableMarkup('Highlights'))
+    ->setTranslatable(TRUE)
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setDisplayConfigurable('view', TRUE);
+
+  foreach ($fields as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
+  }
+}

@@ -29,17 +29,27 @@ process:
   id: id
   name: name
   services: service_descriptions
+  _opening_hours_connections:
+    plugin: array_element_equals
+    source: connections
+    value: OPENING_HOURS
+    key: type
   opening_hours:
     plugin: sub_process
-    source: connections
+    source: '@_opening_hours_connections'
     process:
-      # Only import opening hours
-      skip:
-        plugin: skip_on_value
-        not_equals: true
-        source: type
-        value: OPENING_HOURS
-        method: row
+      value: value
+      data: data
+      type: type
+  _highlight_connections:
+    plugin: array_element_equals
+    source: connections
+    value: HIGHLIGHT
+    key: type
+  highlights:
+    plugin: sub_process
+    source: '@_highlight_connections'
+    process:
       value: value
       data: data
       type: type

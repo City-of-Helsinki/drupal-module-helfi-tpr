@@ -6,6 +6,7 @@ namespace Drupal\Tests\helfi_tpr\Functional;
 
 use Drupal\Core\Url;
 use Drupal\helfi_tpr\Entity\TprEntityBase;
+use Drupal\helfi_tpr\Field\Connection\Highlight;
 use Drupal\helfi_tpr\Field\Connection\OpeningHour;
 
 /**
@@ -25,14 +26,21 @@ class ConnectionFormatterTest extends CustomFieldFormatterTestBase {
       $openingHour = new OpeningHour();
       $openingHour->set('name', "Open $language 1");
 
-      $field = $entity->getTranslation($language)
+      $openingHoursField = $entity->getTranslation($language)
         ->get('opening_hours');
-      $field->appendItem($openingHour);
+      $openingHoursField->appendItem($openingHour);
 
       $openingHour = new OpeningHour();
       $openingHour->set('www', "https://localhost/$language")
         ->set('name', "Open $language 2");
-      $field->appendItem($openingHour);
+      $openingHoursField->appendItem($openingHour);
+
+      $highlight = new Highlight();
+      $highlight->set('name', "Highlight $language");
+      $highlightsField = $entity->getTranslation($language)
+        ->get('highlights');
+      $highlightsField->appendItem($highlight);
+
       $entity->save();
     }
 
@@ -55,6 +63,7 @@ class ConnectionFormatterTest extends CustomFieldFormatterTestBase {
         'Opening hours',
         "Open $language 1",
         "Open $language 2",
+        "Highlight $language",
       ];
 
       foreach ($strings as $string) {
@@ -80,6 +89,10 @@ class ConnectionFormatterTest extends CustomFieldFormatterTestBase {
     $display_repository = \Drupal::service('entity_display.repository');
     $display_repository->getViewDisplay('tpr_unit', 'tpr_unit')
       ->setComponent('opening_hours', [
+        'type' => 'tpr_connection',
+        'label' => 'above',
+      ])
+      ->setComponent('highlights', [
         'type' => 'tpr_connection',
         'label' => 'above',
       ])

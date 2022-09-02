@@ -7,6 +7,7 @@ namespace Drupal\helfi_address_search\Plugin\views\filter;
 use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Language\LanguageInterface;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
 use Drupal\views\Plugin\views\pager\PagerPluginBase;
 use Drupal\views\ViewExecutable;
@@ -121,9 +122,12 @@ class AddressSearch extends FilterPluginBase {
    *   Latitude and longitude coordinates in array, or empty array.
    */
   protected static function fetchAddressCoordinates(string $address): array {
+    $language = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
+
     $client = new Client([
       'base_uri' => 'https://api.hel.fi/servicemap/v2/',
     ]);
+
     try {
       $response = $client->get('search', [
         'query' => [
@@ -131,16 +135,20 @@ class AddressSearch extends FilterPluginBase {
           'type' => 'address',
           'page' => '1',
           'page_size' => '1',
+          'language' => $language,
         ],
       ]);
     }
     catch (RequestException $e) {
       return [];
     }
+
     $addressSearchResult = Json::decode($response->getBody());
 
-    if (empty($addressSearchResult["results"][0]["location"]["coordinates"][1]) ||
-      empty($addressSearchResult["results"][0]["location"]["coordinates"][0])) {
+    if (
+      empty($addressSearchResult["results"][0]["location"]["coordinates"][1]) ||
+      empty($addressSearchResult["results"][0]["location"]["coordinates"][0])
+    ) {
       return [];
     }
 

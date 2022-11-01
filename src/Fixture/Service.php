@@ -57,6 +57,7 @@ final class Service extends FixtureBase {
               'url' => sprintf('https://localhost/2/%s/%s', $language, $id),
             ],
           ],
+          'name_synonyms' =>  sprintf('Name synonyms %s %s', $language, $id),
         ];
       }
     }

@@ -13,6 +13,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\helfi_tpr\Entity\ChannelTypeCollection;
+use Drupal\migrate\Plugin\MigrateIdMapInterface;
 
 /**
  * Helper function to get the content translation field definitions.
@@ -698,4 +699,34 @@ function helfi_tpr_update_8039() : void {
     \Drupal::entityDefinitionUpdateManager()
       ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
   }
+}
+
+/**
+ * Add name_synonyms field to Service entity.
+ */
+function helfi_tpr_update_8040() : void {
+  $fields['name_synonyms'] = BaseFieldDefinition::create('string_long')
+    ->setTranslatable(TRUE)
+    ->setRevisionable(FALSE)
+    ->setLabel(new TranslatableMarkup('Name synonyms'))
+    ->setDescription(new TranslatableMarkup('Name synonyms for the service title.'))
+    ->setDisplayOptions('form', [
+      'type' => 'readonly_field_widget',
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  foreach ($fields as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'tpr_service', 'helfi_tpr', $field);
+  }
+}
+
+/**
+ * Map all services that needs update to import name_synonyms on next migration.
+ */
+function helfi_tpr_update_8041() : void {
+  \Drupal::database()->update('migrate_map_tpr_service')->fields([
+    'source_row_status' => MigrateIdMapInterface::STATUS_NEEDS_UPDATE
+  ])->execute();
 }

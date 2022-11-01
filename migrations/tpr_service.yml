@@ -16,6 +16,7 @@ source:
 process:
   id: id
   name: title
+  name_synonyms: name_synonyms
   description/summary: description_short
   description/value: description_long
   description/format:

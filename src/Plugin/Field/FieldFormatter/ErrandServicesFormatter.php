@@ -97,16 +97,24 @@ class ErrandServicesFormatter extends EntityReferenceEntityFormatter {
     }
     $elements = parent::viewElements($items, $langcode);
     $channelTypes = $this->getChannelTypes();
-
     foreach ($elements as $delta => $element) {
+      $elements[$delta]['unique_channels'] = [];
       /** @var \Drupal\helfi_tpr\Entity\ErrandService $entity */
       $entity = $element['#tpr_errand_service'];
       foreach ($entity->getChannels() as $channel) {
-        $elements[$delta]['#weight'] = $channelTypes[$channel->getType()]->weight;
+        if (in_array($channel->getType(), $elements[$delta]['unique_channels'])) {
+          continue;
+        }
+        $elements[$delta]['unique_channels'][] = [
+          '#name' => $channel->getType(),
+          '#weight' => $channelTypes[$channel->getType()]->weight,
+        ];
       }
+      uasort($elements[$delta]['unique_channels'], [SortArray::class, 'sortByWeightProperty']);
 
     }
-    uasort($elements, [SortArray::class, 'sortByWeightProperty']);
+
     return $elements;
   }
+
 }

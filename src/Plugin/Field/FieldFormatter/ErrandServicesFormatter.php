@@ -8,6 +8,7 @@ use Drupal\Component\Utility\SortArray;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceEntityFormatter;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\helfi_tpr\Entity\ChannelType;
 use Drupal\helfi_tpr\Entity\ChannelTypeCollection;
 use Drupal\helfi_tpr\Entity\ErrandService;
 use Drupal\helfi_tpr\Entity\Service;
@@ -97,6 +98,8 @@ class ErrandServicesFormatter extends EntityReferenceEntityFormatter {
     }
     $elements = parent::viewElements($items, $langcode);
     $channelTypes = $this->getChannelTypes();
+    $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
     foreach ($elements as $delta => $element) {
       $elements[$delta]['unique_channels'] = [];
       /** @var \Drupal\helfi_tpr\Entity\ErrandService $entity */
@@ -105,14 +108,19 @@ class ErrandServicesFormatter extends EntityReferenceEntityFormatter {
         if (in_array($channel->getType(), $elements[$delta]['unique_channels'])) {
           continue;
         }
+        $translatedChannel = $channel->getTranslation($language);
+
         $elements[$delta]['unique_channels'][] = [
-          '#name' => $channel->getType(),
+          '#name' => $translatedChannel->type_string->value,
           '#weight' => $channelTypes[$channel->getType()]->weight,
         ];
+
+
       }
       uasort($elements[$delta]['unique_channels'], [SortArray::class, 'sortByWeightProperty']);
 
     }
+
 
     return $elements;
   }

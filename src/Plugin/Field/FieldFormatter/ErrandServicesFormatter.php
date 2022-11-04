@@ -115,12 +115,15 @@ class ErrandServicesFormatter extends EntityReferenceEntityFormatter {
           '#weight' => $channelTypes[$channel->getType()]->weight,
         ];
 
-
+      }
+      if ($items->getEntity()->has_unit->value) {
+        $elements[$delta]['unique_channels'][] = [
+          '#name' => $this->t('Office'),
+          '#weight' => 999,
+        ];
       }
       uasort($elements[$delta]['unique_channels'], [SortArray::class, 'sortByWeightProperty']);
-
     }
-
 
     return $elements;
   }

@@ -161,6 +161,17 @@ class Service extends TprEntityBase {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['has_unit'] = BaseFieldDefinition::create('boolean')
+      ->setTranslatable(TRUE)
+      ->setRevisionable(FALSE)
+      ->setLabel(new TranslatableMarkup('Has Unit'))
+      ->setDescription(new TranslatableMarkup('If service have unit its true else false.'))
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     $fields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
       ->setRevisionable(FALSE)
@@ -196,6 +207,7 @@ class Service extends TprEntityBase {
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
+
     $fields['menu_link'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(new TranslatableMarkup('Menu link'))
       ->setSettings([

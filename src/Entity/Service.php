@@ -162,7 +162,7 @@ class Service extends TprEntityBase {
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['has_unit'] = BaseFieldDefinition::create('boolean')
-      ->setTranslatable(TRUE)
+      ->setTranslatable(FALSE)
       ->setRevisionable(FALSE)
       ->setLabel(new TranslatableMarkup('Has Unit'))
       ->setDescription(new TranslatableMarkup('If service have unit its true else false.'))

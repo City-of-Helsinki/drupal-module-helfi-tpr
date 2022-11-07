@@ -8,17 +8,15 @@ use Drupal\Component\Utility\SortArray;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceEntityFormatter;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\helfi_tpr\Entity\ChannelType;
 use Drupal\helfi_tpr\Entity\ChannelTypeCollection;
-use Drupal\helfi_tpr\Entity\ErrandService;
 use Drupal\helfi_tpr\Entity\Service;
 
 /**
  * Field formatter to render errand service maps.
  *
  * @FieldFormatter(
- *   id = "tpr_errand_servie_formatter",
- *   label = @Translation("TPR - Errand Service formatter"),
+ *   id = "tpr_service_err_channel_list",
+ *   label = @Translation("TPR - Errand Service Channels List"),
  *   field_types = {
  *     "entity_reference"
  *   }
@@ -96,34 +94,39 @@ class ErrandServicesFormatter extends EntityReferenceEntityFormatter {
     if (!$items->getEntity() instanceof Service) {
       throw new \InvalidArgumentException('The field can only be used with tpr_errand_service entities.');
     }
-    $elements = parent::viewElements($items, $langcode);
+
+
+//    $elements = parent::viewElements($items, $langcode);
+    $services = $items->getEntity();
     $channelTypes = $this->getChannelTypes();
     $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
-    foreach ($elements as $delta => $element) {
-      $elements[$delta]['unique_channels'] = [];
-      /** @var \Drupal\helfi_tpr\Entity\ErrandService $entity */
-      $entity = $element['#tpr_errand_service'];
-      foreach ($entity->getChannels() as $channel) {
-        if (in_array($channel->getType(), $elements[$delta]['unique_channels'])) {
-          continue;
-        }
-        $translatedChannel = $channel->getTranslation($language);
 
-        $elements[$delta]['unique_channels'][] = [
-          '#name' => $translatedChannel->type_string->value,
-          '#weight' => $channelTypes[$channel->getType()]->weight,
-        ];
+    $elements['unique_channels'] = [];
+    $errand_services = $items->referencedEntities();
 
+    foreach ($errand_services as $errand_service) {
+      foreach ($errand_service->getChannels() as $channel) {
+
+
+      if (in_array($channel->getType(), $elements['unique_channels'])) {
+        continue;
       }
-      if ($items->getEntity()->has_unit->value) {
-        $elements[$delta]['unique_channels'][] = [
-          '#name' => $this->t('Office'),
-          '#weight' => 999,
-        ];
-      }
-      uasort($elements[$delta]['unique_channels'], [SortArray::class, 'sortByWeightProperty']);
+      $translatedChannel = $channel->getTranslation($language);
+
+      $elements['unique_channels'][] = [
+        '#name' => $translatedChannel->type_string->value,
+        '#weight' => $channelTypes[$channel->getType()]->weight,
+      ];
     }
+    }
+    if ($items->getEntity()->has_unit->value) {
+      $elements['unique_channels'][] = [
+        '#name' => $this->t('Office'),
+        '#weight' => 999,
+      ];
+    }
+    uasort($elements['unique_channels'], [SortArray::class, 'sortByWeightProperty']);
 
     return $elements;
   }

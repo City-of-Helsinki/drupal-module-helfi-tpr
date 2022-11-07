@@ -102,33 +102,41 @@ class ErrandServicesFormatter extends EntityReferenceEntityFormatter {
     $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
 
-    $elements['unique_channels'] = [];
+    $elements = [];
     $errand_services = $items->referencedEntities();
 
     foreach ($errand_services as $errand_service) {
       foreach ($errand_service->getChannels() as $channel) {
 
 
-      if (in_array($channel->getType(), $elements['unique_channels'])) {
+      if (in_array($channel->getType(), $elements)) {
         continue;
       }
       $translatedChannel = $channel->getTranslation($language);
 
-      $elements['unique_channels'][] = [
+      $elements[] = [
         '#name' => $translatedChannel->type_string->value,
         '#weight' => $channelTypes[$channel->getType()]->weight,
       ];
     }
     }
     if ($items->getEntity()->has_unit->value) {
-      $elements['unique_channels'][] = [
+      $elements[] = [
         '#name' => $this->t('Office'),
         '#weight' => 999,
       ];
     }
-    uasort($elements['unique_channels'], [SortArray::class, 'sortByWeightProperty']);
+    uasort($elements, [SortArray::class, 'sortByWeightProperty']);
 
-    return $elements;
+    $list = [];
+    foreach ($elements as $element) {
+      $list[] = $element['#name'];
+    }
+    $list_items[0] = [
+      '#theme' => 'item_list',
+      '#items' => $list,
+    ];
+    return $list_items;
   }
 
 }

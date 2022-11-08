@@ -741,3 +741,24 @@ function helfi_tpr_update_8041() : void {
     'source_row_status' => MigrateIdMapInterface::STATUS_NEEDS_UPDATE
   ])->execute();
 }
+
+/**
+ * Add has_unit field to Service entity.
+ */
+function helfi_tpr_update_8042() : void {
+  $fields['has_unit'] = BaseFieldDefinition::create('boolean')
+    ->setTranslatable(TRUE)
+    ->setRevisionable(FALSE)
+    ->setLabel(new TranslatableMarkup('Has Unit'))
+    ->setDescription(new TranslatableMarkup('If service have unit its true else false.'))
+    ->setDisplayOptions('form', [
+      'type' => 'readonly_field_widget',
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  foreach ($fields as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'tpr_service', 'helfi_tpr', $field);
+  }
+}

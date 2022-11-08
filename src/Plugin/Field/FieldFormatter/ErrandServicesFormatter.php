@@ -110,7 +110,7 @@ class ErrandServicesFormatter extends FormatterBase {
         continue;
       }
       foreach ($errand_service->getChannels() as $channel) {
-        if (in_array($channel->getType(), $channel_list['channel_type'])) {
+        if (isset($channel_list[$channel->getType()])) {
           continue;
         }
 

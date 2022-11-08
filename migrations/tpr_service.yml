@@ -17,6 +17,7 @@ process:
   id: id
   name: title
   name_synonyms: name_synonyms
+  service_id: service_id
   description/summary: description_short
   description/value: description_long
   description/format:

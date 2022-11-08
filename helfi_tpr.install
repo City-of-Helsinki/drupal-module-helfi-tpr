@@ -702,9 +702,20 @@ function helfi_tpr_update_8039() : void {
 }
 
 /**
- * Add name_synonyms field to Service entity.
+ * Add name_synonyms field and service_id field to Service entity.
  */
 function helfi_tpr_update_8040() : void {
+
+  $fields['service_id'] = BaseFieldDefinition::create('integer')
+    ->setLabel(new TranslatableMarkup('Service grouping ID'))
+    ->setDescription(new TranslatableMarkup('Value from service_id property'))
+    ->setDisplayOptions('form', [
+      'type' => 'readonly_field_widget',
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE)
+    ->setSetting('unsigned', TRUE);
+
   $fields['name_synonyms'] = BaseFieldDefinition::create('string_long')
     ->setTranslatable(TRUE)
     ->setRevisionable(FALSE)

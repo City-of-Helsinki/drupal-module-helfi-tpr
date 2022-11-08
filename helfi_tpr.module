@@ -269,3 +269,20 @@ function helfi_tpr_tpr_errand_service_access(EntityInterface $entity, $operation
 function helfi_tpr_query_owd_relationship_alter(AlterableInterface $query) : void {
   $query->groupBy('id');
 }
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function helfi_tpr_views_data_alter(&$data) {
+  $data['tpr_service_field_data']['id_or_service_id'] = [
+    'title' => t('ID or Service ID'),
+    'help' => t('Displays entities that have either id or service IDs'),
+    'argument' => [
+      'field' => 'id',
+      'name table' => 'tpr_service_field_data',
+      'name field' => 'id',
+      'id' => 'id_or_service_id_handler',
+    ],
+  ];
+
+}

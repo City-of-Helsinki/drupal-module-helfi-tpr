@@ -161,6 +161,16 @@ class Service extends TprEntityBase {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['service_id'] = BaseFieldDefinition::create('integer')
+      ->setLabel(new TranslatableMarkup('Service grouping ID'))
+      ->setDescription(new TranslatableMarkup('Value from service_id property'))
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setSetting('unsigned', TRUE);
+
     $fields['description'] = BaseFieldDefinition::create('text_with_summary')
       ->setTranslatable(TRUE)
       ->setRevisionable(FALSE)

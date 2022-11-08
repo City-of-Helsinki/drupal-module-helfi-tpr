@@ -83,6 +83,14 @@ class ServiceMigrationTest extends MigrationTestBase {
         $this->assertEquals(sprintf('Name synonyms %s %s', $langcode, $translation->id()), $translation->get('name_synonyms')->value);
 
         $this->assertEquals(10554, $translation->get('service_id')->value);
+        $has_unit = !empty($translation->get('has_unit')->value);
+        if ($translation->id() == 2) {
+          $this->assertTrue($has_unit);
+        }
+        else {
+          $this->assertFalse($has_unit);
+        }
+
 
         foreach ([123, 456] as $key => $id) {
           $this->assertEquals($id, $translation->get('errand_services')->get($key)->target_id);

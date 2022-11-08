@@ -97,58 +97,50 @@ class ErrandServicesFormatter extends FormatterBase {
     }
 
     $channelTypes = $this->getChannelTypes();
-    $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
+    /** @var \Drupal\Core\Render\Renderer $renderer */
     $renderer = \Drupal::service('renderer');
 
     $channel_list = [];
     $errand_services = $items->referencedEntities();
+    $item_list = [
+      '#theme' => 'item_list',
+      '#items' => [],
+    ];
 
     foreach ($errand_services as $errand_service) {
-      if (!$errand_service) {
-        continue;
-      }
+      /** @var \Drupal\helfi_tpr\Entity\ErrandService $errand_service */
       foreach ($errand_service->getChannels() as $channel) {
         if (isset($channel_list[$channel->getType()])) {
           continue;
         }
 
-        $translatedChannel = $channel->getTranslation($language);
-
-        $channel_list[] = [
+        /** @var \Drupal\helfi_tpr\Entity\Channel $translatedChannel */
+        $translatedChannel = \Drupal::service('entity.repository')->getTranslationFromContext($channel, $langcode);
+        $channel_list[$channel->getType()] = [
           '#name' => $translatedChannel->type_string->value,
           '#weight' => $channelTypes[$channel->getType()]->weight,
-          '#cache' => [
-            'context' => 'user',
-            'tags' => Cache::mergeTags(['tpr_errand_service_view'], $errand_service->getCacheTags()),
-          ]
         ];
-
+        $renderer->addCacheableDependency($item_list, $translatedChannel);
       }
     }
 
-    if ($items->getEntity()->hasField('has_unit')
-      && $items->getEntity()->has_unit->value) {
-      $channel_list[] = [
+    /** @var \Drupal\helfi_tpr\Entity\Service $service */
+    $service = $items->getEntity();
+
+    if ($service->hasField('has_unit') && $service->has_unit->value) {
+      $channel_list['OFFICE'] = [
         '#name' => $this->t('Office'),
         '#weight' => 999,
       ];
     }
 
     uasort($channel_list, [SortArray::class, 'sortByWeightProperty']);
+    $item_list['#items'] = array_column($channel_list, '#name');
 
-    $list_items = [];
-    if ($errand_services) {
-      $list_items = [
-        '#theme' => 'item_list',
-        '#items' => array_column($channel_list, '#name'),
-      ];
+    $elements[0] = $item_list;
 
-      $renderer->addCacheableDependency($list_items, $channel_list);
-      $renderer->addCacheableDependency($list_items, $errand_services[0]);
-    }
-
-    return $list_items;
+    return $elements;
   }
 
 }

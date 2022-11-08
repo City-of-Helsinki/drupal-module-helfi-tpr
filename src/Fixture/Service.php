@@ -57,11 +57,16 @@ final class Service extends FixtureBase {
               'url' => sprintf('https://localhost/2/%s/%s', $language, $id),
             ],
           ],
+          'unit_ids' => $id != 2 ? [] : [
+            1563,
+            1940,
+          ],
           'name_synonyms' =>  sprintf('Name synonyms %s %s', $language, $id),
           'service_id' => 10554
         ];
       }
     }
+
 
     $services[] = [
       'fi' => [

@@ -102,7 +102,6 @@ class ErrandServicesFormatter extends FormatterBase {
     $renderer = \Drupal::service('renderer');
 
     $channel_list = [];
-    $channel_list['channel_type'] = [];
     $errand_services = $items->referencedEntities();
 
     foreach ($errand_services as $errand_service) {
@@ -115,7 +114,7 @@ class ErrandServicesFormatter extends FormatterBase {
         }
 
         $translatedChannel = $channel->getTranslation($language);
-        $channel_list['channel_type'][] = $channel->getType();
+
         $channel_list[] = [
           '#name' => $translatedChannel->type_string->value,
           '#weight' => $channelTypes[$channel->getType()]->weight,

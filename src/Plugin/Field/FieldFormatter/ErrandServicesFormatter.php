@@ -5,8 +5,9 @@ declare(strict_types = 1);
 namespace Drupal\helfi_tpr\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\SortArray;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceEntityFormatter;
+use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\helfi_tpr\Entity\ChannelTypeCollection;
 use Drupal\helfi_tpr\Entity\Service;
@@ -23,7 +24,7 @@ use Drupal\helfi_tpr\Entity\Service;
  * )
  */
 
-class ErrandServicesFormatter extends EntityReferenceEntityFormatter {
+class ErrandServicesFormatter extends FormatterBase {
   /**
    * {@inheritdoc}
    */
@@ -92,50 +93,62 @@ class ErrandServicesFormatter extends EntityReferenceEntityFormatter {
   public function viewElements(FieldItemListInterface $items, $langcode) : array {
 
     if (!$items->getEntity() instanceof Service) {
-      throw new \InvalidArgumentException('The field can only be used with tpr_errand_service entities.');
+      throw new \InvalidArgumentException('The field can only be used with Services entities.');
     }
 
-
-//    $elements = parent::viewElements($items, $langcode);
-    $services = $items->getEntity();
     $channelTypes = $this->getChannelTypes();
     $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
+    $renderer = \Drupal::service('renderer');
 
-    $elements = [];
+    $channel_list = [];
+    $channel_list['channel_type'] = [];
     $errand_services = $items->referencedEntities();
 
     foreach ($errand_services as $errand_service) {
-      foreach ($errand_service->getChannels() as $channel) {
-
-
-      if (in_array($channel->getType(), $elements)) {
+      if (!$errand_service) {
         continue;
       }
-      $translatedChannel = $channel->getTranslation($language);
+      foreach ($errand_service->getChannels() as $channel) {
+        if (in_array($channel->getType(), $channel_list['channel_type'])) {
+          continue;
+        }
 
-      $elements[] = [
-        '#name' => $translatedChannel->type_string->value,
-        '#weight' => $channelTypes[$channel->getType()]->weight,
-      ];
+        $translatedChannel = $channel->getTranslation($language);
+        $channel_list['channel_type'][] = $channel->getType();
+        $channel_list[] = [
+          '#name' => $translatedChannel->type_string->value,
+          '#weight' => $channelTypes[$channel->getType()]->weight,
+          '#cache' => [
+            'context' => 'user',
+            'tags' => Cache::mergeTags(['tpr_errand_service_view'], $errand_service->getCacheTags()),
+          ]
+        ];
+
+      }
     }
-    }
-    if ($items->getEntity()->has_unit->value) {
-      $elements[] = [
+
+    if ($items->getEntity()->hasField('has_unit')
+      && $items->getEntity()->has_unit->value) {
+      $channel_list[] = [
         '#name' => $this->t('Office'),
         '#weight' => 999,
       ];
     }
-    uasort($elements, [SortArray::class, 'sortByWeightProperty']);
 
-    $list = [];
-    foreach ($elements as $element) {
-      $list[] = $element['#name'];
+    uasort($channel_list, [SortArray::class, 'sortByWeightProperty']);
+
+    $list_items = [];
+    if ($errand_services) {
+      $list_items = [
+        '#theme' => 'item_list',
+        '#items' => array_column($channel_list, '#name'),
+      ];
+
+      $renderer->addCacheableDependency($list_items, $channel_list);
+      $renderer->addCacheableDependency($list_items, $errand_services[0]);
     }
-    $list_items[0] = [
-      '#theme' => 'item_list',
-      '#items' => $list,
-    ];
+
     return $list_items;
   }
 

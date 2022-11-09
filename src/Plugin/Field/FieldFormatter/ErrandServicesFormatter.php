@@ -9,6 +9,7 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\helfi_tpr\Entity\ChannelType;
 use Drupal\helfi_tpr\Entity\ChannelTypeCollection;
 use Drupal\helfi_tpr\Entity\Service;
 
@@ -35,6 +36,25 @@ class ErrandServicesFormatter extends FormatterBase {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function settingsSummary() {
+    $settings = $this->getSetting('sort_order');
+    $selected_channels = [];
+    foreach ($settings as $channel_type => $channel_setting) {
+      if ($channel_setting['show']) {
+        $selected_channels[] = $channel_type;
+      }
+    }
+
+    return [
+      $this->t('Showing @list ', [
+        '@list' => implode(', ', $selected_channels)
+      ])
+    ];
+  }
+
+  /**
    * Gets the channel types.
    *
    * @return \Drupal\helfi_tpr\Entity\ChannelTypeCollection
@@ -56,6 +76,8 @@ class ErrandServicesFormatter extends FormatterBase {
       '#header' => [
         $this->t('ID'),
         $this->t('Label'),
+        $this->t('Show'),
+        $this->t('Label'),
         $this->t('Weight'),
       ],
       '#tableselect' => FALSE,
@@ -67,16 +89,29 @@ class ErrandServicesFormatter extends FormatterBase {
         ],
       ],
     ];
+    $channelTypes = [];
+    foreach ($this->getChannelTypes() as $channelId => $channelType) {
+      $channelTypes[$channelId] = $channelType;
+    }
+    $channelTypes['OFFICE'] = new ChannelType('OFFICE', 99);
 
-    foreach ($this->getChannelTypes() as $item) {
+
+    foreach ($channelTypes as $item) {
       $form['sort_order'][$item->id] = [
         '#attributes' => ['class' => ['draggable']],
         '#weight' => $item->weight,
         'id' => ['#plain_text' => $item->id],
-        'label' => ['#plain_text' => $item->label()],
+        'label' => [
+          '#type' => 'textfield',
+          '#default_value' => $this->getSetting('sort_order')[$item->id]['label'] ?? $item->id,
+        ],
+        'show' => [
+          '#type' => 'checkbox',
+          '#default_value' => $this->getSetting('sort_order')[$item->id]['show'] ?? 0,
+        ],
         'weight' => [
           '#type' => 'weight',
-          '#title' => $this->t('Weight for @title', ['@title' => $item->label()]),
+          '#title' => $this->t('Weight for @title', ['@title' => $item->id]),
           '#title_display' => 'invisible',
           '#default_value' => $item->weight,
           '#attributes' => ['class' => ['group-weight']],
@@ -95,7 +130,6 @@ class ErrandServicesFormatter extends FormatterBase {
     if (!$items->getEntity() instanceof Service) {
       throw new \InvalidArgumentException('The field can only be used with Services entities.');
     }
-
     $channelTypes = $this->getChannelTypes();
 
     /** @var \Drupal\Core\Render\Renderer $renderer */
@@ -111,17 +145,16 @@ class ErrandServicesFormatter extends FormatterBase {
     foreach ($errand_services as $errand_service) {
       /** @var \Drupal\helfi_tpr\Entity\ErrandService $errand_service */
       foreach ($errand_service->getChannels() as $channel) {
-        if (isset($channel_list[$channel->getType()])) {
+        if (isset($channel_list[$channel->getType()])
+        || empty($this->getSetting('sort_order')[$channel->getType()]['show'])) {
           continue;
         }
 
-        /** @var \Drupal\helfi_tpr\Entity\Channel $translatedChannel */
-        $translatedChannel = \Drupal::service('entity.repository')->getTranslationFromContext($channel, $langcode);
         $channel_list[$channel->getType()] = [
-          '#name' => $translatedChannel->type_string->value,
+          '#name' => $this->getSetting('sort_order')[$channel->getType()]['label'],
           '#weight' => $channelTypes[$channel->getType()]->weight,
         ];
-        $renderer->addCacheableDependency($item_list, $translatedChannel);
+        $renderer->addCacheableDependency($item_list, $channel);
       }
     }
 
@@ -130,8 +163,8 @@ class ErrandServicesFormatter extends FormatterBase {
 
     if ($service->hasField('has_unit') && $service->has_unit->value) {
       $channel_list['OFFICE'] = [
-        '#name' => $this->t('Office'),
-        '#weight' => 999,
+        '#name' => $this->getSetting('sort_order')['OFFICE']['label'],
+        '#weight' => $this->getSetting('sort_order')['OFFICE']['weight'],
       ];
     }
 

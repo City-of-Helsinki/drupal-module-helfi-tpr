@@ -103,6 +103,7 @@ process:
     to_format: U
     from_timezone: Europe/Helsinki
     to_timezone: UTC
+  ontologyword_ids: ontologyword_ids
 destination:
   plugin: translatable_entity:tpr_unit
   default_values:

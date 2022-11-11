@@ -699,3 +699,18 @@ function helfi_tpr_update_8039() : void {
       ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
   }
 }
+
+/**
+ * Add 'ontologyword_ids' field to the TPR Unit entity.
+ */
+function helfi_tpr_update_8040() : void {
+  $fields['ontologyword_ids'] = BaseFieldDefinition::create('integer')
+    ->setLabel(new TranslatableMarkup('Ontologyword IDs'))
+    ->setTranslatable(FALSE)
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
+
+  foreach ($fields as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
+  }
+}

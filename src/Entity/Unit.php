@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Webmozart\Assert\Assert;
+use Drupal\helfi_tpr\UnitCategoryUtility;
 
 /**
  * Defines the tpr_unit entity class.
@@ -180,6 +181,22 @@ class Unit extends TprEntityBase {
   public function getDescription(string $key) : ? string {
     Assert::oneOf($key, ['value', 'summary', 'format']);
     return $this->get('description')->{$key};
+  }
+
+  /**
+   * Gets unit categories using the ontologyword_ids field.
+   *
+   * @return string[]
+   *   An array containing categories.
+   */
+  public function getCategories() : array {
+    $categories = [];
+    foreach ($this->get('ontologyword_ids') as $ontologyword_id) {
+      if ($category = UnitCategoryUtility::getCategory($ontologyword_id->get('value')->getCastedValue())) {
+        $categories[$category] = $category;
+      }
+    }
+    return $categories;
   }
 
   /**

@@ -19,6 +19,7 @@ class UnitCategoryUtility {
    * @var array|string[]
    */
   private static array $categoryMap = [
+    603 => self::DAYCARE,
     663 => self::DAYCARE,
     601 => self::COMPREHENSIVE_SCHOOL,
     602 => self::COMPREHENSIVE_SCHOOL,

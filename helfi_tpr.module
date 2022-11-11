@@ -12,6 +12,7 @@ use Drupal\Core\Database\Query\AlterableInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\helfi_tpr\UnitCategoryUtility;
 
 /**
  * Implements hook_theme().
@@ -219,9 +220,28 @@ function template_preprocess_tpr_ontology_word_details(array &$variables) : void
  * Implements hook_ENTITY_TYPE_access().
  */
 function helfi_tpr_tpr_unit_access(EntityInterface $entity, $operation, AccountInterface $account) : AccessResult {
+  /** @var \Drupal\helfi_tpr\Entity\Unit $entity */
+
   // Allow user to view unpublished Units based on permission.
   if ($operation === 'view' && !$entity->isPublished()) {
     return AccessResult::allowedIfHasPermission($account, 'view unpublished tpr_unit');
+  }
+
+  // Allow users with special permissions to update specific TPR units.
+  if ($operation === 'update') {
+    $unit_categories = $entity->getCategories();
+
+    if (in_array(UnitCategoryUtility::DAYCARE, $unit_categories)) {
+      return AccessResult::allowedIfHasPermission($account, 'admin daycare units');
+    }
+
+    if (in_array(UnitCategoryUtility::COMPREHENSIVE_SCHOOL, $unit_categories)) {
+      return AccessResult::allowedIfHasPermission($account, 'admin comprehensive school units');
+    }
+
+    if (in_array(UnitCategoryUtility::PLAYGROUND, $unit_categories)) {
+      return AccessResult::allowedIfHasPermission($account, 'admin playground units');
+    }
   }
 
   return AccessResult::neutral();

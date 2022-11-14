@@ -192,11 +192,11 @@ class Unit extends TprEntityBase {
   public function getCategories() : array {
     $categories = [];
     foreach ($this->get('ontologyword_ids') as $ontologyword_id) {
-      if ($category = UnitCategoryUtility::getCategory($ontologyword_id->get('value')->getCastedValue())) {
+      foreach (UnitCategoryUtility::getCategories($ontologyword_id->get('value')->getCastedValue()) as $category) {
         $categories[$category] = $category;
       }
     }
-    return $categories;
+    return array_values($categories);
   }
 
   /**

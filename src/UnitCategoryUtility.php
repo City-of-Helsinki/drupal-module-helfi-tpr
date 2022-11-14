@@ -14,34 +14,43 @@ class UnitCategoryUtility {
   public const PLAYGROUND = 'playground';
 
   /**
-   * Map ontologyword IDs to categories.
+   * Map categories to ontologyword IDs.
    *
-   * @var array|string[]
+   * @var array
    */
-  private static array $categoryMap = [
-    603 => self::DAYCARE,
-    663 => self::DAYCARE,
-    601 => self::COMPREHENSIVE_SCHOOL,
-    602 => self::COMPREHENSIVE_SCHOOL,
-    661 => self::COMPREHENSIVE_SCHOOL,
-    662 => self::COMPREHENSIVE_SCHOOL,
-    475 => self::PLAYGROUND,
+  private static array $categoryToIds = [
+    self::DAYCARE => [
+      603,
+      663,
+    ],
+    self::COMPREHENSIVE_SCHOOL => [
+      601,
+      602,
+      661,
+      662,
+    ],
+    self::PLAYGROUND => [
+      475,
+    ],
   ];
 
   /**
-   * Get unit category from ontologyword ID, if defined.
+   * Get unit categories from ontologyword ID, if defined.
    *
    * @param int $ontologyword_id
    *   The ontologyword ID.
    *
-   * @return string|null
-   *   The category or null if there's no match for the ID.
+   * @return string[]
+   *   The matching categories.
    */
-  public static function getCategory(int $ontologyword_id) : ? string {
-    if (!isset(self::$categoryMap[$ontologyword_id])) {
-      return NULL;
+  public static function getCategories(int $ontologyword_id) : array {
+    $categories = [];
+    foreach (self::$categoryToIds as $category => $ids) {
+      if (in_array($ontologyword_id, $ids)) {
+        $categories[] = $category;
+      }
     }
-    return self::$categoryMap[$ontologyword_id];
+    return $categories;
   }
 
 }

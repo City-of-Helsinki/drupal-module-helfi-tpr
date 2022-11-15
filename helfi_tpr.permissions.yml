@@ -21,10 +21,3 @@
 
 'view unpublished tpr_errand_service':
   title: 'View unpublished tpr_errand_service'
-
-'admin daycare units':
-  title: 'Administer daycare TPR units'
-'admin comprehensive school units':
-  title: 'Administer comprehensive school TPR units'
-'admin playground units':
-  title: 'Administer playground TPR units'

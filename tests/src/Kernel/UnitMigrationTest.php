@@ -7,7 +7,6 @@ namespace Drupal\Tests\helfi_tpr\Kernel;
 use Drupal\helfi_tpr\Entity\Unit;
 use Drupal\helfi_tpr\Field\Connection\Highlight;
 use Drupal\helfi_tpr\Field\Connection\OpeningHour;
-use Drupal\helfi_tpr\UnitCategoryUtility;
 
 /**
  * Tests TPR Unit migration.
@@ -103,30 +102,6 @@ class UnitMigrationTest extends MigrationTestBase {
 
     $this->assertEquals('0', $translation->get('content_translation_uid')->target_id);
     $this->assertequals('1', $translation->get('content_translation_status')->value);
-  }
-
-  /**
-   * Tests unit category mapping to ontologyword IDs.
-   */
-  public function testUnitCategories() : void {
-    $expectedResults = [
-      60321 => [],
-      67763 => [],
-      63115 => [],
-      1 => [
-        UnitCategoryUtility::COMPREHENSIVE_SCHOOL,
-        UnitCategoryUtility::DAYCARE,
-      ],
-      59369 => [],
-    ];
-    $this->runUnitMigrate();
-
-    foreach ($expectedResults as $entityId => $expectedCategories) {
-      $unitCategories = Unit::load($entityId)->getCategories();
-      foreach ($expectedCategories as $expectedCategory) {
-        $this->assertContains($expectedCategory, $unitCategories);
-      }
-    }
   }
 
   /**

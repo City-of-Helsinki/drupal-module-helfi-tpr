@@ -332,7 +332,7 @@ class Unit extends TprEntityBase {
         'min' => '0',
       ])
       ->setDisplayOptions('form', [
-        'type' => 'readonly_field_widget',
+        'region' => 'hidden',
       ]);
 
     return $fields;

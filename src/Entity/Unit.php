@@ -322,6 +322,18 @@ class Unit extends TprEntityBase {
       ->setTranslatable(TRUE)
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE);
+    $fields['ontologyword_ids'] = BaseFieldDefinition::create('integer')
+      ->setLabel(new TranslatableMarkup('Ontologyword IDs'))
+      ->setTranslatable(FALSE)
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('view', FALSE)
+      ->setDisplayConfigurable('form', TRUE)
+      ->setSettings([
+        'min' => '0',
+      ])
+      ->setDisplayOptions('form', [
+        'region' => 'hidden',
+      ]);
 
     return $fields;
   }

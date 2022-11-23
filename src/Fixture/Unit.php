@@ -504,6 +504,11 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
         'name_fi' => 'Name fi 1',
         'name_sv' => 'Name sv 1',
         'name_en' => 'Name en 1',
+        'ontologyword_ids' => [
+          603,
+          813,
+          601,
+        ],
         'latitude' => '60.19',
         'longitude' => '24.76',
         'street_address_fi' => 'Address fi 1',

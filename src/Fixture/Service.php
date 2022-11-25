@@ -67,7 +67,6 @@ final class Service extends FixtureBase {
       }
     }
 
-
     $services[] = [
       'fi' => [
         'id' => 7822,

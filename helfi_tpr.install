@@ -714,6 +714,7 @@ function helfi_tpr_update_8040() : void {
     \Drupal::entityDefinitionUpdateManager()
       ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
   }
+}
 
 /**
  * Add name_synonyms field and service_id field to Service entity.

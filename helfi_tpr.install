@@ -702,9 +702,23 @@ function helfi_tpr_update_8039() : void {
 }
 
 /**
- * Add name_synonyms field and service_id field to Service entity.
+ * Add 'ontologyword_ids' field to the TPR Unit entity.
  */
 function helfi_tpr_update_8040() : void {
+  $fields['ontologyword_ids'] = BaseFieldDefinition::create('integer')
+    ->setLabel(new TranslatableMarkup('Ontologyword IDs'))
+    ->setTranslatable(FALSE)
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
+
+  foreach ($fields as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
+  }
+
+/**
+ * Add name_synonyms field and service_id field to Service entity.
+ */
+function helfi_tpr_update_8041() : void {
 
   $fields['service_id'] = BaseFieldDefinition::create('integer')
     ->setLabel(new TranslatableMarkup('Service grouping ID'))
@@ -736,7 +750,7 @@ function helfi_tpr_update_8040() : void {
 /**
  * Map all services that needs update to import name_synonyms on next migration.
  */
-function helfi_tpr_update_8041() : void {
+function helfi_tpr_update_8042() : void {
   \Drupal::database()->update('migrate_map_tpr_service')->fields([
     'source_row_status' => MigrateIdMapInterface::STATUS_NEEDS_UPDATE
   ])->execute();
@@ -745,7 +759,7 @@ function helfi_tpr_update_8041() : void {
 /**
  * Add has_unit field to Service entity.
  */
-function helfi_tpr_update_8042() : void {
+function helfi_tpr_update_8043() : void {
   $fields['has_unit'] = BaseFieldDefinition::create('boolean')
     ->setTranslatable(TRUE)
     ->setRevisionable(FALSE)

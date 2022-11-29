@@ -56,6 +56,10 @@ all garbage collection tasks (such as cleaning removed remote entities), so you 
 
 It's possible to overwrite `url` and `canonical_url` per project by adding a configuration file named `helfi_tpr.migration_settings.{migrate_id}.yml` and defining the URLs there.
 
+### Developing
+
+Make sure you have `donatj/mock-webserver` installed when running tests locally: `composer require --dev donatj/mock-webserver`
+
 ## Contact
 
 Slack: #helfi-drupal (http://helsinkicity.slack.com/)

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace Drupal\helfi_tpr\Plugin\views\argument;
 
 use Drupal\views\Plugin\views\argument\ArgumentPluginBase;
@@ -19,7 +17,7 @@ class ServiceIdArgument extends ArgumentPluginBase {
   /**
    * Build the query based upon the formula.
    */
-  public function query($group_by = FALSE) {
+  public function query($group_by = FALSE) : void {
     $this->ensureMyTable();
 
     // Separate IDs from Service IDs.

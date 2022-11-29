@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\tests\helfi_tpr\Kernel;
+namespace Drupal\Tests\helfi_tpr\Kernel;
 
 use Drupal\views\Views;
 

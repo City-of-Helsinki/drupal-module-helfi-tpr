@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Drupal\tests\helfi_tpr\Kernel;
 
 use Drupal\views\Views;
-use Drupal\Tests\helfi_tpr\Kernel\MigrationTestBase;
 
 /**
  * Tests the ServiceIdArgument views argument handler.

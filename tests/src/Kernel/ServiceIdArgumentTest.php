@@ -1,32 +1,23 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\tests\helfi_tpr\Kernel;
 
-
-use Drupal\helfi_tpr\Entity\Service;
 use Drupal\views\Views;
 use Drupal\Tests\helfi_tpr\Kernel\MigrationTestBase;
-
 
 /**
  * Tests the ServiceIdArgument views argument handler.
  *
  * @group helfi_tpr
  */
-class ServiceIdArgumentTest extends MigrationTestBase
-{
+class ServiceIdArgumentTest extends MigrationTestBase {
 
   /**
-   * {@inheritdoc}
+   * Tests the service id argument.
    */
-  public function setUp(): void
-  {
-    parent::setUp();
-  }
-
-
-  public function testServiceIdArgument()
-  {
+  public function testServiceIdArgument() : void {
     // Service migration has a soft dependency on unit migration.
     $this->runUnitMigrate();
     $this->runServiceMigrate();

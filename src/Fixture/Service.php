@@ -61,8 +61,8 @@ final class Service extends FixtureBase {
             1563,
             1940,
           ],
-          'name_synonyms' =>  sprintf('Name synonyms %s %s', $language, $id),
-          'service_id' => 10554
+          'name_synonyms' => sprintf('Name synonyms %s %s', $language, $id),
+          'service_id' => 10554,
         ];
       }
     }

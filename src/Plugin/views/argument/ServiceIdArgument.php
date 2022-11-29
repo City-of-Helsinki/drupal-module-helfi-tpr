@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\helfi_tpr\Plugin\views\argument;
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\argument\ArgumentPluginBase;
 
 /**
@@ -13,11 +14,10 @@ use Drupal\views\Plugin\views\argument\ArgumentPluginBase;
  *
  * @ViewsArgument("id_or_service_id_handler")
  */
-class ServiceIdArgument extends ArgumentPluginBase
-{
+class ServiceIdArgument extends ArgumentPluginBase {
 
   /**
-   * Build the query based upon the formula
+   * Build the query based upon the formula.
    */
   public function query($group_by = FALSE) {
     $this->ensureMyTable();

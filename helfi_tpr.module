@@ -273,7 +273,7 @@ function helfi_tpr_query_owd_relationship_alter(AlterableInterface $query) : voi
 /**
  * Implements hook_views_data_alter().
  */
-function helfi_tpr_views_data_alter(&$data) {
+function helfi_tpr_views_data_alter(&$data) : void {
   $data['tpr_service_field_data']['id_or_service_id'] = [
     'title' => t('ID or Service ID'),
     'help' => t('Displays entities that have either id or service IDs'),

@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Drupal\helfi_tpr\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\SortArray;
-use Drupal\Core\Cache\Cache;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -24,21 +23,22 @@ use Drupal\helfi_tpr\Entity\Service;
  *   }
  * )
  */
+class ErrandServicesChannelFormatter extends FormatterBase {
 
-class ErrandServicesFormatter extends FormatterBase {
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings() {
+  public static function defaultSettings() : array {
+
     return [
-        'sort_order' => [],
-      ] + parent::defaultSettings();
+      'sort_order' => [],
+    ] + parent::defaultSettings();
   }
 
   /**
    * {@inheritdoc}
    */
-  public function settingsSummary() {
+  public function settingsSummary() : array {
     $settings = $this->getSetting('sort_order');
     $selected_channels = [];
     foreach ($settings as $channel_type => $channel_setting) {
@@ -48,9 +48,10 @@ class ErrandServicesFormatter extends FormatterBase {
     }
 
     return [
-      $this->t('Showing @list ', [
-        '@list' => implode(', ', $selected_channels)
-      ])
+      $this->t('Showing @list', [
+        '@list' => implode(', ', $selected_channels),
+      ],
+      ),
     ];
   }
 
@@ -67,7 +68,7 @@ class ErrandServicesFormatter extends FormatterBase {
   /**
    * {@inheritdoc}
    */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
+  public function settingsForm(array $form, FormStateInterface $form_state) : array {
     $form = parent::settingsForm($form, $form_state);
 
     $form['sort_order'] = [
@@ -94,7 +95,6 @@ class ErrandServicesFormatter extends FormatterBase {
       $channelTypes[$channelId] = $channelType;
     }
     $channelTypes['OFFICE'] = new ChannelType('OFFICE', 99);
-
 
     foreach ($channelTypes as $item) {
       $form['sort_order'][$item->id] = [

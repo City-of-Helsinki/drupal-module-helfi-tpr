@@ -91,7 +91,6 @@ class ServiceMigrationTest extends MigrationTestBase {
           $this->assertFalse($has_unit);
         }
 
-
         foreach ([123, 456] as $key => $id) {
           $this->assertEquals($id, $translation->get('errand_services')->get($key)->target_id);
         }

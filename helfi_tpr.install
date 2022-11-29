@@ -753,7 +753,7 @@ function helfi_tpr_update_8041() : void {
  */
 function helfi_tpr_update_8042() : void {
   \Drupal::database()->update('migrate_map_tpr_service')->fields([
-    'source_row_status' => MigrateIdMapInterface::STATUS_NEEDS_UPDATE
+    'source_row_status' => MigrateIdMapInterface::STATUS_NEEDS_UPDATE,
   ])->execute();
 }
 

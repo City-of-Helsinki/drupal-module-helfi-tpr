@@ -172,7 +172,6 @@ class Service extends TprEntityBase {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-
     $fields['service_id'] = BaseFieldDefinition::create('integer')
       ->setLabel(new TranslatableMarkup('Service grouping ID'))
       ->setDescription(new TranslatableMarkup('Value from service_id property'))

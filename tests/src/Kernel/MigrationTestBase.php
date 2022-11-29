@@ -27,7 +27,7 @@ abstract class MigrationTestBase extends ApiMigrationTestBase {
     'menu_link_content',
     'helfi_tpr_test',
     'views',
-    'image'
+    'image',
   ];
 
   /**

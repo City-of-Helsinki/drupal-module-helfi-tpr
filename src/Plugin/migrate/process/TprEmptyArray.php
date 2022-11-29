@@ -22,7 +22,6 @@ use Drupal\migrate\Row;
  *   plugin: tpr_empty_array
  *   source: array
  * @endcode
- *
  */
 class TprEmptyArray extends ProcessPluginBase {
 
@@ -32,4 +31,5 @@ class TprEmptyArray extends ProcessPluginBase {
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
     return !empty($value);
   }
+
 }

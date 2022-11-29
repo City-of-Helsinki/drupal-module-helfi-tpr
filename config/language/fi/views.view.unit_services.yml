@@ -18,4 +18,3 @@ display:
             items_per_page_options_all_label: '- Kaikki -'
           views_infinite_scroll:
             button_text: 'Lataa lisää palveluita'
-

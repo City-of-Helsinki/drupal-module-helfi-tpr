@@ -40,6 +40,21 @@ field.formatter.settings.tpr_service_channel_formatter:
           weight:
             type: integer
 
+field.formatter.settings.tpr_service_err_channel_list:
+  type: mapping
+  mapping:
+    sort_order:
+      type: sequence
+      sequence:
+        type: mapping
+        mapping:
+          label:
+            type: label
+          show:
+            type: boolean
+          weight:
+            type: integer
+
 field.formatter.settings.service_map_embed:
   type: mapping
   label: 'Service map embed'

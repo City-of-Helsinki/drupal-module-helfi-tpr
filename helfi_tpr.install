@@ -13,6 +13,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\helfi_tpr\Entity\ChannelTypeCollection;
+use Drupal\migrate\Plugin\MigrateIdMapInterface;
 
 /**
  * Helper function to get the content translation field definitions.
@@ -712,5 +713,67 @@ function helfi_tpr_update_8040() : void {
   foreach ($fields as $name => $field) {
     \Drupal::entityDefinitionUpdateManager()
       ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
+  }
+}
+
+/**
+ * Add name_synonyms field and service_id field to Service entity.
+ */
+function helfi_tpr_update_8041() : void {
+
+  $fields['service_id'] = BaseFieldDefinition::create('integer')
+    ->setLabel(new TranslatableMarkup('Service grouping ID'))
+    ->setDescription(new TranslatableMarkup('Value from service_id property'))
+    ->setDisplayOptions('form', [
+      'type' => 'readonly_field_widget',
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE)
+    ->setSetting('unsigned', TRUE);
+
+  $fields['name_synonyms'] = BaseFieldDefinition::create('string_long')
+    ->setTranslatable(TRUE)
+    ->setRevisionable(FALSE)
+    ->setLabel(new TranslatableMarkup('Name synonyms'))
+    ->setDescription(new TranslatableMarkup('Name synonyms for the service title.'))
+    ->setDisplayOptions('form', [
+      'type' => 'readonly_field_widget',
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  foreach ($fields as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'tpr_service', 'helfi_tpr', $field);
+  }
+}
+
+/**
+ * Map all services that needs update to import name_synonyms on next migration.
+ */
+function helfi_tpr_update_8042() : void {
+  \Drupal::database()->update('migrate_map_tpr_service')->fields([
+    'source_row_status' => MigrateIdMapInterface::STATUS_NEEDS_UPDATE,
+  ])->execute();
+}
+
+/**
+ * Add has_unit field to Service entity.
+ */
+function helfi_tpr_update_8043() : void {
+  $fields['has_unit'] = BaseFieldDefinition::create('boolean')
+    ->setTranslatable(TRUE)
+    ->setRevisionable(FALSE)
+    ->setLabel(new TranslatableMarkup('Has Unit'))
+    ->setDescription(new TranslatableMarkup('If service have unit its true else false.'))
+    ->setDisplayOptions('form', [
+      'type' => 'readonly_field_widget',
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  foreach ($fields as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'tpr_service', 'helfi_tpr', $field);
   }
 }

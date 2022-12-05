@@ -27,8 +27,9 @@ process:
     plugin: get
     source: exact_errand_services
   has_unit:
-    plugin: tpr_empty_array
-    source: unit_ids
+      plugin: callback
+      callable: boolval
+      source: unit_ids
   links:
     plugin: sub_process
     source: links

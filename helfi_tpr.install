@@ -752,7 +752,12 @@ function helfi_tpr_update_8041() : void {
  * Map all services that needs update to import name_synonyms on next migration.
  */
 function helfi_tpr_update_8042() : void {
-  \Drupal::database()->update('migrate_map_tpr_service')->fields([
+  $database = \Drupal::database();
+
+  if (!$database->schema()->tableExists('migrate_map_tpr_service')) {
+    return;
+  }
+  $database->update('migrate_map_tpr_service')->fields([
     'source_row_status' => MigrateIdMapInterface::STATUS_NEEDS_UPDATE,
   ])->execute();
 }

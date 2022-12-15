@@ -16,6 +16,8 @@ source:
 process:
   id: id
   name: title
+  name_synonyms: name_synonyms
+  service_id: service_id
   description/summary: description_short
   description/value: description_long
   description/format:
@@ -24,6 +26,10 @@ process:
   errand_services:
     plugin: get
     source: exact_errand_services
+  has_unit:
+      plugin: callback
+      callable: boolval
+      source: unit_ids
   links:
     plugin: sub_process
     source: links

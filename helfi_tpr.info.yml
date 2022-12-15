@@ -19,4 +19,3 @@ dependencies:
   - views
 'interface translation project': helfi_tpr
 'interface translation server pattern': modules/contrib/helfi_tpr/translations/%language.po
-

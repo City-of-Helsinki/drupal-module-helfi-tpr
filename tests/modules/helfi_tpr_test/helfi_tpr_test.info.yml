@@ -1,0 +1,7 @@
+name: 'Service List Test Config'
+type: module
+core_version_requirement: ^9 || ^10
+description: 'Provides default views for tests.'
+package: Testing
+dependencies:
+  - drupal:helfi_tpr

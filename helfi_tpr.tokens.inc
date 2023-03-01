@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\helfi_tpr\Entity\Service;
 use Drupal\helfi_tpr\Entity\Unit;
 
 /**
@@ -88,6 +89,9 @@ function helfi_tpr_tokens(
       if ($name === 'picture') {
         $replacements[$original] = $entity->getPictureUrl();
       }
+    }
+
+    if ($entity instanceof Unit || $entity instanceof Service) {
       if ($name === 'description:value') {
         $replacements[$original] = $entity->getDescription('value');
       }

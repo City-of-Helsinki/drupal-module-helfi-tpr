@@ -7,6 +7,7 @@ namespace Drupal\helfi_tpr\Entity;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Webmozart\Assert\Assert;
 
 /**
  * Defines the tpr_service entity class.
@@ -142,6 +143,17 @@ class Service extends TprEntityBase {
     }, $values);
 
     return array_search($errand_service->id(), $ids);
+  }
+
+  /**
+   * Gets the description.
+   *
+   * @return string|null
+   *   The description.
+   */
+  public function getDescription(string $key) : ? string {
+    Assert::oneOf($key, ['value', 'summary', 'format']);
+    return $this->get('description')->{$key};
   }
 
   /**

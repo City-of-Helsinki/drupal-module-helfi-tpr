@@ -64,4 +64,4 @@ Make sure you have `donatj/mock-webserver` installed when running tests locally:
 
 Slack: #helfi-drupal (http://helsinkicity.slack.com/)
 
-Mail: drupal@hel.fi
+Mail: `drupal@hel.fi`

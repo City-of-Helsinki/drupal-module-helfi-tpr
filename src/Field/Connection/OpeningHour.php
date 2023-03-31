@@ -33,16 +33,9 @@ final class OpeningHour extends Connection {
    * {@inheritdoc}
    */
   public function build(): array {
-    $markup = Html::escape($this->get('name'));
-
-    // The _filter_autop is provided by 'filter' module
-    if (function_exists('_filter_autop')) {
-      $markup = _filter_autop($markup);
-    }
-
     $build = [
       'name' => [
-        '#markup' => $markup,
+        '#markup' => _filter_autop(Html::escape($this->get('name'))),
       ],
     ];
 

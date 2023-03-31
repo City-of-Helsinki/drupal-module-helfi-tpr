@@ -4,4 +4,4 @@ core_version_requirement: ^9 || ^10
 description: 'Provides default views for tests.'
 package: Testing
 dependencies:
-  - drupal:helfi_tpr
+  - helfi_tpr:helfi_tpr

@@ -17,7 +17,7 @@ final class FieldDefinition extends BaseFieldDefinition {
   /**
    * {@inheritdoc}
    */
-  public function isBaseField() {
+  public function isBaseField() : bool {
     return FALSE;
   }
 

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_school_addons\Plugin\views\filter;
 
+use Drupal\Core\Language\LanguageInterface;
 use Drupal\helfi_school_addons\SchoolUtility;
 use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\filter\InOperator;
@@ -64,7 +65,7 @@ class StudyProgrammeType extends InOperator {
     $owdFdJoin = Views::pluginManager('join')->createInstance('standard', $owdFdConfiguration);
     $this->query->addRelationship('owd_fd_spt', $owdFdJoin, 'tpr_unit_field_data');
 
-    $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $language = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)->getId();
     $this->query->addWhere('AND', 'owd_fd_spt.langcode', $language);
 
     // Join with tpr_ontology_word_details__detail_items table.

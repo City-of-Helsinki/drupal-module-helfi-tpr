@@ -65,7 +65,7 @@ class StudyProgrammeType extends InOperator {
     $owdFdJoin = Views::pluginManager('join')->createInstance('standard', $owdFdConfiguration);
     $this->query->addRelationship('owd_fd_spt', $owdFdJoin, 'tpr_unit_field_data');
 
-    $language = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)->getId();
+    $language = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
     $this->query->addWhere('AND', 'owd_fd_spt.langcode', $language);
 
     // Join with tpr_ontology_word_details__detail_items table.

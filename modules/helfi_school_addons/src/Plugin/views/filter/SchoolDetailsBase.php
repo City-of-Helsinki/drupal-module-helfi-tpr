@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_school_addons\Plugin\views\filter;
 
+use Drupal\Core\Language\LanguageInterface;
 use Drupal\helfi_school_addons\SchoolUtility;
 use Drupal\helfi_tpr\Entity\OntologyWordDetails;
 use Drupal\views\Plugin\views\display\DisplayPluginBase;
@@ -69,7 +70,7 @@ abstract class SchoolDetailsBase extends InOperator {
     $owdFdJoin = Views::pluginManager('join')->createInstance('standard', $owdFdConfiguration);
     $this->query->addRelationship('owd_fd', $owdFdJoin, 'tpr_unit_field_data');
 
-    $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $language = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
     $this->query->addWhere('AND', 'owd_fd.langcode', $language);
     $this->query->addWhere('AND', 'owd_fd.ontologyword_id', $wordId);
 
@@ -104,7 +105,7 @@ abstract class SchoolDetailsBase extends InOperator {
       return [];
     }
 
-    $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $langcode = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
     $schoolYear = SchoolUtility::getCurrentSchoolYear();
     if ($schoolYear === NULL) {
       return [];

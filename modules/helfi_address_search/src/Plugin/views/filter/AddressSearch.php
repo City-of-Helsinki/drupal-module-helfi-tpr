@@ -136,6 +136,7 @@ class AddressSearch extends FilterPluginBase {
           'page' => '1',
           'page_size' => '1',
           'language' => $language,
+          'municipality' => 'helsinki',
         ],
       ]);
     }

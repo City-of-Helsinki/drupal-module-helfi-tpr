@@ -6,6 +6,8 @@ namespace Drupal\Tests\helfi_tpr\Unit;
 
 use Drupal\helfi_tpr\Field\Connection\Highlight;
 use Drupal\helfi_tpr\Field\Connection\OpeningHour;
+use Drupal\helfi_tpr\Field\Connection\OpeningHourBase;
+use Drupal\helfi_tpr\Field\Connection\OpeningHourObject;
 use Drupal\Tests\UnitTestCase;
 
 /**
@@ -19,15 +21,14 @@ class ConnectionTest extends UnitTestCase {
   /**
    * Tests opening hours.
    *
-   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHour::build
-   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHour::getFields
+   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHourBase::build
+   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHourBase::getFields
    * @covers ::set
    * @covers ::get
    * @covers ::isValidField
+   * @dataProvider openingHourData
    */
-  public function testOpeningHours() : void {
-    $object = new OpeningHour();
-    $this->assertEquals('OPENING_HOURS', $object::TYPE_NAME);
+  public function testOpeningHours(OpeningHourBase $object) : void {
     $object->set('name', 'mon-wed 10-19');
     $this->assertNotEmpty($object->build());
 
@@ -54,7 +55,6 @@ class ConnectionTest extends UnitTestCase {
    */
   public function testHighlights() : void {
     $object = new Highlight();
-    $this->assertEquals('HIGHLIGHT', $object::TYPE_NAME);
     $object->set('name', 'Some information.');
     $this->assertNotEmpty($object->build());
 
@@ -71,20 +71,33 @@ class ConnectionTest extends UnitTestCase {
    *
    * @covers ::set
    * @covers ::isValidField
-   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHour::getFields
+   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHourBase::getFields
+   * @dataProvider openingHourData
    */
-  public function testInvalidFieldName() : void {
+  public function testInvalidFieldName(OpeningHourBase $object) : void {
     $this->expectException(\InvalidArgumentException::class);
     $this->expectExceptionMessage('Field "invalid_field" is not valid.');
-    $object = new OpeningHour();
     $object->set('invalid_field', 'value');
+  }
+
+  /**
+   * Data provider opening hour tests.
+   *
+   * @return array
+   *   The data.
+   */
+  public function openingHourData() : array {
+    return [
+      [new OpeningHour()],
+      [new OpeningHourObject()],
+    ];
   }
 
   /**
    * Tests invalid data type.
    *
    * @dataProvider invalidFieldValueData
-   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHour::getFields
+   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHourBase::getFields
    * @covers ::set
    * @covers ::isValidField
    */
@@ -112,7 +125,7 @@ class ConnectionTest extends UnitTestCase {
    * Tests valid values.
    *
    * @dataProvider validFieldValueData
-   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHour::getFields
+   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHourBase::getFields
    * @covers ::set
    * @covers ::get
    * @covers ::isValidField

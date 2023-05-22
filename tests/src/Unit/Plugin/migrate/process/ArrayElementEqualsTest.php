@@ -56,9 +56,9 @@ class ArrayElementEqualsTest extends UnitTestCase {
    * @covers ::transform
    * @dataProvider transformData
    */
-  public function testTransform(array $configuration, mixed $value) : void {
+  public function testTransform(array $configuration, mixed $expectedValue, mixed $value) : void {
     $sut = new ArrayElementEquals($configuration, 'plugin_id', []);
-    $this->assertEquals($value, $sut->transform($value, $this->prophesize(MigrateExecutableInterface::class)->reveal(), new Row([]), 'destination_property'));
+    $this->assertEquals($expectedValue, $sut->transform($value, $this->prophesize(MigrateExecutableInterface::class)->reveal(), new Row([]), 'destination_property'));
   }
 
   /**
@@ -69,6 +69,17 @@ class ArrayElementEqualsTest extends UnitTestCase {
    */
   public function transformData() : array {
     return [
+      // Test non-array value.
+      [
+        [
+          'key' => 'type',
+          'value' => OpeningHour::TYPE_NAME,
+          'source' => 'connections',
+          'plugin' => 'array_element_equals',
+        ],
+        [],
+        '',
+      ],
       // Make sure we support non-array 'value' configuration.
       [
         [
@@ -76,6 +87,11 @@ class ArrayElementEqualsTest extends UnitTestCase {
           'value' => OpeningHour::TYPE_NAME,
           'source' => 'connections',
           'plugin' => 'array_element_equals',
+        ],
+        [
+          'type' => OpeningHour::TYPE_NAME,
+          'value' => 'Voimassa toistaiseksi',
+          'data' => new OpeningHour(),
         ],
         [
           'type' => OpeningHour::TYPE_NAME,
@@ -90,6 +106,11 @@ class ArrayElementEqualsTest extends UnitTestCase {
           'value' => [OpeningHourObject::TYPE_NAME, OpeningHour::TYPE_NAME],
           'source' => 'connections',
           'plugin' => 'array_element_equals',
+        ],
+        [
+          'type' => OpeningHour::TYPE_NAME,
+          'value' => 'Voimassa toistaiseksi',
+          'data' => new OpeningHour(),
         ],
         [
           'type' => OpeningHour::TYPE_NAME,

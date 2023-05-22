@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Field\Connection;
 
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Field\FieldItemListInterface;
+
 /**
  * Provides a domain object for TPR connection data.
  */

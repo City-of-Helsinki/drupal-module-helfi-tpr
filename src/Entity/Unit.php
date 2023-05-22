@@ -8,6 +8,7 @@ use CommerceGuys\Addressing\AddressFormat\AddressField;
 use CommerceGuys\Addressing\AddressFormat\FieldOverride;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Webmozart\Assert\Assert;
 
@@ -185,7 +186,7 @@ class Unit extends TprEntityBase {
   /**
    * {@inheritdoc}
    */
-  public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
+  public static function baseFieldDefinitions(EntityTypeInterface $entity_type) : array {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $fields['picture_url'] = static::createStringField('Picture')
@@ -280,7 +281,7 @@ class Unit extends TprEntityBase {
         'type' => 'readonly_field_widget',
       ])
       ->setRevisionable(FALSE)
-      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
     $fields['menu_link'] = BaseFieldDefinition::create('entity_reference')
@@ -293,16 +294,17 @@ class Unit extends TprEntityBase {
     $fields['accessibility_sentences'] = BaseFieldDefinition::create('tpr_accessibility_sentence')
       ->setLabel(new TranslatableMarkup('Accessibility sentences'))
       ->setTranslatable(TRUE)
-      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE);
     $fields['opening_hours'] = BaseFieldDefinition::create('tpr_connection')
       ->setLabel(new TranslatableMarkup('Opening hours'))
+      ->setDescription(new TranslatableMarkup('The "OPENING_HOURS" connection type'))
       ->setTranslatable(TRUE)
-      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE);
     $fields['provided_languages'] = BaseFieldDefinition::create('string')
       ->setLabel(new TranslatableMarkup('Provided languages'))
-      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setTranslatable(FALSE)
       ->setDisplayOptions('form', [
         'type' => 'readonly_field_widget',
@@ -320,12 +322,12 @@ class Unit extends TprEntityBase {
     $fields['highlights'] = BaseFieldDefinition::create('tpr_connection')
       ->setLabel(new TranslatableMarkup('Highlights'))
       ->setTranslatable(TRUE)
-      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE);
     $fields['ontologyword_ids'] = BaseFieldDefinition::create('integer')
       ->setLabel(new TranslatableMarkup('Ontologyword IDs'))
       ->setTranslatable(FALSE)
-      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', FALSE)
       ->setDisplayConfigurable('form', TRUE)
       ->setSettings([

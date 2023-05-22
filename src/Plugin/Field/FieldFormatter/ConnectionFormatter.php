@@ -21,7 +21,7 @@ class ConnectionFormatter extends FormatterBase {
   /**
    * {@inheritdoc}
    */
-  public function viewElements(FieldItemListInterface $items, $langcode) {
+  public function viewElements(FieldItemListInterface $items, $langcode) : array {
     $element = [];
 
     foreach ($items as $delta => $item) {

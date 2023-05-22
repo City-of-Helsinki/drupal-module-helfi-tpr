@@ -22,6 +22,18 @@ use Drupal\migrate\Row;
  *   value: OPENING_HOURS
  *   key: type
  * @endcode
+ *
+ * Value can be an array too:
+ *
+ * @code
+ * opening_hours_connections:
+ *   plugin: array_element_equals
+ *   source: connections
+ *   value:
+ *     - OPENING_HOURS
+ *     - OPENING_HOUR_OBJECT
+ *   key: type
+ * @endcode
  */
 class ArrayElementEquals extends ProcessPluginBase {
 
@@ -49,7 +61,11 @@ class ArrayElementEquals extends ProcessPluginBase {
       return [];
     }
 
-    if (!empty($value[$key]) && $value[$key] === $matchValue) {
+    if (!is_array($matchValue)) {
+      $matchValue = [$matchValue];
+    }
+
+    if (!empty($value[$key]) && in_array($value[$key], $matchValue)) {
       return $value;
     }
 

@@ -464,6 +464,12 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
             'www_sv' => 'http://www.helmet.fi/bibliotek/86685/Kontaktuppgifter/',
           ],
           [
+            'section_type'  => 'OPENING_HOUR_OBJECT',
+            'name_fi' => 'Puhelinaika fi',
+            'name_en' => 'Puhelinaika en',
+            'name_sv' => 'Puhelinaika sv',
+          ],
+          [
             'section_type' => 'LINK',
             'name_fi' => 'Kirjava satama',
             'name_en' => 'Kirjava satama',
@@ -571,6 +577,13 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
             'www_fi' => 'https://localhost/fi',
             'www_en' => 'https://localhost/en',
             'www_sv' => 'https://localhost/sv',
+          ],
+          [
+            'unit_id' => 1,
+            'section_type'  => 'OPENING_HOUR_OBJECT',
+            'name_fi' => 'open object fi',
+            'name_en' => 'open object en',
+            'name_sv' => 'open object sv',
           ],
           [
             'unit_id' => 1,

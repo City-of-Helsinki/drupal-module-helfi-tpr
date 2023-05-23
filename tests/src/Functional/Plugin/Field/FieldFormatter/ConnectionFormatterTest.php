@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\helfi_tpr\Functional;
+namespace Drupal\Tests\helfi_tpr\Functional\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Url;
 use Drupal\helfi_tpr\Entity\TprEntityBase;
@@ -12,6 +12,7 @@ use Drupal\helfi_tpr\Field\Connection\OpeningHour;
 /**
  * Tests connection formatter.
  *
+ * @coversDefaultClass \Drupal\helfi_tpr\Plugin\Field\FieldFormatter\ConnectionFormatter
  * @group helfi_tpr
  */
 class ConnectionFormatterTest extends CustomFieldFormatterTestBase {
@@ -80,6 +81,8 @@ class ConnectionFormatterTest extends CustomFieldFormatterTestBase {
 
   /**
    * Tests the formatter.
+   *
+   * @covers ::viewElements
    */
   public function testFormatter() : void {
     // Make sure field display is disabled by default.

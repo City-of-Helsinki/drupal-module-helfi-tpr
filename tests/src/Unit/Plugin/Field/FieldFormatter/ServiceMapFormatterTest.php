@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\helfi_tpr\Unit;
+namespace Drupal\Tests\helfi_tpr\Unit\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Field\FieldDefinitionInterface;
@@ -14,6 +14,7 @@ use Drupal\helfi_api_base\Entity\RemoteEntityBase;
 use Drupal\helfi_tpr\Entity\Unit;
 use Drupal\helfi_tpr\Plugin\Field\FieldFormatter\ServiceMapFormatter;
 use Drupal\Tests\UnitTestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
  * Tests service map formatter field formatter.
@@ -22,6 +23,8 @@ use Drupal\Tests\UnitTestCase;
  * @group helfi_tpr
  */
 class ServiceMapFormatterTest extends UnitTestCase {
+
+  use ProphecyTrait;
 
   /**
    * The service map formatter.

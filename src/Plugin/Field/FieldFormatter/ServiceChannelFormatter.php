@@ -27,7 +27,7 @@ final class ServiceChannelFormatter extends EntityReferenceEntityFormatter {
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings() {
+  public static function defaultSettings() : array {
     return [
       'sort_order' => [],
     ] + parent::defaultSettings();
@@ -46,7 +46,7 @@ final class ServiceChannelFormatter extends EntityReferenceEntityFormatter {
   /**
    * {@inheritdoc}
    */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
+  public function settingsForm(array $form, FormStateInterface $form_state) : array {
     $form = parent::settingsForm($form, $form_state);
 
     $form['sort_order'] = [

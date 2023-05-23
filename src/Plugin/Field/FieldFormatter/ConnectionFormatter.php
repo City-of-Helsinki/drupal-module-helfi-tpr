@@ -4,6 +4,7 @@ namespace Drupal\helfi_tpr\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
+use Drupal\helfi_tpr\Field\Connection\Connection;
 
 /**
  * Plugin implementation of the 'Connection' formatter.
@@ -16,7 +17,7 @@ use Drupal\Core\Field\FormatterBase;
  *   }
  * )
  */
-class ConnectionFormatter extends FormatterBase {
+final class ConnectionFormatter extends FormatterBase {
 
   /**
    * {@inheritdoc}
@@ -25,14 +26,12 @@ class ConnectionFormatter extends FormatterBase {
     $element = [];
 
     foreach ($items as $delta => $item) {
-      if (!$item->data) {
+      if (!isset($item->data) || !$item->data instanceof Connection) {
         continue;
       }
-      /** @var \Drupal\helfi_tpr\Field\Connection\Connection $connection */
-      $connection = $item->data;
       $element[$delta] = [
         '#type' => 'item',
-        'content' => $connection->build(),
+        'content' => $item->data->build(),
       ];
     }
 

@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\helfi_tpr\Functional;
+namespace Drupal\Tests\helfi_tpr\Functional\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Url;
 use Drupal\helfi_tpr\Entity\Channel;
@@ -15,6 +15,7 @@ use Drupal\helfi_tpr\Entity\TprEntityBase;
 /**
  * Tests service channel formatter.
  *
+ * @coversDefaultClass \Drupal\helfi_tpr\Plugin\Field\FieldFormatter\ServiceChannelFormatter
  * @group helfi_tpr
  */
 class ServiceChannelFormatterTest extends CustomFieldFormatterTestBase {
@@ -89,6 +90,8 @@ class ServiceChannelFormatterTest extends CustomFieldFormatterTestBase {
 
   /**
    * Tests the formatter.
+   *
+   * @covers ::viewElements
    */
   public function testFormatter() : void {
     $this->drupalGet(Url::fromRoute('entity.tpr_service.canonical', ['tpr_service' => 999]), [

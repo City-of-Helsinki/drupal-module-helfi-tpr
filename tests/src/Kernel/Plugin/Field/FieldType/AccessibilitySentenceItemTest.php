@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\helfi_tpr\Kernel;
+namespace Drupal\Tests\helfi_tpr\Kernel\Plugin\Field\FieldType;
 
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -14,6 +14,7 @@ use Drupal\Tests\field\Kernel\FieldKernelTestBase;
 /**
  * Tests accessibility sentence field.
  *
+ * @coversDefaultClass \Drupal\helfi_tpr\Plugin\Field\FieldType\AccessibilitySentenceItem
  * @group helfi_tpr
  */
 class AccessibilitySentenceItemTest extends FieldKernelTestBase {
@@ -66,6 +67,11 @@ class AccessibilitySentenceItemTest extends FieldKernelTestBase {
 
   /**
    * Tests accessibility sentences field type.
+   *
+   * @covers ::isEmpty
+   * @covers ::propertyDefinitions
+   * @covers ::schema
+   * @covers ::generateSampleValue
    */
   public function testItem() : void {
     $entity = EntityTest::create();

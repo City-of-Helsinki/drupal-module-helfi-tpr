@@ -9,6 +9,7 @@ use Drupal\helfi_tpr\Entity\Channel;
 /**
  * Tests TPR Service Channel entities.
  *
+ * @coversDefaultClass \Drupal\helfi_tpr\Entity\Channel
  * @group helfi_tpr
  */
 class ChannelEntityTest extends MigrationTestBase {
@@ -36,6 +37,10 @@ class ChannelEntityTest extends MigrationTestBase {
 
   /**
    * Tests entity deletion.
+   *
+   * @covers ::create
+   * @covers ::delete
+   * @covers ::save
    */
   public function testEntityDeletion() : void {
     $entity = $this->getEntity(1);

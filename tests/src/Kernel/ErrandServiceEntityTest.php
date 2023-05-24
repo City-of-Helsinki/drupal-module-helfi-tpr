@@ -9,6 +9,7 @@ use Drupal\helfi_tpr\Entity\ErrandService;
 /**
  * Tests TPR Errand Service entities.
  *
+ * @coversDefaultClass \Drupal\helfi_tpr\Entity\ErrandService
  * @group helfi_tpr
  */
 class ErrandServiceEntityTest extends MigrationTestBase {
@@ -36,6 +37,10 @@ class ErrandServiceEntityTest extends MigrationTestBase {
 
   /**
    * Tests entity deletion.
+   *
+   * @covers ::create
+   * @covers ::delete
+   * @covers ::save
    */
   public function testEntityDeletion() : void {
     $entity = $this->getEntity(1);

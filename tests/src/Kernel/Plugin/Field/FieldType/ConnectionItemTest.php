@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\helfi_tpr\Kernel;
+namespace Drupal\Tests\helfi_tpr\Kernel\Plugin\Field\FieldType;
 
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -15,6 +15,7 @@ use Drupal\Tests\field\Kernel\FieldKernelTestBase;
 /**
  * Tests connection item field.
  *
+ * @coversDefaultClass \Drupal\helfi_tpr\Plugin\Field\FieldType\ConnectionItem
  * @group helfi_tpr
  */
 class ConnectionItemTest extends FieldKernelTestBase {
@@ -92,6 +93,12 @@ class ConnectionItemTest extends FieldKernelTestBase {
 
   /**
    * Tests connection field type.
+   *
+   * @covers ::generateSampleValue
+   * @covers ::mainPropertyName
+   * @covers ::isEmpty
+   * @covers ::setValue
+   * @covers ::schema
    */
   public function testItem() : void {
     $values = [

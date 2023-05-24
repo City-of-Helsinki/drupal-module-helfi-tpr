@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\helfi_tpr\Functional;
+namespace Drupal\Tests\helfi_tpr\Functional\Plugin\Field\FieldFormatter;
 
 use Drupal\helfi_tpr\Entity\TprEntityBase;
 use Drupal\helfi_tpr\Entity\Unit;

@@ -9,6 +9,7 @@ use Drupal\helfi_tpr\Entity\Service;
 /**
  * Tests TPR Service entities.
  *
+ * @coversDefaultClass \Drupal\helfi_tpr\Entity\Service
  * @group helfi_tpr
  */
 class ServiceEntityTest extends MigrationTestBase {
@@ -36,6 +37,10 @@ class ServiceEntityTest extends MigrationTestBase {
 
   /**
    * Tests entity deletion.
+   *
+   * @covers ::create
+   * @covers ::delete
+   * @covers ::save
    */
   public function testEntityDeletion() : void {
     $entity = $this->getEntity(1);

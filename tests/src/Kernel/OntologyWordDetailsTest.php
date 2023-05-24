@@ -9,6 +9,7 @@ use Drupal\helfi_tpr\Entity\OntologyWordDetails;
 /**
  * Tests TPR Ontology word details entities.
  *
+ * @coversDefaultClass \Drupal\helfi_tpr\Entity\OntologyWordDetails
  * @group helfi_tpr
  */
 class OntologyWordDetailsTest extends MigrationTestBase {
@@ -37,7 +38,9 @@ class OntologyWordDetailsTest extends MigrationTestBase {
   /**
    * Tests entity deletion.
    *
-   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @covers ::create
+   * @covers ::delete
+   * @covers ::save
    */
   public function testEntityDeletion() : void {
     $entity = $this->getEntity('1_1');

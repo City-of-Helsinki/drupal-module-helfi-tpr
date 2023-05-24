@@ -30,10 +30,13 @@ process:
   name: name
   services: service_descriptions
   _opening_hours_connections:
-    plugin: array_element_equals
-    source: connections
-    value: OPENING_HOURS
-    key: type
+    -
+      plugin: array_element_equals
+      source: connections
+      value:
+        - OPENING_HOURS
+        - OPENING_HOUR_OBJECT
+      key: type
   opening_hours:
     plugin: sub_process
     source: '@_opening_hours_connections'

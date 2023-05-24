@@ -9,6 +9,7 @@ use Drupal\helfi_tpr\Entity\Unit;
 /**
  * Tests TPR Unit entities.
  *
+ * @coversDefaultClass \Drupal\helfi_tpr\Entity\Unit
  * @group helfi_tpr
  */
 class UnitEntityTest extends MigrationTestBase {
@@ -36,6 +37,10 @@ class UnitEntityTest extends MigrationTestBase {
 
   /**
    * Tests entity deletion.
+   *
+   * @covers ::create
+   * @covers ::delete
+   * @covers ::save
    */
   public function testEntityDeletion() : void {
     $entity = $this->getEntity(1);

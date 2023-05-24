@@ -25,8 +25,8 @@ class AddressSearchInfo extends AreaPluginBase {
    *   NULL: the search was not performed.
    */
   protected function getSearchStatus(): ?bool {
-    if (isset($this->view->element['address_search_succeed'])) {
-      return $this->view->element['address_search_succeed'];
+    if (isset($this->view->element['#address_search_succeed'])) {
+      return $this->view->element['#address_search_succeed'];
     }
     return NULL;
   }

@@ -224,8 +224,8 @@ class AddressSearch extends FilterPluginBase {
    *   ViewExecutable element array.
    */
   protected static function setSearchStatus(array $element, bool $succeed): array {
-    if (!isset($element['address_search_succeed'])) {
-      $element['address_search_succeed'] = $succeed;
+    if (!isset($element['#address_search_succeed'])) {
+      $element['#address_search_succeed'] = $succeed;
     }
     return $element;
   }

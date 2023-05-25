@@ -31,3 +31,12 @@ msgstr "Allmänt gymnasium eller -linje"
 
 msgid "The upper secondary school for adults or a study programme"
 msgstr "Vuxengymnasium eller -linje"
+
+msgid "Service map embed"
+msgstr "Servicekarta bädda in"
+
+msgid "Override: @field_name"
+msgstr "Överskrida: @field_name"
+
+msgid "Override: Picture"
+msgstr "Bild som ersätter standardbilden"

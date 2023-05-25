@@ -46,3 +46,12 @@ msgstr "Yleislukio tai -linja"
 
 msgid "The upper secondary school for adults or a study programme"
 msgstr "Aikuislukio tai -linja"
+
+msgid "Service map embed"
+msgstr "Palvelukartan upotus"
+
+msgid "Override: @field_name"
+msgstr "Ylikirjoita arvo kentälle: @field_name"
+
+msgid "Override: Picture"
+msgstr "Oletuskuvan korvaava kuva"

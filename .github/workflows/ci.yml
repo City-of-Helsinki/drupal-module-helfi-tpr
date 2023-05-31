@@ -5,16 +5,14 @@ on:
       - main
 name: CI
 env:
-  SIMPLETEST_DB: "mysql://drupal:drupal@db:3306/drupal"
-  SIMPLETEST_BASE_URL: "http://127.0.0.1:8888"
   SYMFONY_DEPRECATIONS_HELPER: disabled
-  BROWSERTEST_OUTPUT_DIRECTORY: 'sites/simpletest'
+  BROWSERTEST_OUTPUT_DIRECTORY: 'public/sites/simpletest'
 jobs:
   tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['8.1']
+        php-versions: ['8.1', '8.2']
     container:
       image: ghcr.io/city-of-helsinki/drupal-php-docker:${{ matrix.php-versions }}-alpine
 
@@ -70,14 +68,14 @@ jobs:
           chromedriver --port=4444 > /dev/null 2>&1 &
 
       - name: Run PHPUnit tests
-        working-directory: ${{ env.MODULE_FOLDER }}
+        working-directory: ${{ env.DRUPAL_ROOT }}
         run: |
-          $DRUPAL_ROOT/vendor/bin/phpunit \
+          vendor/bin/phpunit \
             --bootstrap $DRUPAL_ROOT/public/core/tests/bootstrap.php \
             -c $MODULE_FOLDER/phpunit.xml \
             --coverage-clover=$MODULE_FOLDER/coverage.xml \
-            .
-          codecov
+            $MODULE_FOLDER
+          codecov --rootDir $MODULE_FOLDER
 
       - name: Create an artifact from test report
         uses: actions/upload-artifact@v3

@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 use Drupal\content_translation\ContentTranslationHandler;
 use Drupal\Core\Config\FileStorage;
+use Drupal\Core\Extension\ExtensionPathResolver;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
@@ -69,6 +70,17 @@ function _helfi_tpr_get_content_translation_fields(): array {
 
   return $definitions;
 }
+
+/**
+ * Get path to module's config folder.
+ *
+ * @param string $path_from_root
+ *   Path from module root folder to the config folder, for example /config/install
+ */
+function _get_module_config_folder_path(string $path_from_root): string {
+  return ExtensionPathResolver::getPath('module', 'helfi_tpr') . $path_from_root;
+}
+
 
 /**
  * Installs the service entity type.
@@ -189,7 +201,7 @@ function helfi_tpr_update_8006() : void {
  * Enable translation for e-service, service and service channels.
  */
 function helfi_tpr_update_8007() : void {
-  $config_path = drupal_get_path('module', 'helfi_tpr') . '/config/install';
+  $config_path = _get_module_config_folder_path('/config/install');
   $source = new FileStorage($config_path);
   $config_storage = \Drupal::service('config.storage');
 
@@ -274,7 +286,7 @@ function helfi_tpr_update_8012() : void {
  * Update tpr_unit and tpr_service views.
  */
 function helfi_tpr_update_8016() : void {
-  $config_path = drupal_get_path('module', 'helfi_tpr') . '/config/install';
+  $config_path = _get_module_config_folder_path('/config/install');
   $source = new FileStorage($config_path);
   $config_storage = \Drupal::service('config.storage');
 
@@ -283,9 +295,9 @@ function helfi_tpr_update_8016() : void {
   $config_storage->write($tpr_service_action, $source->read($tpr_service_action));
 
   // Create file storages.
-  $optional_config_path = drupal_get_path('module', 'helfi_tpr') . '/config/optional';
+  $optional_config_path = _get_module_config_folder_path('/config/optional');
   $optional_config_source = new FileStorage($optional_config_path);
-  $language_config_path = drupal_get_path('module', 'helfi_tpr') . '/config/language/fi';
+  $language_config_path = _get_module_config_folder_path('/config/language/fi');
   $language_config_source = new FileStorage($language_config_path);
   $views = ['views.view.tpr_service_list', 'views.view.tpr_unit_list'];
 
@@ -332,7 +344,7 @@ function helfi_tpr_update_8018() : void {
  * Install publish and unpublish actions for TPR unit and service.
  */
 function helfi_tpr_update_8019() : void {
-  $config_path = drupal_get_path('module', 'helfi_tpr') . '/config/install';
+  $config_path = _get_module_config_folder_path('/config/install');
   $source = new FileStorage($config_path);
   $config_storage = \Drupal::service('config.storage');
 
@@ -451,11 +463,11 @@ function helfi_tpr_update_8025() : void {
   $uuid_service = \Drupal::service('uuid');
 
   // Create file storages.
-  $config_path = drupal_get_path('module', 'helfi_tpr') . '/config/install';
+  $config_path = _get_module_config_folder_path('/config/install');
   $config_source = new FileStorage($config_path);
-  $optional_config_path = drupal_get_path('module', 'helfi_tpr') . '/config/optional';
+  $optional_config_path = _get_module_config_folder_path('/config/optional');
   $optional_config_source = new FileStorage($optional_config_path);
-  $language_config_path = drupal_get_path('module', 'helfi_tpr') . '/config/language/fi';
+  $language_config_path = _get_module_config_folder_path('/config/language/fi');
   $language_config_source = new FileStorage($language_config_path);
 
   // Add new configs for entity publish and unpublish actions.

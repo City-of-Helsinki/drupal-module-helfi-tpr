@@ -4,7 +4,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=City-of-Helsinki_drupal-module-helfi-tpr&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=City-of-Helsinki_drupal-module-helfi-tpr)
 [![codecov](https://codecov.io/gh/City-of-Helsinki/drupal-module-helfi-tpr/branch/main/graph/badge.svg?token=10D01ZY22M)](https://codecov.io/gh/City-of-Helsinki/drupal-module-helfi-tpr)
 
-Integrates [Helsinki Service Map](https://www.hel.fi/palvelukarttaws/restpages/ver4_en.html) with Drupal.
+Integrates [Helsinki Service Map](https://www.hel.fi/palvelukarttaws/restpages/ver4_en.html) and [TPR Service Description Register](https://www.hel.fi/palvelukarttaws/restpages/palvelurekisteri_en.html) with Drupal.
 
 ## Requirements
 

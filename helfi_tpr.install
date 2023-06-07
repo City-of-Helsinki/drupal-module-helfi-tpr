@@ -75,12 +75,11 @@ function _helfi_tpr_get_content_translation_fields(): array {
  * Get path to module's config folder.
  *
  * @param string $path_from_root
- *   Path from module root folder to the config folder, for example /config/install
+ *   Path from module root folder to the config folder, (f.ex /config/install).
  */
 function _get_module_config_folder_path(string $path_from_root): string {
   return ExtensionPathResolver::getPath('module', 'helfi_tpr') . $path_from_root;
 }
-
 
 /**
  * Installs the service entity type.

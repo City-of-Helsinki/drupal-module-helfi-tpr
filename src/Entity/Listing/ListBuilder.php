@@ -63,7 +63,7 @@ class ListBuilder extends EntityListBuilder {
     $total = $this->getStorage()
       ->getQuery()
       ->count()
-      ->accessCheck(FALSE)
+      ->accessCheck(TRUE)
       ->execute();
 
     $build['summary']['#markup'] = $this->t('Total @total', ['@total' => $total]);

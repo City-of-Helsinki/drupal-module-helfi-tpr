@@ -336,6 +336,40 @@ class Unit extends TprEntityBase {
       ->setDisplayOptions('form', [
         'region' => 'hidden',
       ]);
+    $fields['other_info'] = BaseFieldDefinition::create('tpr_connection')
+      ->setLabel(new TranslatableMarkup('Further information'))
+      ->setDescription(new TranslatableMarkup('The "OTHER_INFO" connection type'))
+      ->setTranslatable(TRUE)
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+    $fields['price_info'] = BaseFieldDefinition::create('tpr_connection')
+      ->setLabel(new TranslatableMarkup('Charges'))
+      ->setDescription(new TranslatableMarkup('The "PRICE" connection type'))
+      ->setTranslatable(TRUE)
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+    $fields['links'] = BaseFieldDefinition::create('tpr_connection')
+      ->setLabel(new TranslatableMarkup('Web sites'))
+      ->setDescription(new TranslatableMarkup('The "LINK" connection type'))
+      ->setTranslatable(TRUE)
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+    $fields['contacts'] = BaseFieldDefinition::create('tpr_connection')
+      ->setLabel(new TranslatableMarkup('Other contact information'))
+      ->setDescription(new TranslatableMarkup('The "PHONE_OR_EMAIL" connection type'))
+      ->setTranslatable(TRUE)
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }

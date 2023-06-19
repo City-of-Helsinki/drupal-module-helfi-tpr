@@ -40,3 +40,15 @@ msgstr "Överskrida: @field_name"
 
 msgid "Override: Picture"
 msgstr "Bild som ersätter standardbilden"
+
+msgid "Further information"
+msgstr "Ytterligare uppgifter"
+
+msgid "Charges"
+msgstr "Priser"
+
+msgid "Web sites"
+msgstr "På webben"
+
+msgid "Other contact information"
+msgstr "Andra kontaktuppgifter"

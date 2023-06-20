@@ -342,14 +342,20 @@ class Unit extends TprEntityBase {
       ->setTranslatable(TRUE)
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ]);
     $fields['price_info'] = BaseFieldDefinition::create('tpr_connection')
       ->setLabel(new TranslatableMarkup('Charges'))
       ->setDescription(new TranslatableMarkup('The "PRICE" connection type'))
       ->setTranslatable(TRUE)
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ]);
     $fields['links'] = BaseFieldDefinition::create('tpr_connection')
       ->setLabel(new TranslatableMarkup('Web sites'))
       ->setDescription(new TranslatableMarkup('The "LINK" connection type'))

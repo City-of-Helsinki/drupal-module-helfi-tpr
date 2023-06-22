@@ -56,6 +56,54 @@ process:
       value: value
       data: data
       type: type
+  _other_info_connections:
+      plugin: array_element_equals
+      source: connections
+      value: OTHER_INFO
+      key: type
+  other_info:
+    plugin: sub_process
+    source: '@_other_info_connections'
+    process:
+      value: value
+      data: data
+      type: type
+  _price_info_connections:
+      plugin: array_element_equals
+      source: connections
+      value: PRICE
+      key: type
+  price_info:
+    plugin: sub_process
+    source: '@_price_info_connections'
+    process:
+      value: value
+      data: data
+      type: type
+  _links_connections:
+      plugin: array_element_equals
+      source: connections
+      value: LINK
+      key: type
+  links:
+    plugin: sub_process
+    source: '@_links_connections'
+    process:
+      value: value
+      data: data
+      type: type
+  _contacts_connections:
+      plugin: array_element_equals
+      source: connections
+      value: PHONE_OR_EMAIL
+      key: type
+  contacts:
+    plugin: sub_process
+    source: '@_contacts_connections'
+    process:
+      value: value
+      data: data
+      type: type
   accessibility_sentences:
     plugin: sub_process
     source: accessibility_sentences

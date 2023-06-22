@@ -55,3 +55,15 @@ msgstr "Ylikirjoita arvo kentälle: @field_name"
 
 msgid "Override: Picture"
 msgstr "Oletuskuvan korvaava kuva"
+
+msgid "Further information"
+msgstr "Lisätietoja"
+
+msgid "Charges"
+msgstr "Hinnat"
+
+msgid "Web sites"
+msgstr "Muualla verkossa"
+
+msgid "Other contact information"
+msgstr "Muut yhteystiedot"

@@ -8,9 +8,9 @@ use Drupal\Component\Utility\Html;
 use Drupal\Core\Url;
 
 /**
- * A base class for 'opening hour' connections.
+ * A base class for connections with text and link.
  */
-abstract class OpeningHourBase extends Connection {
+abstract class TextWithLink extends Connection {
 
   /**
    * {@inheritdoc}

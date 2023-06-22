@@ -6,8 +6,8 @@ namespace Drupal\Tests\helfi_tpr\Unit;
 
 use Drupal\helfi_tpr\Field\Connection\Highlight;
 use Drupal\helfi_tpr\Field\Connection\OpeningHour;
-use Drupal\helfi_tpr\Field\Connection\OpeningHourBase;
 use Drupal\helfi_tpr\Field\Connection\OpeningHourObject;
+use Drupal\helfi_tpr\Field\Connection\TextWithLink;
 use Drupal\Tests\UnitTestCase;
 
 /**
@@ -21,14 +21,14 @@ class ConnectionTest extends UnitTestCase {
   /**
    * Tests opening hours.
    *
-   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHourBase::build
-   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHourBase::getFields
+   * @covers \Drupal\helfi_tpr\Field\Connection\TextWithLink::build
+   * @covers \Drupal\helfi_tpr\Field\Connection\TextWithLink::getFields
    * @covers ::set
    * @covers ::get
    * @covers ::isValidField
    * @dataProvider openingHourData
    */
-  public function testOpeningHours(OpeningHourBase $object) : void {
+  public function testOpeningHours(TextWithLink $object) : void {
     $object->set('name', 'mon-wed 10-19');
     $this->assertNotEmpty($object->build());
 
@@ -71,10 +71,10 @@ class ConnectionTest extends UnitTestCase {
    *
    * @covers ::set
    * @covers ::isValidField
-   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHourBase::getFields
+   * @covers \Drupal\helfi_tpr\Field\Connection\TextWithLink::getFields
    * @dataProvider openingHourData
    */
-  public function testInvalidFieldName(OpeningHourBase $object) : void {
+  public function testInvalidFieldName(TextWithLink $object) : void {
     $this->expectException(\InvalidArgumentException::class);
     $this->expectExceptionMessage('Field "invalid_field" is not valid.');
     $object->set('invalid_field', 'value');
@@ -97,7 +97,7 @@ class ConnectionTest extends UnitTestCase {
    * Tests invalid data type.
    *
    * @dataProvider invalidFieldValueData
-   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHourBase::getFields
+   * @covers \Drupal\helfi_tpr\Field\Connection\TextWithLink::getFields
    * @covers ::set
    * @covers ::isValidField
    */
@@ -125,7 +125,7 @@ class ConnectionTest extends UnitTestCase {
    * Tests valid values.
    *
    * @dataProvider validFieldValueData
-   * @covers \Drupal\helfi_tpr\Field\Connection\OpeningHourBase::getFields
+   * @covers \Drupal\helfi_tpr\Field\Connection\TextWithLink::getFields
    * @covers ::set
    * @covers ::get
    * @covers ::isValidField

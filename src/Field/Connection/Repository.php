@@ -18,6 +18,10 @@ final class Repository {
     OpeningHour::TYPE_NAME => OpeningHour::class,
     OpeningHourObject::TYPE_NAME => OpeningHourObject::class,
     Highlight::TYPE_NAME => Highlight::class,
+    OtherInfo::TYPE_NAME => OtherInfo::class,
+    Price::TYPE_NAME => Price::class,
+    Link::TYPE_NAME => Link::class,
+    PhoneOrEmail::TYPE_NAME => PhoneOrEmail::class,
   ];
 
   /**

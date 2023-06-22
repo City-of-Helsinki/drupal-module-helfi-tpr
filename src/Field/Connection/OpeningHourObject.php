@@ -7,7 +7,7 @@ namespace Drupal\helfi_tpr\Field\Connection;
 /**
  * Provides a DTO for TPR connection type of OPENING_HOUR_OBJECT.
  */
-final class OpeningHourObject extends TextWithLinkBase {
+final class OpeningHourObject extends TextWithLink {
 
   /**
    * The type name.

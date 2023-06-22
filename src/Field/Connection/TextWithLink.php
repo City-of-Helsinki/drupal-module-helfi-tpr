@@ -10,7 +10,7 @@ use Drupal\Core\Url;
 /**
  * A base class for connections with text and link.
  */
-abstract class TextWithLinkBase extends Connection {
+abstract class TextWithLink extends Connection {
 
   /**
    * {@inheritdoc}

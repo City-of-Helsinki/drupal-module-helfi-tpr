@@ -7,7 +7,7 @@ namespace Drupal\helfi_tpr\Field\Connection;
 /**
  * Provides a domain object for TPR connection type of LINK.
  */
-final class Link extends TextWithLinkBase {
+final class Link extends TextWithLink {
 
   /**
    * The type name.

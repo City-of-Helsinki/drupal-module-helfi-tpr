@@ -32,6 +32,7 @@ final class ConnectionFormatter extends FormatterBase {
       $element[$delta] = [
         '#type' => 'item',
         'content' => $item->data->build(),
+        '#parents' => [$delta],
       ];
     }
 

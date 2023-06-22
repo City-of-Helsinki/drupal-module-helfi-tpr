@@ -301,6 +301,10 @@ class Unit extends TprEntityBase {
       ->setDescription(new TranslatableMarkup('The "OPENING_HOURS" connection type'))
       ->setTranslatable(TRUE)
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
+      ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
     $fields['provided_languages'] = BaseFieldDefinition::create('string')
       ->setLabel(new TranslatableMarkup('Provided languages'))
@@ -323,6 +327,10 @@ class Unit extends TprEntityBase {
       ->setLabel(new TranslatableMarkup('Highlights'))
       ->setTranslatable(TRUE)
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ])
+      ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
     $fields['ontologyword_ids'] = BaseFieldDefinition::create('integer')
       ->setLabel(new TranslatableMarkup('Ontologyword IDs'))

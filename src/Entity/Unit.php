@@ -329,35 +329,35 @@ class Unit extends TprEntityBase {
 
     $connectionFields = [
       'links' => [
-        'description' => new TranslatableMarkup('The "LINK" connection type'),
-        'label' => new TranslatableMarkup('Web sites'),
+        'description' => 'The "LINK" connection type',
+        'label' => 'Web sites',
       ],
       'opening_hours' => [
-        'description' => new TranslatableMarkup('The "OPENING_HOURS" connection type'),
-        'label' => new TranslatableMarkup('Opening hours'),
+        'description' => 'The "OPENING_HOURS" connection type',
+        'label' => 'Opening hours',
       ],
       'highlights' => [
-        'description' => new TranslatableMarkup('The "HIGHLIGHTS" connection type'),
-        'label' => new TranslatableMarkup('Highlights'),
+        'description' => 'The "HIGHLIGHTS" connection type',
+        'label' => 'Highlights',
       ],
       'other_info' => [
-        'description' => new TranslatableMarkup('The "OTHER_INFO" connection type'),
-        'label' => new TranslatableMarkup('Further information'),
+        'description' => 'The "OTHER_INFO" connection type',
+        'label' => 'Further information',
       ],
       'price_info' => [
-        'description' => new TranslatableMarkup('The "PRICE" connection type'),
-        'label' => new TranslatableMarkup('Charges'),
+        'description' => 'The "PRICE" connection type',
+        'label' => 'Charges',
       ],
       'contacts' => [
-        'description' => new TranslatableMarkup('The "PHONE_OR_EMAIL" connection type'),
-        'label' => new TranslatableMarkup('Other contact information'),
+        'description' => 'The "PHONE_OR_EMAIL" connection type',
+        'label' => 'Other contact information',
       ],
     ];
 
     foreach ($connectionFields as $name => $data) {
       $fields[$name] = BaseFieldDefinition::create('tpr_connection')
-        ->setLabel($data['label'])
-        ->setDescription($data['description'])
+        ->setLabel(new TranslatableMarkup($data['label']))
+        ->setDescription(new TranslatableMarkup($data['description']))
         ->setTranslatable(TRUE)
         ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
         ->setDisplayOptions('form', [

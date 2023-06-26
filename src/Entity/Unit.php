@@ -329,35 +329,38 @@ class Unit extends TprEntityBase {
 
     $connectionFields = [
       'links' => [
-        'description' => 'The "LINK" connection type',
-        'label' => 'Web sites',
+        'description' => 'LINK',
+        'label' => new TranslatableMarkup('Web sites'),
       ],
       'opening_hours' => [
-        'description' => 'The "OPENING_HOURS" connection type',
-        'label' => 'Opening hours',
+        'description' => 'OPENING_HOURS',
+        'label' => new TranslatableMarkup('Opening hours'),
       ],
       'highlights' => [
-        'description' => 'The "HIGHLIGHTS" connection type',
-        'label' => 'Highlights',
+        'description' => 'HIGHLIGHTS',
+        'label' => new TranslatableMarkup('Highlights'),
       ],
       'other_info' => [
-        'description' => 'The "OTHER_INFO" connection type',
-        'label' => 'Further information',
+        'description' => 'OTHER_INFO',
+        'label' => new TranslatableMarkup('Further information'),
       ],
       'price_info' => [
-        'description' => 'The "PRICE" connection type',
-        'label' => 'Charges',
+        'description' => 'PRICE',
+        'label' => new TranslatableMarkup('Charges'),
       ],
       'contacts' => [
-        'description' => 'The "PHONE_OR_EMAIL" connection type',
-        'label' => 'Other contact information',
+        'description' => 'PHONE_OR_EMAIL',
+        'label' => new TranslatableMarkup('Other contact information'),
       ],
     ];
 
     foreach ($connectionFields as $name => $data) {
       $fields[$name] = BaseFieldDefinition::create('tpr_connection')
-        ->setLabel(new TranslatableMarkup($data['label']))
-        ->setDescription(new TranslatableMarkup($data['description']))
+        ->setLabel($data['label'])
+        ->setDescription(new TranslatableMarkup('The "@description" connection type', [
+            '@description' => $data['description'],
+          ])
+        )
         ->setTranslatable(TRUE)
         ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
         ->setDisplayOptions('form', [

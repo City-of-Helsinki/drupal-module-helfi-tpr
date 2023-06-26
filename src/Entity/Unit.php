@@ -358,9 +358,8 @@ class Unit extends TprEntityBase {
       $fields[$name] = BaseFieldDefinition::create('tpr_connection')
         ->setLabel($data['label'])
         ->setDescription(new TranslatableMarkup('The "@description" connection type', [
-            '@description' => $data['description'],
-          ])
-        )
+          '@description' => $data['description'],
+        ]))
         ->setTranslatable(TRUE)
         ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
         ->setDisplayOptions('form', [

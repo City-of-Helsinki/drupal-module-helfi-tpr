@@ -352,19 +352,19 @@ class Unit extends TprEntityBase {
         'description' => new TranslatableMarkup('The "PHONE_OR_EMAIL" connection type'),
         'label' => new TranslatableMarkup('Other contact information'),
       ],
-     ];
+    ];
 
     foreach ($connectionFields as $name => $data) {
       $fields[$name] = BaseFieldDefinition::create('tpr_connection')
-       ->setLabel($data['label'])
-       ->setDescription($data['description'])
-       ->setTranslatable(TRUE)
-       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
-       ->setDisplayOptions('form', [
-         'type' => 'readonly_field_widget',
-       ])
-       ->setDisplayConfigurable('form', TRUE)
-       ->setDisplayConfigurable('view', TRUE);
+        ->setLabel($data['label'])
+        ->setDescription($data['description'])
+        ->setTranslatable(TRUE)
+        ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+        ->setDisplayOptions('form', [
+          'type' => 'readonly_field_widget',
+        ])
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayConfigurable('view', TRUE);
     }
 
     return $fields;

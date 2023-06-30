@@ -296,16 +296,6 @@ class Unit extends TprEntityBase {
       ->setTranslatable(TRUE)
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setDisplayConfigurable('view', TRUE);
-    $fields['opening_hours'] = BaseFieldDefinition::create('tpr_connection')
-      ->setLabel(new TranslatableMarkup('Opening hours'))
-      ->setDescription(new TranslatableMarkup('The "OPENING_HOURS" connection type'))
-      ->setTranslatable(TRUE)
-      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
-      ->setDisplayOptions('form', [
-        'type' => 'readonly_field_widget',
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
     $fields['provided_languages'] = BaseFieldDefinition::create('string')
       ->setLabel(new TranslatableMarkup('Provided languages'))
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
@@ -323,15 +313,7 @@ class Unit extends TprEntityBase {
       ->setLabel(new TranslatableMarkup('Show website link'))
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
-    $fields['highlights'] = BaseFieldDefinition::create('tpr_connection')
-      ->setLabel(new TranslatableMarkup('Highlights'))
-      ->setTranslatable(TRUE)
-      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
-      ->setDisplayOptions('form', [
-        'type' => 'readonly_field_widget',
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+
     $fields['ontologyword_ids'] = BaseFieldDefinition::create('integer')
       ->setLabel(new TranslatableMarkup('Ontologyword IDs'))
       ->setTranslatable(FALSE)
@@ -344,46 +326,48 @@ class Unit extends TprEntityBase {
       ->setDisplayOptions('form', [
         'region' => 'hidden',
       ]);
-    $fields['other_info'] = BaseFieldDefinition::create('tpr_connection')
-      ->setLabel(new TranslatableMarkup('Further information'))
-      ->setDescription(new TranslatableMarkup('The "OTHER_INFO" connection type'))
-      ->setTranslatable(TRUE)
-      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE)
-      ->setDisplayOptions('form', [
-        'type' => 'readonly_field_widget',
-      ]);
-    $fields['price_info'] = BaseFieldDefinition::create('tpr_connection')
-      ->setLabel(new TranslatableMarkup('Charges'))
-      ->setDescription(new TranslatableMarkup('The "PRICE" connection type'))
-      ->setTranslatable(TRUE)
-      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE)
-      ->setDisplayOptions('form', [
-        'type' => 'readonly_field_widget',
-      ]);
-    $fields['links'] = BaseFieldDefinition::create('tpr_connection')
-      ->setLabel(new TranslatableMarkup('Web sites'))
-      ->setDescription(new TranslatableMarkup('The "LINK" connection type'))
-      ->setTranslatable(TRUE)
-      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
-      ->setDisplayOptions('form', [
-        'type' => 'readonly_field_widget',
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-    $fields['contacts'] = BaseFieldDefinition::create('tpr_connection')
-      ->setLabel(new TranslatableMarkup('Other contact information'))
-      ->setDescription(new TranslatableMarkup('The "PHONE_OR_EMAIL" connection type'))
-      ->setTranslatable(TRUE)
-      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
-      ->setDisplayOptions('form', [
-        'type' => 'readonly_field_widget',
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+
+    $connectionFields = [
+      'links' => [
+        'description' => 'LINK',
+        'label' => new TranslatableMarkup('Web sites'),
+      ],
+      'opening_hours' => [
+        'description' => 'OPENING_HOURS',
+        'label' => new TranslatableMarkup('Opening hours'),
+      ],
+      'highlights' => [
+        'description' => 'HIGHLIGHTS',
+        'label' => new TranslatableMarkup('Highlights'),
+      ],
+      'other_info' => [
+        'description' => 'OTHER_INFO',
+        'label' => new TranslatableMarkup('Further information'),
+      ],
+      'price_info' => [
+        'description' => 'PRICE',
+        'label' => new TranslatableMarkup('Charges'),
+      ],
+      'contacts' => [
+        'description' => 'PHONE_OR_EMAIL',
+        'label' => new TranslatableMarkup('Other contact information'),
+      ],
+    ];
+
+    foreach ($connectionFields as $name => $data) {
+      $fields[$name] = BaseFieldDefinition::create('tpr_connection')
+        ->setLabel($data['label'])
+        ->setDescription(new TranslatableMarkup('The "@description" connection type', [
+          '@description' => $data['description'],
+        ]))
+        ->setTranslatable(TRUE)
+        ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+        ->setDisplayOptions('form', [
+          'type' => 'readonly_field_widget',
+        ])
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayConfigurable('view', TRUE);
+    }
 
     return $fields;
   }

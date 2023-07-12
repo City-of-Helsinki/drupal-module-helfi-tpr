@@ -8,6 +8,10 @@ use Drupal\helfi_tpr\Entity\Unit;
 use Drupal\helfi_tpr\Field\Connection\Highlight;
 use Drupal\helfi_tpr\Field\Connection\OpeningHour;
 use Drupal\helfi_tpr\Field\Connection\OpeningHourObject;
+use Drupal\helfi_tpr\Field\Connection\PhoneOrEmail;
+use Drupal\helfi_tpr\Field\Connection\Link;
+use Drupal\helfi_tpr\Field\Connection\Price;
+use Drupal\helfi_tpr\Field\Connection\OtherInfo;
 
 /**
  * Tests TPR Unit migration.
@@ -62,7 +66,12 @@ class UnitMigrationTest extends MigrationTestBase {
         $this->assertEquals("Group $langcode $delta", $translation->get('accessibility_sentences')->get($i)->group);
         $this->assertEquals("Sentence $langcode $delta", $translation->get('accessibility_sentences')->get($i)->value);
         $this->assertEquals("open $langcode $delta", $translation->get('opening_hours')->get($i)->value);
+        $this->assertEquals("phone or email $langcode $delta", $translation->get('contacts')->get($i)->value);
+        $this->assertEquals("link $langcode $delta", $translation->get('links')->get($i)->value);
+        $this->assertEquals("price $langcode $delta", $translation->get('price_info')->get($i)->value);
+        $this->assertEquals("other info $langcode $delta", $translation->get('other_info')->get($i)->value);
       }
+
       $opening_hour = $translation->get('opening_hours')->get(1)->data;
       $this->assertInstanceOf(OpeningHour::class, $opening_hour);
       $opening_hour_object = $translation->get('opening_hours')->get(2)->data;
@@ -72,6 +81,21 @@ class UnitMigrationTest extends MigrationTestBase {
       $highlight = $translation->get('highlights')->get(0)->data;
       $this->assertInstanceOf(Highlight::class, $highlight);
       $this->assertEquals("highlight $langcode 1", $highlight->get('name'));
+
+      $contacts = $translation->get('contacts')->get(1)->data;
+      $this->assertInstanceOf(PhoneOrEmail::class, $contacts);
+      $this->assertEquals("contact person name", $contacts->get('contact_person'));
+      $this->assertEquals("040654321", $contacts->get('phone'));
+
+      $links = $translation->get('links')->get(0)->data;
+      $this->assertInstanceOf(Link::class, $links);
+      $this->assertEquals("https://localhost/$langcode", $links->get('www'));
+
+      $price_info = $translation->get('price_info')->get(0)->data;
+      $this->assertInstanceOf(Price::class, $price_info);
+
+      $other_info = $translation->get('other_info')->get(0)->data;
+      $this->assertInstanceOf(OtherInfo::class, $other_info);
     }
 
     // Re-run migrate and make sure migrate map hash doesn't change.

@@ -6,10 +6,10 @@ namespace Drupal\Tests\helfi_tpr\Kernel;
 
 use Drupal\helfi_tpr\Entity\Unit;
 use Drupal\helfi_tpr\Field\Connection\Highlight;
+use Drupal\helfi_tpr\Field\Connection\Link;
 use Drupal\helfi_tpr\Field\Connection\OpeningHour;
 use Drupal\helfi_tpr\Field\Connection\OpeningHourObject;
 use Drupal\helfi_tpr\Field\Connection\PhoneOrEmail;
-use Drupal\helfi_tpr\Field\Connection\Link;
 use Drupal\helfi_tpr\Field\Connection\Price;
 use Drupal\helfi_tpr\Field\Connection\OtherInfo;
 

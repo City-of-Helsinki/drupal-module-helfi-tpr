@@ -6,7 +6,11 @@ namespace Drupal\Tests\helfi_tpr\Unit;
 
 use Drupal\helfi_tpr\Field\Connection\Connection;
 use Drupal\helfi_tpr\Field\Connection\Highlight;
+use Drupal\helfi_tpr\Field\Connection\Link;
 use Drupal\helfi_tpr\Field\Connection\OpeningHour;
+use Drupal\helfi_tpr\Field\Connection\OtherInfo;
+use Drupal\helfi_tpr\Field\Connection\PhoneOrEmail;
+use Drupal\helfi_tpr\Field\Connection\Price;
 use Drupal\helfi_tpr\Field\Connection\Repository;
 use Drupal\Tests\UnitTestCase;
 
@@ -64,6 +68,10 @@ class ConnectionRepositoryTest extends UnitTestCase {
     return [
       [OpeningHour::TYPE_NAME],
       [Highlight::TYPE_NAME],
+      [Link::TYPE_NAME],
+      [OtherInfo::TYPE_NAME],
+      [Price::TYPE_NAME],
+      [PhoneOrEmail::TYPE_NAME],
     ];
   }
 

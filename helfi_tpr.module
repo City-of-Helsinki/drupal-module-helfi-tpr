@@ -63,7 +63,7 @@ function helfi_tpr_theme() : array {
 /**
  * Implements hook_entity_bundle_info_alter().
  */
-function helfi_paragraphs_phasing_entity_bundle_info_alter(array &$bundles): void {
+function helfi_tpr_entity_bundle_info_alter(array &$bundles): void {
   $bundles['paragraph']['service_list']['class'] = ServiceList::class;
   $bundles['paragraph']['service_list_search']['class'] = ServiceListSearch::class;
   $bundles['paragraph']['unit_search']['class'] = UnitSearch::class;

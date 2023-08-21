@@ -43,4 +43,14 @@ class UnitSearch extends Paragraph implements ParagraphInterface {
     }, $this->get($field_name)->getValue()));
   }
 
+  /**
+   * Get the id of the paragraph to search a parent for.
+   *
+   * @return string|int|null
+   *   Id of the paragraph.
+   */
+  public function getSearchParentParagraph(): string|int|null {
+    return $this->id();
+  }
+
 }

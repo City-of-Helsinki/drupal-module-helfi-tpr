@@ -32,7 +32,7 @@ class UnitSearch extends Paragraph implements ParagraphInterface {
    * @param string $field_name
    *   Name of the field.
    * @param string $type
-   *   Use 'target_id' for entity reference fields, 'value' for string or number.
+   *   Use 'target_id' for entity reference, 'value' for string or number.
    *
    * @return string
    *   Comma separated string of list items.

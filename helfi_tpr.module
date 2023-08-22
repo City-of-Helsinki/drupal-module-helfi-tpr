@@ -69,8 +69,6 @@ function helfi_tpr_entity_bundle_info_alter(array &$bundles): void {
   $bundles['paragraph']['unit_search']['class'] = UnitSearch::class;
 }
 
-
-
 /**
  * Implements hook_theme_suggestions_HOOK().
  */

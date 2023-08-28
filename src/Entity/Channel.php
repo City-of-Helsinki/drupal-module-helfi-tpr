@@ -9,6 +9,7 @@ use CommerceGuys\Addressing\AddressFormat\FieldOverride;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Url;
 
 /**
  * Defines the tpr_service_channel entity class.
@@ -169,4 +170,67 @@ class Channel extends TprEntityBase {
     return $fields;
   }
 
+  /**
+   * Get mailto link for service channel email address.
+   *
+   * @return Url|null
+   *   Email as mailto link or null.
+   */
+  public function getMailto():?Url {
+    return $this->get('email')->isEmpty() ? NULL : Url::fromUri('mailto:' . $this->get('email')->value);
+  }
+
+  /**
+   * Get tel link for service channel phone number.
+   *
+   * @return Url|null
+   *   Phone number as tel link or null.
+   */
+  public function getPhoneNumber():?Url {
+    if ($this->get('phone')->isEmpty()) {
+      return NULL;
+    }
+
+    $trimmed_phone_number = trim($this->get('phone')->value);
+    return Url::fromUri("tel:$trimmed_phone_number");
+  }
+
+  /**
+   * Get render array for service channel address.
+   *
+   * @return array|null
+   *   Render array or null.
+   */
+  public function getFormattedAddress():?array {
+    if ($this->get('address')->isEmpty()) {
+      return NULL;
+    }
+
+    return $this->get('address')->view('default');
+  }
+
+  /**
+   * Get default weights for each service channel type.
+   *
+   * @param string $channel_type
+   *   Name of the channel type.
+   *
+   * @return int|null
+   *   Weight for given channel or null.
+   */
+  public function getChannelWeight(string $channel_type):?int {
+    $weight = [
+      'ESERVICE' => 0,
+      'TELEPHONE' => 1,
+      'EMAIL' => 2,
+      'PRINTABLE_FORM' => 3,
+      'MAIL' => 4,
+      'LOCAL' => 5,
+      'CHAT' => 6,
+      'WEBPAGE' => 7,
+      'SMS' => 8,
+    ];
+
+    return $weight[$channel_type] ?? NULL;
+  }
 }

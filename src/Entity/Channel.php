@@ -173,7 +173,7 @@ class Channel extends TprEntityBase {
   /**
    * Get mailto link for service channel email address.
    *
-   * @return Url|null
+   * @return \Drupal\Core\Url|null
    *   Email as mailto link or null.
    */
   public function getMailto():?Url {
@@ -183,7 +183,7 @@ class Channel extends TprEntityBase {
   /**
    * Get tel link for service channel phone number.
    *
-   * @return Url|null
+   * @return \Drupal\Core\Url|null
    *   Phone number as tel link or null.
    */
   public function getPhoneNumber():?Url {
@@ -208,4 +208,5 @@ class Channel extends TprEntityBase {
 
     return $this->get('address')->view('default');
   }
+
 }

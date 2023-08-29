@@ -208,29 +208,4 @@ class Channel extends TprEntityBase {
 
     return $this->get('address')->view('default');
   }
-
-  /**
-   * Get default weights for each service channel type.
-   *
-   * @param string $channel_type
-   *   Name of the channel type.
-   *
-   * @return int|null
-   *   Weight for given channel or null.
-   */
-  public function getChannelWeight(string $channel_type):?int {
-    $weight = [
-      'ESERVICE' => 0,
-      'TELEPHONE' => 1,
-      'EMAIL' => 2,
-      'PRINTABLE_FORM' => 3,
-      'MAIL' => 4,
-      'LOCAL' => 5,
-      'CHAT' => 6,
-      'WEBPAGE' => 7,
-      'SMS' => 8,
-    ];
-
-    return $weight[$channel_type] ?? NULL;
-  }
 }

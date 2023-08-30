@@ -59,7 +59,7 @@ function helfi_tpr_theme() : array {
         'label' => NULL,
         'content' => NULL,
       ],
-    ]
+    ],
   ];
 }
 

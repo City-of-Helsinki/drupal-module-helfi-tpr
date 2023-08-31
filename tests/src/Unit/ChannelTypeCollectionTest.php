@@ -137,6 +137,7 @@ class ChannelTypeCollectionTest extends UnitTestCase {
    * @covers ::count
    * @covers \Drupal\helfi_tpr\Entity\ChannelType::__construct
    * @covers \Drupal\helfi_tpr\Entity\ChannelType::label
+   * @covers \Drupal\helfi_tpr\Entity\ChannelType::getTypeLabel
    */
   public function testGetLabel() : void {
     $sut = ChannelTypeCollection::all();
@@ -146,6 +147,7 @@ class ChannelTypeCollectionTest extends UnitTestCase {
     $index = 0;
     foreach ($sut as $item) {
       $this->assertInstanceOf(TranslatableMarkup::class, $item->label());
+      $this->assertInstanceOf(TranslatableMarkup::class, $item->getTypeLabel());
       $index++;
     }
     $this->assertEquals($total, $index);

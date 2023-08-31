@@ -58,6 +58,7 @@ function helfi_tpr_theme() : array {
       'variables' => [
         'label' => NULL,
         'content' => NULL,
+        'type' => NULL,
       ],
     ],
   ];

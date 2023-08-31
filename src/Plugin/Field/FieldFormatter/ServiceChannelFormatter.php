@@ -108,6 +108,7 @@ final class ServiceChannelFormatter extends EntityReferenceEntityFormatter {
           '#theme' => 'tpr_service_channel_group',
           '#label' => $channelType->getTypeLabel(),
           '#weight' => $channelType->weight,
+          '#type' => strtolower($type),
         ];
       }
 

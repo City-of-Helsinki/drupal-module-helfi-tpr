@@ -58,4 +58,25 @@ final class ChannelType {
     };
   }
 
+  /**
+   * Gets the type label.
+   *
+   * @return \Drupal\Core\StringTranslation\TranslatableMarkup
+   *   The type label.
+   */
+  public function getTypeLabel() : TranslatableMarkup {
+    return match($this->id) {
+      self::MAIL => new TranslatableMarkup('Send us mail', [], ['context' => 'Service channel type verb']),
+      self::EMAIL => new TranslatableMarkup('Send us an email', [], ['context' => 'Service channel type verb']),
+      self::TELEFAX => new TranslatableMarkup('Send us a telefax', [], ['context' => 'Service channel type verb']),
+      self::TELEPHONE => new TranslatableMarkup('Call us', [], ['context' => 'Service channel type verb']),
+      self::SMS => new TranslatableMarkup('Send a text message', [], ['context' => 'Service channel type verb']),
+      self::LOCAL => new TranslatableMarkup('Visit us', [], ['context' => 'Service channel type verb']),
+      self::CHAT => new TranslatableMarkup('Ask in the chat', [], ['context' => 'Service channel type verb']),
+      self::ESERVICE => new TranslatableMarkup('Use the online service', [], ['context' => 'Service channel type verb']),
+      self::WEBPAGE => new TranslatableMarkup('Online information', [], ['context' => 'Service channel type verb']),
+      self::PRINTABLE_FORM => new TranslatableMarkup('Fill in a form', [], ['context' => 'Service channel type verb']),
+    };
+  }
+
 }

@@ -96,13 +96,26 @@ final class ServiceChannelFormatter extends EntityReferenceEntityFormatter {
     $elements = parent::viewElements($items, $langcode);
     $channelTypes = $this->getChannelTypes();
 
-    foreach ($elements as $delta => $element) {
+    $grouped = [];
+    foreach ($elements as $element) {
       /** @var \Drupal\helfi_tpr\Entity\Channel $entity */
       $entity = $element['#tpr_service_channel'];
-      $elements[$delta]['#weight'] = $channelTypes[$entity->getType()]->weight;
+      $type = $entity->getType();
+      $channelType = $channelTypes[$type];
+
+      if (!isset($grouped[$type])) {
+        $grouped[$type] = [
+          '#theme' => 'tpr_service_channel_group',
+          '#label' => $channelType->getTypeLabel(),
+          '#weight' => $channelType->weight,
+          '#type' => strtolower($type),
+        ];
+      }
+
+      $grouped[$type]['#content'][] = $element;
     }
-    uasort($elements, [SortArray::class, 'sortByWeightProperty']);
-    return $elements;
+    uasort($grouped, [SortArray::class, 'sortByWeightProperty']);
+    return array_values($grouped);
   }
 
 }

@@ -54,6 +54,13 @@ function helfi_tpr_theme() : array {
     'tpr_ontology_word_details_form' => [
       'render element' => 'form',
     ],
+    'tpr_service_channel_group' => [
+      'variables' => [
+        'label' => NULL,
+        'content' => NULL,
+        'type' => NULL,
+      ],
+    ],
   ];
 }
 

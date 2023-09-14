@@ -70,7 +70,7 @@ msgstr "Muut yhteystiedot"
 
 msgctxt "Service channel type verb"
 msgid "Use the online service"
-msgstr "Asio verkossa"
+msgstr "Asioi verkossa"
 
 msgctxt "Service channel type verb"
 msgid "Fill in a form"

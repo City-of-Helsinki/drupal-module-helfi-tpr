@@ -240,7 +240,7 @@ class Service extends TprEntityBase {
 
     $fields['hide_service_points'] = BaseFieldDefinition::create('boolean')
       ->setLabel(new TranslatableMarkup('Hide service points'))
-      ->setDescription(new TranslatableMarkup('Hide automatic service units listing '))
+      ->setDescription(new TranslatableMarkup('Hide automatic service units listing'))
       ->setTranslatable(TRUE)
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);

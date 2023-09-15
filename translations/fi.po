@@ -107,3 +107,9 @@ msgstr "Lähetä tekstiviesti"
 msgctxt "Service channel type verb"
 msgid "Send us a telefax"
 msgstr "Lähetä faksia"
+
+msgid "Hide service points"
+msgstr "Piilota palvelupaikkojen listaus"
+
+msgid "Hide automatic service units listing"
+msgstr "Piilota palvelupaikkojen automaattinen listaus"

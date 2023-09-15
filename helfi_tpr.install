@@ -288,7 +288,7 @@ function helfi_tpr_update_8044() : void {
 function helfi_tpr_update_8045() : void {
   $fields['hide_service_points'] = BaseFieldDefinition::create('boolean')
     ->setLabel(new TranslatableMarkup('Hide service points'))
-    ->setDescription(new TranslatableMarkup('Hide automatic service units listing '))
+    ->setDescription(new TranslatableMarkup('Hide automatic service units listing'))
     ->setTranslatable(TRUE)
     ->setDisplayConfigurable('form', TRUE)
     ->setDisplayConfigurable('view', TRUE);

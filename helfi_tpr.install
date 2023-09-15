@@ -281,3 +281,20 @@ function helfi_tpr_update_8044() : void {
       ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
   }
 }
+
+/**
+ * Add a field for hiding the service points.
+ */
+function helfi_tpr_update_8045() : void {
+  $fields['hide_service_points'] = BaseFieldDefinition::create('boolean')
+    ->setLabel(new TranslatableMarkup('Hide service points'))
+    ->setDescription(new TranslatableMarkup('Hide automatic service units listing '))
+    ->setTranslatable(TRUE)
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  foreach ($fields as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'tpr_service', 'helfi_tpr', $field);
+  }
+}

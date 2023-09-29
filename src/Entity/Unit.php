@@ -209,6 +209,16 @@ class Unit extends TprEntityBase {
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
+    $fields['picture_url_override_caption'] = BaseFieldDefinition::create('text_long')
+      ->setTranslatable(TRUE)
+      ->setRevisionable(FALSE)
+      ->setLabel(new TranslatableMarkup('Caption'))
+      ->setDisplayOptions('form', [
+        'type' => 'string_textarea',
+        'weight' => -19,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
     $fields['phone'] = static::createPhoneField('Phone', BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setTranslatable(FALSE);
     $fields['email'] = static::createStringField('Email')

@@ -281,3 +281,24 @@ function helfi_tpr_update_8044() : void {
       ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
   }
 }
+
+/**
+ * Add a caption field for the override picture.
+ */
+function helfi_tpr_update_8045() : void {
+  $fields['picture_url_override_caption'] = BaseFieldDefinition::create('text_long')
+    ->setTranslatable(TRUE)
+    ->setRevisionable(FALSE)
+    ->setLabel(new TranslatableMarkup('Caption'))
+    ->setDisplayOptions('form', [
+      'type' => 'string_textarea',
+      'weight' => -19,
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  foreach ($fields as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
+  }
+}

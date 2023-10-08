@@ -15,8 +15,8 @@ source:
   translatable_details_fields:
     - clarification
   track_changes: true
-  url: 'https://www.hel.fi/palvelukarttaws/rest/v4/ontologyword/'
-  details_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/ontologyword_details/'
+  url: 'https://tpr.hel.fi/palvelukarttaws/rest/v4/ontologyword/'
+  details_url: 'https://tpr.hel.fi/palvelukarttaws/rest/v4/ontologyword_details/'
 process:
   id: id
   name: name

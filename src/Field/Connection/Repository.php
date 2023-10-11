@@ -22,6 +22,7 @@ final class Repository {
     Price::TYPE_NAME => Price::class,
     Link::TYPE_NAME => Link::class,
     PhoneOrEmail::TYPE_NAME => PhoneOrEmail::class,
+    Topical::TYPE_NAME => Topical::class,
   ];
 
   /**

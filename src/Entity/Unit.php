@@ -352,6 +352,10 @@ class Unit extends TprEntityBase {
         'description' => 'PHONE_OR_EMAIL',
         'label' => new TranslatableMarkup('Other contact information'),
       ],
+      'topical' => [
+        'description' => 'TOPICAL',
+        'label' => new TranslatableMarkup('Topical'),
+      ],
     ];
 
     foreach ($connectionFields as $name => $data) {

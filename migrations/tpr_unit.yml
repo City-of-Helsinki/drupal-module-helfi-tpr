@@ -20,10 +20,10 @@ source:
     - desc
     - short_desc
   track_changes: true
-  url: 'https://tpr.hel.fi/palvelukarttaws/rest/v4/unit/?newfeatures=yes'
-  canonical_url: 'https://tpr.hel.fi/palvelukarttaws/rest/v4/unit/?newfeatures=yes'
-  accessibility_sentences_url: 'https://tpr.hel.fi/palvelukarttaws/rest/v4/accessibility_sentence/'
-  connections_url: 'https://tpr.hel.fi/palvelukarttaws/rest/v4/connection/'
+  url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/?newfeatures=yes'
+  canonical_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/unit/?newfeatures=yes'
+  accessibility_sentences_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/accessibility_sentence/'
+  connections_url: 'https://www.hel.fi/palvelukarttaws/rest/v4/connection/'
   services_url: 'https://city-of-helsinki.github.io/drupal-tpr-aggregator/unitservices.json'
 process:
   id: id
@@ -88,6 +88,18 @@ process:
   links:
     plugin: sub_process
     source: '@_links_connections'
+    process:
+      value: value
+      data: data
+      type: type
+  _topical_connections:
+      plugin: array_element_equals
+      source: connections
+      value: TOPICAL
+      key: type
+  topical:
+    plugin: sub_process
+    source: '@_topical_connections'
     process:
       value: value
       data: data

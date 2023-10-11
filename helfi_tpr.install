@@ -281,3 +281,22 @@ function helfi_tpr_update_8044() : void {
       ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
   }
 }
+
+/**
+ * UHF-8939 Add TOPICAL field to Unit entity.
+ */
+function helfi_tpr_update_8045() : void {
+  $topical_field = BaseFieldDefinition::create('tpr_connection')
+    ->setLabel(new TranslatableMarkup('Topical'))
+    ->setDescription(new TranslatableMarkup('The "TOPICAL" connection type'))
+    ->setTranslatable(TRUE)
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setDisplayOptions('form', [
+      'type' => 'readonly_field_widget',
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('topical', 'tpr_unit', 'helfi_tpr', $topical_field);
+}

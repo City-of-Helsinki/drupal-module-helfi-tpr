@@ -12,6 +12,7 @@ use Drupal\helfi_tpr\Field\Connection\OpeningHourObject;
 use Drupal\helfi_tpr\Field\Connection\OtherInfo;
 use Drupal\helfi_tpr\Field\Connection\PhoneOrEmail;
 use Drupal\helfi_tpr\Field\Connection\Price;
+use Drupal\helfi_tpr\Field\Connection\Topical;
 
 /**
  * Tests TPR Unit migration.
@@ -70,6 +71,7 @@ class UnitMigrationTest extends MigrationTestBase {
         $this->assertEquals("link $langcode $delta", $translation->get('links')->get($i)->value);
         $this->assertEquals("price $langcode $delta", $translation->get('price_info')->get($i)->value);
         $this->assertEquals("other info $langcode $delta", $translation->get('other_info')->get($i)->value);
+        $this->assertEquals("topical $langcode $delta", $translation->get('topical')->get($i)->value);
       }
 
       $opening_hour = $translation->get('opening_hours')->get(1)->data;
@@ -96,6 +98,10 @@ class UnitMigrationTest extends MigrationTestBase {
 
       $other_info = $translation->get('other_info')->get(0)->data;
       $this->assertInstanceOf(OtherInfo::class, $other_info);
+
+      $topical = $translation->get('topical')->get(0)->data;
+      $this->assertInstanceOf(Topical::class, $topical);
+      $this->assertEquals("https://localhost/$langcode", $links->get('www'));
     }
 
     // Re-run migrate and make sure migrate map hash doesn't change.

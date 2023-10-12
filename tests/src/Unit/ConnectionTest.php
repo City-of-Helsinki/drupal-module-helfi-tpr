@@ -12,6 +12,7 @@ use Drupal\helfi_tpr\Field\Connection\OtherInfo;
 use Drupal\helfi_tpr\Field\Connection\PhoneOrEmail;
 use Drupal\helfi_tpr\Field\Connection\Price;
 use Drupal\helfi_tpr\Field\Connection\TextWithLink;
+use Drupal\helfi_tpr\Field\Connection\Topical;
 
 use Drupal\Tests\UnitTestCase;
 
@@ -157,6 +158,32 @@ class ConnectionTest extends UnitTestCase {
   public function testLink() : void {
     $object = new Link();
     $object->set('name', 'mon-wed 10-19');
+    $this->assertNotEmpty($object->build());
+
+    // Make sure we can override data.
+    $object->set('name', 'override');
+    $this->assertNotEmpty($object->build());
+
+    $this->assertEquals(['name', 'www'], $object->getFields());
+
+    $this->assertNull($object->get('www'));
+
+    $object->set('www', 'https://localhost');
+    $this->assertNotEmpty($object->build());
+  }
+
+   /**
+   * Tests topical.
+   *
+   * @covers \Drupal\helfi_tpr\Field\Connection\Topical::build
+   * @covers \Drupal\helfi_tpr\Field\Connection\Topical::getFields
+   * @covers ::set
+   * @covers ::get
+   * @covers ::isValidField
+   */
+  public function testTopical() : void {
+    $object = new Topical();
+    $object->set('name', 'Some information');
     $this->assertNotEmpty($object->build());
 
     // Make sure we can override data.

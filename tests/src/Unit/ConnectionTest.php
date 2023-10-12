@@ -172,7 +172,7 @@ class ConnectionTest extends UnitTestCase {
     $this->assertNotEmpty($object->build());
   }
 
-   /**
+  /**
    * Tests topical.
    *
    * @covers \Drupal\helfi_tpr\Field\Connection\Topical::build

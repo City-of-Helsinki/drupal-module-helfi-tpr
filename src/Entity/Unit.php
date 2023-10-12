@@ -330,31 +330,31 @@ class Unit extends TprEntityBase {
     $connectionFields = [
       'links' => [
         'description' => 'LINK',
-        'label' => new TranslatableMarkup('Web sites'),
+        'label' => new TranslatableMarkup('Web sites', [], ['context' => 'TPR Unit field label']),
       ],
       'opening_hours' => [
         'description' => 'OPENING_HOURS',
-        'label' => new TranslatableMarkup('Opening hours'),
+        'label' => new TranslatableMarkup('Opening hours', [], ['context' => 'TPR Unit field label']),
       ],
       'highlights' => [
         'description' => 'HIGHLIGHTS',
-        'label' => new TranslatableMarkup('Highlights'),
+        'label' => new TranslatableMarkup('Highlights', [], ['context' => 'TPR Unit field label']),
       ],
       'other_info' => [
         'description' => 'OTHER_INFO',
-        'label' => new TranslatableMarkup('Further information'),
+        'label' => new TranslatableMarkup('Further information', [], ['context' => 'TPR Unit field label']),
       ],
       'price_info' => [
         'description' => 'PRICE',
-        'label' => new TranslatableMarkup('Charges'),
+        'label' => new TranslatableMarkup('Charges', [], ['context' => 'TPR Unit field label']),
       ],
       'contacts' => [
         'description' => 'PHONE_OR_EMAIL',
-        'label' => new TranslatableMarkup('Other contact information'),
+        'label' => new TranslatableMarkup('Other contact information', [], ['context' => 'TPR Unit field label']),
       ],
       'topical' => [
         'description' => 'TOPICAL',
-        'label' => new TranslatableMarkup('Topical'),
+        'label' => new TranslatableMarkup('Topical', [], ['context' => 'TPR Unit field label']),
       ],
     ];
 

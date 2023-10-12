@@ -41,15 +41,19 @@ msgstr "Överskrida: @field_name"
 msgid "Override: Picture"
 msgstr "Bild som ersätter standardbilden"
 
+msgctxt "TPR Unit field label"
 msgid "Further information"
 msgstr "Ytterligare uppgifter"
 
+msgctxt "TPR Unit field label"
 msgid "Charges"
 msgstr "Priser"
 
+msgctxt "TPR Unit field label"
 msgid "Web sites"
 msgstr "På webben"
 
+msgctxt "TPR Unit field label"
 msgid "Other contact information"
 msgstr "Andra kontaktuppgifter"
 
@@ -92,3 +96,7 @@ msgstr "Skicka textmeddelande"
 msgctxt "Service channel type verb"
 msgid "Send us a telefax"
 msgstr "Skicka fax"
+
+msgctxt "TPR Unit field label"
+msgid "Topical"
+msgstr "Aktuell"

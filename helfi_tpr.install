@@ -287,7 +287,7 @@ function helfi_tpr_update_8044() : void {
  */
 function helfi_tpr_update_8045() : void {
   $topical_field = BaseFieldDefinition::create('tpr_connection')
-    ->setLabel(new TranslatableMarkup('Topical'))
+    ->setLabel(new TranslatableMarkup('Topical', [], ['context' => 'TPR Unit field label']))
     ->setDescription(new TranslatableMarkup('The "TOPICAL" connection type'))
     ->setTranslatable(TRUE)
     ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)

@@ -100,3 +100,7 @@ msgstr "Skicka fax"
 msgctxt "TPR Unit field label"
 msgid "Topical"
 msgstr "Aktuell"
+
+msgctxt "TPR Unit field label"
+msgid "Highlights"
+msgstr "Höjdpunkt"

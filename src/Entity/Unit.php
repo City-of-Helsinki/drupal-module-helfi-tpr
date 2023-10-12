@@ -330,11 +330,11 @@ class Unit extends TprEntityBase {
     $connectionFields = [
       'links' => [
         'description' => 'LINK',
-        'label' => new TranslatableMarkup('Web sites', [], ['context' => 'TPR Unit field label']),
+        'label' => new TranslatableMarkup('Web sites'),
       ],
       'opening_hours' => [
         'description' => 'OPENING_HOURS',
-        'label' => new TranslatableMarkup('Opening hours', [], ['context' => 'TPR Unit field label']),
+        'label' => new TranslatableMarkup('Opening hours'),
       ],
       'highlights' => [
         'description' => 'HIGHLIGHTS',
@@ -342,15 +342,15 @@ class Unit extends TprEntityBase {
       ],
       'other_info' => [
         'description' => 'OTHER_INFO',
-        'label' => new TranslatableMarkup('Further information', [], ['context' => 'TPR Unit field label']),
+        'label' => new TranslatableMarkup('Further information'),
       ],
       'price_info' => [
         'description' => 'PRICE',
-        'label' => new TranslatableMarkup('Charges', [], ['context' => 'TPR Unit field label']),
+        'label' => new TranslatableMarkup('Charges'),
       ],
       'contacts' => [
         'description' => 'PHONE_OR_EMAIL',
-        'label' => new TranslatableMarkup('Other contact information', [], ['context' => 'TPR Unit field label']),
+        'label' => new TranslatableMarkup('Other contact information'),
       ],
       'topical' => [
         'description' => 'TOPICAL',

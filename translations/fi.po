@@ -56,19 +56,15 @@ msgstr "Ylikirjoita arvo kentälle: @field_name"
 msgid "Override: Picture"
 msgstr "Oletuskuvan korvaava kuva"
 
-msgctxt "TPR Unit field label"
 msgid "Further information"
 msgstr "Lisätietoja"
 
-msgctxt "TPR Unit field label"
 msgid "Charges"
 msgstr "Hinnat"
 
-msgctxt "TPR Unit field label"
 msgid "Web sites"
 msgstr "Muualla verkossa"
 
-msgctxt "TPR Unit field label"
 msgid "Other contact information"
 msgstr "Muut yhteystiedot"
 

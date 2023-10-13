@@ -92,6 +92,18 @@ process:
       value: value
       data: data
       type: type
+  _topical_connections:
+      plugin: array_element_equals
+      source: connections
+      value: TOPICAL
+      key: type
+  topical:
+    plugin: sub_process
+    source: '@_topical_connections'
+    process:
+      value: value
+      data: data
+      type: type
   _contacts_connections:
       plugin: array_element_equals
       source: connections

@@ -107,3 +107,11 @@ msgstr "Lähetä tekstiviesti"
 msgctxt "Service channel type verb"
 msgid "Send us a telefax"
 msgstr "Lähetä faksia"
+
+msgctxt "TPR Unit field label"
+msgid "Topical"
+msgstr "Ajankohtaista"
+
+msgctxt "TPR Unit field label"
+msgid "Highlights"
+msgstr "Nostot"

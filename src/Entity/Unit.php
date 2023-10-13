@@ -338,7 +338,7 @@ class Unit extends TprEntityBase {
       ],
       'highlights' => [
         'description' => 'HIGHLIGHTS',
-        'label' => new TranslatableMarkup('Highlights'),
+        'label' => new TranslatableMarkup('Highlights', [], ['context' => 'TPR Unit field label']),
       ],
       'other_info' => [
         'description' => 'OTHER_INFO',
@@ -351,6 +351,10 @@ class Unit extends TprEntityBase {
       'contacts' => [
         'description' => 'PHONE_OR_EMAIL',
         'label' => new TranslatableMarkup('Other contact information'),
+      ],
+      'topical' => [
+        'description' => 'TOPICAL',
+        'label' => new TranslatableMarkup('Topical', [], ['context' => 'TPR Unit field label']),
       ],
     ];
 

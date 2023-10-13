@@ -92,3 +92,11 @@ msgstr "Skicka textmeddelande"
 msgctxt "Service channel type verb"
 msgid "Send us a telefax"
 msgstr "Skicka fax"
+
+msgctxt "TPR Unit field label"
+msgid "Topical"
+msgstr "Aktuell"
+
+msgctxt "TPR Unit field label"
+msgid "Highlights"
+msgstr "Höjdpunkt"

@@ -48,21 +48,21 @@ function helfi_address_search_views_data_alter(array &$data): void {
  * Implements hook_views_pre_execute().
  */
 function helfi_address_search_views_pre_execute(ViewExecutable $view): void {
-  if (!isset($view->filter["address_search"])) {
+  if (!isset($view->filter['address_search'])) {
     return;
   }
 
   // Query all results as the sorting and paging is done with
   // AddressSearch::getSortedResultsByAddress().
-  $view->query->setLimit(NULL);
-  $view->query->setOffset(NULL);
+  $view->query->setLimit(0);
+  $view->query->setOffset(0);
 }
 
 /**
  * Implements hook_views_pre_render().
  */
 function helfi_address_search_views_pre_render(ViewExecutable $view): void {
-  if (isset($view->filter["address_search"])) {
+  if (isset($view->filter['address_search'])) {
     $view = AddressSearch::sortByAddress($view);
   }
 }

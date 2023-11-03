@@ -196,9 +196,9 @@ class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFacto
               'id' => $id,
               'ontologyword_id' => $detailedItem['ontologyword_id'],
               'unit_id' => $detailedItem['unit_id'],
-              'name_fi' => $detailedItem['unit_id'] . ': ' . $contentItem['ontologyword_fi'],
-              'name_sv' => $detailedItem['unit_id'] . ': ' . $contentItem['ontologyword_sv'],
-              'name_en' => $detailedItem['unit_id'] . ': ' . $contentItem['ontologyword_en'],
+              'name_fi' => $contentItem['ontologyword_fi'],
+              'name_sv' => $contentItem['ontologyword_sv'],
+              'name_en' => $contentItem['ontologyword_en'],
               'details' => [],
             ];
           }

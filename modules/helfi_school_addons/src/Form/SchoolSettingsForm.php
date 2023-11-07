@@ -24,19 +24,33 @@ class SchoolSettingsForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $currentSchoolYear = SchoolUtility::getCurrentSchoolYear();
+    $currentHighSchoolYear = SchoolUtility::getCurrentHighSchoolYear();
+    $currentComprehensiveSchoolYear = SchoolUtility::getCurrentComprehensiveSchoolYear();
 
     $form['current_school_year_info'] = [
-      '#markup' => '<p>' . t('Current school year:') . ' ' . ($currentSchoolYear ? $currentSchoolYear : '-') . '</p>',
+      '#markup' => '<p>' . t('Current high school year:') . ' ' . ($currentHighSchoolYear ? $currentHighSchoolYear : '-') . '</p>',
     ];
 
-    $form['school_year_first'] = [
+    $form['high_school_year_first'] = [
       '#type' => 'number',
-      '#title' => $this->t('Starting year for school year'),
+      '#title' => $this->t('Starting year for high school year'),
       '#min' => 2020,
       '#max' => 9999,
-      '#default_value' => ($currentSchoolYear ? $this->splitStartYear($currentSchoolYear) : ''),
-      '#description' => t('Select the starting year for a school year period. For example, selecting "2022" would set the school year to "2022-2023".'),
+      '#default_value' => ($currentHighSchoolYear ? SchoolUtility::splitStartYear($currentHighSchoolYear) : ''),
+      '#description' => t('Select the starting year for a high school year period. For example, selecting "2022" would set the school year to "2022-2023".'),
+    ];
+
+    $form['current_comprehensive_school_year_info'] = [
+      '#markup' => '<p>' . t('Current comprehensive school year:') . ' ' . ($currentComprehensiveSchoolYear ? $currentComprehensiveSchoolYear : '-') . '</p>',
+    ];
+
+    $form['comprehensive_school_year_first'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Starting year for comprehensive school year'),
+      '#min' => 2020,
+      '#max' => 9999,
+      '#default_value' => ($currentComprehensiveSchoolYear ? SchoolUtility::splitStartYear($currentComprehensiveSchoolYear) : ''),
+      '#description' => t('Select the starting year for a comprehensive school year period. For example, selecting "2022" would set the school year to "2022-2023".'),
     ];
 
     $form['submit'] = [
@@ -52,33 +66,7 @@ class SchoolSettingsForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    SchoolUtility::setCurrentSchoolYear($this->composeSchoolYear((int) $form_state->getValue('school_year_first')));
+    SchoolUtility::setCurrentHighSchoolYear(SchoolUtility::composeSchoolYear((int) $form_state->getValue('high_school_year_first')));
+    SchoolUtility::setCurrentComprehensiveSchoolYear(SchoolUtility::composeSchoolYear((int) $form_state->getValue('comprehensive_school_year_first')));
   }
-
-  /**
-   * Gets the start year from a school year period.
-   *
-   * @param string $schoolYear
-   *   The school year, e.g. '2022-2023'.
-   *
-   * @return string
-   *   The year.
-   */
-  private function splitStartYear(string $schoolYear): string {
-    return strtok($schoolYear, '-');
-  }
-
-  /**
-   * Gets the school year from a starting year.
-   *
-   * @param int $firstYear
-   *   The year.
-   *
-   * @return string
-   *   The school year, e.g. '2022-2023'.
-   */
-  private function composeSchoolYear(int $firstYear): string {
-    return $firstYear . '-' . strval($firstYear + 1);
-  }
-
 }

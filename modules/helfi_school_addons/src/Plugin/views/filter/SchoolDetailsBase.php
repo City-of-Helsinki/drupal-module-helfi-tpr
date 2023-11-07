@@ -86,7 +86,7 @@ abstract class SchoolDetailsBase extends InOperator {
     $diJoin = Views::pluginManager('join')->createInstance('standard', $diConfiguration);
     $this->query->addRelationship('di', $diJoin, 'owd_fd');
 
-    $schoolYear = SchoolUtility::getCurrentSchoolYear();
+    $schoolYear = SchoolUtility::getCurrentHighSchoolYear();
     if ($schoolYear) {
       $this->query->addWhere('AND', 'di.detail_items_schoolyear', $schoolYear);
     }
@@ -106,7 +106,7 @@ abstract class SchoolDetailsBase extends InOperator {
     }
 
     $langcode = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
-    $schoolYear = SchoolUtility::getCurrentSchoolYear();
+    $schoolYear = SchoolUtility::getCurrentHighSchoolYear();
     if ($schoolYear === NULL) {
       return [];
     }

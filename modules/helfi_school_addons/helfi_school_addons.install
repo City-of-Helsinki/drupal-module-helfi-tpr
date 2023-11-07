@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Contains installation functions for Helfi school addons.
+ */
+
+declare(strict_types = 1);
+
+use Drupal\helfi_school_addons\SchoolUtility;
+
+/**
+ *
+ */
+function helfi_school_addons_update_9001() {
+  $highSchoolYear = \Drupal::state()->get('helfi_school_addons.school_year') ? (int) \Drupal::state()->get('helfi_school_addons.school_year') : '2023-2024';
+  SchoolUtility::setCurrentHighSchoolYear(SchoolUtility::composeSchoolYear($highSchoolYear));
+  SchoolUtility::setCurrentComprehensiveSchoolYear('2023-2024');
+}

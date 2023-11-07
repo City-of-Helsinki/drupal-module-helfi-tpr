@@ -80,7 +80,7 @@ class StudyProgrammeType extends InOperator {
     $diJoin = Views::pluginManager('join')->createInstance('standard', $diConfiguration);
     $this->query->addRelationship('di_spt', $diJoin, 'owd_fd_spt');
 
-    $schoolYear = SchoolUtility::getCurrentSchoolYear();
+    $schoolYear = SchoolUtility::getCurrentHighSchoolYear();
     if ($schoolYear) {
       $this->query->addWhere('AND', 'di_spt.detail_items_schoolyear', $schoolYear);
     }

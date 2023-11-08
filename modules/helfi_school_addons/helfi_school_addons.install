@@ -10,7 +10,7 @@ declare(strict_types = 1);
 use Drupal\helfi_school_addons\SchoolUtility;
 
 /**
- *
+ * Update schoolyear Drupal state.
  */
 function helfi_school_addons_update_9001() {
   $highSchoolYear = \Drupal::state()->get('helfi_school_addons.school_year') ? (int) \Drupal::state()->get('helfi_school_addons.school_year') : '2023-2024';

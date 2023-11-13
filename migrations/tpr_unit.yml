@@ -104,18 +104,6 @@ process:
       value: value
       data: data
       type: type
-  _subgroup_connections:
-      plugin: array_element_equals
-      source: connections
-      value: SUBGROUP
-      key: type
-  subgroup:
-    plugin: sub_process
-    source: '@_subgroup_connections'
-    process:
-      value: value
-      data: data
-      type: type
   _contacts_connections:
       plugin: array_element_equals
       source: connections

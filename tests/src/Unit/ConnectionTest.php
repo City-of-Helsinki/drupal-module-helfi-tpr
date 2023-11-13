@@ -11,6 +11,7 @@ use Drupal\helfi_tpr\Field\Connection\OpeningHourObject;
 use Drupal\helfi_tpr\Field\Connection\OtherInfo;
 use Drupal\helfi_tpr\Field\Connection\PhoneOrEmail;
 use Drupal\helfi_tpr\Field\Connection\Price;
+use Drupal\helfi_tpr\Field\Connection\Subgroup;
 use Drupal\helfi_tpr\Field\Connection\TextWithLink;
 use Drupal\helfi_tpr\Field\Connection\Topical;
 
@@ -195,6 +196,36 @@ class ConnectionTest extends UnitTestCase {
     $this->assertNull($object->get('www'));
 
     $object->set('www', 'https://localhost');
+    $this->assertNotEmpty($object->build());
+  }
+
+  /**
+   * Tests subgroups.
+   *
+   * @covers \Drupal\helfi_tpr\Field\Connection\Subgroup::build
+   * @covers \Drupal\helfi_tpr\Field\Connection\Subgroup::getFields
+   * @covers ::set
+   * @covers ::get
+   * @covers ::isValidField
+   */
+  public function testSubgroup() : void {
+    $object = new Subgroup();
+    $object->set('name', 'Some information.');
+    $this->assertNotEmpty($object->build());
+
+    // Make sure we can override data.
+    $object->set('name', 'override');
+    $this->assertNotEmpty($object->build());
+
+    $this->assertEquals(['name', 'contact_person', 'phone', 'email'], $object->getFields());
+
+    $this->assertNull($object->get('www'));
+
+    $object->set('contact_person', 'John Doe');
+    $this->assertNotEmpty($object->build());
+    $object->set('phone', '040123456');
+    $this->assertNotEmpty($object->build());
+    $object->set('email', 'john.doe@example.com');
     $this->assertNotEmpty($object->build());
   }
 

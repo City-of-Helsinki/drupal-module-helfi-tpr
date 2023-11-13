@@ -12,7 +12,6 @@ use Drupal\helfi_tpr\Field\Connection\OtherInfo;
 use Drupal\helfi_tpr\Field\Connection\PhoneOrEmail;
 use Drupal\helfi_tpr\Field\Connection\Price;
 use Drupal\helfi_tpr\Field\Connection\Repository;
-use Drupal\helfi_tpr\Field\Connection\Subgroup;
 use Drupal\helfi_tpr\Field\Connection\Topical;
 use Drupal\Tests\UnitTestCase;
 
@@ -75,7 +74,6 @@ class ConnectionRepositoryTest extends UnitTestCase {
       [Price::TYPE_NAME],
       [PhoneOrEmail::TYPE_NAME],
       [Topical::TYPE_NAME],
-      [Subgroup::TYPE_NAME],
     ];
   }
 

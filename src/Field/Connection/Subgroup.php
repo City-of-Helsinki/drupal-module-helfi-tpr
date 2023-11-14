@@ -48,6 +48,12 @@ final class Subgroup extends Connection {
       if ($field === 'name') {
         $fields_data[] = '<strong>' . $data . '</strong>';
       }
+      elseif ($field === 'email') {
+        $fields_data[] = '<a href="mailto:' . $data . '" data-is-external="true" data-protocol="mailto">' . $data . '</a>';
+      }
+      elseif ($field === 'phone') {
+        $fields_data[] = '<a href="tel:' . $data . '" data-is-external="true" data-protocol="tel">' . $data . '</a>';
+      }
       else {
         $fields_data[] = $data;
       }

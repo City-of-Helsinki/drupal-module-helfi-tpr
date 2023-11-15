@@ -698,6 +698,7 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
             'name_sv' => 'subgroup sv 1',
             'contact_person' => 'subgroup contact person name',
             'phone' => '0406543210',
+            'email' => 'subgroup@example.com',
           ],
           [
             'unit_id' => 1,
@@ -707,6 +708,7 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
             'name_sv' => 'subgroup sv 2',
             'contact_person' => 'contact person name 2',
             'phone' => '0506543210',
+            'email' => 'subgroup2@example.com',
           ],
         ],
         'provided_languages' => [

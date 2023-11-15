@@ -706,7 +706,7 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
             'name_fi' => 'subgroup fi 2',
             'name_en' => 'subgroup en 2',
             'name_sv' => 'subgroup sv 2',
-            'contact_person' => 'contact person name 2',
+            'contact_person' => 'subgroup contact person name 2',
             'phone' => '0506543210',
             'email' => 'subgroup2@example.com',
           ],

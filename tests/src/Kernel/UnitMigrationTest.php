@@ -105,7 +105,7 @@ class UnitMigrationTest extends MigrationTestBase {
       $this->assertInstanceOf(Topical::class, $topical);
       $this->assertEquals("https://localhost/$langcode", $links->get('www'));
 
-      $subgroup = $translation->get('subgroup')->get(1)->data;
+      $subgroup = $translation->get('subgroup')->get(0)->data;
       $this->assertInstanceOf(Subgroup::class, $subgroup);
       $this->assertEquals("subgroup contact person name", $subgroup->get('contact_person'));
       $this->assertEquals("0406543210", $subgroup->get('phone'));

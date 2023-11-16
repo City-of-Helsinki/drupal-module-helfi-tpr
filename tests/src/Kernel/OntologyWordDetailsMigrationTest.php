@@ -43,19 +43,19 @@ class OntologyWordDetailsMigrationTest extends MigrationTestBase {
     return [
       'en' => [
         'id' => '157_30855',
-        'name' => '30855: special educational mission upper secondary schools',
+        'name' => 'special educational mission upper secondary schools',
         'ontologyword_id' => '157',
         'unit_id' => '30855',
       ],
       'fi' => [
         'id' => '157_30855',
-        'name' => '30855: erityistehtävän mukaiset lukiot',
+        'name' => 'erityistehtävän mukaiset lukiot',
         'ontologyword_id' => '157',
         'unit_id' => '30855',
       ],
       'sv' => [
         'id' => '157_30855',
-        'name' => '30855: gymnasier enligt specialuppgift',
+        'name' => 'gymnasier enligt specialuppgift',
         'ontologyword_id' => '157',
         'unit_id' => '30855',
       ],

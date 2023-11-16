@@ -1,8 +1,5 @@
 name: HELfi School addons
 type: module
-description: Adds school specific features. Currently used with the high school search.
+description: This module should be removed after it's disabled. Adds school specific features.
 package: HELfi
 core_version_requirement: ^9 || ^10
-configure: helfi_school_addons.admin_form
-dependencies:
-  - helfi_tpr:helfi_tpr

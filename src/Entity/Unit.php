@@ -358,7 +358,7 @@ class Unit extends TprEntityBase {
       ],
       'subgroup' => [
         'description' => 'SUBGROUP',
-        'label' => new TranslatableMarkup('Subgroup', [], ['context' => 'TPR Unit field label']),
+        'label' => new TranslatableMarkup('Contact details of daycare centre groups', [], ['context' => 'TPR Unit field label']),
       ],
     ];
 

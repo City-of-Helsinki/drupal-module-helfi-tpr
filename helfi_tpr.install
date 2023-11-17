@@ -306,7 +306,7 @@ function helfi_tpr_update_8045() : void {
  */
 function helfi_tpr_update_8046() : void {
   $subgroup_field = BaseFieldDefinition::create('tpr_connection')
-    ->setLabel(new TranslatableMarkup('Subgroup', [], ['context' => 'TPR Unit field label']))
+    ->setLabel(new TranslatableMarkup('Contact details of daycare centre groups', [], ['context' => 'TPR Unit field label']))
     ->setDescription(new TranslatableMarkup('The "SUBGROUP" connection type'))
     ->setTranslatable(TRUE)
     ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)

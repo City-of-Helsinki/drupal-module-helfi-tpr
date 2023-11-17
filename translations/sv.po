@@ -100,3 +100,7 @@ msgstr "Aktuell"
 msgctxt "TPR Unit field label"
 msgid "Highlights"
 msgstr "Höjdpunkt"
+
+msgctxt "TPR Unit field label"
+msgid "Contact details of daycare centre groups"
+msgstr "Barngruppernas kontaktuppgifter"

@@ -115,3 +115,7 @@ msgstr "Ajankohtaista"
 msgctxt "TPR Unit field label"
 msgid "Highlights"
 msgstr "Nostot"
+
+msgctxt "TPR Unit field label"
+msgid "Contact details of daycare centre groups"
+msgstr "Päiväkotiryhmien yhteystiedot"

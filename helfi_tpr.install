@@ -300,3 +300,22 @@ function helfi_tpr_update_8045() : void {
   \Drupal::entityDefinitionUpdateManager()
     ->installFieldStorageDefinition('topical', 'tpr_unit', 'helfi_tpr', $topical_field);
 }
+
+/**
+ * UHF-9159 Add SUBGROUP field to Unit entity.
+ */
+function helfi_tpr_update_8046() : void {
+  $subgroup_field = BaseFieldDefinition::create('tpr_connection')
+    ->setLabel(new TranslatableMarkup('Contact details of daycare centre groups', [], ['context' => 'TPR Unit field label']))
+    ->setDescription(new TranslatableMarkup('The "SUBGROUP" connection type'))
+    ->setTranslatable(TRUE)
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setDisplayOptions('form', [
+      'type' => 'readonly_field_widget',
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('subgroup', 'tpr_unit', 'helfi_tpr', $subgroup_field);
+}

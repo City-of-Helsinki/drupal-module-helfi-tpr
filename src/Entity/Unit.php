@@ -356,6 +356,10 @@ class Unit extends TprEntityBase {
         'description' => 'TOPICAL',
         'label' => new TranslatableMarkup('Topical', [], ['context' => 'TPR Unit field label']),
       ],
+      'subgroup' => [
+        'description' => 'SUBGROUP',
+        'label' => new TranslatableMarkup('Contact details of daycare centre groups', [], ['context' => 'TPR Unit field label']),
+      ],
     ];
 
     foreach ($connectionFields as $name => $data) {

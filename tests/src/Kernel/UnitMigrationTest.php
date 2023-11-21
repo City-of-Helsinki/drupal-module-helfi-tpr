@@ -12,6 +12,7 @@ use Drupal\helfi_tpr\Field\Connection\OpeningHourObject;
 use Drupal\helfi_tpr\Field\Connection\OtherInfo;
 use Drupal\helfi_tpr\Field\Connection\PhoneOrEmail;
 use Drupal\helfi_tpr\Field\Connection\Price;
+use Drupal\helfi_tpr\Field\Connection\Subgroup;
 use Drupal\helfi_tpr\Field\Connection\Topical;
 
 /**
@@ -72,6 +73,7 @@ class UnitMigrationTest extends MigrationTestBase {
         $this->assertEquals("price $langcode $delta", $translation->get('price_info')->get($i)->value);
         $this->assertEquals("other info $langcode $delta", $translation->get('other_info')->get($i)->value);
         $this->assertEquals("topical $langcode $delta", $translation->get('topical')->get($i)->value);
+        $this->assertEquals("subgroup $langcode $delta", $translation->get('subgroup')->get($i)->value);
       }
 
       $opening_hour = $translation->get('opening_hours')->get(1)->data;
@@ -102,6 +104,12 @@ class UnitMigrationTest extends MigrationTestBase {
       $topical = $translation->get('topical')->get(0)->data;
       $this->assertInstanceOf(Topical::class, $topical);
       $this->assertEquals("https://localhost/$langcode", $links->get('www'));
+
+      $subgroup = $translation->get('subgroup')->get(0)->data;
+      $this->assertInstanceOf(Subgroup::class, $subgroup);
+      $this->assertEquals("subgroup contact person name", $subgroup->get('contact_person'));
+      $this->assertEquals("0406543210", $subgroup->get('phone'));
+      $this->assertEquals("subgroup@example.com", $subgroup->get('email'));
     }
 
     // Re-run migrate and make sure migrate map hash doesn't change.

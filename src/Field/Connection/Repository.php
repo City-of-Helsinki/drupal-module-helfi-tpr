@@ -23,6 +23,7 @@ final class Repository {
     Link::TYPE_NAME => Link::class,
     PhoneOrEmail::TYPE_NAME => PhoneOrEmail::class,
     Topical::TYPE_NAME => Topical::class,
+    Subgroup::TYPE_NAME => Subgroup::class,
   ];
 
   /**

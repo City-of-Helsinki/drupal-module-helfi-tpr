@@ -38,7 +38,6 @@ final class Subgroup extends Connection {
   public function build(): array {
     $fields = $this->getFields();
     $fields_data = [];
-    $name = '';
 
     foreach ($fields as $field) {
       if (!$this->get($field)) {

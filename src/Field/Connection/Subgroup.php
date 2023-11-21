@@ -4,7 +4,9 @@ declare(strict_types = 1);
 
 namespace Drupal\helfi_tpr\Field\Connection;
 
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Url;
 
 /**
  * Provides a domain object for TPR connection type of Subgroup.
@@ -45,26 +47,31 @@ final class Subgroup extends Connection {
 
       $data = Html::escape($this->get($field));
 
-      if ($field === 'name') {
-        $fields_data[] = '<strong>' . $data . '</strong>';
-      }
-      elseif ($field === 'email') {
-        $fields_data[] = '<a href="mailto:' . $data . '" data-is-external="true" data-protocol="mailto">' . $data . '</a>';
-      }
-      elseif ($field === 'phone') {
-        $fields_data[] = '<a href="tel:' . $data . '" data-is-external="true" data-protocol="tel">' . $data . '</a>';
-      }
-      else {
-        $fields_data[] = $data;
-      }
+      $fields_data[] = match ($field) {
+        'name' => [
+          '#markup' => '<strong>' . $data . '</strong>',
+        ],
+        'contact_person' => [
+          '#markup' => '<span>' . $data . '</span>',
+          '#prefix' => '<br />',
+        ],
+        'email' => [
+          '#url' => Url::fromUri('mailto:' . $data),
+          '#title' => new FormattableMarkup($data, []),
+          '#type' => 'link',
+          '#prefix' => '<br />',
+        ],
+        'phone' => [
+          '#url' => Url::fromUri('tel:' . $data),
+          '#title' => new FormattableMarkup($data, []),
+          '#type' => 'link',
+          '#prefix' => '<br />',
+        ],
+      };
     }
 
-    $markup = '<p>' . implode('<br>', $fields_data) . '</p>';
-
     $build = [
-      'contact' => [
-        '#markup' => $markup,
-      ],
+      'subgroup' => $fields_data,
     ];
 
     return $build;

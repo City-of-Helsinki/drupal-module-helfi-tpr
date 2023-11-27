@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Provides a list controller for the tpr entity types.
  */
-class ListBuilder extends EntityListBuilder {
+final class ListBuilder extends EntityListBuilder {
 
   /**
    * The date formatter service.
@@ -45,8 +45,8 @@ class ListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
-    return new static(
+  public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) : self {
+    return new self(
       $entity_type,
       $container->get('entity_type.manager')->getStorage($entity_type->id()),
       $container->get('date.formatter'),

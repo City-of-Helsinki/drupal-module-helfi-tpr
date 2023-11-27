@@ -3,6 +3,7 @@
 namespace Drupal\helfi_tpr\Plugin\views\argument;
 
 use Drupal\views\Plugin\views\argument\ArgumentPluginBase;
+use Drupal\views\Plugin\views\query\Sql;
 
 /**
  * Argument for service_id column.
@@ -30,6 +31,9 @@ class ServiceIdArgument extends ArgumentPluginBase {
     }
 
     $group = $this->query->setWhereGroup('OR');
+
+    assert($this->query instanceof Sql);
+
     if (!empty($ids)) {
       $this->query->addWhere($group, 'id', $ids, 'IN');
     }

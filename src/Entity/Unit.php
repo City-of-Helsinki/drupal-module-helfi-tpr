@@ -161,8 +161,8 @@ class Unit extends TprEntityBase {
       return $this->get('picture_url')->value;
     }
 
-    /** @var \Drupal\file\FileInterface $file */
     if ($file = $picture_url->get('field_media_image')->entity) {
+      /** @var \Drupal\file\FileInterface $file */
       try {
         return $file->createFileUrl(FALSE) ?: NULL;
       }

@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\helfi_tpr\Kernel;
 
+use Drupal\Core\Entity\ContentEntityInterface;
+
 /**
  * Tests override fields.
  *
@@ -18,6 +20,7 @@ class OverrideFieldTest extends MigrationTestBase {
    */
   public function testName(string $entity_type) : void {
     $entity = \Drupal::entityTypeManager()->getStorage($entity_type)->create(['id' => 1]);
+    assert($entity instanceof ContentEntityInterface);
     $entity->set('name', 'Name no override')
       ->save();
     $this->assertEquals('Name no override', $entity->label());

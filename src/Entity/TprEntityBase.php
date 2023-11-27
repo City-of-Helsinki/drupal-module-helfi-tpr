@@ -33,7 +33,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
    * These are fields that needs to be duplicated and
    * be overridable by the end user.
    *
-   * @var \Drupal\Core\Field\BaseFieldDefinition[]
+   * @var \Drupal\Core\Field\FieldDefinitionInterface[]
    */
   protected static array $overrideFields = [];
 

@@ -126,16 +126,18 @@ class ContentEntityForm extends CoreContentEntityForm {
   /**
    * {@inheritdoc}
    */
-  public function save(array $form, FormStateInterface $form_state) {
+  public function save(array $form, FormStateInterface $form_state) : int {
     $entity_type = $this->entity->getEntityTypeId();
 
-    parent::save($form, $form_state);
+    $status = parent::save($form, $form_state);
 
     $this->messenger()->addStatus($this->t('%title saved.', ['%title' => $this->entity->label()]));
 
     $form_state->setRedirect('entity.' . $entity_type . '.canonical', [
       $entity_type => $this->entity->id(),
     ]);
+
+    return $status;
   }
 
 }

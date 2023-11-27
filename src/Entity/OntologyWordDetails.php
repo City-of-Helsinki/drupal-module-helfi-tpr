@@ -145,7 +145,7 @@ class OntologyWordDetails extends TprEntityBase {
         }
       }
     }
-    return $data ?? NULL;
+    return $data;
   }
 
 }

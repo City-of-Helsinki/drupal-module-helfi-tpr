@@ -45,12 +45,12 @@ class KiloFormatter extends DecimalFormatter {
 
     $elements['minimum_value'] = [
       '#type' => 'number',
-      '#title' => t('Minimum value', [], ['context' => 'decimal places']),
+      '#title' => $this->t('Minimum value', [], ['context' => 'decimal places']),
       '#step' => '.01',
       '#min' => 0,
       '#max' => 1000,
       '#default_value' => $this->getSetting('minimum_value'),
-      '#description' => t('If the number is smaller than minimum value, minimum value is shown.'),
+      '#description' => $this->t('If the number is smaller than minimum value, minimum value is shown.'),
       '#weight' => 7,
     ];
 

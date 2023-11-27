@@ -10,6 +10,7 @@ declare(strict_types = 1);
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Database\Query\AlterableInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityPublishedInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountInterface;
 
@@ -226,6 +227,7 @@ function template_preprocess_tpr_ontology_word_details(array &$variables) : void
  * Implements hook_ENTITY_TYPE_access().
  */
 function helfi_tpr_tpr_unit_access(EntityInterface $entity, $operation, AccountInterface $account) : AccessResult {
+  assert($entity instanceof EntityPublishedInterface);
   // Allow user to view unpublished Units based on permission.
   if ($operation === 'view' && !$entity->isPublished()) {
     return AccessResult::allowedIfHasPermission($account, 'view unpublished tpr_unit');
@@ -238,6 +240,7 @@ function helfi_tpr_tpr_unit_access(EntityInterface $entity, $operation, AccountI
  * Implements hook_ENTITY_TYPE_access().
  */
 function helfi_tpr_tpr_service_access(EntityInterface $entity, $operation, AccountInterface $account) : AccessResult {
+  assert($entity instanceof EntityPublishedInterface);
   // Allow user to view unpublished Services based on permission.
   if ($operation === 'view' && !$entity->isPublished()) {
     return AccessResult::allowedIfHasPermission($account, 'view unpublished tpr_service');
@@ -250,6 +253,7 @@ function helfi_tpr_tpr_service_access(EntityInterface $entity, $operation, Accou
  * Implements hook_ENTITY_TYPE_access().
  */
 function helfi_tpr_tpr_service_channel_access(EntityInterface $entity, $operation, AccountInterface $account) : AccessResult {
+  assert($entity instanceof EntityPublishedInterface);
   // Allow user to view unpublished Service channels based on permission.
   if ($operation === 'view' && !$entity->isPublished()) {
     return AccessResult::allowedIfHasPermission($account, 'view unpublished tpr_service_channel');
@@ -262,6 +266,7 @@ function helfi_tpr_tpr_service_channel_access(EntityInterface $entity, $operatio
  * Implements hook_ENTITY_TYPE_access().
  */
 function helfi_tpr_tpr_errand_service_access(EntityInterface $entity, $operation, AccountInterface $account) : AccessResult {
+  assert($entity instanceof EntityPublishedInterface);
   // Allow user to view unpublished Errand services based on permission.
   if ($operation === 'view' && !$entity->isPublished()) {
     return AccessResult::allowedIfHasPermission($account, 'view unpublished tpr_errand_service');
@@ -274,6 +279,7 @@ function helfi_tpr_tpr_errand_service_access(EntityInterface $entity, $operation
  * Implements hook_query_TAG_alter().
  */
 function helfi_tpr_query_owd_relationship_alter(AlterableInterface $query) : void {
+  /** @var \Drupal\Core\Entity\Query\QueryAggregateInterface $query */
   $query->groupBy('id');
 }
 

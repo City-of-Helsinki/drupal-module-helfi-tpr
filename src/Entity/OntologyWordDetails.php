@@ -133,7 +133,7 @@ class OntologyWordDetails extends TprEntityBase {
    * @param string $langcode
    *   The langcode.
    *
-   * @return string[]|null
+   * @return string[]
    *   Array containing the details.
    */
   public function getDetailByAnother(string $fieldName, string $detail, string $filterName, string $filterValue, string $langcode): array {

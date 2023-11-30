@@ -148,6 +148,7 @@ class ErrandService extends TprEntityBase {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
+    assert($fields['name'] instanceof BaseFieldDefinition);
     static::$overrideFields['name'] = $fields['name'];
 
     $fields['type'] = static::createStringField('Type');

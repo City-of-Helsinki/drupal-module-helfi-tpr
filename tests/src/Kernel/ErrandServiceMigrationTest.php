@@ -60,7 +60,9 @@ class ErrandServiceMigrationTest extends MigrationTestBase {
 
         $this->assertEquals($langcode, $translation->language()->getId());
 
-        foreach ($this->fixture('tpr_errand_service')->getFields() as $field) {
+        /** @var \Drupal\helfi_tpr\Fixture\ErrandService $fixture */
+        $fixture = $this->fixture('tpr_errand_service');
+        foreach ($fixture->getFields() as $field) {
           $this->assertEquals(
             sprintf('%s %s %s', $field, $langcode, $translation->id()),
             $translation->get($field)->value

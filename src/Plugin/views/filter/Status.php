@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\helfi_tpr\Plugin\views\filter;
 
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
+use Drupal\views\Plugin\views\query\Sql;
 
 /**
  * Filter by published status.
@@ -28,6 +29,7 @@ class Status extends FilterPluginBase {
   public function query() {
     $table = $this->ensureMyTable();
     $snippet = "$table.content_translation_status = 1 OR ***VIEW_UNPUBLISHED_TPR_ENTITIES*** = 1";
+    assert($this->query instanceof Sql);
     $this->query->addWhereExpression($this->options['group'], $snippet);
   }
 

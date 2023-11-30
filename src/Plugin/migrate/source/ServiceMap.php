@@ -35,7 +35,7 @@ class ServiceMap extends TprSourceBase implements ContainerFactoryPluginInterfac
   /**
    * {@inheritdoc}
    */
-  public function count($refresh = FALSE) {
+  public function count($refresh = FALSE) : int {
     return $this->count;
   }
 

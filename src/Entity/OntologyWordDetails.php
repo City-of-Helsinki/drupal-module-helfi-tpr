@@ -133,10 +133,10 @@ class OntologyWordDetails extends TprEntityBase {
    * @param string $langcode
    *   The langcode.
    *
-   * @return string[]|null
+   * @return string[]
    *   Array containing the details.
    */
-  public function getDetailByAnother(string $fieldName, string $detail, string $filterName, string $filterValue, string $langcode): ?array {
+  public function getDetailByAnother(string $fieldName, string $detail, string $filterName, string $filterValue, string $langcode): array {
     $data = [];
     if (!$this->getTranslation($langcode)->get($fieldName)->isEmpty()) {
       foreach ($this->getTranslation($langcode)->get($fieldName)->getValue() as $item) {
@@ -145,7 +145,7 @@ class OntologyWordDetails extends TprEntityBase {
         }
       }
     }
-    return $data ?? NULL;
+    return $data;
   }
 
 }

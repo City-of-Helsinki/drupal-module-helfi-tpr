@@ -22,7 +22,7 @@ class ProvidedLanguages extends InOperator {
    */
   public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL): void {
     parent::init($view, $display, $options);
-    $this->valueTitle = t('Allowed languages');
+    $this->valueTitle = (string) $this->t('Allowed languages');
     $this->definition['options callback'] = [$this, 'generateOptions'];
   }
 
@@ -34,9 +34,9 @@ class ProvidedLanguages extends InOperator {
    */
   public function generateOptions(): array {
     return [
-      'fi' => t('Finnish'),
-      'sv' => t('Swedish'),
-      'se' => t('North Sami'),
+      'fi' => (string) $this->t('Finnish'),
+      'sv' => (string) $this->t('Swedish'),
+      'se' => (string) $this->t('North Sami'),
     ];
   }
 

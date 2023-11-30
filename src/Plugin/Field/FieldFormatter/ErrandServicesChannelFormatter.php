@@ -8,9 +8,12 @@ use Drupal\Component\Utility\SortArray;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\helfi_tpr\Entity\ChannelType;
 use Drupal\helfi_tpr\Entity\ChannelTypeCollection;
 use Drupal\helfi_tpr\Entity\Service;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Field formatter to render errand service maps.
@@ -23,7 +26,29 @@ use Drupal\helfi_tpr\Entity\Service;
  *   }
  * )
  */
-class ErrandServicesChannelFormatter extends FormatterBase {
+final class ErrandServicesChannelFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * The renderer service.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  private RendererInterface $renderer;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition
+  ) : self {
+    $instance = parent::create($container, $configuration, $plugin_id,
+      $plugin_definition);
+    $instance->renderer = $container->get('renderer');
+    return $instance;
+  }
 
   /**
    * {@inheritdoc}
@@ -48,10 +73,9 @@ class ErrandServicesChannelFormatter extends FormatterBase {
     }
 
     return [
-      $this->t('Showing @list', [
+      (string) $this->t('Showing @list', [
         '@list' => implode(', ', $selected_channels),
-      ],
-      ),
+      ]),
     ];
   }
 
@@ -132,10 +156,8 @@ class ErrandServicesChannelFormatter extends FormatterBase {
     }
     $channelTypes = $this->getChannelTypes();
 
-    /** @var \Drupal\Core\Render\Renderer $renderer */
-    $renderer = \Drupal::service('renderer');
-
     $channel_list = [];
+    /** @var \Drupal\helfi_tpr\Entity\ErrandService[] $errand_services */
     $errand_services = $items->referencedEntities();
     $item_list = [
       '#theme' => 'item_list',
@@ -143,7 +165,6 @@ class ErrandServicesChannelFormatter extends FormatterBase {
     ];
 
     foreach ($errand_services as $errand_service) {
-      /** @var \Drupal\helfi_tpr\Entity\ErrandService $errand_service */
       foreach ($errand_service->getChannels() as $channel) {
         if (isset($channel_list[$channel->getType()])
         || empty($this->getSetting('sort_order')[$channel->getType()]['show'])) {
@@ -154,7 +175,7 @@ class ErrandServicesChannelFormatter extends FormatterBase {
           '#name' => $this->getSetting('sort_order')[$channel->getType()]['label'],
           '#weight' => $channelTypes[$channel->getType()]->weight,
         ];
-        $renderer->addCacheableDependency($item_list, $channel);
+        $this->renderer->addCacheableDependency($item_list, $channel);
       }
     }
 

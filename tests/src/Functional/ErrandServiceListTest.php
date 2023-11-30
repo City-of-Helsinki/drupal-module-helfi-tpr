@@ -5,6 +5,8 @@ declare(strict_types = 1);
 namespace Drupal\Tests\helfi_tpr\Functional;
 
 use donatj\MockWebServer\Response;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\TranslatableInterface;
 use Drupal\helfi_tpr\Entity\ErrandService;
 
 /**
@@ -36,7 +38,10 @@ class ErrandServiceListTest extends ListTestBase {
    * {@inheritdoc}
    */
   protected function populateMockQueue(): void {
-    foreach ($this->fixture($this->entityType)->getMockData() as $item) {
+    /** @var \Drupal\helfi_tpr\Fixture\ErrandService $fixture */
+    $fixture = $this->fixture($this->entityType);
+
+    foreach ($fixture->getMockData() as $item) {
       $url = sprintf('/%s/%s', $this->entityType, $item['id']);
       $this->webServer
         ->setResponseOfPath($url, new Response(json_encode($item['fi'])));
@@ -118,13 +123,19 @@ class ErrandServiceListTest extends ListTestBase {
     $this->assertUpdateAction(['fi']);
 
     $storage = \Drupal::entityTypeManager()->getStorage('tpr_errand_service');
-    $items = $this->fixture('tpr_errand_service')->getMockData();
+    /** @var \Drupal\helfi_tpr\Fixture\ErrandService $fixture */
+    $fixture = $this->fixture($this->entityType);
+    $items = $fixture->getMockData();
 
     // Make sure entity data is updated back to normal.
     foreach ($items as $item) {
       $item = $item['fi'];
       $storage->resetCache([$item['id']]);
-      $entity = $storage->load($item['id'])->getTranslation('fi');
+      $entity = $storage->load($item['id']);
+      assert($entity instanceof TranslatableInterface);
+      assert($entity instanceof ContentEntityInterface);
+
+      $entity = $entity->getTranslation('fi');
 
       $this->assertEquals($item['name'], $entity->label());
       $this->assertNotEquals(sprintf('Description %s fi', $item['id']), $entity->get('description')->value);

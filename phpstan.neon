@@ -1,0 +1,27 @@
+parameters:
+  fileExtensions:
+      - php
+      - module
+      - install
+  paths:
+    - ./
+  excludePaths:
+    - vendor
+  level: 3
+  checkMissingIterableValueType: false
+  treatPhpDocTypesAsCertain: false
+  ignoreErrors:
+    -
+      message: '#^Access to an undefined property#'
+      paths:
+        - tests/src/Kernel/UnitMigrationTest.php
+        - tests/src/Kernel/ServiceMigrationTest.php
+        - tests/src/Kernel/ServiceChannelMigrationTest.php
+        - tests/src/Kernel/Plugin/Field/FieldType/ConnectionItemTest.php
+        - tests/src/Kernel/Plugin/Field/FieldType/AccessibilitySentenceItemTest.php
+        - tests/src/Functional/UnitListTest.php
+        - tests/src/Functional/ServiceListTest.php
+    -
+      message: '#^\\Drupal calls should be avoided in classes, use dependency injection instead#'
+      path: src/Entity/TranslationHandler.php
+      count: 1

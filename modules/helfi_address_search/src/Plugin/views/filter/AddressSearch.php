@@ -6,6 +6,7 @@ namespace Drupal\helfi_address_search\Plugin\views\filter;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\Xss;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
@@ -79,6 +80,7 @@ class AddressSearch extends FilterPluginBase {
     $results = $view->result;
     $distances = [];
     foreach ($results as $result) {
+      assert($result->_entity instanceof ContentEntityInterface);
       if (empty($result->_entity->get('latitude')) || empty($result->_entity->get('longitude'))) {
         continue;
       }
@@ -94,6 +96,7 @@ class AddressSearch extends FilterPluginBase {
 
     // Sort results array by distances: nearest first.
     uasort($results, function ($left, $right) use ($distances) {
+      assert($left->_entity instanceof ContentEntityInterface && $right->_entity instanceof ContentEntityInterface);
       return match ($distances[$left->_entity->get('id')->getString()] >= $distances[$right->_entity->get('id')->getString()]) {
         FALSE => (-1),
         TRUE => 1,

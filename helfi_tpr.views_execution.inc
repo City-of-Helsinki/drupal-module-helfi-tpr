@@ -14,6 +14,7 @@ use Drupal\views\ViewExecutable;
  */
 function helfi_tpr_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
   if ($view->id() == 'unit_search' || $view->id() == 'service_units') {
+    assert(isset($query->orderby));
     // Use the CASE function from helfi_tpr_views_pre_execute() for sorting.
     $query->orderby[0]['field'] = 'name_sort';
     $query->orderby[0]['direction'] = 'ASC';

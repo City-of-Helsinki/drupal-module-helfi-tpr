@@ -136,7 +136,7 @@ class OntologyWordDetails extends TprEntityBase {
    * @return string[]|null
    *   Array containing the details.
    */
-  public function getDetailByAnother(string $fieldName, string $detail, string $filterName, string $filterValue, string $langcode): ?array {
+  public function getDetailByAnother(string $fieldName, string $detail, string $filterName, string $filterValue, string $langcode): array {
     $data = [];
     if (!$this->getTranslation($langcode)->get($fieldName)->isEmpty()) {
       foreach ($this->getTranslation($langcode)->get($fieldName)->getValue() as $item) {

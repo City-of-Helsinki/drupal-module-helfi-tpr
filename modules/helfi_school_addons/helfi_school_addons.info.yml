@@ -1,5 +1,0 @@
-name: HELfi School addons
-type: module
-description: This module should be removed after it's disabled. Adds school specific features.
-package: HELfi
-core_version_requirement: ^9 || ^10

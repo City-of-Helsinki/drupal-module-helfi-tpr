@@ -90,6 +90,10 @@ class AddressSearch extends FilterPluginBase {
         (float) $result->_entity->get('latitude')->getString(),
         (float) $result->_entity->get('longitude')->getString());
 
+      // The entity should not be cached since it relies on high-cardinality
+      // user input.
+      $result->_entity->mergeCacheMaxAge(0);
+
       // Set the distance to computed field.
       $result->_entity->set('distance', $distances[$result->_entity->get('id')->getString()]);
     }

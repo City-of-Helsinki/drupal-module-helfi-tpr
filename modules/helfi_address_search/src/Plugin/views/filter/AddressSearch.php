@@ -7,6 +7,8 @@ namespace Drupal\helfi_address_search\Plugin\views\filter;
 use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\TranslatableInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
@@ -90,9 +92,9 @@ class AddressSearch extends FilterPluginBase {
         (float) $result->_entity->get('latitude')->getString(),
         (float) $result->_entity->get('longitude')->getString());
 
-      // The entity should not be cached since it relies on high-cardinality
-      // user input.
-      $result->_entity->mergeCacheMaxAge(0);
+      // The entity should not be cached if it wants to render the computed
+      // distance field (since the value relies on high-cardinality user input).
+      self::entityCacheKillSwitch($result->_entity);
 
       // Set the distance to computed field.
       $result->_entity->set('distance', $distances[$result->_entity->get('id')->getString()]);
@@ -235,6 +237,23 @@ class AddressSearch extends FilterPluginBase {
       $element['#address_search_succeed'] = $succeed;
     }
     return $element;
+  }
+
+  /**
+   * Disable caching for given entity.
+   *
+   * @param EntityInterface $entity
+   *   The entity.
+   */
+  private static function entityCacheKillSwitch(EntityInterface $entity): void {
+    if ($entity instanceof TranslatableInterface) {
+      foreach ($entity->getTranslationLanguages() as $language) {
+        $entity->getTranslation($language->getId())->mergeCacheMaxAge(0);
+      }
+    }
+    else {
+      $entity->mergeCacheMaxAge(0);
+    }
   }
 
 }

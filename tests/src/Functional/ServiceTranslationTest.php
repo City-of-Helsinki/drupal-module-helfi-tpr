@@ -45,7 +45,7 @@ class ServiceTranslationTest extends MigrationTestBase {
       $this->drupalGet(Url::fromRoute('entity.tpr_service.edit_form', ['tpr_service' => 1]), [
         'query' => ['language' => 'fi'],
       ]);
-      $this->assertSession()->fieldValueEquals('content_translation[status]', $expected_status);
+      $this->assertSession()->fieldValueEquals('content_translation[status]', (string) $expected_status);
     }
 
     // Run migrate to update existing service entity and translations.
@@ -65,7 +65,7 @@ class ServiceTranslationTest extends MigrationTestBase {
         $this->drupalGet(Url::fromRoute('entity.tpr_service.edit_form', ['tpr_service' => 1]), [
           'query' => ['language' => $language],
         ]);
-        $this->assertSession()->fieldValueEquals('content_translation[status]', $expected_status);
+        $this->assertSession()->fieldValueEquals('content_translation[status]', (string) $expected_status);
       }
     }
   }

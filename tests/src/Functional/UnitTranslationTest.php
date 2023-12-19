@@ -45,7 +45,7 @@ class UnitTranslationTest extends MigrationTestBase {
       $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 1]), [
         'query' => ['language' => 'fi'],
       ]);
-      $this->assertSession()->fieldValueEquals('content_translation[status]', $expected_status);
+      $this->assertSession()->fieldValueEquals('content_translation[status]', (string) $expected_status);
     }
 
     // Run migrate to update existing unit entity andtranslations.
@@ -65,7 +65,7 @@ class UnitTranslationTest extends MigrationTestBase {
         $this->drupalGet(Url::fromRoute('entity.tpr_unit.edit_form', ['tpr_unit' => 1]), [
           'query' => ['language' => $language],
         ]);
-        $this->assertSession()->fieldValueEquals('content_translation[status]', $expected_status);
+        $this->assertSession()->fieldValueEquals('content_translation[status]', (string) $expected_status);
       }
     }
   }

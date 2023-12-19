@@ -242,7 +242,7 @@ class AddressSearch extends FilterPluginBase {
   /**
    * Disable caching for given entity.
    *
-   * @param EntityInterface $entity
+   * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The entity.
    */
   private static function entityCacheKillSwitch(EntityInterface $entity): void {

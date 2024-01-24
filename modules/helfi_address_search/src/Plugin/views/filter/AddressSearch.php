@@ -192,7 +192,7 @@ class AddressSearch extends FilterPluginBase {
       break;
     }
 
-    if (!$addressSearchResult) {
+    if (!isset($addressSearchResult)) {
       return [];
     }
 

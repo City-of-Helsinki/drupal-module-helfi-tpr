@@ -167,7 +167,7 @@ class AddressSearch extends FilterPluginBase {
         'fi' => $client->getAsync('search', $queries['fi']),
       ];
       $responses = Utils::unwrap($promises);
-    } 
+    }
     catch (ConnectException $e) {
       \Drupal::logger('helfi_tpr')
         ->error(

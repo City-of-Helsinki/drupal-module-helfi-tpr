@@ -148,7 +148,7 @@ class AddressSearch extends FilterPluginBase {
       'base_uri' => self::BASE_URL,
     ]);
 
-    foreach($langcodes as $langcode) {
+    foreach ($langcodes as $langcode) {
       $queries[$langcode] = [
         'query' => [
           'q' => $address,
@@ -167,7 +167,8 @@ class AddressSearch extends FilterPluginBase {
         'fi' => $client->getAsync('search', $queries['fi']),
       ];
       $responses = Utils::unwrap($promises);
-    } catch (ConnectException $e) {
+    } 
+    catch (ConnectException $e) {
       \Drupal::logger('helfi_tpr')
         ->error(
           "After school activity search\'s coordinate search failed,
@@ -176,7 +177,7 @@ class AddressSearch extends FilterPluginBase {
       return [];
     }
 
-    foreach($langcodes as $langcode) {
+    foreach ($langcodes as $langcode) {
       $response = $responses[$langcode];
       $result = Json::decode($response->getBody());
 

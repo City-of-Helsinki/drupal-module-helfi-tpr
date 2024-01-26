@@ -15,7 +15,8 @@ use Drupal\views\Plugin\views\filter\FilterPluginBase;
 use Drupal\views\Plugin\views\pager\PagerPluginBase;
 use Drupal\views\ViewExecutable;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Promise\Utils;
 
 /**
  * Address search for sorting the results to show the nearest units first.
@@ -29,6 +30,8 @@ use GuzzleHttp\Exception\RequestException;
  * @ViewsFilter("address_search")
  */
 class AddressSearch extends FilterPluginBase {
+
+  const BASE_URL = 'https://api.hel.fi/servicemap/v2/';
 
   /**
    * Provide a simple textfield for street address.
@@ -131,34 +134,65 @@ class AddressSearch extends FilterPluginBase {
    *   Latitude and longitude coordinates in array, or empty array.
    */
   protected static function fetchAddressCoordinates(string $address): array {
-    $language = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
+    $currentLanguage = \Drupal::languageManager()
+      ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
+      ->getId();
+
+    $langcodes = ['fi', 'sv'];
+    // Reorder langcodes for the result generation, set current first.
+    if ($langcodes[$currentLanguage]) {
+      $langcodes = array_unique(array_merge([$currentLanguage], $langcodes));
+    }
 
     $client = new Client([
-      'base_uri' => 'https://api.hel.fi/servicemap/v2/',
+      'base_uri' => self::BASE_URL,
     ]);
 
-    try {
-      $response = $client->get('search', [
+    foreach ($langcodes as $langcode) {
+      $queries[$langcode] = [
         'query' => [
           'q' => $address,
           'type' => 'address',
           'page' => '1',
           'page_size' => '1',
-          'language' => $language,
+          'language' => $langcode,
           'municipality' => 'helsinki',
         ],
-      ]);
+      ];
     }
-    catch (RequestException $e) {
+
+    try {
+      $promises = [
+        'sv' => $client->getAsync('search', $queries['sv']),
+        'fi' => $client->getAsync('search', $queries['fi']),
+      ];
+      $responses = Utils::unwrap($promises);
+    }
+    catch (ConnectException $e) {
+      \Drupal::logger('helfi_tpr')
+        ->error(
+          "After school activity search\'s coordinate search failed,
+         error code: {$e->getCode()}"
+        );
       return [];
     }
 
-    $addressSearchResult = Json::decode($response->getBody());
+    foreach ($langcodes as $langcode) {
+      $response = $responses[$langcode];
+      $result = Json::decode($response->getBody());
 
-    if (
-      empty($addressSearchResult["results"][0]["location"]["coordinates"][1]) ||
-      empty($addressSearchResult["results"][0]["location"]["coordinates"][0])
-    ) {
+      if (
+        empty($result["results"][0]["location"]["coordinates"][1]) ||
+        empty($result["results"][0]["location"]["coordinates"][0])
+      ) {
+        continue;
+      }
+
+      $addressSearchResult = $result;
+      break;
+    }
+
+    if (!isset($addressSearchResult)) {
       return [];
     }
 

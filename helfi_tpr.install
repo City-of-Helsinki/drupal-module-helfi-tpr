@@ -323,7 +323,7 @@ function helfi_tpr_update_8046() : void {
 /**
  * UHF-9940 Add information text field to Channel entity.
  */
-function helfi_tpr_update_8048() : void {
+function helfi_tpr_update_8047() : void {
   $field = BaseFieldDefinition::create('text_long')
     ->setTranslatable(TRUE)
     ->setRevisionable(FALSE)

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\Fixture;
 
@@ -71,6 +71,7 @@ final class ErrandService extends FixtureBase {
             'email' => sprintf('%s.email.%s.%s@hel.fi', $id, $language, $channelId),
             'phone' => sprintf('%s-123456-%s-%s', $id, $language, $channelId),
             'call_charge_info' => sprintf('call_charge_info %s %s %s', $id, $language, $channelId),
+            'information' => sprintf('information %s %s %s', $id, $language, $channelId),
             'availabilities' => [
               [
                 'availability_string' => sprintf('0:%s:test %s %s', $id, $language, $channelId),

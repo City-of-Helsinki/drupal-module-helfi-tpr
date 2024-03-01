@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\helfi_tpr\Kernel;
 
@@ -72,6 +72,7 @@ class ServiceChannelMigrationTest extends MigrationTestBase {
             'email' => new FormattableMarkup('@id.email.@langcode.@tid@hel.fi', $args),
             'phone' => new FormattableMarkup('@id-123456-@langcode-@tid', $args),
             'call_charge_info' => new FormattableMarkup('call_charge_info @id @langcode @tid', $args),
+            'information' => new FormattableMarkup('information @id @langcode @tid', $args),
             'type' => 'EMAIL',
             'requires_authentication' => TRUE,
             'saved_to_customer_folder' => TRUE,

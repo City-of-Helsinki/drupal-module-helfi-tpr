@@ -67,6 +67,10 @@ process:
   payment_enabled: payment_enabled
   for_personal_customer: for_personal_customer
   for_corporate_customer: for_corporate_customer
+  information/value: information
+  information/format:
+    plugin: default_value
+    default_value: plain_text
 destination:
   plugin: translatable_entity:tpr_service_channel
   default_values:

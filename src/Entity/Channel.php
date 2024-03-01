@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\Entity;
 
@@ -131,6 +131,7 @@ class Channel extends TprEntityBase {
       'expiration_time' => new TranslatableMarkup('Expiration time'),
       'authorization_code' => new TranslatableMarkup('Information'),
       'call_charge_info' => new TranslatableMarkup('Call charge info'),
+      'information' => new TranslatableMarkup('Additional information'),
     ];
     foreach ($text_fields as $name => $label) {
       $fields[$name] = BaseFieldDefinition::create('text_long')

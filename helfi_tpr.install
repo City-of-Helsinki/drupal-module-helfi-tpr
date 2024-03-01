@@ -5,7 +5,7 @@
  * Contains helfi_tpr installation procedures.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 use Drupal\content_translation\ContentTranslationHandler;
 use Drupal\Core\Field\BaseFieldDefinition;
@@ -318,4 +318,22 @@ function helfi_tpr_update_8046() : void {
 
   \Drupal::entityDefinitionUpdateManager()
     ->installFieldStorageDefinition('subgroup', 'tpr_unit', 'helfi_tpr', $subgroup_field);
+}
+
+/**
+ * UHF-9940 Add information text field to Channel entity.
+ */
+function helfi_tpr_update_8047() : void {
+  $field = BaseFieldDefinition::create('text_long')
+    ->setTranslatable(TRUE)
+    ->setRevisionable(FALSE)
+    ->setLabel(new TranslatableMarkup('Additional information'))
+    ->setDisplayOptions('form', [
+      'type' => 'readonly_field_widget',
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('information', 'tpr_service_channel', 'helfi_tpr', $field);
 }

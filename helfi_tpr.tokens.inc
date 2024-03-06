@@ -83,6 +83,13 @@ function helfi_tpr_tokens(
 
   $image_style = ImageStyle::load('og_image');
 
+  $default_image = '';
+
+  // Module might not be installed, or it has incompatible version.
+  if (function_exists('helfi_base_content_get_default_og_image_url')) {
+    $default_image = helfi_base_content_get_default_og_image_url();
+  }
+
   foreach ($tokens as $name => $original) {
     if ($name === 'label') {
       $replacements[$original] = $entity->label();
@@ -90,7 +97,7 @@ function helfi_tpr_tokens(
 
     if ($entity instanceof Unit) {
       if ($name === 'picture') {
-        $replacements[$original] = $entity->getPictureUrl($image_style);
+        $replacements[$original] = $entity->getPictureUrl($image_style) ?? $default_image;
       }
     }
 

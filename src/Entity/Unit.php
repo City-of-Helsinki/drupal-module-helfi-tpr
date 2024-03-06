@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\image\Entity\ImageStyle;
 use Webmozart\Assert\Assert;
 
 /**
@@ -149,20 +150,41 @@ class Unit extends TprEntityBase {
   /**
    * Gets the picture url.
    *
+   * @param \Drupal\image\Entity\ImageStyle|null $imageStyle
+   *   URL image style. Original image is returned if style is NULL.
+   *
    * @return string|null
    *   The picture url.
    */
-  public function getPictureUrl() : ? string {
+  public function getPictureUrl(?ImageStyle $imageStyle = NULL) : ? string {
     /** @var \Drupal\media\MediaInterface $picture_url */
     $picture_url = $this->get('picture_url_override')->entity;
 
     // Fallback to default picture url if override is not set.
     if (!$picture_url) {
-      return $this->get('picture_url')->value;
+      $url = $this->get('picture_url')->value;
+
+      // Run image url through imagecache_external so that we
+      // can apply image style.
+      if ($imageStyle) {
+        $image_path = imagecache_external_generate_path($url);
+
+        if ($image_path) {
+          return $imageStyle->buildUrl($image_path);
+        }
+
+        return NULL;
+      }
+
+      return $url;
     }
 
     if ($file = $picture_url->get('field_media_image')->entity) {
       /** @var \Drupal\file\FileInterface $file */
+      if ($imageStyle) {
+        return $imageStyle->buildUrl($file->getFileUri());
+      }
+
       try {
         return $file->createFileUrl(FALSE) ?: NULL;
       }

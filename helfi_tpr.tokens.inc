@@ -8,6 +8,7 @@
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\helfi_tpr\Entity\Service;
 use Drupal\helfi_tpr\Entity\Unit;
+use Drupal\image\Entity\ImageStyle;
 
 /**
  * Implements hook_token_info().
@@ -80,6 +81,8 @@ function helfi_tpr_tokens(
   $entity = $data[$type];
   $replacements = [];
 
+  $image_style = ImageStyle::load('og_image');
+
   foreach ($tokens as $name => $original) {
     if ($name === 'label') {
       $replacements[$original] = $entity->label();
@@ -87,7 +90,7 @@ function helfi_tpr_tokens(
 
     if ($entity instanceof Unit) {
       if ($name === 'picture') {
-        $replacements[$original] = $entity->getPictureUrl();
+        $replacements[$original] = $entity->getPictureUrl($image_style);
       }
     }
 

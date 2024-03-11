@@ -10,7 +10,8 @@
         "drupal/address": "~1.0",
         "drupal/readonly_field_widget": "^1.0",
         "drupal/twig_tweak": "^2.0 || ^3.0",
-        "drupal/views_infinite_scroll": "^2.0"
+        "drupal/views_infinite_scroll": "^2.0",
+        "drupal/imagecache_external": "^3.0"
     },
     "conflict": {
         "drupal/helfi_api_base": "<2.0"

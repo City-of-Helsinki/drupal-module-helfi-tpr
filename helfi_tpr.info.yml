@@ -12,6 +12,7 @@ dependencies:
   - drupal:content_translation
   - drupal:language
   - readonly_field_widget:readonly_field_widget
+  - imagecache_external:imagecache_external
   - drupal:media
   - twig_tweak:twig_tweak
   - drupal:telephone

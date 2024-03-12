@@ -6,11 +6,11 @@
  */
 
 use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\helfi_tpr\Entity\Service;
+use Drupal\helfi_tpr\Entity\Unit;
 
 /**
  * Implements hook_token_info().
- *
- * @see \Drupal\helfi_tpr\Token\TokenSubscriber
  */
 function helfi_tpr_token_info() {
   $info = [];
@@ -43,7 +43,7 @@ function helfi_tpr_token_info() {
     }
   }
 
-  $info['tokens']['tpr_unit']['shareable-image'] = [
+  $info['tokens']['tpr_unit']['picture'] = [
     'name' => t('Picture'),
   ];
   $info['tokens']['tpr_unit']['description:value'] = [
@@ -76,12 +76,24 @@ function helfi_tpr_tokens(
   if (!in_array($type, $entity_types) || empty($data[$type])) {
     return [];
   }
-
   /** @var \Drupal\helfi_tpr\Entity\TprEntityBase $entity */
   $entity = $data[$type];
   $replacements = [];
 
   foreach ($tokens as $name => $original) {
+    if ($name === 'label') {
+      $replacements[$original] = $entity->label();
+    }
+
+    if ($entity instanceof Unit || $entity instanceof Service) {
+      if ($name === 'description:value') {
+        $replacements[$original] = $entity->getDescription('value');
+      }
+      if ($name === 'description:summary') {
+        $replacements[$original] = $entity->getDescription('summary');
+      }
+    }
+
     // Custom token for entity URL alias with menu parents.
     if ($name == 'menu-link-parents') {
       // Get entity menu link.

@@ -14,9 +14,9 @@ services:
     arguments: ['@config.factory']
     tags:
       - { name: event_subscriber }
-  helfi_tpr.token_subscriber:
-    class: Drupal\helfi_tpr\EventSubscriber\TokenSubscriber
+  helfi_tpr.og_image.tpr_entity:
+    class: Drupal\helfi_tpr\Token\TprImageBuilder
     arguments:
       - '@entity_type.manager'
     tags:
-      - { name: event_subscriber }
+      - { name: helfi_api_base.og_image_builder }

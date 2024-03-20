@@ -350,13 +350,13 @@ function helfi_tpr_update_8048() : void {
     $entityDefinitionManager->uninstallFieldStorageDefinition($fieldDefinition);
   }
 
-   $field = BaseFieldDefinition::create('email')
+  $field = BaseFieldDefinition::create('email')
     ->setLabel(new TranslatableMarkup('Email'))
     ->setTranslatable(FALSE)
     ->setRevisionable(FALSE)
-     ->setSettings([
-       'max_length' => 255,
-     ])
+    ->setSettings([
+      'max_length' => 255,
+    ])
     ->setDisplayConfigurable('view', TRUE)
     ->setDisplayConfigurable('form', TRUE)
     ->setDisplayOptions('form', [

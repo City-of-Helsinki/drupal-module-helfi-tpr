@@ -341,28 +341,31 @@ function helfi_tpr_update_8047() : void {
 /**
  * UHF-8908 Convert email field type to email.
  */
-function helfi_tpr_update_8048() : void {
+function helfi_tpr_update_8049() : void {
   $entityDefinitionManager = \Drupal::entityDefinitionUpdateManager();
-  $fieldDefinition = $entityDefinitionManager->getFieldStorageDefinition('email', 'tpr_unit');
 
-  // Uninstall old string email field.
-  if ($fieldDefinition->getType() === 'string') {
-    $entityDefinitionManager->uninstallFieldStorageDefinition($fieldDefinition);
+  foreach (['tpr_unit', 'tpr_service_channel'] as $entityType) {
+    $fieldDefinition = $entityDefinitionManager->getFieldStorageDefinition('email', $entityType);
+
+    // Uninstall old string email field.
+    if ($fieldDefinition->getType() === 'string') {
+      $entityDefinitionManager->uninstallFieldStorageDefinition($fieldDefinition);
+    }
+
+    $field = BaseFieldDefinition::create('email')
+      ->setLabel(new TranslatableMarkup('Email'))
+      ->setTranslatable(FALSE)
+      ->setRevisionable(FALSE)
+      ->setSettings([
+        'max_length' => 255,
+      ])
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ]);
+
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition('email', $entityType, 'helfi_tpr', $field);
   }
-
-  $field = BaseFieldDefinition::create('email')
-    ->setLabel(new TranslatableMarkup('Email'))
-    ->setTranslatable(FALSE)
-    ->setRevisionable(FALSE)
-    ->setSettings([
-      'max_length' => 255,
-    ])
-    ->setDisplayConfigurable('view', TRUE)
-    ->setDisplayConfigurable('form', TRUE)
-    ->setDisplayOptions('form', [
-      'type' => 'readonly_field_widget',
-    ]);
-
-  \Drupal::entityDefinitionUpdateManager()
-    ->installFieldStorageDefinition('email', 'tpr_unit', 'helfi_tpr', $field);
 }

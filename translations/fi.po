@@ -64,8 +64,23 @@ msgstr "Yleislukio tai -linja"
 msgid "The upper secondary school for adults or a study programme"
 msgstr "Aikuislukio tai -linja"
 
+msgid "TPR - Errand Service entities"
+msgstr "TPR - Asiointipalvelut"
+
+msgid "TPR - Ontology word details entities"
+msgstr "TPR - Palvelukanava"
+
 msgid "TPR - Service channel"
 msgstr "TPR - Palvelukanava"
+
+msgid "TPR - Service channel entities"
+msgstr "TPR - Palvelukanavat"
+
+msgid "TPR - Service entities"
+msgstr "TPR - Palvelut"
+
+msgid "TPR - Unit entities"
+msgstr "TPR - Toimipisteet"
 
 msgid "Visiting address"
 msgstr "Käyntiosoite"

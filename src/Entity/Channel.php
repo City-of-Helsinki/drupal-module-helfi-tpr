@@ -85,12 +85,11 @@ class Channel extends TprEntityBase {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $fields['name_synonyms'] = static::createStringField('Name synonyms', BaseFieldDefinition::CARDINALITY_UNLIMITED);
-    $fields['email'] = static::createStringField('Email');
+    $fields['email'] = static::createEmailField('Email');
 
     $string_fields = [
       'type' => 'Type',
       'type_string' => 'Type string',
-      'email' => 'Email',
     ];
 
     foreach ($string_fields as $name => $label) {

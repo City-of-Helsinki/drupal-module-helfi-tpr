@@ -13,6 +13,26 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 trait BaseFieldTrait {
 
   /**
+   * Helper function to create an email field.
+   *
+   * @param string $label
+   *   The label.
+   * @param int $cardinality
+   *   The cardinality.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The field definition.
+   */
+  protected static function createEmailField(string $label, int $cardinality = 1) : BaseFieldDefinition {
+    return static::createBaseField(BaseFieldDefinition::create('email'), $label)
+      ->setCardinality($cardinality)
+      ->setDefaultValue('')
+      ->setSettings([
+        'max_length' => 255,
+      ]);
+  }
+
+  /**
    * Helper function to create a basic string field.
    *
    * @param string $label
@@ -25,7 +45,6 @@ trait BaseFieldTrait {
    */
   protected static function createStringField(string $label, int $cardinality = 1) : BaseFieldDefinition {
     return static::createBaseField(BaseFieldDefinition::create('string'), $label)
-      // @codingStandardsIgnoreLine
       ->setCardinality($cardinality)
       ->setDefaultValue('')
       ->setSettings([

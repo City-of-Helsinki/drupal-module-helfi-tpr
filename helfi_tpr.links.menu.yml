@@ -2,19 +2,37 @@ tpr_unit.settings:
   title: TPR - Unit settings
   description: Configure TPR unit entity type
   route_name:  tpr_unit.settings
-  parent: system.admin_structure
+  parent: helfi_api_base.entity_settings
+
+tpr_service.settings:
+  title: TPR - Service settings
+  description: Configure TPR service entity type
+  route_name:  tpr_service.settings
+  parent: helfi_api_base.entity_settings
+
+tpr_errand_service.settings:
+  title: TPR - Errand Service settings
+  description: Configure TPR errand service entity type
+  route_name:  tpr_errand_service.settings
+  parent: helfi_api_base.entity_settings
+
+tpr_service_channel.settings:
+  title: TPR - Service channel settings
+  description: Configure TPR service channel entity type
+  route_name:  tpr_service_channel.settings
+  parent: helfi_api_base.entity_settings
+
+tpr_ontology_word_details.settings:
+  title: TPR - Ontology word details settings
+  description: Configure TPR Ontology word details entity type
+  route_name:  tpr_ontology_word_details.settings
+  parent: helfi_api_base.entity_settings
 
 entity.tpr_unit.collection:
   title: TPR - Unit entities
   description: List of TPR unit entities
   route_name: entity.tpr_unit.collection
   parent: helfi_api_base.integrations
-
-tpr_service.settings:
-  title: TPR - Service settings
-  description: Configure TPR service entity type
-  route_name:  tpr_service.settings
-  parent: system.admin_structure
 
 entity.tpr_service.collection:
   title: TPR - Service entities
@@ -28,29 +46,11 @@ entity.tpr_errand_service.collection:
   route_name: entity.tpr_errand_service.collection
   parent: helfi_api_base.integrations
 
-tpr_errand_service.settings:
-  title: TPR - Errand Service settings
-  description: Configure TPR errand service entity type
-  route_name:  tpr_errand_service.settings
-  parent: system.admin_structure
-
 entity.tpr_service_channel.collection:
   title: TPR - Service channel entities
   description: List of TPR service channel entities
   route_name: entity.tpr_service_channel.collection
   parent: helfi_api_base.integrations
-
-tpr_service_channel.settings:
-  title: TPR - Service channel settings
-  description: Configure TPR service channel entity type
-  route_name:  tpr_service_channel.settings
-  parent: system.admin_structure
-
-tpr_ontology_word_details.settings:
-  title: TPR - Ontology word details settings
-  description: Configure TPR Ontology word details entity type
-  route_name:  tpr_ontology_word_details.settings
-  parent: system.admin_structure
 
 entity.tpr_ontology_word_details.collection:
   title: TPR - Ontology word details entities

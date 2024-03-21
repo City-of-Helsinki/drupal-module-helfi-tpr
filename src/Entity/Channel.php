@@ -90,7 +90,6 @@ class Channel extends TprEntityBase {
     $string_fields = [
       'type' => 'Type',
       'type_string' => 'Type string',
-      'email' => 'Email',
     ];
 
     foreach ($string_fields as $name => $label) {

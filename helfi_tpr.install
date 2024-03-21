@@ -341,7 +341,7 @@ function helfi_tpr_update_8047() : void {
 /**
  * UHF-8908 Convert email field type to email.
  */
-function helfi_tpr_update_8049() : void {
+function helfi_tpr_update_8048() : void {
   $entityDefinitionManager = \Drupal::entityDefinitionUpdateManager();
 
   foreach (['tpr_unit', 'tpr_service_channel'] as $entityType) {

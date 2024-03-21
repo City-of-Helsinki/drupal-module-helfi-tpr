@@ -3,16 +3,31 @@ tpr_unit.settings:
   route_name: tpr_unit.settings
   base_route: tpr_unit.settings
 
+tpr_service.settings:
+  title: Settings
+  route_name: tpr_service.settings
+  base_route: tpr_service.settings
+
+tpr_errand_service.settings:
+  title: Settings
+  route_name: tpr_errand_service.settings
+  base_route: tpr_errand_service.settings
+
+tpr_service_channel.settings:
+  title: Settings
+  route_name: tpr_service_channel.settings
+  base_route: tpr_service_channel.settings
+
+tpr_ontology_word_details.settings:
+  title: Settings
+  route_name: tpr_ontology_word_details.settings
+  base_route: tpr_ontology_word_details.settings
+
 tpr_unit.content_list:
   title: TPR - Unit
   route_name: entity.tpr_unit.collection
   base_route: helfi_api_base.integrations
   weight: 10
-
-tpr_service.settings:
-  title: Settings
-  route_name: tpr_service.settings
-  base_route: tpr_service.settings
 
 tpr_service.content_list:
   title: TPR - Service
@@ -20,32 +35,17 @@ tpr_service.content_list:
   base_route: helfi_api_base.integrations
   weight: 10
 
-tpr_errand_service.settings:
-  title: Settings
-  route_name: tpr_errand_service.settings
-  base_route: tpr_errand_service.settings
-
 tpr_errand_service.content_list:
   title: TPR - Errand Service
   route_name: entity.tpr_errand_service.collection
   base_route: helfi_api_base.integrations
   weight: 10
 
-tpr_service_channel.settings:
-  title: Settings
-  route_name: tpr_service_channel.settings
-  base_route: tpr_service_channel.settings
-
 tpr_service_channel.content_list:
   title: TPR - Service channel
   route_name: entity.tpr_service_channel.collection
   base_route: helfi_api_base.integrations
   weight: 10
-
-tpr_ontology_word_details.settings:
-  title: Settings
-  route_name: tpr_ontology_word_details.settings
-  base_route: tpr_ontology_word_details.settings
 
 tpr_ontology_word_details.content_list:
   title: TPR - Ontology word details

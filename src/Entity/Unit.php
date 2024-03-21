@@ -211,7 +211,7 @@ class Unit extends TprEntityBase {
       ->setDisplayConfigurable('form', TRUE);
     $fields['phone'] = static::createPhoneField('Phone', BaseFieldDefinition::CARDINALITY_UNLIMITED)
       ->setTranslatable(FALSE);
-    $fields['email'] = static::createStringField('Email')
+    $fields['email'] = static::createEmailField('Email')
       ->setTranslatable(FALSE);
     $fields['accessibility_phone'] = static::createStringField('Accessibility phone')
       ->setTranslatable(FALSE);

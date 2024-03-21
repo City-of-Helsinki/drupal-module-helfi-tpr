@@ -13,7 +13,7 @@
         "drupal/views_infinite_scroll": "^2.0"
     },
     "conflict": {
-        "drupal/helfi_api_base": "<2.0"
+        "drupal/helfi_api_base": "<2.6.6"
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",

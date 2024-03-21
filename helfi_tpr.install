@@ -337,3 +337,44 @@ function helfi_tpr_update_8047() : void {
   \Drupal::entityDefinitionUpdateManager()
     ->installFieldStorageDefinition('information', 'tpr_service_channel', 'helfi_tpr', $field);
 }
+
+/**
+ * UHF-8908 Convert email field type to email.
+ */
+function helfi_tpr_update_8048() : void {
+  $entityDefinitionManager = \Drupal::entityDefinitionUpdateManager();
+  $database = \Drupal::database();
+
+  foreach (['tpr_unit', 'tpr_service_channel'] as $entityType) {
+    $fieldDefinition = $entityDefinitionManager->getFieldStorageDefinition('email', $entityType);
+
+    // Uninstall old string email field.
+    if ($fieldDefinition->getType() === 'string') {
+      $entityDefinitionManager->uninstallFieldStorageDefinition($fieldDefinition);
+    }
+
+    $field = BaseFieldDefinition::create('email')
+      ->setLabel(new TranslatableMarkup('Email'))
+      ->setTranslatable(FALSE)
+      ->setRevisionable(FALSE)
+      ->setSettings([
+        'max_length' => 255,
+      ])
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'readonly_field_widget',
+      ]);
+
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition('email', $entityType, 'helfi_tpr', $field);
+
+    // Mark migrate map as 'needs update'.
+    if (!$database->schema()->tableExists('migrate_map_' . $entityType)) {
+      return;
+    }
+    $database->update('migrate_map_' . $entityType)->fields([
+      'source_row_status' => MigrateIdMapInterface::STATUS_NEEDS_UPDATE,
+    ])->execute();
+  }
+}

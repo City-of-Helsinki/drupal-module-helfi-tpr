@@ -343,6 +343,7 @@ function helfi_tpr_update_8047() : void {
  */
 function helfi_tpr_update_8048() : void {
   $entityDefinitionManager = \Drupal::entityDefinitionUpdateManager();
+  $database = \Drupal::database();
 
   foreach (['tpr_unit', 'tpr_service_channel'] as $entityType) {
     $fieldDefinition = $entityDefinitionManager->getFieldStorageDefinition('email', $entityType);
@@ -367,5 +368,13 @@ function helfi_tpr_update_8048() : void {
 
     \Drupal::entityDefinitionUpdateManager()
       ->installFieldStorageDefinition('email', $entityType, 'helfi_tpr', $field);
+
+    // Mark migrate map as 'needs update'.
+    if (!$database->schema()->tableExists('migrate_map_' . $entityType)) {
+      return;
+    }
+    $database->update('migrate_map_' . $entityType)->fields([
+      'source_row_status' => MigrateIdMapInterface::STATUS_NEEDS_UPDATE,
+    ])->execute();
   }
 }

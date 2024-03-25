@@ -1,54 +1,38 @@
 msgid ""
 msgstr ""
 
-msgctxt "TPR unit also offers service in Swedish"
-msgid "Service in Swedish"
-msgstr "Ruotsinkielistä palvelua"
+msgid "Additional information"
+msgstr "Lisätietoja"
 
-msgid "Visiting address"
-msgstr "Käyntiosoite"
+msgid "Call charge"
+msgstr "Hinta"
 
-msgid "Opening hours"
-msgstr "Aukioloajat"
+msgid "Call charge info"
+msgstr "Hinnan lisätiedot"
 
-msgid "Postal address"
-msgstr "Postiosoite"
-
-msgid "Website link"
-msgstr "Verkkosivun linkki"
-
-msgid "Show website link"
-msgstr "Näytä verkkosivun linkki"
-
-msgid "Process description"
-msgstr "Prosessin kuvaus"
-
-msgid "Processing time"
-msgstr "Käsittelyaika"
-
-msgid "Expiration time"
-msgstr "Voimassaoloaika"
+msgid "Charges"
+msgstr "Hinnat"
 
 msgid "Costs"
 msgstr "Maksut"
 
-msgid "Additional information"
-msgstr "Lisätietoja"
+msgid "Description summary"
+msgstr "Kuvauksen yhteenveto"
 
-msgid "Requires authentication"
-msgstr "Vaatii tunnistautumisen"
+msgid "Expiration time"
+msgstr "Voimassaoloaika"
+
+msgid "Further information"
+msgstr "Lisätietoja"
 
 msgid "Important links"
 msgstr "Tärkeitä linkkejä"
 
-msgid "The general programme or study programme"
-msgstr "Yleislukio tai -linja"
+msgid "Opening hours"
+msgstr "Aukioloajat"
 
-msgid "The upper secondary school for adults or a study programme"
-msgstr "Aikuislukio tai -linja"
-
-msgid "Service map embed"
-msgstr "Palvelukartan upotus"
+msgid "Other contact information"
+msgstr "Muut yhteystiedot"
 
 msgid "Override: @field_name"
 msgstr "Ylikirjoita arvo kentälle: @field_name"
@@ -56,17 +40,56 @@ msgstr "Ylikirjoita arvo kentälle: @field_name"
 msgid "Override: Picture"
 msgstr "Oletuskuvan korvaava kuva"
 
-msgid "Further information"
-msgstr "Lisätietoja"
+msgid "Process description"
+msgstr "Prosessin kuvaus"
 
-msgid "Charges"
-msgstr "Hinnat"
+msgid "Processing time"
+msgstr "Käsittelyaika"
+
+msgid "Postal address"
+msgstr "Postiosoite"
+
+msgid "Requires authentication"
+msgstr "Vaatii tunnistautumisen"
+
+msgid "Service map embed"
+msgstr "Palvelukartan upotus"
+
+msgid "Show website link"
+msgstr "Näytä verkkosivun linkki"
+
+msgid "The general programme or study programme"
+msgstr "Yleislukio tai -linja"
+
+msgid "The upper secondary school for adults or a study programme"
+msgstr "Aikuislukio tai -linja"
+
+msgid "TPR - Errand Service entities"
+msgstr "TPR - Asiointipalvelut"
+
+msgid "TPR - Ontology word details entities"
+msgstr "TPR - Palvelukanava"
+
+msgid "TPR - Service channel"
+msgstr "TPR - Palvelukanava"
+
+msgid "TPR - Service channel entities"
+msgstr "TPR - Palvelukanavat"
+
+msgid "TPR - Service entities"
+msgstr "TPR - Palvelut"
+
+msgid "TPR - Unit entities"
+msgstr "TPR - Toimipisteet"
+
+msgid "Visiting address"
+msgstr "Käyntiosoite"
+
+msgid "Website link"
+msgstr "Verkkosivun linkki"
 
 msgid "Web sites"
 msgstr "Muualla verkossa"
-
-msgid "Other contact information"
-msgstr "Muut yhteystiedot"
 
 msgctxt "Service channel type verb"
 msgid "Use the online service"
@@ -107,6 +130,10 @@ msgstr "Lähetä tekstiviesti"
 msgctxt "Service channel type verb"
 msgid "Send us a telefax"
 msgstr "Lähetä faksia"
+
+msgctxt "TPR unit also offers service in Swedish"
+msgid "Service in Swedish"
+msgstr "Ruotsinkielistä palvelua"
 
 msgctxt "TPR Unit field label"
 msgid "Topical"

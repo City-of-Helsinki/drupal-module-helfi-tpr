@@ -139,7 +139,10 @@ process:
     plugin: default_value
     default_value: plain_text
   www/uri: www
-  description/value: desc
+  description/value:
+    plugin: default_value
+    source: desc
+    default_value: ''
   description/summary: short_desc
   service_map_embed: id
   latitude: latitude

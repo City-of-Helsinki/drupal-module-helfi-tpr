@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\helfi_tpr\Functional\Plugin\Field\FieldFormatter;
 
+use Drupal\Tests\helfi_api_base\Functional\MigrationTestBase;
 use Drupal\helfi_tpr\Entity\TprEntityBase;
 use Drupal\helfi_tpr\Entity\Unit;
-use Drupal\Tests\helfi_api_base\Functional\MigrationTestBase;
 
 /**
  * Base class to test TPR field formatters.

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\helfi_tpr\Kernel;
 
+use Drupal\Tests\media\Traits\MediaTypeCreationTrait;
 use Drupal\file\Entity\File;
 use Drupal\helfi_tpr\Entity\Unit;
 use Drupal\media\Entity\Media;
-use Drupal\Tests\media\Traits\MediaTypeCreationTrait;
 
 /**
  * Tests custom tokens.

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Drupal\Tests\helfi_tpr\Functional;
 
 use Drupal\Core\Url;
-use Drupal\helfi_tpr\Entity\Unit;
 use Drupal\Tests\helfi_tpr\Traits\TprMigrateTrait;
+use Drupal\helfi_tpr\Entity\Unit;
 
 /**
  * Tests unit revisions.

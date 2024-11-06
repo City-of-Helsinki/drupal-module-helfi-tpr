@@ -6,10 +6,10 @@ namespace Drupal\Tests\helfi_tpr\Kernel\Plugin\Field\FieldType;
 
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Tests\field\Kernel\FieldKernelTestBase;
 use Drupal\entity_test\Entity\EntityTest;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\Tests\field\Kernel\FieldKernelTestBase;
 
 /**
  * Tests accessibility sentence field.

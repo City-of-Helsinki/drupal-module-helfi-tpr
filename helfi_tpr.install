@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-use Drupal\content_translation\ContentTranslationHandler;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\content_translation\ContentTranslationHandler;
 use Drupal\helfi_tpr\Entity\ChannelTypeCollection;
 use Drupal\migrate\Plugin\MigrateIdMapInterface;
 

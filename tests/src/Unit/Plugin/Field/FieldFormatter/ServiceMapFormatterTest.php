@@ -10,10 +10,10 @@ use Drupal\Core\Field\FieldItemList;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldTypePluginManagerInterface;
 use Drupal\Core\TypedData\TraversableTypedDataInterface;
+use Drupal\Tests\UnitTestCase;
 use Drupal\helfi_api_base\Entity\RemoteEntityBase;
 use Drupal\helfi_tpr\Entity\Unit;
 use Drupal\helfi_tpr\Plugin\Field\FieldFormatter\ServiceMapFormatter;
-use Drupal\Tests\UnitTestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 /**

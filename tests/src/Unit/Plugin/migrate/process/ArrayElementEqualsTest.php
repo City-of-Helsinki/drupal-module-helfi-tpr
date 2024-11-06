@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\helfi_tpr\Unit\Plugin\migrate\process;
 
+use Drupal\Tests\UnitTestCase;
 use Drupal\helfi_tpr\Field\Connection\OpeningHour;
 use Drupal\helfi_tpr\Field\Connection\OpeningHourObject;
 use Drupal\helfi_tpr\Plugin\migrate\process\ArrayElementEquals;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Row;
-use Drupal\Tests\UnitTestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 /**

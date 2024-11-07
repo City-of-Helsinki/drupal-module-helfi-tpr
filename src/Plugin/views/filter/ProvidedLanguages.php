@@ -20,7 +20,7 @@ class ProvidedLanguages extends InOperator {
   /**
    * {@inheritdoc}
    */
-  public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL): void {
+  public function init(ViewExecutable $view, DisplayPluginBase $display, ?array &$options = NULL): void {
     parent::init($view, $display, $options);
     $this->valueTitle = (string) $this->t('Allowed languages');
     $this->definition['options callback'] = [$this, 'generateOptions'];

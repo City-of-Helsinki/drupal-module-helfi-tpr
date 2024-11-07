@@ -67,7 +67,7 @@ abstract class MigrationTestBase extends ApiMigrationTestBase {
   protected function getMigrateMapRowHash(
     string $migrationId,
     int|string $sourceId,
-    string $language
+    string $language,
   ) : ? string {
     /** @var \Drupal\Core\Database\Connection $database */
     $database = $this->container->get('database');
@@ -97,7 +97,7 @@ abstract class MigrationTestBase extends ApiMigrationTestBase {
     string $migrationId,
     string $expected,
     int|string $sourceId,
-    string $language
+    string $language,
   ) {
     $this->assertEquals($expected, $this->getMigrateMapRowHash($migrationId, $sourceId, $language));
   }

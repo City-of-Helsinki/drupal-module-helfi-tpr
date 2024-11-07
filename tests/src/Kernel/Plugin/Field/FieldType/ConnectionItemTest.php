@@ -6,11 +6,11 @@ namespace Drupal\Tests\helfi_tpr\Kernel\Plugin\Field\FieldType;
 
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Tests\field\Kernel\FieldKernelTestBase;
 use Drupal\entity_test\Entity\EntityTest;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\helfi_tpr\Field\Connection\OpeningHour;
-use Drupal\Tests\field\Kernel\FieldKernelTestBase;
 
 /**
  * Tests connection item field.

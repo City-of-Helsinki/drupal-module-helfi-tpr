@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\helfi_tpr\Functional;
 
-use donatj\MockWebServer\Response;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\TranslatableInterface;
 use Drupal\helfi_tpr\Entity\Service;
+use donatj\MockWebServer\Response;
 
 /**
  * Tests Service entity's list functionality.

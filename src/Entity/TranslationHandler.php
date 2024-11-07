@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\Entity;
 
-use Drupal\content_translation\ContentTranslationHandler;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\content_translation\ContentTranslationHandler;
 
 /**
  * Translation handler for TPR entities.

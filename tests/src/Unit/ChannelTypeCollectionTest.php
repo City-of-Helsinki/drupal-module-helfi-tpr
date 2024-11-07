@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Drupal\Tests\helfi_tpr\Unit;
 
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Tests\UnitTestCase;
 use Drupal\helfi_tpr\Entity\ChannelType;
 use Drupal\helfi_tpr\Entity\ChannelTypeCollection;
-use Drupal\Tests\UnitTestCase;
 
 /**
  * Tests connection value objects.

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\helfi_tpr\Unit;
 
+use Drupal\Tests\UnitTestCase;
 use Drupal\helfi_tpr\Field\Connection\Highlight;
 use Drupal\helfi_tpr\Field\Connection\Link;
 use Drupal\helfi_tpr\Field\Connection\OpeningHour;
@@ -14,8 +15,6 @@ use Drupal\helfi_tpr\Field\Connection\Price;
 use Drupal\helfi_tpr\Field\Connection\Subgroup;
 use Drupal\helfi_tpr\Field\Connection\TextWithLink;
 use Drupal\helfi_tpr\Field\Connection\Topical;
-
-use Drupal\Tests\UnitTestCase;
 
 /**
  * Tests connection value objects.

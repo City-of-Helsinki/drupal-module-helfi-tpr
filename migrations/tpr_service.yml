@@ -35,7 +35,10 @@ process:
     source: links
     process:
       title: title
-      uri: url
+      uri:
+        plugin: callback
+        callable: trim
+        source: url
 destination:
   plugin: translatable_entity:tpr_service
   default_values:

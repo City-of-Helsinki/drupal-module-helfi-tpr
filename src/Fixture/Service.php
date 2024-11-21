@@ -49,12 +49,12 @@ final class Service extends FixtureBase {
             [
               'type' => 'INTERNET',
               'title' => sprintf('0: %s link title %s', $language, $id),
-              'url' => sprintf('https://localhost/1/%s/%s', $language, $id),
+              'url' => sprintf('https://localhost/0/%s/%s', $language, $id),
             ],
             [
               'type' => 'INTERNET',
               'title' => sprintf('1: %s link title %s', $language, $id),
-              'url' => sprintf('https://localhost/2/%s/%s', $language, $id),
+              'url' => sprintf(' https://localhost/1/%s/%s ', $language, $id),
             ],
           ],
           'unit_ids' => $id != 2 ? [] : [
@@ -104,7 +104,7 @@ Palvelu on maksutonta.',
           [
             'type' => 'INTERNET',
             'title' => 'Lue lisää digituesta Helsingissä',
-            'url' => 'https://digituki.hel.fi/fi/',
+            'url' => ' https://digituki.hel.fi/fi/ ',
             'file_format' => 'HTML',
           ],
         ],

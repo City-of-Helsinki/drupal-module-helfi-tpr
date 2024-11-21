@@ -75,6 +75,7 @@ class ServiceMigrationTest extends MigrationTestBase {
 
         for ($i = 0; $i < 2; $i++) {
           $this->assertEquals(sprintf('%s: %s link title %s', $i, $langcode, $translation->id()), $translation->get('links')->get($i)->title);
+          $this->assertEquals(sprintf('https://localhost/%s/%s/%s', $i, $langcode, $translation->id()), $translation->get('links')->get($i)->uri);
         }
 
         $this->assertEquals(sprintf('Description short %s %s', $langcode, $translation->id()), $translation->get('description')->summary);

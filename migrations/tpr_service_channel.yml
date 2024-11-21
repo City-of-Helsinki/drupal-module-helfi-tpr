@@ -17,8 +17,14 @@ process:
   id: id
   type: type
   type_string: type_string
-  email: email
-  phone: phone
+  email:
+    plugin: callback
+    callable: trim
+    source: email
+  phone:
+    plugin: callback
+    callable: trim
+    source: phone
   availabilities:
     plugin: sub_process
     source: availabilities
@@ -29,7 +35,10 @@ process:
     source: links
     process:
       title: title
-      uri: url
+      uri:
+        plugin: callback
+        callable: trim
+        source: url
   address/address_line1: personal_service_street_addr
   address/postal_code: personal_service_postal_code
   address/locality: personal_service_city

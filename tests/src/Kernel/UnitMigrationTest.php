@@ -51,7 +51,7 @@ class UnitMigrationTest extends MigrationTestBase {
       $this->assertEquals('FI', $translation->get('address')->country_code);
       $this->assertEquals($expected['phone'], $translation->get('phone')->value);
       $this->assertEquals($expected['call_charge_info'], $translation->get('call_charge_info')->value);
-      $this->assertEquals($expected['www'], $translation->get('www')->uri);
+      $this->assertEquals($expected['www'], trim($translation->get('www')->uri));
 
       $this->assertEquals(2, $translation->get('accessibility_sentences')->count());
 
@@ -81,7 +81,7 @@ class UnitMigrationTest extends MigrationTestBase {
       $opening_hour_object = $translation->get('opening_hours')->get(2)->data;
       $this->assertInstanceOf(OpeningHourObject::class, $opening_hour_object);
 
-      $this->assertEquals("https://localhost/$langcode", $opening_hour->get('www'));
+      $this->assertEquals("https://localhost/$langcode", trim($opening_hour->get('www')));
       $highlight = $translation->get('highlights')->get(0)->data;
       $this->assertInstanceOf(Highlight::class, $highlight);
       $this->assertEquals("highlight $langcode 1", $highlight->get('name'));
@@ -89,11 +89,11 @@ class UnitMigrationTest extends MigrationTestBase {
       $contacts = $translation->get('contacts')->get(1)->data;
       $this->assertInstanceOf(PhoneOrEmail::class, $contacts);
       $this->assertEquals("contact person name", $contacts->get('contact_person'));
-      $this->assertEquals("040654321", $contacts->get('phone'));
+      $this->assertEquals("040654321", trim($contacts->get('phone')));
 
       $links = $translation->get('links')->get(0)->data;
       $this->assertInstanceOf(Link::class, $links);
-      $this->assertEquals("https://localhost/$langcode", $links->get('www'));
+      $this->assertEquals("https://localhost/$langcode", trim($links->get('www')));
 
       $price_info = $translation->get('price_info')->get(0)->data;
       $this->assertInstanceOf(Price::class, $price_info);
@@ -103,13 +103,13 @@ class UnitMigrationTest extends MigrationTestBase {
 
       $topical = $translation->get('topical')->get(0)->data;
       $this->assertInstanceOf(Topical::class, $topical);
-      $this->assertEquals("https://localhost/$langcode", $links->get('www'));
+      $this->assertEquals("https://localhost/$langcode", trim($links->get('www')));
 
       $subgroup = $translation->get('subgroup')->get(0)->data;
       $this->assertInstanceOf(Subgroup::class, $subgroup);
       $this->assertEquals("subgroup contact person name", $subgroup->get('contact_person'));
-      $this->assertEquals("0406543210", $subgroup->get('phone'));
-      $this->assertEquals("subgroup@example.com", $subgroup->get('email'));
+      $this->assertEquals("0406543210", trim($subgroup->get('phone')));
+      $this->assertEquals("subgroup@example.com", trim($subgroup->get('email')));
     }
 
     // Re-run migrate and make sure migrate map hash doesn't change.

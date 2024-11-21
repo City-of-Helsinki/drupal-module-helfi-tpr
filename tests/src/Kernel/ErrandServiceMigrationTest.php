@@ -65,7 +65,7 @@ class ErrandServiceMigrationTest extends MigrationTestBase {
         foreach ($fixture->getFields() as $field) {
           $this->assertEquals(
             sprintf('%s %s %s', $field, $langcode, $translation->id()),
-            trim($translation->get($field)->value)
+            $translation->get($field)->value
           );
         }
 
@@ -73,7 +73,7 @@ class ErrandServiceMigrationTest extends MigrationTestBase {
           /** @var \Drupal\link\Plugin\Field\FieldType\LinkItem $link */
           $link = $translation->get('links')->get($i);
           $this->assertEquals(sprintf('%s:%s link title %s', $i, $langcode, $translation->id()), $link->title);
-          $this->assertEquals(sprintf('https://localhost/%s/%s/%s', $i, $langcode, $translation->id()), trim($link->uri));
+          $this->assertEquals(sprintf('https://localhost/%s/%s/%s', $i, $langcode, $translation->id()), $link->uri);
         }
       }
     }

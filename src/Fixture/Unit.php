@@ -574,7 +574,7 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
             'name_fi' => 'open fi 2',
             'name_en' => 'open en 2',
             'name_sv' => 'open sv 2',
-            'www_fi' => ' https://localhost/fi ',
+            'www_fi' => 'https://localhost/fi',
             'www_en' => 'https://localhost/en',
             'www_sv' => 'https://localhost/sv',
           ],
@@ -698,7 +698,7 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
             'name_sv' => 'subgroup sv 1',
             'contact_person' => 'subgroup contact person name',
             'phone' => '0406543210',
-            'email' => 'subgroup@example.com ',
+            'email' => 'subgroup@example.com',
           ],
           [
             'unit_id' => 1,

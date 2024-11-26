@@ -139,9 +139,13 @@ process:
     plugin: default_value
     default_value: plain_text
   www/uri:
-    plugin: callback
-    callable: trim
-    source: www
+    -
+      plugin: default_value
+      default_value: ''
+      source: www
+    -
+      plugin: callback
+      callable: trim
   description/value:
     plugin: default_value
     source: desc
@@ -151,13 +155,21 @@ process:
   latitude: latitude
   longitude: longitude
   streetview_entrance_url/uri:
-    plugin: callback
-    callable: trim
-    source: streetview_entrance_url
+    -
+      plugin: default_value
+      default_value: ''
+      source: streetview_entrance_url
+    -
+      plugin: callback
+      callable: trim
   picture_url:
-    plugin: callback
-    callable: trim
-    source: picture_url
+    -
+      plugin: default_value
+      default_value: ''
+      source: picture_url
+    -
+      plugin: callback
+      callable: trim
   description/format:
     plugin: default_value
     default_value: plain_text
@@ -178,9 +190,13 @@ process:
       plugin: callback
       callable: trim
   email:
-    plugin: callback
-    callable: trim
-    source: email
+    -
+      plugin: default_value
+      default_value: ''
+      source: email
+    -
+      plugin: callback
+      callable: trim
   provided_languages: provided_languages
   changed:
     -

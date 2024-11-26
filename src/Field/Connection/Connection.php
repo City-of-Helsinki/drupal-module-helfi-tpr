@@ -55,7 +55,7 @@ abstract class Connection {
     if (!is_scalar($value) && !is_null($value)) {
       throw new \InvalidArgumentException(sprintf('Only scalar or null values allowed for "%s".', $field));
     }
-    $this->data[$field] = $value;
+    $this->data[$field] = trim($value);
 
     return $this;
   }

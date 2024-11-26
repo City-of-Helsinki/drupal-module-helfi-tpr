@@ -54,7 +54,12 @@ final class Service extends FixtureBase {
             [
               'type' => 'INTERNET',
               'title' => sprintf('1: %s link title %s', $language, $id),
-              'url' => sprintf(' https://localhost/1/%s/%s ', $language, $id),
+              'url' => sprintf('https://localhost/1/%s/%s', $language, $id),
+            ],
+            [
+              'type' => 'INTERNET',
+              'title' => sprintf('2: %s broken link title %s', $language, $id),
+              'url' => sprintf(' https://localhost/2/%s/%s ', $language, $id),
             ],
           ],
           'unit_ids' => $id != 2 ? [] : [
@@ -82,7 +87,7 @@ final class Service extends FixtureBase {
 
 Digituen antajat ovat kaupungin työntekijöitä tai koulutettuja vapaaehtoisia.
 Palvelu on maksutonta.',
-        'servicemap_url' => 'https://palvelukartta.hel.fi/fi/search?service_node=341&organization=83e74666-0836-4c1d-948a-4b34a8b90301',
+        'servicemap_url' => 'https://palvelukartta.hel.fi/fi/search?service_node=341&organization=83e74666-0836-4c1d-948a-4b34a8b90301 ',
         'general_description_id' => '18510b60-1bb5-43a6-82f2-32b7530351a4',
         'provided_languages' => [
           'en',
@@ -216,7 +221,7 @@ Lisätietoja parklet-luvan hakemisesta saat Lue lisää-kohdan linkistä.',
           [
             'type' => 'INTERNET',
             'title' => 'Pysäköintipaikkojen parklet-käyttö',
-            'url' => 'https://www.hel.fi/helsinki/fi/asuminen-ja-ymparisto/tontit/luvat/terassit-ja-parkletit/parkletit/',
+            'url' => 'https://www.hel.fi/helsinki/fi/asuminen-ja-ymparisto/tontit/luvat/terassit-ja-parkletit/parkletit/ ',
           ],
         ],
         'availabilities' => [],

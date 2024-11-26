@@ -57,7 +57,7 @@ final class ErrandService extends FixtureBase {
             'url' => sprintf('https://localhost/1/%s/%s', $language, $id),
           ],
           [
-            'title' => sprintf('2:%s broken link title %s', $language, $id),
+            'title' => sprintf('2:%s link title %s', $language, $id),
             'url' => sprintf(' https://localhost/2/%s/%s ', $language, $id),
           ],
         ];

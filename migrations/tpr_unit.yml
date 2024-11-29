@@ -138,7 +138,14 @@ process:
   call_charge_info/format:
     plugin: default_value
     default_value: plain_text
-  www/uri: www
+  www/uri:
+    -
+      plugin: default_value
+      default_value: ''
+      source: www
+    -
+      plugin: callback
+      callable: trim
   description/value:
     plugin: default_value
     source: desc
@@ -147,8 +154,22 @@ process:
   service_map_embed: id
   latitude: latitude
   longitude: longitude
-  streetview_entrance_url/uri: streetview_entrance_url
-  picture_url: picture_url
+  streetview_entrance_url/uri:
+    -
+      plugin: default_value
+      default_value: ''
+      source: streetview_entrance_url
+    -
+      plugin: callback
+      callable: trim
+  picture_url:
+    -
+      plugin: default_value
+      default_value: ''
+      source: picture_url
+    -
+      plugin: callback
+      callable: trim
   description/format:
     plugin: default_value
     default_value: plain_text
@@ -160,11 +181,22 @@ process:
     plugin: default_value
     default_value: FI
   phone:
-    plugin: explode
-    source: phone
-    delimiter: ','
-    strict: false
-  email: email
+    -
+      plugin: explode
+      source: phone
+      delimiter: ','
+      strict: false
+    -
+      plugin: callback
+      callable: trim
+  email:
+    -
+      plugin: default_value
+      default_value: ''
+      source: email
+    -
+      plugin: callback
+      callable: trim
   provided_languages: provided_languages
   changed:
     -

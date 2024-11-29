@@ -52,7 +52,7 @@ final class ChannelTypeCollection implements \ArrayAccess, \Iterator, \Countable
    * @param array $items
    *   The items to create.
    *
-   * @return $this
+   * @return self
    *   The self.
    */
   public static function createFromArray(array $items = []) : self {
@@ -70,7 +70,7 @@ final class ChannelTypeCollection implements \ArrayAccess, \Iterator, \Countable
   /**
    * Gets all channel types.
    *
-   * @return $this
+   * @return self
    *   The self.
    */
   public static function all() : self {

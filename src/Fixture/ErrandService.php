@@ -56,6 +56,10 @@ final class ErrandService extends FixtureBase {
             'title' => sprintf('1:%s link title %s', $language, $id),
             'url' => sprintf('https://localhost/1/%s/%s', $language, $id),
           ],
+          [
+            'title' => sprintf('2:%s link title %s', $language, $id),
+            'url' => sprintf(' https://localhost/2/%s/%s ', $language, $id),
+          ],
         ];
 
         $channelId = $id * 3;
@@ -68,8 +72,8 @@ final class ErrandService extends FixtureBase {
             'id' => $channelId,
             'name' => sprintf('Channel %s %s %s', $id, $language, $channelId),
             'type_string' => sprintf('%s email %s %s', $id, $language, $channelId),
-            'email' => sprintf('%s.email.%s.%s@hel.fi', $id, $language, $channelId),
-            'phone' => sprintf('%s-123456-%s-%s', $id, $language, $channelId),
+            'email' => sprintf(' %s.email.%s.%s@hel.fi ', $id, $language, $channelId),
+            'phone' => sprintf(' %s-123456-%s-%s ', $id, $language, $channelId),
             'call_charge_info' => sprintf('call_charge_info %s %s %s', $id, $language, $channelId),
             'information' => sprintf('information %s %s %s', $id, $language, $channelId),
             'availabilities' => [
@@ -88,6 +92,10 @@ final class ErrandService extends FixtureBase {
               [
                 'title' => sprintf('1:%s:%s link title %s', $id, $language, $channelId),
                 'url' => sprintf('https://localhost/1/%s/%s/%s', $id, $language, $channelId),
+              ],
+              [
+                'title' => sprintf('2:%s:%s link title %s', $id, $language, $channelId),
+                'url' => sprintf(' https://localhost/2/%s/%s/%s ', $id, $language, $channelId),
               ],
             ],
             'type' => 'EMAIL',

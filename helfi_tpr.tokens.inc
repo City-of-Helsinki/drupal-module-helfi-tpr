@@ -9,10 +9,12 @@ use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\helfi_tpr\Entity\Service;
 use Drupal\helfi_tpr\Entity\Unit;
 
+declare(strict_types=1);
+
 /**
  * Implements hook_token_info().
  */
-function helfi_tpr_token_info() {
+function helfi_tpr_token_info(): array {
   $info = [];
 
   $entity_types = [
@@ -64,8 +66,8 @@ function helfi_tpr_tokens(
   $tokens,
   array $data,
   array $options,
-  BubbleableMetadata $bubbleable_metadata
-) {
+  BubbleableMetadata $bubbleable_metadata,
+): array {
   $entity_types = [
     'tpr_unit',
     'tpr_service',

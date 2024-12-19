@@ -5,11 +5,11 @@
  * Contains token data for helfi_tpr.
  */
 
+declare(strict_types=1);
+
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\helfi_tpr\Entity\Service;
 use Drupal\helfi_tpr\Entity\Unit;
-
-declare(strict_types=1);
 
 /**
  * Implements hook_token_info().

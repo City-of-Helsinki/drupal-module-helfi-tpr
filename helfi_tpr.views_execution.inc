@@ -5,6 +5,8 @@
  * Views alter for helfi_tpr.
  */
 
+declare(strict_types=1);
+
 use Drupal\Core\Entity\EntityType;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ViewExecutable;

@@ -45,11 +45,8 @@ class ChannelEntityTest extends MigrationTestBase {
   public function testEntityDeletion() : void {
     $entity = $this->getEntity(1);
 
-    // Test that the entity is not deleted.
-    // See Drupal\helfi_tpr\Entity\TprEntityBase::delete() for more
-    // information.
     $entity->delete();
-    $this->assertNotEquals(NULL, Channel::load(1));
+    $this->assertEquals(NULL, Channel::load(1));
   }
 
 }

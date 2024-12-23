@@ -180,4 +180,71 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     return $fields;
   }
 
+  public function delete(bool $forceDelete = FALSE): void {
+    if ($this->helfi_tpr_entity_exists()) {
+      \Drupal::messenger()->addWarning(
+        t('Cannot delete TPR-entity which still exists in API.')
+      );
+      return;
+    }
+
+    parent::delete($forceDelete);
+  }
+
+  /**
+   * Check if the entity being deleted exists in the API.
+   *
+   * @param EntityInterface $entity
+   *   Tpr-entity
+   *
+   * @return bool
+   *   The entity exists in api.
+   */
+  private function helfi_tpr_entity_exists() : bool {
+    $entityTypeId = $this->getEntityTypeId();
+
+    /** @var \Drupal\migrate\Plugin\MigrationPluginManager $x */
+    $migrationPluginManager = \Drupal::service('plugin.manager.migration');
+    $url = $migrationPluginManager->getDefinition($entityTypeId)['source']['url'];
+
+    if (!$url) {
+      return TRUE;
+    }
+
+    $entity_url = sprintf(
+      '%s/%s%s',
+      strtok($url, '?'),
+      $this->id(),
+      "?language={$this->language()->getId()}"
+    );
+
+    try {
+      $response = \Drupal::httpClient()
+        ->get($entity_url);
+
+      $data = $response->getBody()
+        ->getContents();
+    }
+    catch(GuzzleException $e) {
+      \Drupal::logger('helfi_tpr')
+        ->error(
+          "Failed to verify if tpr-entity can be deleted -
+        ID: {$this->id()} - {$e->getMessage()}"
+        );
+      // Prevent from deleting.
+      return TRUE;
+    }
+
+    if (!json_validate($data) || $data === 'null') {
+      return FALSE;
+    }
+
+    $api_data = json_decode($data, TRUE);
+    if (isset($api_data['id']) && $api_data['id'] == $this->id()) {
+      return TRUE;
+    }
+
+    return FALSE;
+  }
+
 }

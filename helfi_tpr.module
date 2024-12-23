@@ -13,8 +13,6 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityPublishedInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\helfi_tpr\Entity\TprEntityBase;
-use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Implements hook_theme().

@@ -13,6 +13,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityPublishedInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountInterface;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Implements hook_theme().
@@ -233,6 +234,13 @@ function helfi_tpr_tpr_unit_access(EntityInterface $entity, $operation, AccountI
     return AccessResult::allowedIfHasPermission($account, 'view unpublished tpr_unit');
   }
 
+  if ($operation === 'delete') {
+    return AccessResult::forbiddenIf(
+      _helfi_tpr_entity_exists($entity),
+      'The tpr entity exists and should not be deleted.'
+    );
+  }
+
   return AccessResult::neutral();
 }
 
@@ -244,6 +252,13 @@ function helfi_tpr_tpr_service_access(EntityInterface $entity, $operation, Accou
   // Allow user to view unpublished Services based on permission.
   if ($operation === 'view' && !$entity->isPublished()) {
     return AccessResult::allowedIfHasPermission($account, 'view unpublished tpr_service');
+  }
+
+  if ($operation === 'delete') {
+    return AccessResult::forbiddenIf(
+      _helfi_tpr_entity_exists($entity),
+      'The tpr entity exists and should not be deleted.'
+    );
   }
 
   return AccessResult::neutral();
@@ -259,6 +274,13 @@ function helfi_tpr_tpr_service_channel_access(EntityInterface $entity, $operatio
     return AccessResult::allowedIfHasPermission($account, 'view unpublished tpr_service_channel');
   }
 
+  if ($operation === 'delete') {
+    return AccessResult::forbiddenIf(
+      _helfi_tpr_entity_exists($entity),
+      'The tpr entity exists and should not be deleted.'
+    );
+  }
+
   return AccessResult::neutral();
 }
 
@@ -270,6 +292,13 @@ function helfi_tpr_tpr_errand_service_access(EntityInterface $entity, $operation
   // Allow user to view unpublished Errand services based on permission.
   if ($operation === 'view' && !$entity->isPublished()) {
     return AccessResult::allowedIfHasPermission($account, 'view unpublished tpr_errand_service');
+  }
+
+  if ($operation === 'delete') {
+    return AccessResult::forbiddenIf(
+      _helfi_tpr_entity_exists($entity),
+      'The tpr entity exists and should not be deleted.'
+    );
   }
 
   return AccessResult::neutral();
@@ -298,4 +327,60 @@ function helfi_tpr_views_data_alter(&$data) : void {
     ],
   ];
 
+}
+
+/**
+ * Check if the entity being deleted exists in the API.
+ *
+ * @param EntityInterface $entity
+ *   Tpr-entity
+ *
+ * @return bool
+ *   The entity exists in api.
+ */
+function _helfi_tpr_entity_exists(EntityInterface $entity) : bool {
+  $entityTypeId = $entity->getEntityTypeId();
+
+  /** @var \Drupal\migrate\Plugin\MigrationPluginManager $x */
+  $migrationPluginManager = \Drupal::service('plugin.manager.migration');
+  $url = $migrationPluginManager->getDefinition($entityTypeId)['source']['url'];
+
+  if (!$url) {
+    return TRUE;
+  }
+
+  $entity_url = sprintf(
+    '%s/%s%s',
+    strtok($url, '?'),
+    $entity->id(),
+    "?language={$entity->language()->getId()}"
+  );
+
+  try {
+    $response = \Drupal::httpClient()
+      ->get($entity_url);
+
+    $data = $response->getBody()
+      ->getContents();
+  }
+  catch(GuzzleException $e) {
+    \Drupal::logger('helfi_tpr')
+      ->error(
+        "Failed to verify if tpr-entity can be deleted -
+        ID: {$entity->id()} - {$e->getMessage()}"
+      );
+    // Prevent from deleting.
+    return TRUE;
+  }
+
+  if (!json_validate($data) || $data === 'null') {
+    return FALSE;
+  }
+
+  $api_data = json_decode($data, TRUE);
+  if (isset($api_data['id']) && $api_data['id'] == $entity->id()) {
+    return TRUE;
+  }
+
+  return FALSE;
 }

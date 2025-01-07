@@ -11,11 +11,16 @@ use Drupal\Core\Entity\RevisionLogEntityTrait;
 use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Utility\Error;
 use Drupal\helfi_api_base\Entity\RemoteEntityBase;
 use Drupal\user\EntityOwnerInterface;
 use Drupal\user\EntityOwnerTrait;
+use GuzzleHttp\ClientTrait;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Defines the base class for all TPR entities.
@@ -26,6 +31,9 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   use BaseFieldTrait;
   use EntityPublishedTrait;
   use EntityOwnerTrait;
+  use StringTranslationTrait;
+  use LoggerChannelTrait;
+  use ClientTrait;
 
   /**
    * An array of overridable fields.
@@ -183,7 +191,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   public function delete(bool $forceDelete = FALSE): void {
     if ($this->helfi_tpr_entity_exists()) {
       \Drupal::messenger()->addWarning(
-        t('Cannot delete TPR-entity which still exists in API.')
+        $this->t('Cannot delete TPR-entity which still exists in the API.')
       );
       return;
     }
@@ -194,22 +202,14 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   /**
    * Check if the entity being deleted exists in the API.
    *
-   * @param EntityInterface $entity
-   *   Tpr-entity
-   *
    * @return bool
    *   The entity exists in api.
    */
   private function helfi_tpr_entity_exists() : bool {
     $entityTypeId = $this->getEntityTypeId();
-
-    /** @var \Drupal\migrate\Plugin\MigrationPluginManager $x */
+    /** @var \Drupal\migrate\Plugin\MigrationPluginManager $migrationPluginManager */
     $migrationPluginManager = \Drupal::service('plugin.manager.migration');
     $url = $migrationPluginManager->getDefinition($entityTypeId)['source']['url'];
-
-    if (!$url) {
-      return TRUE;
-    }
 
     $entity_url = sprintf(
       '%s/%s%s',
@@ -219,18 +219,12 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     );
 
     try {
-      $response = \Drupal::httpClient()
-        ->get($entity_url);
-
+      $response = $this->get($entity_url);
       $data = $response->getBody()
         ->getContents();
     }
-    catch(GuzzleException $e) {
-      \Drupal::logger('helfi_tpr')
-        ->error(
-          "Failed to verify if tpr-entity can be deleted -
-        ID: {$this->id()} - {$e->getMessage()}"
-        );
+    catch (GuzzleException $e) {
+      Error::logException($this->getLogger('helfi_tpr'), $e);
       // Prevent from deleting.
       return TRUE;
     }

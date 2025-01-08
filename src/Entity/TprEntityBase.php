@@ -19,7 +19,7 @@ use Drupal\Core\Utility\Error;
 use Drupal\helfi_api_base\Entity\RemoteEntityBase;
 use Drupal\user\EntityOwnerInterface;
 use Drupal\user\EntityOwnerTrait;
-use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\ClientException;
 
 /**
  * Defines the base class for all TPR entities.
@@ -249,7 +249,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
       $data = $response->getBody()
         ->getContents();
     }
-    catch (GuzzleException $e) {
+    catch (ClientException $e) {
       if ($e->getResponse()->getStatusCode() === 404) {
         return FALSE;
       }

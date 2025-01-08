@@ -208,7 +208,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
 
     if ($this->helfiTprEntityExists()) {
       \Drupal::messenger()->addWarning(
-        $this->t('Cannot delete TPR-entity which still exists in the API.')
+        $this->t('Cannot delete TPR-entity which still exists in the API')
       );
       return;
     }

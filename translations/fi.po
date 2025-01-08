@@ -146,3 +146,7 @@ msgstr "Nostot"
 msgctxt "TPR Unit field label"
 msgid "Contact details of daycare centre groups"
 msgstr "Päiväkotiryhmien yhteystiedot"
+
+msgctxt "TPR entity delete error "
+msgid "Cannot delete TPR-entity which still exists in the API"
+msgstr "Rajapinnasta löytyvää TPR-entiteettiä ei voida poistaa"

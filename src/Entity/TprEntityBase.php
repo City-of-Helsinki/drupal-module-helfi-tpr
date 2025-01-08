@@ -195,6 +195,9 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     return $fields;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function delete(bool $forceDelete = FALSE): void {
     if ($this->entityTypeId === 'tpr_service_channel') {
       \Drupal::messenger()->addWarning(
@@ -203,7 +206,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
       return;
     }
 
-    if ($this->helfi_tpr_entity_exists()) {
+    if ($this->helfiTprEntityExists()) {
       \Drupal::messenger()->addWarning(
         $this->t('Cannot delete TPR-entity which still exists in the API.')
       );
@@ -219,7 +222,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
    * @return bool
    *   The entity exists in api.
    */
-  private function helfi_tpr_entity_exists() : bool {
+  private function helfiTprEntityExists() : bool {
     $entityTypeId = $this->getEntityTypeId();
     /** @var \Drupal\migrate\Plugin\MigrationPluginManager $migrationPluginManager */
     $migrationPluginManager = \Drupal::service('plugin.manager.migration');

@@ -196,6 +196,13 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   }
 
   public function delete(bool $forceDelete = FALSE): void {
+    if ($this->entityTypeId === 'tpr_service_channel') {
+      \Drupal::messenger()->addWarning(
+        $this->t('Cannot verify whether service channel can be deleted.')
+      );
+      return;
+    }
+
     if ($this->helfi_tpr_entity_exists()) {
       \Drupal::messenger()->addWarning(
         $this->t('Cannot delete TPR-entity which still exists in the API.')
@@ -216,23 +223,34 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     $entityTypeId = $this->getEntityTypeId();
     /** @var \Drupal\migrate\Plugin\MigrationPluginManager $migrationPluginManager */
     $migrationPluginManager = \Drupal::service('plugin.manager.migration');
-    $url = $migrationPluginManager->getDefinition($entityTypeId)['source']['url'];
 
-    $entity_url = sprintf(
+    $urlMap = [
+      'tpr_errand_service' => 'canonical_url',
+      'tpr_ontology_word_details' => 'details_url',
+      'tpr_service' => 'canonical_url',
+      'tpr_unit' => 'url',
+    ];
+    $key = $urlMap[$entityTypeId];
+    $url = $migrationPluginManager->getDefinition($entityTypeId)['source'][$key];
+
+    $request_url = sprintf(
       '%s/%s%s',
-      strtok($url, '?'),
+      rtrim(strtok($url, '?'), '/'),
       $this->id(),
       "?language={$this->language()->getId()}"
     );
 
     try {
       $response = \Drupal::httpClient()
-        ->request('GET', $entity_url);
-
+        ->request('GET', $request_url);
       $data = $response->getBody()
         ->getContents();
     }
     catch (GuzzleException $e) {
+      if ($e->getResponse()->getStatusCode() === 404) {
+        return FALSE;
+      }
+
       Error::logException($this->getLogger('helfi_tpr'), $e);
       // Prevent from deleting.
       return TRUE;

@@ -19,7 +19,6 @@ use Drupal\Core\Utility\Error;
 use Drupal\helfi_api_base\Entity\RemoteEntityBase;
 use Drupal\user\EntityOwnerInterface;
 use Drupal\user\EntityOwnerTrait;
-use GuzzleHttp\ClientTrait;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
@@ -33,7 +32,6 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   use EntityOwnerTrait;
   use StringTranslationTrait;
   use LoggerChannelTrait;
-  use ClientTrait;
 
   /**
    * An array of overridable fields.
@@ -219,7 +217,9 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     );
 
     try {
-      $response = $this->get($entity_url);
+      $response = \Drupal::httpClient()
+        ->request('GET', $entity_url);
+      
       $data = $response->getBody()
         ->getContents();
     }

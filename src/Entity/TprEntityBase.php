@@ -55,10 +55,19 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
    * {@inheritdoc}
    */
   public function label() {
+    // @todo Fix after core issue has been resolved.
+    // https://www.drupal.org/project/drupal/issues/3423205
+    // Getting name_override after deletion causes exception
+    // because field does not exist when drupal is trying to log the deletion.
+    if (!isset($this->translations[$this->activeLangcode]['status'])) {
+      return parent::label();
+    }
+
     // Use overridden name field as default label when possible.
     if (!$this->get('name_override')->isEmpty()) {
       return $this->get('name_override')->value;
     }
+
     return parent::label();
   }
 
@@ -219,7 +228,7 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     try {
       $response = \Drupal::httpClient()
         ->request('GET', $entity_url);
-      
+
       $data = $response->getBody()
         ->getContents();
     }

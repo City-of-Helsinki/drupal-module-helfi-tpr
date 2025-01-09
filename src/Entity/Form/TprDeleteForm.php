@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\helfi_tpr\Entity\Form;
 
 use Drupal\Component\Datetime\TimeInterface;
@@ -12,8 +14,23 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Tpr-entity delete form.
+ */
 class TprDeleteForm extends ContentEntityDeleteForm {
 
+  /**
+   * The constructor.
+   *
+   * @param EntityRepositoryInterface $entity_repository
+   *   The entity repository.
+   * @param EntityTypeBundleInfoInterface $entity_type_bundle_info
+   *   The entity type bundle info interface.
+   * @param TimeInterface $time
+   *   The time interface.
+   * @param ClientInterface $http_client
+   *   The time interface.
+   */
   public function __construct(
     EntityRepositoryInterface $entity_repository,
     EntityTypeBundleInfoInterface $entity_type_bundle_info,
@@ -23,8 +40,10 @@ class TprDeleteForm extends ContentEntityDeleteForm {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
   }
 
-  public static function create(ContainerInterface $container)
-  {
+  /**
+   * {inheritDoc}
+   */
+  public static function create(ContainerInterface $container) {
     return new static(
       $container->get('entity.repository'),
       $container->get('entity_type.bundle.info'),

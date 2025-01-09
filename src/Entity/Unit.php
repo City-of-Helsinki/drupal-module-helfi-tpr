@@ -28,7 +28,7 @@ use Webmozart\Assert\Assert;
  *     "translation" = "Drupal\helfi_tpr\Entity\TranslationHandler",
  *     "form" = {
  *       "default" = "Drupal\helfi_tpr\Entity\Form\ContentEntityForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
+ *       "delete" = "Drupal\helfi_tpr\Entity\Form\TprDeleteForm",
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",

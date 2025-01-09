@@ -11,15 +11,12 @@ use Drupal\Core\Entity\RevisionLogEntityTrait;
 use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
-use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\Core\Utility\Error;
 use Drupal\helfi_api_base\Entity\RemoteEntityBase;
 use Drupal\user\EntityOwnerInterface;
 use Drupal\user\EntityOwnerTrait;
-use GuzzleHttp\Exception\ClientException;
 
 /**
  * Defines the base class for all TPR entities.
@@ -31,7 +28,6 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   use EntityPublishedTrait;
   use EntityOwnerTrait;
   use StringTranslationTrait;
-  use LoggerChannelTrait;
 
   /**
    * An array of overridable fields.
@@ -193,81 +189,6 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     }
 
     return $fields;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function delete(bool $forceDelete = FALSE): void {
-    if (isset($this->getEntityType()->getLinkTemplates()['delete-form'])) {
-      \Drupal::messenger()->addWarning(
-        $this->t('Entity is not deletable')
-      );
-    }
-
-    if ($this->helfiTprEntityExists()) {
-      \Drupal::messenger()->addWarning(
-        $this->t('Cannot delete TPR-entity which still exists in the API')
-      );
-      return;
-    }
-
-    parent::delete($forceDelete);
-  }
-
-  /**
-   * Check if the entity being deleted exists in the API.
-   *
-   * @return bool
-   *   The entity exists in api.
-   */
-  private function helfiTprEntityExists() : bool {
-    $entityTypeId = $this->getEntityTypeId();
-    /** @var \Drupal\migrate\Plugin\MigrationPluginManager $migrationPluginManager */
-    $migrationPluginManager = \Drupal::service('plugin.manager.migration');
-
-    $urlMap = [
-      'tpr_errand_service' => 'canonical_url',
-      'tpr_ontology_word_details' => 'details_url',
-      'tpr_service' => 'canonical_url',
-      'tpr_unit' => 'url',
-    ];
-    $key = $urlMap[$entityTypeId];
-    $url = $migrationPluginManager->getDefinition($entityTypeId)['source'][$key];
-
-    $request_url = sprintf(
-      '%s/%s%s',
-      rtrim(strtok($url, '?'), '/'),
-      $this->id(),
-      "?language={$this->language()->getId()}"
-    );
-
-    try {
-      $response = \Drupal::httpClient()
-        ->request('GET', $request_url);
-      $data = $response->getBody()
-        ->getContents();
-    }
-    catch (ClientException $e) {
-      if ($e->getResponse()->getStatusCode() === 404) {
-        return FALSE;
-      }
-
-      Error::logException($this->getLogger('helfi_tpr'), $e);
-      // Prevent from deleting.
-      return TRUE;
-    }
-
-    if (!json_validate($data) || $data === 'null') {
-      return FALSE;
-    }
-
-    $api_data = json_decode($data, TRUE);
-    if (isset($api_data['id']) && $api_data['id'] == $this->id()) {
-      return TRUE;
-    }
-
-    return FALSE;
   }
 
 }

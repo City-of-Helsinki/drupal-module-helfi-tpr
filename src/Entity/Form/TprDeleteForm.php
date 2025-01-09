@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Tpr-entity delete form.
  */
-class TprDeleteForm extends ContentEntityDeleteForm {
+final class TprDeleteForm extends ContentEntityDeleteForm {
 
   /**
    * The constructor.

@@ -191,6 +191,9 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     return $fields;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function delete(bool $forceDelete = FALSE): void {
     parent::delete(TRUE);
   }

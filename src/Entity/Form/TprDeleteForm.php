@@ -22,13 +22,13 @@ class TprDeleteForm extends ContentEntityDeleteForm {
   /**
    * The constructor.
    *
-   * @param EntityRepositoryInterface $entity_repository
+   * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
    *   The entity repository.
-   * @param EntityTypeBundleInfoInterface $entity_type_bundle_info
+   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
    *   The entity type bundle info interface.
-   * @param TimeInterface $time
+   * @param \Drupal\Component\Datetime\TimeInterface $time
    *   The time interface.
-   * @param ClientInterface $http_client
+   * @param \GuzzleHttp\ClientInterface $http_client
    *   The time interface.
    */
   public function __construct(
@@ -41,7 +41,7 @@ class TprDeleteForm extends ContentEntityDeleteForm {
   }
 
   /**
-   * {inheritDoc}
+   * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
@@ -53,7 +53,7 @@ class TprDeleteForm extends ContentEntityDeleteForm {
   }
 
   /**
-   * {inheritDoc}
+   * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     if ($this->helfiTprEntityExists()) {

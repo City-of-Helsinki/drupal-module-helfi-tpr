@@ -199,11 +199,10 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
    * {@inheritdoc}
    */
   public function delete(bool $forceDelete = FALSE): void {
-    if ($this->entityTypeId === 'tpr_service_channel') {
+    if (isset($this->getEntityType()->getLinkTemplates()['delete-form'])) {
       \Drupal::messenger()->addWarning(
-        $this->t('Cannot verify whether service channel can be deleted.')
+        $this->t('Entity is not deletable')
       );
-      return;
     }
 
     if ($this->helfiTprEntityExists()) {

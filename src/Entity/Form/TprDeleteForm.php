@@ -11,7 +11,6 @@ use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Utility\Error;
-use Drupal\helfi_tpr\Entity\TprEntityBase;
 use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
@@ -34,7 +33,7 @@ final class TprDeleteForm extends ContentEntityDeleteForm {
    *   The time interface.
    * @param \GuzzleHttp\ClientInterface $http_client
    *   The time interface.
-   * @param \Drupal\migrate\Plugin\MigrationPluginManagerInterface
+   * @param \Drupal\migrate\Plugin\MigrationPluginManagerInterface $migration_manager
    *   The migration plugin manager
    */
   public function __construct(

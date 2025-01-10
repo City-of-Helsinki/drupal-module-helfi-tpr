@@ -189,4 +189,19 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
     return $fields;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function delete(bool $forceDelete = FALSE) : void {
+    if (!$forceDelete) {
+      \Drupal::logger('helfi_api_base')
+        ->notice('Prevented deleting entity @type with ID @id. Deleting Remote entities without "delete-form" is disabled. This can be overridden by calling ::delete() with forceDelete = TRUE.',
+          [
+            '@id' => $this->id(),
+            '@type' => $this->getEntityTypeId(),
+          ]);
+      return;
+    }
+  }
+
 }

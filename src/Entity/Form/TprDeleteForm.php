@@ -31,6 +31,8 @@ final class TprDeleteForm extends ContentEntityDeleteForm {
    *   The time interface.
    * @param \GuzzleHttp\ClientInterface $http_client
    *   The time interface.
+   * @param \Drupal\migrate\Plugin\MigrationPluginManagerInterface
+   *   The migration plugin manager
    */
   public function __construct(
     EntityRepositoryInterface $entity_repository,

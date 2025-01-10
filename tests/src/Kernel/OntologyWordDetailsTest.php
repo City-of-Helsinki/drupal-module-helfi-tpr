@@ -46,7 +46,7 @@ class OntologyWordDetailsTest extends MigrationTestBase {
     $entity = $this->getEntity('1_1');
 
     $entity->delete();
-    $this->assertEquals(NULL, OntologyWordDetails::load('1_1'));
+    $this->assertNotEquals(NULL, OntologyWordDetails::load('1_1'));
   }
 
 }

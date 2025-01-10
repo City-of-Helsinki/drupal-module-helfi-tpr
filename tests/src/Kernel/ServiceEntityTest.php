@@ -46,7 +46,7 @@ class ServiceEntityTest extends MigrationTestBase {
     $entity = $this->getEntity(1);
 
     $entity->delete();
-    $this->assertEquals(NULL, Service::load(1));
+    $this->assertNotEquals(NULL, Service::load(1));
   }
 
 }

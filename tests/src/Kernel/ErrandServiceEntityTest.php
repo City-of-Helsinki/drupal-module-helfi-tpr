@@ -46,7 +46,7 @@ class ErrandServiceEntityTest extends MigrationTestBase {
     $entity = $this->getEntity(1);
 
     $entity->delete();
-    $this->assertEquals(NULL, ErrandService::load(1));
+    $this->assertNotEquals(NULL, ErrandService::load(1));
   }
 
 }

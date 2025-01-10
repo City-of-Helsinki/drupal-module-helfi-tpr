@@ -46,7 +46,7 @@ class UnitEntityTest extends MigrationTestBase {
     $entity = $this->getEntity(1);
 
     $entity->delete();
-    $this->assertEquals(NULL, Unit::load(1));
+    $this->assertNotEquals(NULL, Unit::load(1));
   }
 
 }

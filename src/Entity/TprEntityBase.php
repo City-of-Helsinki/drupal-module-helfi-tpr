@@ -12,7 +12,6 @@ use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\helfi_api_base\Entity\RemoteEntityBase;
 use Drupal\user\EntityOwnerInterface;
@@ -27,7 +26,6 @@ abstract class TprEntityBase extends RemoteEntityBase implements RevisionableInt
   use BaseFieldTrait;
   use EntityPublishedTrait;
   use EntityOwnerTrait;
-  use StringTranslationTrait;
 
   /**
    * An array of overridable fields.

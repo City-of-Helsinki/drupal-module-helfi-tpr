@@ -28,6 +28,7 @@ use Webmozart\Assert\Assert;
  *     "translation" = "Drupal\helfi_tpr\Entity\TranslationHandler",
  *     "form" = {
  *       "default" = "Drupal\helfi_tpr\Entity\Form\ContentEntityForm",
+ *       "delete" = "Drupal\helfi_tpr\Entity\Form\TprDeleteForm",
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
@@ -69,6 +70,7 @@ use Webmozart\Assert\Assert;
  *     "version-history" = "/admin/content/integrations/tpr-unit/{tpr_unit}/revisions",
  *     "revision" = "/tpr-unit/{tpr_unit}/revisions/{tpr_unit_revision}/view",
  *     "revision-revert-language-form" = "/admin/content/integrations/tpr-unit/{tpr_unit}/revisions/{tpr_unit_revision}/revert/{langcode}",
+ *     "delete-form" = "/admin/content/integrations/tpr-unit/{tpr_unit}/delete",
  *   },
  *   field_ui_base_route = "tpr_unit.settings"
  * )

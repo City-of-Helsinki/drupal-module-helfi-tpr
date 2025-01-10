@@ -23,6 +23,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "translation" = "Drupal\helfi_tpr\Entity\TranslationHandler",
  *     "form" = {
  *       "default" = "Drupal\Core\Entity\ContentEntityForm",
+ *       "delete" = "Drupal\helfi_tpr\Entity\Form\TprDeleteForm",
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
@@ -51,8 +52,10 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "revision_log_message" = "revision_log"
  *   },
  *   links = {
+ *     "canonical" = "/tpr-errand-service/{tpr_errand_service}",
  *     "edit-form" = "/admin/content/integrations/tpr-errand-service/{tpr_errand_service}/edit",
- *     "collection" = "/admin/content/integrations/tpr-errand-service"
+ *     "collection" = "/admin/content/integrations/tpr-errand-service",
+ *     "delete-form" = "/admin/content/integrations/tpr-errand-service/{tpr_errand_service}/delete",
  *   },
  *   field_ui_base_route = "tpr_errand_service.settings"
  * )

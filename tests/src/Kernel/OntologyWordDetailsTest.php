@@ -45,9 +45,6 @@ class OntologyWordDetailsTest extends MigrationTestBase {
   public function testEntityDeletion() : void {
     $entity = $this->getEntity('1_1');
 
-    // Test that the entity is not deleted.
-    // See Drupal\helfi_tpr\Entity\TprEntityBase::delete() for more
-    // information.
     $entity->delete();
     $this->assertNotEquals(NULL, OntologyWordDetails::load('1_1'));
   }

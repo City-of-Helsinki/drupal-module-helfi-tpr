@@ -54,7 +54,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *   },
  *   links = {
  *     "edit-form" = "/admin/content/integrations/tpr-service-channel/{tpr_service_channel}/edit",
- *     "collection" = "/admin/content/integrations/tpr-service-channel"
+ *     "collection" = "/admin/content/integrations/tpr-service-channel",
  *   },
  *   field_ui_base_route = "tpr_service_channel.settings"
  * )

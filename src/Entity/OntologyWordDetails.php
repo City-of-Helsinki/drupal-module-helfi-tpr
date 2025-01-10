@@ -24,6 +24,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "translation" = "Drupal\helfi_tpr\Entity\TranslationHandler",
  *     "form" = {
  *       "default" = "Drupal\helfi_tpr\Entity\Form\ContentEntityForm",
+ *       "delete" = "Drupal\helfi_tpr\Entity\Form\TprDeleteForm",
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
@@ -63,6 +64,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "edit-form" = "/admin/content/integrations/tpr-ontology-word-details/{tpr_ontology_word_details}/edit",
  *     "collection" = "/admin/content/integrations/tpr-ontology-word-details",
  *     "version-history" = "/admin/content/integrations/tpr-ontology-word-details/{tpr_ontology_word_details}/revisions",
+ *     "delete-form" = "/admin/content/integrations/tpr-ontology-word-details/{tpr_ontology_word_details}/delete",
  *   },
  *   field_ui_base_route = "tpr_ontology_word_details.settings"
  * )

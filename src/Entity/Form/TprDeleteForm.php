@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Utility\Error;
+use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -36,6 +37,7 @@ final class TprDeleteForm extends ContentEntityDeleteForm {
     EntityTypeBundleInfoInterface $entity_type_bundle_info,
     TimeInterface $time,
     private readonly ClientInterface $http_client,
+    private readonly MigrationPluginManagerInterface $migration_manager,
   ) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
   }
@@ -49,6 +51,7 @@ final class TprDeleteForm extends ContentEntityDeleteForm {
       $container->get('entity_type.bundle.info'),
       $container->get('datetime.time'),
       $container->get('http_client'),
+      $container->get('plugin.manager.migration'),
     );
   }
 
@@ -74,8 +77,6 @@ final class TprDeleteForm extends ContentEntityDeleteForm {
    */
   private function helfiTprEntityExists(): bool {
     $entityTypeId = $this->entity->getEntityTypeId();
-    /** @var \Drupal\migrate\Plugin\MigrationPluginManager $migrationPluginManager */
-    $migrationPluginManager = \Drupal::service('plugin.manager.migration');
 
     $urlMap = [
       'tpr_errand_service' => 'canonical_url',
@@ -84,7 +85,7 @@ final class TprDeleteForm extends ContentEntityDeleteForm {
       'tpr_unit' => 'url',
     ];
     $key = $urlMap[$entityTypeId];
-    $url = $migrationPluginManager->getDefinition($entityTypeId)['source'][$key];
+    $url = $this->migration_manager->getDefinition($entityTypeId)['source'][$key];
 
     $request_url = sprintf(
       '%s/%s%s',

@@ -5,20 +5,23 @@ declare(strict_types=1);
 namespace Drupal\helfi_tpr\Entity\Form;
 
 use Drupal\Component\Datetime\TimeInterface;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\ContentEntityDeleteForm;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Utility\Error;
+use Drupal\helfi_tpr\Entity\TprEntityBase;
 use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Tpr-entity delete form.
  */
 final class TprDeleteForm extends ContentEntityDeleteForm {
+
+  use AutowireTrait;
 
   /**
    * The constructor.
@@ -47,28 +50,32 @@ final class TprDeleteForm extends ContentEntityDeleteForm {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('entity.repository'),
-      $container->get('entity_type.bundle.info'),
-      $container->get('datetime.time'),
-      $container->get('http_client'),
-      $container->get('plugin.manager.migration'),
-    );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    if ($this->helfiTprEntityExists()) {
+    if ($this->entityExists()) {
       $this->messenger()->addWarning(
         $this->t('Cannot delete TPR-entity which still exists in the API')
       );
       return;
     }
 
-    parent::submitForm($form, $form_state);
+    /** @var \Drupal\helfi_tpr\Entity\TprEntityBase $entity */
+    $entity = $this->entity;
+    $message = $this->getDeletionMessage();
+
+    // Make sure that deleting a translation does not delete the whole entity.
+    if (!$entity->isDefaultTranslation()) {
+      $untranslated_entity = $entity->getUntranslated();
+      $untranslated_entity->removeTranslation($entity->language()->getId());
+      $untranslated_entity->save();
+      $form_state->setRedirectUrl($untranslated_entity->toUrl('canonical'));
+    }
+    else {
+      $entity->delete(TRUE);
+      $form_state->setRedirectUrl($this->getRedirectUrl());
+    }
+
+    $this->messenger()->addStatus($message);
+    $this->logDeletionMessage();
   }
 
   /**
@@ -77,7 +84,7 @@ final class TprDeleteForm extends ContentEntityDeleteForm {
    * @return bool
    *   The entity exists in api.
    */
-  private function helfiTprEntityExists(): bool {
+  private function entityExists(): bool {
     $entityTypeId = $this->entity->getEntityTypeId();
 
     $urlMap = [

@@ -1,6 +1,6 @@
 name: 'Service List Test Config'
 type: module
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 description: 'Provides default views for tests.'
 package: Testing
 dependencies:

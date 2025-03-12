@@ -29,6 +29,7 @@ class UnitEntityTest extends MigrationTestBase {
     $entity = Unit::create([
       'id' => $id,
       'name' => 'TPR Unit ' . $id,
+      'provided_languages' => ['fi', 'en', 'ar', 'this_is_clearly wrong'],
     ]);
     $entity->save();
 
@@ -47,6 +48,12 @@ class UnitEntityTest extends MigrationTestBase {
 
     $entity->delete();
     $this->assertNotEquals(NULL, Unit::load(1));
+  }
+
+  public function testProvidedLanguages() : void {
+    $entity = $this->getEntity(1);
+    $languages_name_list = $entity->getProvidedLanguagesNames();
+    $this->assertEquals('Finnish, English, Arabic');
   }
 
 }

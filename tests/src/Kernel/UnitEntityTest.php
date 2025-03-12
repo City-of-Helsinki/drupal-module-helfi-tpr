@@ -50,10 +50,14 @@ class UnitEntityTest extends MigrationTestBase {
     $this->assertNotEquals(NULL, Unit::load(1));
   }
 
+  /**
+   * Test provided languages.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
   public function testProvidedLanguages() : void {
     $entity = $this->getEntity(1);
-    $languages_name_list = $entity->getProvidedLanguagesNames();
-    $this->assertEquals('Finnish, English, Arabic');
+    $this->assertEquals('Finnish, English, Arabic', $entity->getProvidedLanguagesNames());
   }
 
 }

@@ -407,6 +407,7 @@ class Unit extends TprEntityBase {
       }
 
       $language = $all_languages[$langcode][0];
+      // phpcs:ignore
       $language_names[] = $this->t($language);
     }
 

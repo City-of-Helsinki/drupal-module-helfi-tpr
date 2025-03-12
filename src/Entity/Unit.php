@@ -391,7 +391,7 @@ class Unit extends TprEntityBase {
    * @return string
    *   Comma separated list of language names.
    */
-  public function getProvidedLanguagesNames(): string {
+  public function getProvidedLanguageNames(): string {
     $provided_languages = $this->get('provided_languages');
     if ($provided_languages->isEmpty()) {
       return '';

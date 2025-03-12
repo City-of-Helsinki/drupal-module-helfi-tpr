@@ -57,7 +57,7 @@ class UnitEntityTest extends MigrationTestBase {
    */
   public function testProvidedLanguages() : void {
     $entity = $this->getEntity(1);
-    $this->assertEquals('Finnish, English, Arabic', $entity->getProvidedLanguagesNames());
+    $this->assertEquals('Finnish, English, Arabic', $entity->getProvidedLanguageNames());
   }
 
 }

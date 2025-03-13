@@ -9,6 +9,7 @@ use CommerceGuys\Addressing\AddressFormat\FieldOverride;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Webmozart\Assert\Assert;
 
@@ -76,6 +77,8 @@ use Webmozart\Assert\Assert;
  * )
  */
 class Unit extends TprEntityBase {
+
+  use StringTranslationTrait;
 
   /**
    * {@inheritdoc}
@@ -380,6 +383,35 @@ class Unit extends TprEntityBase {
     }
 
     return $fields;
+  }
+
+  /**
+   * Get comma separated list of provided language names.
+   *
+   * @return string
+   *   Comma separated list of language names.
+   */
+  public function getProvidedLanguageNames(): string {
+    $provided_languages = $this->get('provided_languages');
+    if ($provided_languages->isEmpty()) {
+      return '';
+    }
+
+    $all_languages = $this->languageManager()->getStandardLanguageList();
+
+    $language_names = [];
+    foreach ($provided_languages as $provided_language) {
+      $langcode = $provided_language->getValue()['value'];
+      if (!isset($all_languages[$langcode])) {
+        continue;
+      }
+
+      $language = $all_languages[$langcode][0];
+      // phpcs:ignore
+      $language_names[] = $this->t($language);
+    }
+
+    return implode(', ', $language_names);
   }
 
 }

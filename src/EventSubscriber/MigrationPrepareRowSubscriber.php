@@ -18,6 +18,9 @@ final class MigrationPrepareRowSubscriber implements EventSubscriberInterface {
 
   private array $allowedMigrationIds = [
     'tpr_service',
+    'tpr_errand_service',
+    'tpr_unit',
+    'tpr_service_channel',
   ];
 
   /**

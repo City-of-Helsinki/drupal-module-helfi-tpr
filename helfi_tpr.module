@@ -305,8 +305,18 @@ function helfi_tpr_views_data_alter(&$data) : void {
 }
 
 /**
- * Implements hook_migrate_MIGRATION_ID_prepare_row().
+ * Implements hook_migrate_prepare_row().
  */
-function helfi_tpr_migrate_tpr_service_prepare_row(Row $row, MigrateSourceInterface $source, MigrationInterface $migration) {
-  \Drupal::service('event_dispatcher')->dispatch(new MigrationPrepareRowEvent($row, $migration, $source));
+function helfi_tpr_migrate_prepare_row(Row $row, MigrateSourceInterface $source, MigrationInterface $migration) : void {
+  // @todo: Remove this when prepare row event dispatch is merged.
+  // @see: https://www.drupal.org/node/2952291
+  if (in_array($migration->id(), [
+    'tpr_service',
+    'tpr_errand_service',
+    'tpr_unit',
+    'tpr_service_channel',
+  ])) {
+    \Drupal::service('event_dispatcher')
+      ->dispatch(new MigrationPrepareRowEvent($row, $migration, $source));
+  }
 }

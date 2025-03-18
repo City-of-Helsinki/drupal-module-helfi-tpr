@@ -75,9 +75,6 @@ class MigrationPrepareRowSubscriberTest extends MigrationTestBase {
 
   /**
    * Tests that the missing entity translation is marked for migration import.
-   *
-   * @covers ::processPrepareRow
-   * @covers ::__construct
    */
   public function testMissingEntityTranslation(): void {
     // Initialise the row with a status of imported.
@@ -108,9 +105,6 @@ class MigrationPrepareRowSubscriberTest extends MigrationTestBase {
 
   /**
    * Test that the row status is not updated if the entity translation exists.
-   *
-   * @covers ::processPrepareRow
-   * @covers ::__construct
    */
   public function testExistingEntityTranslation(): void {
     // Initialise the row with a status of imported.

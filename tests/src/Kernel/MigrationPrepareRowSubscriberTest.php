@@ -6,14 +6,14 @@ namespace Drupal\Tests\helfi_tpr\Kernel;
 
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Database\Query\Select;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Database\StatementInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
-use Drupal\migrate\Row;
 use Drupal\helfi_tpr\Event\MigrationPrepareRowEvent;
 use Drupal\helfi_tpr\EventSubscriber\MigrationPrepareRowSubscriber;
 use Drupal\migrate\Plugin\MigrateIdMapInterface;
-use Drupal\Core\Database\StatementInterface;
+use Drupal\migrate\Row;
 use Prophecy\Argument;
 
 /**
@@ -31,7 +31,7 @@ class MigrationPrepareRowSubscriberTest extends MigrationTestBase {
   /**
    * Creates a mock database connection that expects a mapping to exist.
    */
-  protected function mockDatabaseConnection(bool $mappingExists = true): Connection {
+  protected function mockDatabaseConnection(bool $mappingExists = TRUE): Connection {
     $statement = $this->prophesize(StatementInterface::class);
     $statement->fetchField()->willReturn($mappingExists ? 1 : 0);
 
@@ -48,9 +48,9 @@ class MigrationPrepareRowSubscriberTest extends MigrationTestBase {
   }
 
   /**
-   * Creates a mock entity storage that can simulate entity translation existence.
+   * Creates a mock entity storage that can simulate translation existence.
    */
-  protected function mockEntityStorage(bool $translationExists = false): EntityStorageInterface {
+  protected function mockEntityStorage(bool $translationExists = FALSE): EntityStorageInterface {
     $query = $this->prophesize(QueryInterface::class);
     $query->accessCheck(Argument::any())->willReturn($query);
     $query->condition(Argument::any(), Argument::any())->willReturn($query);
@@ -88,10 +88,11 @@ class MigrationPrepareRowSubscriberTest extends MigrationTestBase {
     $source = $migration->getSourcePlugin();
 
     // Mock the database with the state that the mapping exists.
-    $connection = $this->mockDatabaseConnection(true);
+    $connection = $this->mockDatabaseConnection(TRUE);
 
-    // Mock the entity storage to indicate that the entity translation does not exist.
-    $entityTypeManager = $this->mockEntityTypeManager($this->mockEntityStorage(false));
+    // Mock the entity storage indicating that the entity
+    // translation does not exist.
+    $entityTypeManager = $this->mockEntityTypeManager($this->mockEntityStorage(FALSE));
 
     $event = new MigrationPrepareRowEvent($row, $migration, $source);
 
@@ -120,10 +121,10 @@ class MigrationPrepareRowSubscriberTest extends MigrationTestBase {
     $source = $migration->getSourcePlugin();
 
     // Mock the database with the state that the mapping exists.
-    $connection = $this->mockDatabaseConnection(true);
+    $connection = $this->mockDatabaseConnection(TRUE);
 
     // Mock the entity storage to indicate that the entity translation exists.
-    $entityTypeManager = $this->mockEntityTypeManager($this->mockEntityStorage(true));
+    $entityTypeManager = $this->mockEntityTypeManager($this->mockEntityStorage(TRUE));
 
     $event = new MigrationPrepareRowEvent($row, $migration, $source);
 

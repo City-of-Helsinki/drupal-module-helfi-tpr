@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Drupal\helfi_tpr\Event;
 
 use Drupal\Component\EventDispatcher\Event;
-use Drupal\migrate\Row;
-use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Plugin\MigrateSourceInterface;
+use Drupal\migrate\Plugin\MigrationInterface;
+use Drupal\migrate\Row;
 
+/**
+ * Wraps a prepare row event for event listeners.
+ */
 class MigrationPrepareRowEvent extends Event {
 
   /**

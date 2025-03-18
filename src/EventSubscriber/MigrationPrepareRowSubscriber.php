@@ -7,8 +7,8 @@ namespace Drupal\helfi_tpr\EventSubscriber;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\helfi_tpr\Event\MigrationPrepareRowEvent;
-use Drupal\migrate\Plugin\MigrateIdMapInterface;
 use Drupal\migrate\Plugin\MigrateDestinationInterface;
+use Drupal\migrate\Plugin\MigrateIdMapInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -16,6 +16,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 final class MigrationPrepareRowSubscriber implements EventSubscriberInterface {
 
+  /**
+   * The migration IDs that are allowed to be processed.
+   *
+   * @var string[]
+   */
   private array $allowedMigrationIds = [
     'tpr_service',
     'tpr_errand_service',
@@ -34,8 +39,8 @@ final class MigrationPrepareRowSubscriber implements EventSubscriberInterface {
   /**
    * Get the entity type ID from a plugin ID.
    *
-   * @param string $plugin_id
-   *   The plugin ID.
+   * @param \Drupal\migrate\Plugin\MigrateDestinationInterface $plugin
+   *   The destinationplugin.
    *
    * @return string
    *   The entity type ID.
@@ -51,13 +56,15 @@ final class MigrationPrepareRowSubscriber implements EventSubscriberInterface {
   /**
    * Check if a mapping entry exists in the for the given source.
    *
-   * @param string $source_id
+   * @param int $source_id
    *   The source ID.
    * @param \Drupal\helfi_tpr\Event\MigrationPrepareRowEvent $event
    *   The migration prepare row event.
    */
   protected function hasExistingMapping(int $source_id, MigrationPrepareRowEvent $event): bool {
-    $table_name = $event->migration->getIdMap()->mapTableName();
+    /** @var \Drupal\migrate\Plugin\migrate\id_map\Sql $id_map */
+    $id_map = $event->migration->getIdMap();
+    $table_name = $id_map->mapTableName();
 
     $query = $this->connection
       ->select($table_name, 't')
@@ -71,7 +78,7 @@ final class MigrationPrepareRowSubscriber implements EventSubscriberInterface {
    *
    * @param string $entity_type_id
    *   The entity type ID.
-   * @param string $entity_id
+   * @param int $entity_id
    *   The entity ID.
    * @param string $langcode
    *   The language code.
@@ -145,7 +152,6 @@ final class MigrationPrepareRowSubscriber implements EventSubscriberInterface {
       $this->processPrepareRow($event);
     }
   }
-
 
   /**
    * {@inheritdoc}

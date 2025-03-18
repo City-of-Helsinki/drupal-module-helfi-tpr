@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\EventSubscriber;
 
+use Drupal\Component\Plugin\PluginBase;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\helfi_tpr\Event\MigrationPrepareRowEvent;
@@ -47,8 +48,8 @@ final class MigrationPrepareRowSubscriber implements EventSubscriberInterface {
    */
   protected static function getEntityTypeId(MigrateDestinationInterface $plugin): string {
     $entity_type_id = NULL;
-    if (strpos($plugin->getPluginId(), $plugin::DERIVATIVE_SEPARATOR)) {
-      [, $entity_type_id] = explode($plugin::DERIVATIVE_SEPARATOR, $plugin->getPluginId(), 2);
+    if (strpos($plugin->getPluginId(), PluginBase::DERIVATIVE_SEPARATOR)) {
+      [, $entity_type_id] = explode(PluginBase::DERIVATIVE_SEPARATOR, $plugin->getPluginId(), 2);
     }
     return $entity_type_id;
   }

@@ -1,4 +1,8 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
   migration_fixture.tpr_unit:
     class: Drupal\helfi_tpr\Fixture\Unit
   migration_fixture.tpr_service:
@@ -14,3 +18,5 @@ services:
     arguments: ['@config.factory']
     tags:
       - { name: event_subscriber }
+
+  Drupal\helfi_tpr\EventSubscriber\MigrationPrepareRowSubscriber: ~

@@ -13,6 +13,10 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityPublishedInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\helfi_tpr\Event\MigrationPrepareRowEvent;
+use Drupal\migrate\Plugin\MigrateSourceInterface;
+use Drupal\migrate\Plugin\MigrationInterface;
+use Drupal\migrate\Row;
 
 /**
  * Implements hook_theme().
@@ -298,4 +302,21 @@ function helfi_tpr_views_data_alter(&$data) : void {
     ],
   ];
 
+}
+
+/**
+ * Implements hook_migrate_prepare_row().
+ */
+function helfi_tpr_migrate_prepare_row(Row $row, MigrateSourceInterface $source, MigrationInterface $migration) : void {
+  // @todo Remove this when prepare row event dispatch is merged.
+  // @see https://www.drupal.org/node/2952291
+  if (in_array($migration->id(), [
+    'tpr_service',
+    'tpr_errand_service',
+    'tpr_unit',
+    'tpr_service_channel',
+  ])) {
+    \Drupal::service('event_dispatcher')
+      ->dispatch(new MigrationPrepareRowEvent($row, $migration, $source));
+  }
 }

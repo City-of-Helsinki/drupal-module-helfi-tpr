@@ -140,7 +140,7 @@ class AddressSearch extends FilterPluginBase {
 
     $langcodes = ['fi', 'sv'];
     // Reorder langcodes for the result generation, set current first.
-    if ($langcodes[$currentLanguage]) {
+    if (in_array($currentLanguage, $langcodes)) {
       $langcodes = array_unique(array_merge([$currentLanguage], $langcodes));
     }
 

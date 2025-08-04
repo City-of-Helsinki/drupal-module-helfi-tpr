@@ -172,7 +172,7 @@ class AddressSearch extends FilterPluginBase {
       \Drupal::logger('helfi_tpr')
         ->error(
           "After school activity search\'s coordinate search failed,
-         error code: {$e->getCode()}"
+         message: {$e->getMessage()}"
         );
       return [];
     }

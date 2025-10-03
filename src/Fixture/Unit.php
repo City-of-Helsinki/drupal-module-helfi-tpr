@@ -444,6 +444,7 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
         'address_city_en' => 'Espoo',
         'email' => 'kirjasto.lippulaiva@espoo.fi',
         'picture_url' => 'https://kirkanta.kirjastot.fi/files/photos/medium/5f8707669ca26011322092.jpg',
+        'accessibility_www' => 'https://tpr.hel.fi/kapaesteettomyys/app/summary/tpr:0000/',
         'accessibility_viewpoints' => '00:unknown,11:unknown,12:unknown,13:unknown,21:unknown,22:unknown,23:unknown,31:unknown,32:unknown,33:unknown,41:unknown,51:unknown,52:unknown,61:unknown',
         'created_time' => '2020-10-09T21:38:01',
         'modified_time' => '2021-11-10T00:32:39',
@@ -532,6 +533,7 @@ Vantaan sairaala on opetussairaala, joten potilaiden hoitoon osallistuu sekÃ¤ lÃ
         'www_en' => 'localhost/en/1',
         'created_time' => '2015-11-03T12:03:45',
         'modified_time' => '2015-11-03T12:03:45',
+        'accessibility_www' => 'https://tpr.hel.fi/kapaesteettomyys/app/summary/tpr:1234/',
         'accessibility_sentences' => [
           [
             'unit_id' => 1,

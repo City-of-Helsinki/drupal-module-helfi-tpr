@@ -38,7 +38,7 @@ class LocalizeAccessibilityUrlTest extends UnitTestCase {
    *   Test cases: [$input, $rowSource, $expected].
    */
   public function transformData() : array {
-    $base = 'https://tpr.hel.fi/kapaesteettomyys/';
+    $base = 'https://tpr.hel.fi/kapaesteettomyys';
 
     return [
       // Empty input returns empty string.

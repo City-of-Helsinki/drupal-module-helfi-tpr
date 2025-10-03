@@ -19,6 +19,7 @@ source:
     - address_city
     - desc
     - short_desc
+    - accessibility_www
   track_changes: true
   url: 'https://tpr.hel.fi/palvelukarttaws/rest/v4/unit/?newfeatures=yes'
   canonical_url: 'https://tpr.hel.fi/palvelukarttaws/rest/v4/unit/?newfeatures=yes'
@@ -138,6 +139,9 @@ process:
   call_charge_info/format:
     plugin: default_value
     default_value: plain_text
+  accessibility_www/uri:
+    plugin: localize_accessibility_www
+    source: accessibility_www
   www/uri:
     -
       plugin: default_value

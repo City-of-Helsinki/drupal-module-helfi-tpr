@@ -166,7 +166,7 @@ class UnitMigrationTest extends MigrationTestBase {
         'phone' => '+3581234',
         'call_charge_info' => 'pvm en 1',
         'www' => 'https://localhost/en/1',
-        'accessibility_www' => 'https://tpr.hel.fi/kapaesteettomyys/app/en/summary/tpr:1234/'
+        'accessibility_www' => 'https://tpr.hel.fi/kapaesteettomyys/app/en/summary/tpr:1234/',
 
       ],
       'fi' => [
@@ -180,7 +180,7 @@ class UnitMigrationTest extends MigrationTestBase {
         'phone' => '+3581234',
         'call_charge_info' => 'pvm fi 1',
         'www' => 'https://localhost/fi/1',
-        'accessibility_www' => 'https://tpr.hel.fi/kapaesteettomyys/app/summary/tpr:1234/'
+        'accessibility_www' => 'https://tpr.hel.fi/kapaesteettomyys/app/summary/tpr:1234/',
       ],
       'sv' => [
         'id' => 1,
@@ -193,7 +193,7 @@ class UnitMigrationTest extends MigrationTestBase {
         'phone' => '+3581234',
         'call_charge_info' => 'pvm sv 1',
         'www' => 'https://localhost/sv/1',
-        'accessibility_www' => 'https://tpr.hel.fi/kapaesteettomyys/app/sv/summary/tpr:1234/'
+        'accessibility_www' => 'https://tpr.hel.fi/kapaesteettomyys/app/sv/summary/tpr:1234/',
       ],
     ];
   }

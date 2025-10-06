@@ -228,7 +228,6 @@ class Unit extends TprEntityBase {
         'type' => 'link',
       ]);
     $fields['accessibility_www'] = static::createLinkField('Accessibility website link')
-      ->setTranslatable(TRUE)
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'link',

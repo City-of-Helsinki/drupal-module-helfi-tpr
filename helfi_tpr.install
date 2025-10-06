@@ -378,3 +378,31 @@ function helfi_tpr_update_8048() : void {
     ])->execute();
   }
 }
+
+/**
+ * Add 'accessibility_www' field to the TPR Unit entity.
+ */
+function helfi_tpr_update_8049() : void {
+  $fields['accessibility_www'] = BaseFieldDefinition::create('link')
+    ->setLabel(new TranslatableMarkup('Accessibility website link'))
+    ->setTranslatable(TRUE)
+    ->setRevisionable(FALSE)
+    ->setDisplayConfigurable('view', TRUE)
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayOptions('form', [
+      'type' => 'readonly_field_widget',
+    ])
+    ->setDisplayOptions('view', [
+      'label' => 'hidden',
+      'type' => 'link',
+    ])
+    ->setCardinality(1)
+    ->setSettings([
+      'max_length' => 255,
+    ]);
+
+  foreach ($fields as $name => $field) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
+  }
+}

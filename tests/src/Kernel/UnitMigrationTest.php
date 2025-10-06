@@ -52,6 +52,7 @@ class UnitMigrationTest extends MigrationTestBase {
       $this->assertEquals($expected['phone'], $translation->get('phone')->value);
       $this->assertEquals($expected['call_charge_info'], $translation->get('call_charge_info')->value);
       $this->assertEquals($expected['www'], $translation->get('www')->uri);
+      $this->assertEquals($expected['accessibility_www'], $translation->get('accessibility_www')->uri);
 
       $this->assertEquals(2, $translation->get('accessibility_sentences')->count());
 
@@ -165,6 +166,8 @@ class UnitMigrationTest extends MigrationTestBase {
         'phone' => '+3581234',
         'call_charge_info' => 'pvm en 1',
         'www' => 'https://localhost/en/1',
+        'accessibility_www' => 'https://tpr.hel.fi/kapaesteettomyys/app/en/summary/tpr:1234/',
+
       ],
       'fi' => [
         'id' => 1,
@@ -177,6 +180,7 @@ class UnitMigrationTest extends MigrationTestBase {
         'phone' => '+3581234',
         'call_charge_info' => 'pvm fi 1',
         'www' => 'https://localhost/fi/1',
+        'accessibility_www' => 'https://tpr.hel.fi/kapaesteettomyys/app/summary/tpr:1234/',
       ],
       'sv' => [
         'id' => 1,
@@ -189,6 +193,7 @@ class UnitMigrationTest extends MigrationTestBase {
         'phone' => '+3581234',
         'call_charge_info' => 'pvm sv 1',
         'www' => 'https://localhost/sv/1',
+        'accessibility_www' => 'https://tpr.hel.fi/kapaesteettomyys/app/sv/summary/tpr:1234/',
       ],
     ];
   }

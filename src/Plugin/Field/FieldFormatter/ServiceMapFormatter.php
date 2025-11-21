@@ -33,7 +33,7 @@ final class ServiceMapFormatter extends FormatterBase {
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings() {
+  public static function defaultSettings() : array {
     return [
       'iframe_title' => 'Service map',
       'link_title' => t('View larger map'),
@@ -44,7 +44,7 @@ final class ServiceMapFormatter extends FormatterBase {
   /**
    * {@inheritdoc}
    */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
+  public function settingsForm(array $form, FormStateInterface $form_state) : array {
     $elements = parent::settingsForm($form, $form_state);
 
     $elements['iframe_title'] = [
@@ -94,7 +94,7 @@ final class ServiceMapFormatter extends FormatterBase {
   /**
    * {@inheritdoc}
    */
-  public function viewElements(FieldItemListInterface $items, $langcode) {
+  public function viewElements(FieldItemListInterface $items, $langcode) : array {
     $element = [];
 
     $entity = $items->getEntity();
@@ -118,7 +118,7 @@ final class ServiceMapFormatter extends FormatterBase {
         'link' => [
           '#type' => 'html_tag',
           '#tag' => 'a',
-          '#value' => Html::escape($this->getSetting('link_title')),
+          '#value' => Html::escape((string) $this->getSetting('link_title')),
           '#attributes' => [
             'href' => $this->generateUrl($entity, $langcode),
             'target' => $this->getSetting('target') ? '_blank' : '',

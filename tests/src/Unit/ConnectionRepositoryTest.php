@@ -15,6 +15,7 @@ use Drupal\helfi_tpr\Field\Connection\Price;
 use Drupal\helfi_tpr\Field\Connection\Repository;
 use Drupal\helfi_tpr\Field\Connection\Subgroup;
 use Drupal\helfi_tpr\Field\Connection\Topical;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Tests repository value objects.
@@ -52,9 +53,9 @@ class ConnectionRepositoryTest extends UnitTestCase {
   /**
    * Tests the Repository::get() method.
    *
-   * @dataProvider getTestData
    * @covers ::get
    */
+  #[DataProvider(methodName: 'getTestData')]
   public function testGet(string $type) : void {
     $object = $this->repository->get($type);
     $this->assertInstanceOf(Connection::class, $object);
@@ -66,7 +67,7 @@ class ConnectionRepositoryTest extends UnitTestCase {
    * @return array[]
    *   The data.
    */
-  public function getTestData() : array {
+  public static function getTestData() : array {
     return [
       [OpeningHour::TYPE_NAME],
       [Highlight::TYPE_NAME],

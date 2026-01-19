@@ -29,7 +29,7 @@ class TokenTest extends MigrationTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp(): void {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->installEntitySchema('media');

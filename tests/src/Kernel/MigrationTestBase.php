@@ -25,15 +25,13 @@ abstract class MigrationTestBase extends ApiMigrationTestBase {
     'media',
     'telephone',
     'menu_link_content',
-    'helfi_tpr_test',
-    'views',
     'image',
   ];
 
   /**
    * {@inheritdoc}
    */
-  public function setUp() : void {
+  protected function setUp() : void {
     parent::setUp();
 
     $entity_types = [
@@ -48,7 +46,7 @@ abstract class MigrationTestBase extends ApiMigrationTestBase {
     foreach ($entity_types as $type) {
       $this->installEntitySchema($type);
     }
-    $this->installConfig(['helfi_tpr', 'helfi_tpr_test']);
+    $this->installConfig(['helfi_tpr']);
   }
 
   /**

@@ -39,7 +39,7 @@ abstract class CustomFieldFormatterTestBase extends MigrationTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() : void {
+  protected function setUp() : void {
     parent::setUp();
 
     $this->entity = $this->getEntity();

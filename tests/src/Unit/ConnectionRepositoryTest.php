@@ -35,7 +35,7 @@ class ConnectionRepositoryTest extends UnitTestCase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() : void {
+  protected function setUp() : void {
     parent::setUp();
 
     $this->repository = new Repository();

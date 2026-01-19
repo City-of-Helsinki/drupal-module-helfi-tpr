@@ -42,7 +42,7 @@ abstract class MigrationTestBase extends ApiMigrationTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp(): void {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->drupalPlaceBlock('local_tasks_block');

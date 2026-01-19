@@ -8,6 +8,7 @@ use Drupal\Tests\UnitTestCase;
 use Drupal\helfi_tpr\Plugin\migrate\process\LocalizeAccessibilityUrl;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Row;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
@@ -22,8 +23,8 @@ class LocalizeAccessibilityUrlTest extends UnitTestCase {
 
   /**
    * @covers ::transform
-   * @dataProvider transformData
    */
+  #[DataProvider(methodName: 'transformData')]
   public function testTransform(mixed $input, array $rowSource, string $expected) : void {
     $sut = new LocalizeAccessibilityUrl([], 'localize_accessibility_www', []);
     $executable = $this->prophesize(MigrateExecutableInterface::class)->reveal();
@@ -37,7 +38,7 @@ class LocalizeAccessibilityUrlTest extends UnitTestCase {
    * @return array[]
    *   Test cases: [$input, $rowSource, $expected].
    */
-  public function transformData() : array {
+  public static function transformData() : array {
     $base = 'https://tpr.hel.fi/kapaesteettomyys';
 
     return [

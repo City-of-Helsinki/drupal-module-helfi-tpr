@@ -15,6 +15,7 @@ use Drupal\helfi_tpr\Field\Connection\Price;
 use Drupal\helfi_tpr\Field\Connection\Subgroup;
 use Drupal\helfi_tpr\Field\Connection\TextWithLink;
 use Drupal\helfi_tpr\Field\Connection\Topical;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Tests connection value objects.
@@ -32,8 +33,8 @@ class ConnectionTest extends UnitTestCase {
    * @covers ::set
    * @covers ::get
    * @covers ::isValidField
-   * @dataProvider openingHourData
    */
+  #[DataProvider(methodName: 'openingHourData')]
   public function testOpeningHours(TextWithLink $object) : void {
     $object->set('name', 'mon-wed 10-19');
     $this->assertNotEmpty($object->build());
@@ -234,8 +235,8 @@ class ConnectionTest extends UnitTestCase {
    * @covers ::set
    * @covers ::isValidField
    * @covers \Drupal\helfi_tpr\Field\Connection\TextWithLink::getFields
-   * @dataProvider openingHourData
    */
+  #[DataProvider(methodName: 'openingHourData')]
   public function testInvalidFieldName(TextWithLink $object) : void {
     $this->expectException(\InvalidArgumentException::class);
     $this->expectExceptionMessage('Field "invalid_field" is not valid.');
@@ -248,7 +249,7 @@ class ConnectionTest extends UnitTestCase {
    * @return array
    *   The data.
    */
-  public function openingHourData() : array {
+  public static function openingHourData() : array {
     return [
       [new OpeningHour()],
       [new OpeningHourObject()],
@@ -258,11 +259,11 @@ class ConnectionTest extends UnitTestCase {
   /**
    * Tests invalid data type.
    *
-   * @dataProvider invalidFieldValueData
    * @covers \Drupal\helfi_tpr\Field\Connection\TextWithLink::getFields
    * @covers ::set
    * @covers ::isValidField
    */
+  #[DataProvider(methodName: 'invalidFieldValueData')]
   public function testInvalidFieldValue($value) : void {
     $this->expectException(\InvalidArgumentException::class);
     $this->expectExceptionMessage('Only scalar or null values allowed for "name".');
@@ -276,7 +277,7 @@ class ConnectionTest extends UnitTestCase {
    * @return array
    *   The data.
    */
-  public function invalidFieldValueData() : array {
+  public static function invalidFieldValueData() : array {
     return [
       [[]],
       [new \stdClass()],
@@ -286,12 +287,12 @@ class ConnectionTest extends UnitTestCase {
   /**
    * Tests valid values.
    *
-   * @dataProvider validFieldValueData
    * @covers \Drupal\helfi_tpr\Field\Connection\TextWithLink::getFields
    * @covers ::set
    * @covers ::get
    * @covers ::isValidField
    */
+  #[DataProvider(methodName: 'validFieldValueData')]
   public function testValidFieldValue($value) : void {
     $object = new OpeningHour();
     $object->set('name', $value);
@@ -304,7 +305,7 @@ class ConnectionTest extends UnitTestCase {
    * @return array
    *   The data.
    */
-  public function validFieldValueData() : array {
+  public static function validFieldValueData() : array {
     return [
       [1.234],
       [-1],

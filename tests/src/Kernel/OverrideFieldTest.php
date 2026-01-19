@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\helfi_tpr\Kernel;
 
 use Drupal\Core\Entity\ContentEntityInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Tests override fields.
@@ -15,9 +16,8 @@ class OverrideFieldTest extends MigrationTestBase {
 
   /**
    * Tests name and override name fields.
-   *
-   * @dataProvider nameData
    */
+  #[DataProvider(methodName: 'nameData')]
   public function testName(string $entity_type) : void {
     $entity = \Drupal::entityTypeManager()->getStorage($entity_type)->create(['id' => 1]);
     assert($entity instanceof ContentEntityInterface);
@@ -36,7 +36,7 @@ class OverrideFieldTest extends MigrationTestBase {
    * @return array
    *   The data.
    */
-  public function nameData() : array {
+  public static function nameData() : array {
     return [
       ['tpr_unit'],
       ['tpr_service'],

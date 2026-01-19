@@ -10,6 +10,7 @@ use Drupal\helfi_tpr\Field\Connection\OpeningHourObject;
 use Drupal\helfi_tpr\Plugin\migrate\process\ArrayElementEquals;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Row;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
@@ -24,8 +25,8 @@ class ArrayElementEqualsTest extends UnitTestCase {
 
   /**
    * @covers ::__construct
-   * @dataProvider constructorExceptionData
    */
+  #[DataProvider(methodName: 'constructorExceptionData')]
   public function testConstructorException(string $expectedMessage, array $configuration) : void {
     $this->expectException(\InvalidArgumentException::class);
     $this->expectExceptionMessage($expectedMessage);
@@ -38,7 +39,7 @@ class ArrayElementEqualsTest extends UnitTestCase {
    * @return array[]
    *   The data.
    */
-  public function constructorExceptionData() : array {
+  public static function constructorExceptionData() : array {
     return [
       [
         'ArrayElementEquals plugin is missing value configuration',
@@ -54,8 +55,8 @@ class ArrayElementEqualsTest extends UnitTestCase {
   /**
    * @covers ::__construct
    * @covers ::transform
-   * @dataProvider transformData
    */
+  #[DataProvider(methodName: 'transformData')]
   public function testTransform(array $configuration, mixed $expectedValue, mixed $value) : void {
     $sut = new ArrayElementEquals($configuration, 'plugin_id', []);
     $this->assertEquals($expectedValue, $sut->transform($value, $this->prophesize(MigrateExecutableInterface::class)->reveal(), new Row([]), 'destination_property'));
@@ -67,7 +68,7 @@ class ArrayElementEqualsTest extends UnitTestCase {
    * @return array[]
    *   The data.
    */
-  public function transformData() : array {
+  public static function transformData() : array {
     return [
       // Test non-array value.
       [

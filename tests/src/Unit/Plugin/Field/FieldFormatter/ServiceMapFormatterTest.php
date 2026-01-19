@@ -43,7 +43,7 @@ class ServiceMapFormatterTest extends UnitTestCase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() : void {
+  protected function setUp() : void {
     parent::setUp();
 
     // Mock the field type manager and place it in the container.

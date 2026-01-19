@@ -14,6 +14,28 @@ use Drupal\views\Views;
 class ServiceIdArgumentTest extends MigrationTestBase {
 
   /**
+   * {@inheritdoc}
+   */
+  protected static $modules = [
+    'helfi_tpr_test',
+    'image',
+    'user',
+    'system',
+    'file',
+    'media',
+    'views',
+  ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp(): void {
+    parent::setUp();
+
+    $this->installConfig(['media', 'helfi_tpr_test']);
+  }
+
+  /**
    * Tests the service id argument.
    */
   public function testServiceIdArgument() : void {

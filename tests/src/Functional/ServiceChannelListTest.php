@@ -23,7 +23,7 @@ class ServiceChannelListTest extends ListTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() : void {
+  protected function setUp() : void {
     parent::setUp();
     $this->listPermissions = [
       'access remote entities overview',

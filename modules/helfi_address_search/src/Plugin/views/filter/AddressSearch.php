@@ -85,8 +85,11 @@ class AddressSearch extends FilterPluginBase {
     $results = $view->result;
     $distances = [];
     foreach ($results as $result) {
-      assert($result->_entity instanceof ContentEntityInterface);
-      if (empty($result->_entity->get('latitude')) || empty($result->_entity->get('longitude'))) {
+      if (
+        !$result->_entity instanceof ContentEntityInterface ||
+        empty($result->_entity->get('latitude')) ||
+        empty($result->_entity->get('longitude'))
+      ) {
         continue;
       }
       $distances[$result->_entity->get('id')->getString()] = AddressSearch::calculateDistance(
@@ -105,9 +108,14 @@ class AddressSearch extends FilterPluginBase {
 
     // Sort results array by distances: nearest first.
     uasort($results, function ($left, $right) use ($distances) {
-      assert($left->_entity instanceof ContentEntityInterface && $right->_entity instanceof ContentEntityInterface);
+      if (
+        !$left->_entity instanceof ContentEntityInterface ||
+        !$right->_entity instanceof ContentEntityInterface
+      ) {
+        return 0;
+      }
       return match ($distances[$left->_entity->get('id')->getString()] >= $distances[$right->_entity->get('id')->getString()]) {
-        FALSE => (-1),
+        FALSE => -1,
         TRUE => 1,
       };
     });

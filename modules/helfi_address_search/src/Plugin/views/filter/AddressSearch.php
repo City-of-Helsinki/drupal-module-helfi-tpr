@@ -85,8 +85,11 @@ class AddressSearch extends FilterPluginBase {
     $results = $view->result;
     $distances = [];
     foreach ($results as $result) {
-      assert($result->_entity instanceof ContentEntityInterface);
-      if (empty($result->_entity->get('latitude')) || empty($result->_entity->get('longitude'))) {
+      if (
+        !$result->_entity instanceof ContentEntityInterface ||
+        empty($result->_entity->get('latitude')) ||
+        empty($result->_entity->get('longitude'))
+      ) {
         continue;
       }
       $distances[$result->_entity->get('id')->getString()] = AddressSearch::calculateDistance(

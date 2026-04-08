@@ -836,17 +836,12 @@ parameters:
 			path: src/TprViewsData.php
 
 		-
-			message: "#^Call to method setResponseOfPath\\(\\) on an unknown class donatj\\\\MockWebServer\\\\MockWebServer\\.$#"
-			count: 1
-			path: tests/src/Functional/ErrandServiceListTest.php
-
-		-
-			message: "#^Instantiated class donatj\\\\MockWebServer\\\\Response not found\\.$#"
-			count: 1
-			path: tests/src/Functional/ErrandServiceListTest.php
-
-		-
 			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ErrandServiceListTest\\:\\:assertUpdateListEntity\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/src/Functional/ErrandServiceListTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$body of class donatj\\\\MockWebServer\\\\Response constructor expects string, string\\|false given\\.$#"
 			count: 1
 			path: tests/src/Functional/ErrandServiceListTest.php
 
@@ -956,17 +951,12 @@ parameters:
 			path: tests/src/Functional/ServiceListTest.php
 
 		-
-			message: "#^Call to method setResponseOfPath\\(\\) on an unknown class donatj\\\\MockWebServer\\\\MockWebServer\\.$#"
-			count: 1
-			path: tests/src/Functional/ServiceListTest.php
-
-		-
-			message: "#^Instantiated class donatj\\\\MockWebServer\\\\Response not found\\.$#"
-			count: 1
-			path: tests/src/Functional/ServiceListTest.php
-
-		-
 			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceListTest\\:\\:assertUpdateListEntity\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/src/Functional/ServiceListTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$body of class donatj\\\\MockWebServer\\\\Response constructor expects string, string\\|false given\\.$#"
 			count: 1
 			path: tests/src/Functional/ServiceListTest.php
 
@@ -1056,17 +1046,12 @@ parameters:
 			path: tests/src/Functional/UnitListTest.php
 
 		-
-			message: "#^Call to method setResponseOfPath\\(\\) on an unknown class donatj\\\\MockWebServer\\\\MockWebServer\\.$#"
-			count: 1
-			path: tests/src/Functional/UnitListTest.php
-
-		-
-			message: "#^Instantiated class donatj\\\\MockWebServer\\\\Response not found\\.$#"
-			count: 1
-			path: tests/src/Functional/UnitListTest.php
-
-		-
 			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitListTest\\:\\:assertUpdateListEntity\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/src/Functional/UnitListTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$body of class donatj\\\\MockWebServer\\\\Response constructor expects string, string\\|false given\\.$#"
 			count: 1
 			path: tests/src/Functional/UnitListTest.php
 

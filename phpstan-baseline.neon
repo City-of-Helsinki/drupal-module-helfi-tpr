@@ -171,6 +171,16 @@ parameters:
 			path: modules/helfi_address_search/src/Plugin/Field/FieldFormatter/KiloFormatter.php
 
 		-
+			message: """
+				#^Call to deprecated function filter_default_format\\(\\)\\:
+				in drupal\\:11\\.4\\.0 and is removed from drupal\\:13\\.0\\.0\\. Use the
+				  \\\\Drupal\\\\filter\\\\FilterFormatRepositoryInterface service with the
+				  \\:\\:getDefaultFormat\\(\\) method instead\\.$#
+			"""
+			count: 4
+			path: modules/helfi_address_search/src/Plugin/views/area/AddressSearchInfo.php
+
+		-
 			message: "#^Method Drupal\\\\helfi_address_search\\\\Plugin\\\\views\\\\area\\\\AddressSearchInfo\\:\\:buildOptionsForm\\(\\) has parameter \\$form with no type specified\\.$#"
 			count: 1
 			path: modules/helfi_address_search/src/Plugin/views/area/AddressSearchInfo.php
@@ -257,11 +267,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\Form\\\\ContentEntityForm\\:\\:buildForm\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Entity/Form/ContentEntityForm.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\Form\\\\ContentEntityForm\\:\\:create\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/Entity/Form/ContentEntityForm.php
 
@@ -411,6 +416,16 @@ parameters:
 			path: src/Field/Connection/Highlight.php
 
 		-
+			message: """
+				#^Call to deprecated function _filter_autop\\(\\)\\:
+				in drupal\\:11\\.4\\.0 and is removed from drupal\\:13\\.0\\.0\\. The logic has
+				  been included in \\\\Drupal\\\\filter\\\\Plugin\\\\Filter\\\\FilterAutoP\\:\\:process\\(\\) and no
+				  replacement is provided\\.$#
+			"""
+			count: 1
+			path: src/Field/Connection/OtherInfo.php
+
+		-
 			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\OtherInfo\\:\\:build\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Field/Connection/OtherInfo.php
@@ -429,6 +444,16 @@ parameters:
 			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\PhoneOrEmail\\:\\:getFields\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Field/Connection/PhoneOrEmail.php
+
+		-
+			message: """
+				#^Call to deprecated function _filter_autop\\(\\)\\:
+				in drupal\\:11\\.4\\.0 and is removed from drupal\\:13\\.0\\.0\\. The logic has
+				  been included in \\\\Drupal\\\\filter\\\\Plugin\\\\Filter\\\\FilterAutoP\\:\\:process\\(\\) and no
+				  replacement is provided\\.$#
+			"""
+			count: 1
+			path: src/Field/Connection/Price.php
 
 		-
 			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\Price\\:\\:build\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -454,6 +479,16 @@ parameters:
 			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\Subgroup\\:\\:getFields\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Field/Connection/Subgroup.php
+
+		-
+			message: """
+				#^Call to deprecated function _filter_autop\\(\\)\\:
+				in drupal\\:11\\.4\\.0 and is removed from drupal\\:13\\.0\\.0\\. The logic has
+				  been included in \\\\Drupal\\\\filter\\\\Plugin\\\\Filter\\\\FilterAutoP\\:\\:process\\(\\) and no
+				  replacement is provided\\.$#
+			"""
+			count: 1
+			path: src/Field/Connection/TextWithLink.php
 
 		-
 			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\TextWithLink\\:\\:build\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -891,24 +926,9 @@ parameters:
 			path: tests/src/Functional/ListTestBase.php
 
 		-
-			message: "#^Parameter \\#1 \\$account of method Drupal\\\\Tests\\\\BrowserTestBase\\:\\:drupalLogin\\(\\) expects Drupal\\\\Core\\\\Session\\\\AccountInterface, Drupal\\\\user\\\\UserInterface\\|false given\\.$#"
-			count: 2
-			path: tests/src/Functional/ListTestBase.php
-
-		-
 			message: "#^Property Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ListTestBase\\:\\:\\$listPermissions type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: tests/src/Functional/ListTestBase.php
-
-		-
-			message: "#^Property Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\MigrationTestBase\\:\\:\\$privilegedAccount \\(Drupal\\\\user\\\\UserInterface\\) does not accept Drupal\\\\user\\\\UserInterface\\|false\\.$#"
-			count: 1
-			path: tests/src/Functional/MigrationTestBase.php
-
-		-
-			message: "#^Parameter \\#1 \\$account of method Drupal\\\\Tests\\\\BrowserTestBase\\:\\:drupalLogin\\(\\) expects Drupal\\\\Core\\\\Session\\\\AccountInterface, Drupal\\\\user\\\\UserInterface\\|false given\\.$#"
-			count: 1
-			path: tests/src/Functional/Plugin/Field/FieldFormatter/CustomFieldFormatterTestBase.php
 
 		-
 			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ServiceChannelFormatterTest\\:\\:assertChannelOrder\\(\\) has parameter \\$expectedOrder with no value type specified in iterable type array\\.$#"
@@ -982,11 +1002,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceMenuLinkTest\\:\\:runUnitMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: tests/src/Functional/ServiceMenuLinkTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$rid of method Drupal\\\\user\\\\UserInterface\\:\\:addRole\\(\\) expects string, string\\|false given\\.$#"
 			count: 1
 			path: tests/src/Functional/ServiceMenuLinkTest.php
 
@@ -1077,11 +1092,6 @@ parameters:
 
 		-
 			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitMenuLinkTest\\:\\:runUnitMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: tests/src/Functional/UnitMenuLinkTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$rid of method Drupal\\\\user\\\\UserInterface\\:\\:addRole\\(\\) expects string, string\\|false given\\.$#"
 			count: 1
 			path: tests/src/Functional/UnitMenuLinkTest.php
 

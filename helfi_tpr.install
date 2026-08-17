@@ -406,3 +406,18 @@ function helfi_tpr_update_8049() : void {
       ->installFieldStorageDefinition($name, 'tpr_unit', 'helfi_tpr', $field);
   }
 }
+
+/**
+ * Make sure all content translation fields exist for TPR Errand Service entity.
+ *
+ * At least in asuminen-instance some of the fields are missing.
+ */
+function helfi_tpr_update_8050() : void {
+  $fields = _helfi_tpr_get_content_translation_fields();
+  foreach ($fields as $name => $field) {
+    if (!\Drupal::entityDefinitionUpdateManager()->getFieldStorageDefinition($name, 'tpr_errand_service')) {
+      \Drupal::entityDefinitionUpdateManager()
+        ->installFieldStorageDefinition($name, 'tpr_errand_service', 'helfi_tpr', $field);
+    }
+  }
+}

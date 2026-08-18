@@ -1,14 +1,15 @@
+label: 'TPR Asiointipalvelut'
 display:
   default:
     display_options:
       empty:
         area:
           content:
-            value: 'Ei tuloksia.'
+            value: 'Asiointipalveluja ei löytynyt.'
             format: plain_text
       exposed_form:
         options:
-          submit_button: Suodata
+          submit_button: Käytä
           reset_button_label: Palauta
           exposed_sorts_label: Lajittele
           sort_asc_label: Nousevasti
@@ -16,17 +17,14 @@ display:
       pager:
         options:
           tags:
-            previous: Edellinen
-            next: Seuraava
-            first: Ensimmäinen
-            last: Viimeinen
+            previous: '‹ Edellinen'
+            next: 'Seuraava ›'
+            first: '« Ensimmäinen'
+            last: 'Viimeinen »'
           expose:
             items_per_page_label: 'Merkintöjä sivua kohti'
             items_per_page_options_all_label: '- Kaikki -'
       fields:
-        tpr_errand_service_bulk_form:
-          label: Massapäivitys
-          action_title: Toiminto
         name:
           label: Nimi
         langcode:
@@ -40,28 +38,20 @@ display:
           label: Päivitetty
         operations:
           label: Toimenpiteet
-      filters:
-        combine:
-          expose:
-            label: 'Nimi tai ID'
-        langcode:
-          expose:
-            label: Kieli
-        content_translation_status:
-          expose:
-            description: ''
-          group_info:
-            label: Julkaisutila
-            group_items:
-              1:
-                title: Julkaistu
-              2:
-                title: Julkaisematon
+        tpr_errand_service_bulk_form:
+          label: Massapäivitys
+          action_title: Toiminto
       title: 'TPR Asiointipalvelut'
       header:
         result:
           content: 'Näytetään @start - @end / @total'
+      filters:
+        combine:
+          expose:
+            label: Etsi
+        langcode:
+          expose:
+            label: Kieli
     display_title: Oletus
   page_1:
     display_title: Sivu
-label: 'TPR Asiointipalvelut'

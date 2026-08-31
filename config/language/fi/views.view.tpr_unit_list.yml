@@ -29,7 +29,7 @@ display:
             label: Kieli
         combine:
           expose:
-            label: Etsi
+            label: 'Nimi tai ID'
       empty:
         area:
           content:

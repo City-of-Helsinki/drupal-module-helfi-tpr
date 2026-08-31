@@ -1,1346 +1,1677 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Function _helfi_tpr_get_content_translation_fields\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Function _helfi_tpr_get_content_translation_fields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.install
 
 		-
-			message: "#^Function helfi_tpr_theme\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Function helfi_tpr_theme\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function helfi_tpr_theme_suggestions_tpr_errand_service\\(\\) has parameter \\$variables with no value type specified in iterable type array\\.$#"
+			message: '#^Function helfi_tpr_theme_suggestions_tpr_errand_service\(\) has parameter \$variables with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function helfi_tpr_theme_suggestions_tpr_errand_service\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Function helfi_tpr_theme_suggestions_tpr_errand_service\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function helfi_tpr_theme_suggestions_tpr_service\\(\\) has parameter \\$variables with no value type specified in iterable type array\\.$#"
+			message: '#^Function helfi_tpr_theme_suggestions_tpr_service\(\) has parameter \$variables with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function helfi_tpr_theme_suggestions_tpr_service\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Function helfi_tpr_theme_suggestions_tpr_service\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function helfi_tpr_theme_suggestions_tpr_service_channel\\(\\) has parameter \\$variables with no value type specified in iterable type array\\.$#"
+			message: '#^Function helfi_tpr_theme_suggestions_tpr_service_channel\(\) has parameter \$variables with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function helfi_tpr_theme_suggestions_tpr_service_channel\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Function helfi_tpr_theme_suggestions_tpr_service_channel\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function helfi_tpr_theme_suggestions_tpr_unit\\(\\) has parameter \\$variables with no value type specified in iterable type array\\.$#"
+			message: '#^Function helfi_tpr_theme_suggestions_tpr_unit\(\) has parameter \$variables with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function helfi_tpr_theme_suggestions_tpr_unit\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Function helfi_tpr_theme_suggestions_tpr_unit\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function helfi_tpr_tpr_errand_service_access\\(\\) has parameter \\$operation with no type specified\\.$#"
+			message: '#^Function helfi_tpr_tpr_errand_service_access\(\) has parameter \$operation with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function helfi_tpr_tpr_service_access\\(\\) has parameter \\$operation with no type specified\\.$#"
+			message: '#^Function helfi_tpr_tpr_service_access\(\) has parameter \$operation with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function helfi_tpr_tpr_service_channel_access\\(\\) has parameter \\$operation with no type specified\\.$#"
+			message: '#^Function helfi_tpr_tpr_service_channel_access\(\) has parameter \$operation with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function helfi_tpr_tpr_unit_access\\(\\) has parameter \\$operation with no type specified\\.$#"
+			message: '#^Function helfi_tpr_tpr_unit_access\(\) has parameter \$operation with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function helfi_tpr_views_data_alter\\(\\) has parameter \\$data with no type specified\\.$#"
+			message: '#^Function helfi_tpr_views_data_alter\(\) has parameter \$data with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function template_preprocess_tpr_errand_service\\(\\) has parameter \\$variables with no value type specified in iterable type array\\.$#"
+			message: '#^Function template_preprocess_tpr_errand_service\(\) has parameter \$variables with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function template_preprocess_tpr_ontology_word_details\\(\\) has parameter \\$variables with no value type specified in iterable type array\\.$#"
+			message: '#^Function template_preprocess_tpr_ontology_word_details\(\) has parameter \$variables with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function template_preprocess_tpr_service\\(\\) has parameter \\$variables with no value type specified in iterable type array\\.$#"
+			message: '#^Function template_preprocess_tpr_service\(\) has parameter \$variables with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function template_preprocess_tpr_service_channel\\(\\) has parameter \\$variables with no value type specified in iterable type array\\.$#"
+			message: '#^Function template_preprocess_tpr_service_channel\(\) has parameter \$variables with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function template_preprocess_tpr_unit\\(\\) has parameter \\$variables with no value type specified in iterable type array\\.$#"
+			message: '#^Function template_preprocess_tpr_unit\(\) has parameter \$variables with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.module
 
 		-
-			message: "#^Function helfi_tpr_token_info\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Function helfi_tpr_token_info\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.tokens.inc
 
 		-
-			message: "#^Function helfi_tpr_tokens\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			message: '#^Function helfi_tpr_tokens\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.tokens.inc
 
 		-
-			message: "#^Function helfi_tpr_tokens\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+			message: '#^Function helfi_tpr_tokens\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.tokens.inc
 
 		-
-			message: "#^Function helfi_tpr_tokens\\(\\) has parameter \\$tokens with no type specified\\.$#"
+			message: '#^Function helfi_tpr_tokens\(\) has parameter \$tokens with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: helfi_tpr.tokens.inc
 
 		-
-			message: "#^Function helfi_tpr_tokens\\(\\) has parameter \\$type with no type specified\\.$#"
+			message: '#^Function helfi_tpr_tokens\(\) has parameter \$type with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: helfi_tpr.tokens.inc
 
 		-
-			message: "#^Function helfi_tpr_tokens\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Function helfi_tpr_tokens\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: helfi_tpr.tokens.inc
 
 		-
-			message: "#^Function helfi_tpr_views_pre_execute\\(\\) has no return type specified\\.$#"
+			message: '#^Function helfi_tpr_views_pre_execute\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: helfi_tpr.views_execution.inc
 
 		-
-			message: "#^Function helfi_tpr_views_query_alter\\(\\) has no return type specified\\.$#"
+			message: '#^Function helfi_tpr_views_query_alter\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: helfi_tpr.views_execution.inc
 
 		-
-			message: "#^Function helfi_tpr_views_query_substitutions\\(\\) has no return type specified\\.$#"
+			message: '#^Function helfi_tpr_views_query_substitutions\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: helfi_tpr.views_execution.inc
 
 		-
-			message: "#^Function helfi_address_search_entity_bundle_field_info_alter\\(\\) has parameter \\$fields with no type specified\\.$#"
+			message: '#^Function helfi_address_search_entity_bundle_field_info_alter\(\) has parameter \$fields with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: modules/helfi_address_search/helfi_address_search.module
 
 		-
-			message: "#^Function helfi_address_search_views_data_alter\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			message: '#^Function helfi_address_search_views_data_alter\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: modules/helfi_address_search/helfi_address_search.module
 
 		-
-			message: "#^Method Drupal\\\\helfi_address_search\\\\Plugin\\\\Field\\\\FieldFormatter\\\\KiloFormatter\\:\\:defaultSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_address_search\\Plugin\\Field\\FieldFormatter\\KiloFormatter\:\:defaultSettings\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: modules/helfi_address_search/src/Plugin/Field/FieldFormatter/KiloFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_address_search\\\\Plugin\\\\Field\\\\FieldFormatter\\\\KiloFormatter\\:\\:settingsForm\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_address_search\\Plugin\\Field\\FieldFormatter\\KiloFormatter\:\:settingsForm\(\) has parameter \$form with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: modules/helfi_address_search/src/Plugin/Field/FieldFormatter/KiloFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_address_search\\\\Plugin\\\\Field\\\\FieldFormatter\\\\KiloFormatter\\:\\:settingsForm\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_address_search\\Plugin\\Field\\FieldFormatter\\KiloFormatter\:\:settingsForm\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: modules/helfi_address_search/src/Plugin/Field/FieldFormatter/KiloFormatter.php
 
 		-
-			message: """
-				#^Call to deprecated function filter_default_format\\(\\)\\:
-				in drupal\\:11\\.4\\.0 and is removed from drupal\\:13\\.0\\.0\\. Use the
-				  \\\\Drupal\\\\filter\\\\FilterFormatRepositoryInterface service with the
-				  \\:\\:getDefaultFormat\\(\\) method instead\\.$#
-			"""
+			message: '''
+				#^Call to deprecated function filter_default_format\(\)\:
+				in drupal\:11\.4\.0 and is removed from drupal\:13\.0\.0\. Use the
+				  \\Drupal\\filter\\FilterFormatRepositoryInterface service with the
+				  \:\:getDefaultFormat\(\) method instead\.$#
+			'''
+			identifier: function.deprecated
 			count: 4
 			path: modules/helfi_address_search/src/Plugin/views/area/AddressSearchInfo.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_address_search\\\\Plugin\\\\views\\\\area\\\\AddressSearchInfo\\:\\:buildOptionsForm\\(\\) has parameter \\$form with no type specified\\.$#"
+			message: '#^Method Drupal\\helfi_address_search\\Plugin\\views\\area\\AddressSearchInfo\:\:buildOptionsForm\(\) has parameter \$form with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: modules/helfi_address_search/src/Plugin/views/area/AddressSearchInfo.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_address_search\\\\Plugin\\\\views\\\\area\\\\AddressSearchInfo\\:\\:defineOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_address_search\\Plugin\\views\\area\\AddressSearchInfo\:\:defineOptions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: modules/helfi_address_search/src/Plugin/views/area/AddressSearchInfo.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_address_search\\\\Plugin\\\\views\\\\area\\\\AddressSearchInfo\\:\\:render\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_address_search\\Plugin\\views\\area\\AddressSearchInfo\:\:render\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: modules/helfi_address_search/src/Plugin/views/area/AddressSearchInfo.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_address_search\\\\Plugin\\\\views\\\\field\\\\DistanceField\\:\\:query\\(\\) has no return type specified\\.$#"
+			message: '#^Method Drupal\\helfi_address_search\\Plugin\\views\\field\\DistanceField\:\:query\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: modules/helfi_address_search/src/Plugin/views/field/DistanceField.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_address_search\\\\Plugin\\\\views\\\\filter\\\\AddressSearch\\:\\:fetchAddressCoordinates\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_address_search\\Plugin\\views\\filter\\AddressSearch\:\:fetchAddressCoordinates\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: modules/helfi_address_search/src/Plugin/views/filter/AddressSearch.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_address_search\\\\Plugin\\\\views\\\\filter\\\\AddressSearch\\:\\:query\\(\\) has no return type specified\\.$#"
+			message: '#^Method Drupal\\helfi_address_search\\Plugin\\views\\filter\\AddressSearch\:\:query\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: modules/helfi_address_search/src/Plugin/views/filter/AddressSearch.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_address_search\\\\Plugin\\\\views\\\\filter\\\\AddressSearch\\:\\:setSearchStatus\\(\\) has parameter \\$element with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_address_search\\Plugin\\views\\filter\\AddressSearch\:\:setSearchStatus\(\) has parameter \$element with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: modules/helfi_address_search/src/Plugin/views/filter/AddressSearch.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_address_search\\\\Plugin\\\\views\\\\filter\\\\AddressSearch\\:\\:setSearchStatus\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_address_search\\Plugin\\views\\filter\\AddressSearch\:\:setSearchStatus\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: modules/helfi_address_search/src/Plugin/views/filter/AddressSearch.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_address_search\\\\Plugin\\\\views\\\\filter\\\\AddressSearch\\:\\:valueForm\\(\\) has no return type specified\\.$#"
+			message: '#^Method Drupal\\helfi_address_search\\Plugin\\views\\filter\\AddressSearch\:\:valueForm\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: modules/helfi_address_search/src/Plugin/views/filter/AddressSearch.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_address_search\\\\Plugin\\\\views\\\\filter\\\\AddressSearch\\:\\:valueForm\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_address_search\\Plugin\\views\\filter\\AddressSearch\:\:valueForm\(\) has parameter \$form with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: modules/helfi_address_search/src/Plugin/views/filter/AddressSearch.php
 
 		-
-			message: "#^Match expression does not handle remaining value\\: string$#"
+			message: '#^Offset ''fi'' might not exist on non\-empty\-array\{fi\?\: array\{query\: array\{q\: string, type\: ''address'', page\: ''1'', page_size\: ''1'', language\: ''fi''\|''sv'', municipality\: ''helsinki''\}\}, sv\?\: array\{query\: array\{q\: string, type\: ''address'', page\: ''1'', page_size\: ''1'', language\: ''fi''\|''sv'', municipality\: ''helsinki''\}\}\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: modules/helfi_address_search/src/Plugin/views/filter/AddressSearch.php
+
+		-
+			message: '#^Offset ''sv'' might not exist on non\-empty\-array\{fi\?\: array\{query\: array\{q\: string, type\: ''address'', page\: ''1'', page_size\: ''1'', language\: ''fi''\|''sv'', municipality\: ''helsinki''\}\}, sv\?\: array\{query\: array\{q\: string, type\: ''address'', page\: ''1'', page_size\: ''1'', language\: ''fi''\|''sv'', municipality\: ''helsinki''\}\}\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: modules/helfi_address_search/src/Plugin/views/filter/AddressSearch.php
+
+		-
+			message: '#^Match expression does not handle remaining value\: string$#'
+			identifier: match.unhandled
 			count: 2
 			path: src/Entity/ChannelType.php
 
 		-
-			message: "#^Class Drupal\\\\helfi_tpr\\\\Entity\\\\ChannelTypeCollection implements generic interface ArrayAccess but does not specify its types\\: TKey, TValue$#"
+			message: '#^Class Drupal\\helfi_tpr\\Entity\\ChannelTypeCollection implements generic interface ArrayAccess but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
 			count: 1
 			path: src/Entity/ChannelTypeCollection.php
 
 		-
-			message: "#^Class Drupal\\\\helfi_tpr\\\\Entity\\\\ChannelTypeCollection implements generic interface Iterator but does not specify its types\\: TKey, TValue$#"
+			message: '#^Class Drupal\\helfi_tpr\\Entity\\ChannelTypeCollection implements generic interface Iterator but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
 			count: 1
 			path: src/Entity/ChannelTypeCollection.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\ChannelTypeCollection\\:\\:createFromArray\\(\\) has parameter \\$items with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\ChannelTypeCollection\:\:createFromArray\(\) has parameter \$items with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Entity/ChannelTypeCollection.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\ErrandService\\:\\:getChannelIndex\\(\\) should return bool\\|int but returns int\\|string\\|false\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\ErrandService\:\:getChannelIndex\(\) should return bool\|int but returns int\|string\|false\.$#'
+			identifier: return.type
 			count: 1
 			path: src/Entity/ErrandService.php
 
 		-
-			message: "#^Parameter \\#1 \\$offset of method ArrayAccess\\<int,Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\>\\:\\:offsetUnset\\(\\) expects int, int\\|true given\\.$#"
+			message: '#^Parameter \#1 \$offset of method ArrayAccess\<int,Drupal\\Core\\Field\\FieldItemInterface\>\:\:offsetUnset\(\) expects int, int\|true given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Entity/ErrandService.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\Form\\\\ContentEntityForm\\:\\:buildForm\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\Form\\ContentEntityForm\:\:buildForm\(\) has parameter \$form with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Entity/Form/ContentEntityForm.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\Form\\\\ContentEntityForm\\:\\:buildForm\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\Form\\ContentEntityForm\:\:buildForm\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Entity/Form/ContentEntityForm.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\Form\\\\ContentEntityForm\\:\\:form\\(\\) has no return type specified\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\Form\\ContentEntityForm\:\:form\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: src/Entity/Form/ContentEntityForm.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\Form\\\\ContentEntityForm\\:\\:form\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\Form\\ContentEntityForm\:\:form\(\) has parameter \$form with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Entity/Form/ContentEntityForm.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\Form\\\\ContentEntityForm\\:\\:save\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\Form\\ContentEntityForm\:\:save\(\) has parameter \$form with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Entity/Form/ContentEntityForm.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\Form\\\\TprDeleteForm\\:\\:submitForm\\(\\) has no return type specified\\.$#"
+			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
+			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
+			count: 2
+			path: src/Entity/Form/TprDeleteForm.php
+
+		-
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\Form\\TprDeleteForm\:\:submitForm\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: src/Entity/Form/TprDeleteForm.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\Form\\\\TprDeleteForm\\:\\:submitForm\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\Form\\TprDeleteForm\:\:submitForm\(\) has parameter \$form with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Entity/Form/TprDeleteForm.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function rtrim expects string, string\\|false given\\.$#"
+			message: '#^Parameter \#1 \$string of function rtrim expects string, string\|false given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Entity/Form/TprDeleteForm.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\Listing\\\\ListBuilder\\:\\:buildHeader\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Direct injection of entity storage via \$storage is not recommended\. Inject Drupal\\Core\\Entity\\EntityTypeManagerInterface and call getStorage\(\) at the call\-site instead\.$#'
+			identifier: drupal.entityStorageDirectInjection
 			count: 1
 			path: src/Entity/Listing/ListBuilder.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\Listing\\\\ListBuilder\\:\\:buildRow\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\Listing\\ListBuilder\:\:buildHeader\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Entity/Listing/ListBuilder.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\Listing\\\\ListBuilder\\:\\:getDefaultOperations\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\Listing\\ListBuilder\:\:buildRow\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Entity/Listing/ListBuilder.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\Listing\\\\ListBuilder\\:\\:render\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\Listing\\ListBuilder\:\:getDefaultOperations\(\) is missing the CacheableMetadata parameter added in Drupal 11\.3\. Update the signature to\: getDefaultOperations\(\\Drupal\\Core\\Entity\\EntityInterface \$entity, \?\\Drupal\\Core\\Cache\\CacheableMetadata \$cacheability \= NULL\)\.$#'
+			identifier: drupal.entityListBuilderMissingCacheabilityParameter
 			count: 1
 			path: src/Entity/Listing/ListBuilder.php
 
 		-
-			message: "#^Parameter \\#1 \\$text of method Drupal\\\\Core\\\\Entity\\\\EntityBase\\:\\:toLink\\(\\) expects array\\|Drupal\\\\Component\\\\Render\\\\MarkupInterface\\|string\\|null, int\\|string\\|null given\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\Listing\\ListBuilder\:\:getDefaultOperations\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Entity/Listing/ListBuilder.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\OntologyWordDetails\\:\\:loadMultipleByWordId\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\Listing\\ListBuilder\:\:render\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/Listing/ListBuilder.php
+
+		-
+			message: '#^Parameter \#1 \$text of method Drupal\\Core\\Entity\\EntityBase\:\:toLink\(\) expects array\|Drupal\\Component\\Render\\MarkupInterface\|string\|null, int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Entity/Listing/ListBuilder.php
+
+		-
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\OntologyWordDetails\:\:loadMultipleByWordId\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Entity/OntologyWordDetails.php
 
 		-
-			message: "#^Parameter \\#1 \\$ids of static method Drupal\\\\Core\\\\Entity\\\\EntityBase\\:\\:loadMultiple\\(\\) expects array\\|null, array\\|int given\\.$#"
+			message: '#^Parameter \#1 \$ids of static method Drupal\\Core\\Entity\\EntityBase\:\:loadMultiple\(\) expects array\|null, array\|int given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Entity/OntologyWordDetails.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\Service\\:\\:getErrandServiceIndex\\(\\) should return bool\\|int but returns int\\|string\\|false\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\Service\:\:getErrandServiceIndex\(\) should return bool\|int but returns int\|string\|false\.$#'
+			identifier: return.type
 			count: 1
 			path: src/Entity/Service.php
 
 		-
-			message: "#^Parameter \\#1 \\$offset of method ArrayAccess\\<int,Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\>\\:\\:offsetUnset\\(\\) expects int, int\\|true given\\.$#"
+			message: '#^Parameter \#1 \$offset of method ArrayAccess\<int,Drupal\\Core\\Field\\FieldItemInterface\>\:\:offsetUnset\(\) expects int, int\|true given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Entity/Service.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\TranslationHandler\\:\\:addTranslatabilityClue\\(\\) has no return type specified\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\TranslationHandler\:\:addTranslatabilityClue\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: src/Entity/TranslationHandler.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\TranslationHandler\\:\\:addTranslatabilityClue\\(\\) has parameter \\$element with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\TranslationHandler\:\:addTranslatabilityClue\(\) has parameter \$element with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Entity/TranslationHandler.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\TranslationHandler\\:\\:entityFormAlter\\(\\) has no return type specified\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\TranslationHandler\:\:entityFormAlter\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: src/Entity/TranslationHandler.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\TranslationHandler\\:\\:entityFormAlter\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\TranslationHandler\:\:entityFormAlter\(\) has parameter \$form with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Entity/TranslationHandler.php
 
 		-
-			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			message: '#^\\Drupal calls should be avoided in classes, use dependency injection instead$#'
+			identifier: globalDrupalDependencyInjection.useDependencyInjection
 			count: 1
 			path: src/Entity/TranslationHandler.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Entity\\\\Unit\\:\\:getServiceIndex\\(\\) should return bool\\|int but returns int\\|string\\|false\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Entity\\Unit\:\:getServiceIndex\(\) should return bool\|int but returns int\|string\|false\.$#'
+			identifier: return.type
 			count: 1
 			path: src/Entity/Unit.php
 
 		-
-			message: "#^Parameter \\#1 \\$offset of method ArrayAccess\\<int,Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\>\\:\\:offsetUnset\\(\\) expects int, int\\|true given\\.$#"
+			message: '#^Parameter \#1 \$offset of method ArrayAccess\<int,Drupal\\Core\\Field\\FieldItemInterface\>\:\:offsetUnset\(\) expects int, int\|true given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Entity/Unit.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\EventSubscriber\\\\MigrationConfigurationSubscriber\\:\\:onMigration\\(\\) has no return type specified\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\EventSubscriber\\MigrationConfigurationSubscriber\:\:onMigration\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: src/EventSubscriber/MigrationConfigurationSubscriber.php
 
 		-
-			message: "#^Negated boolean expression is always false\\.$#"
+			message: '#^Negated boolean expression is always false\.$#'
+			identifier: booleanNot.alwaysFalse
 			count: 1
 			path: src/EventSubscriber/MigrationPrepareRowSubscriber.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\Connection\\:\\:build\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\Connection\:\:build\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/Connection.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\Connection\\:\\:getFields\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\Connection\:\:getFields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/Connection.php
 
 		-
-			message: "#^Property Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\Connection\\:\\:\\$data type has no value type specified in iterable type array\\.$#"
+			message: '#^Property Drupal\\helfi_tpr\\Field\\Connection\\Connection\:\:\$data type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/Connection.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\Highlight\\:\\:build\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\Highlight\:\:build\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/Highlight.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\Highlight\\:\\:getFields\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\Highlight\:\:getFields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/Highlight.php
 
 		-
-			message: """
-				#^Call to deprecated function _filter_autop\\(\\)\\:
-				in drupal\\:11\\.4\\.0 and is removed from drupal\\:13\\.0\\.0\\. The logic has
-				  been included in \\\\Drupal\\\\filter\\\\Plugin\\\\Filter\\\\FilterAutoP\\:\\:process\\(\\) and no
-				  replacement is provided\\.$#
-			"""
+			message: '''
+				#^Call to deprecated function _filter_autop\(\)\:
+				in drupal\:11\.4\.0 and is removed from drupal\:13\.0\.0\. The logic has
+				  been included in \\Drupal\\filter\\Plugin\\Filter\\FilterAutoP\:\:process\(\) and no
+				  replacement is provided\.$#
+			'''
+			identifier: function.deprecated
 			count: 1
 			path: src/Field/Connection/OtherInfo.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\OtherInfo\\:\\:build\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\OtherInfo\:\:build\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/OtherInfo.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\OtherInfo\\:\\:getFields\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\OtherInfo\:\:getFields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/OtherInfo.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\PhoneOrEmail\\:\\:build\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\PhoneOrEmail\:\:build\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/PhoneOrEmail.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\PhoneOrEmail\\:\\:getFields\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\PhoneOrEmail\:\:getFields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/PhoneOrEmail.php
 
 		-
-			message: """
-				#^Call to deprecated function _filter_autop\\(\\)\\:
-				in drupal\\:11\\.4\\.0 and is removed from drupal\\:13\\.0\\.0\\. The logic has
-				  been included in \\\\Drupal\\\\filter\\\\Plugin\\\\Filter\\\\FilterAutoP\\:\\:process\\(\\) and no
-				  replacement is provided\\.$#
-			"""
+			message: '''
+				#^Call to deprecated function _filter_autop\(\)\:
+				in drupal\:11\.4\.0 and is removed from drupal\:13\.0\.0\. The logic has
+				  been included in \\Drupal\\filter\\Plugin\\Filter\\FilterAutoP\:\:process\(\) and no
+				  replacement is provided\.$#
+			'''
+			identifier: function.deprecated
 			count: 1
 			path: src/Field/Connection/Price.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\Price\\:\\:build\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\Price\:\:build\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/Price.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\Price\\:\\:getFields\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\Price\:\:getFields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/Price.php
 
 		-
-			message: "#^Match expression does not handle remaining value\\: mixed$#"
+			message: '#^Match expression does not handle remaining value\: mixed$#'
+			identifier: match.unhandled
 			count: 1
 			path: src/Field/Connection/Subgroup.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\Subgroup\\:\\:build\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\Subgroup\:\:build\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/Subgroup.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\Subgroup\\:\\:getFields\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\Subgroup\:\:getFields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/Subgroup.php
 
 		-
-			message: """
-				#^Call to deprecated function _filter_autop\\(\\)\\:
-				in drupal\\:11\\.4\\.0 and is removed from drupal\\:13\\.0\\.0\\. The logic has
-				  been included in \\\\Drupal\\\\filter\\\\Plugin\\\\Filter\\\\FilterAutoP\\:\\:process\\(\\) and no
-				  replacement is provided\\.$#
-			"""
+			message: '''
+				#^Call to deprecated function _filter_autop\(\)\:
+				in drupal\:11\.4\.0 and is removed from drupal\:13\.0\.0\. The logic has
+				  been included in \\Drupal\\filter\\Plugin\\Filter\\FilterAutoP\:\:process\(\) and no
+				  replacement is provided\.$#
+			'''
+			identifier: function.deprecated
 			count: 1
 			path: src/Field/Connection/TextWithLink.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\TextWithLink\\:\\:build\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\TextWithLink\:\:build\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/TextWithLink.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Field\\\\Connection\\\\TextWithLink\\:\\:getFields\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\TextWithLink\:\:getFields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/TextWithLink.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Fixture\\\\ErrandService\\:\\:getMockData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Fixture\\ErrandService\:\:getMockData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Fixture/ErrandService.php
 
 		-
-			message: "#^Parameter \\#3 \\$body of class GuzzleHttp\\\\Psr7\\\\Response constructor expects Psr\\\\Http\\\\Message\\\\StreamInterface\\|resource\\|string\\|null, string\\|false given\\.$#"
+			message: '#^Parameter \#3 \$body of class GuzzleHttp\\Psr7\\Response constructor expects Psr\\Http\\Message\\StreamInterface\|resource\|string\|null, string\|false given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Fixture/ErrandService.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Fixture\\\\OntologyWordDetails\\:\\:getMockData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Fixture\\OntologyWordDetails\:\:getMockData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Fixture/OntologyWordDetails.php
 
 		-
-			message: "#^Parameter \\#3 \\$body of class GuzzleHttp\\\\Psr7\\\\Response constructor expects Psr\\\\Http\\\\Message\\\\StreamInterface\\|resource\\|string\\|null, string\\|false given\\.$#"
+			message: '#^Parameter \#3 \$body of class GuzzleHttp\\Psr7\\Response constructor expects Psr\\Http\\Message\\StreamInterface\|resource\|string\|null, string\|false given\.$#'
+			identifier: argument.type
 			count: 2
 			path: src/Fixture/OntologyWordDetails.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Fixture\\\\Service\\:\\:getMockData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Fixture\\Service\:\:getMockData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Fixture/Service.php
 
 		-
-			message: "#^Parameter \\#3 \\$body of class GuzzleHttp\\\\Psr7\\\\Response constructor expects Psr\\\\Http\\\\Message\\\\StreamInterface\\|resource\\|string\\|null, string\\|false given\\.$#"
+			message: '#^Parameter \#3 \$body of class GuzzleHttp\\Psr7\\Response constructor expects Psr\\Http\\Message\\StreamInterface\|resource\|string\|null, string\|false given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Fixture/Service.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Fixture\\\\Unit\\:\\:getMockData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Fixture\\Unit\:\:getMockData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Fixture/Unit.php
 
 		-
-			message: "#^Parameter \\#3 \\$body of class GuzzleHttp\\\\Psr7\\\\Response constructor expects Psr\\\\Http\\\\Message\\\\StreamInterface\\|resource\\|string\\|null, string\\|false given\\.$#"
+			message: '#^Offset ''accessibility_sentences'' might not exist on array\{\}\|array\{accessibility_sentences\?\: non\-empty\-list\<non\-empty\-array\>, connections\?\: non\-empty\-list\<non\-empty\-array\>, service_descriptions\?\: non\-empty\-list\<non\-empty\-array\>\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/Fixture/Unit.php
+
+		-
+			message: '#^Offset ''connections'' might not exist on array\{\}\|array\{accessibility_sentences\?\: non\-empty\-list\<non\-empty\-array\>, connections\?\: non\-empty\-list\<non\-empty\-array\>, service_descriptions\?\: non\-empty\-list\<non\-empty\-array\>\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/Fixture/Unit.php
+
+		-
+			message: '#^Offset ''service_descriptions'' might not exist on array\{\}\|array\{accessibility_sentences\?\: non\-empty\-list\<non\-empty\-array\>, connections\?\: non\-empty\-list\<non\-empty\-array\>, service_descriptions\?\: non\-empty\-list\<non\-empty\-array\>\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/Fixture/Unit.php
+
+		-
+			message: '#^Parameter \#3 \$body of class GuzzleHttp\\Psr7\\Response constructor expects Psr\\Http\\Message\\StreamInterface\|resource\|string\|null, string\|false given\.$#'
+			identifier: argument.type
 			count: 4
 			path: src/Fixture/Unit.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\DataType\\\\ConnectionData\\:\\:setValue\\(\\) has no return type specified\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\DataType\\ConnectionData\:\:setValue\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: src/Plugin/DataType/ConnectionData.php
 
 		-
-			message: "#^Class Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\AccessibilitySentenceFormatter extends generic class Drupal\\\\Core\\\\Field\\\\FormatterBase but does not specify its types\\: T$#"
+			message: '#^Access to an undefined property Drupal\\Core\\Field\\FieldItemInterface\:\:\$group\.$#'
+			identifier: property.notFound
+			count: 4
+			path: src/Plugin/Field/FieldFormatter/AccessibilitySentenceFormatter.php
+
+		-
+			message: '#^Access to an undefined property Drupal\\Core\\Field\\FieldItemInterface\:\:\$value\.$#'
+			identifier: property.notFound
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/AccessibilitySentenceFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\AccessibilitySentenceFormatter\\:\\:groupItemsByLabel\\(\\) has parameter \\$items with generic interface Drupal\\\\Core\\\\Field\\\\FieldItemListInterface but does not specify its types\\: T$#"
+			message: '#^Class Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\AccessibilitySentenceFormatter extends generic class Drupal\\Core\\Field\\FormatterBase but does not specify its types\: T$#'
+			identifier: missingType.generics
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/AccessibilitySentenceFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\AccessibilitySentenceFormatter\\:\\:groupItemsByLabel\\(\\) has parameter \\$items with no value type specified in iterable type Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\AccessibilitySentenceFormatter\:\:groupItemsByLabel\(\) has parameter \$items with generic interface Drupal\\Core\\Field\\FieldItemListInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/AccessibilitySentenceFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\AccessibilitySentenceFormatter\\:\\:groupItemsByLabel\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\AccessibilitySentenceFormatter\:\:groupItemsByLabel\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/AccessibilitySentenceFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\AccessibilitySentenceFormatter\\:\\:viewElements\\(\\) has parameter \\$items with generic interface Drupal\\\\Core\\\\Field\\\\FieldItemListInterface but does not specify its types\\: T$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\AccessibilitySentenceFormatter\:\:viewElements\(\) has parameter \$items with generic interface Drupal\\Core\\Field\\FieldItemListInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/AccessibilitySentenceFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\AccessibilitySentenceFormatter\\:\\:viewElements\\(\\) has parameter \\$items with no value type specified in iterable type Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\.$#"
+			message: '#^PHPDoc tag @var with type array\<Drupal\\helfi_tpr\\Plugin\\Field\\FieldType\\AccessibilitySentenceItem\> is not subtype of native type Drupal\\Core\\Field\\FieldItemListInterface\.$#'
+			identifier: varTag.nativeType
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/AccessibilitySentenceFormatter.php
 
 		-
-			message: "#^Parameter \\#1 \\$items of method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\AccessibilitySentenceFormatter\\:\\:groupItemsByLabel\\(\\) expects Drupal\\\\Core\\\\Field\\\\FieldItemListInterface, array\\<Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldType\\\\AccessibilitySentenceItem\\> given\\.$#"
+			message: '#^Parameter \#1 \$items of method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\AccessibilitySentenceFormatter\:\:groupItemsByLabel\(\) expects Drupal\\Core\\Field\\FieldItemListInterface, array\<Drupal\\helfi_tpr\\Plugin\\Field\\FieldType\\AccessibilitySentenceItem\> given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/AccessibilitySentenceFormatter.php
 
 		-
-			message: "#^Class Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ConnectionFormatter extends generic class Drupal\\\\Core\\\\Field\\\\FormatterBase but does not specify its types\\: T$#"
+			message: '#^Class Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ConnectionFormatter extends generic class Drupal\\Core\\Field\\FormatterBase but does not specify its types\: T$#'
+			identifier: missingType.generics
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ConnectionFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ConnectionFormatter\\:\\:viewElements\\(\\) has parameter \\$items with generic interface Drupal\\\\Core\\\\Field\\\\FieldItemListInterface but does not specify its types\\: T$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ConnectionFormatter\:\:viewElements\(\) has parameter \$items with generic interface Drupal\\Core\\Field\\FieldItemListInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ConnectionFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ConnectionFormatter\\:\\:viewElements\\(\\) has parameter \\$items with no value type specified in iterable type Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\.$#"
-			count: 1
-			path: src/Plugin/Field/FieldFormatter/ConnectionFormatter.php
-
-		-
-			message: "#^Class Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ErrandServicesChannelFormatter extends generic class Drupal\\\\Core\\\\Field\\\\FormatterBase but does not specify its types\\: T$#"
+			message: '#^Class Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ErrandServicesChannelFormatter extends generic class Drupal\\Core\\Field\\FormatterBase but does not specify its types\: T$#'
+			identifier: missingType.generics
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ErrandServicesChannelFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ErrandServicesChannelFormatter\\:\\:create\\(\\) has parameter \\$configuration with no value type specified in iterable type array\\.$#"
+			message: '#^Drupal\\Core\\DependencyInjection\\DependencySerializationTrait does not support private properties\.$#'
+			identifier: dependencySerializationTraitProperty.unsupportedPrivateProperty
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ErrandServicesChannelFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ErrandServicesChannelFormatter\\:\\:defaultSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ErrandServicesChannelFormatter\:\:create\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ErrandServicesChannelFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ErrandServicesChannelFormatter\\:\\:settingsForm\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ErrandServicesChannelFormatter\:\:defaultSettings\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ErrandServicesChannelFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ErrandServicesChannelFormatter\\:\\:settingsForm\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ErrandServicesChannelFormatter\:\:settingsForm\(\) has parameter \$form with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ErrandServicesChannelFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ErrandServicesChannelFormatter\\:\\:viewElements\\(\\) has parameter \\$items with generic interface Drupal\\\\Core\\\\Field\\\\FieldItemListInterface but does not specify its types\\: T$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ErrandServicesChannelFormatter\:\:settingsForm\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ErrandServicesChannelFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ErrandServicesChannelFormatter\\:\\:viewElements\\(\\) has parameter \\$items with no value type specified in iterable type Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ErrandServicesChannelFormatter\:\:viewElements\(\) has parameter \$items with generic interface Drupal\\Core\\Field\\FieldItemListInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ErrandServicesChannelFormatter.php
 
 		-
-			message: "#^Class Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\OntologyWordDetailFormatter extends generic class Drupal\\\\Core\\\\Field\\\\FormatterBase but does not specify its types\\: T$#"
+			message: '#^Class Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\OntologyWordDetailFormatter extends generic class Drupal\\Core\\Field\\FormatterBase but does not specify its types\: T$#'
+			identifier: missingType.generics
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/OntologyWordDetailFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\OntologyWordDetailFormatter\\:\\:viewElements\\(\\) has parameter \\$items with generic interface Drupal\\\\Core\\\\Field\\\\FieldItemListInterface but does not specify its types\\: T$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\OntologyWordDetailFormatter\:\:viewElements\(\) has parameter \$items with generic interface Drupal\\Core\\Field\\FieldItemListInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/OntologyWordDetailFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\OntologyWordDetailFormatter\\:\\:viewElements\\(\\) has parameter \\$items with no value type specified in iterable type Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\.$#"
+			message: '#^PHPDoc tag @var with type array\<Drupal\\helfi_tpr\\Plugin\\Field\\FieldType\\OntologyWordDetailItem\> is not subtype of native type Drupal\\Core\\Field\\FieldItemListInterface\.$#'
+			identifier: varTag.nativeType
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/OntologyWordDetailFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ServiceChannelFormatter\\:\\:defaultSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ServiceChannelFormatter\:\:defaultSettings\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ServiceChannelFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ServiceChannelFormatter\\:\\:settingsForm\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ServiceChannelFormatter\:\:settingsForm\(\) has parameter \$form with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ServiceChannelFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ServiceChannelFormatter\\:\\:settingsForm\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ServiceChannelFormatter\:\:settingsForm\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ServiceChannelFormatter.php
 
 		-
-			message: "#^Class Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ServiceMapFormatter extends generic class Drupal\\\\Core\\\\Field\\\\FormatterBase but does not specify its types\\: T$#"
+			message: '#^Class Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ServiceMapFormatter extends generic class Drupal\\Core\\Field\\FormatterBase but does not specify its types\: T$#'
+			identifier: missingType.generics
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ServiceMapFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ServiceMapFormatter\\:\\:defaultSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ServiceMapFormatter\:\:defaultSettings\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ServiceMapFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ServiceMapFormatter\\:\\:settingsForm\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ServiceMapFormatter\:\:settingsForm\(\) has parameter \$form with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ServiceMapFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ServiceMapFormatter\\:\\:settingsForm\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ServiceMapFormatter\:\:settingsForm\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ServiceMapFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ServiceMapFormatter\\:\\:viewElements\\(\\) has parameter \\$items with generic interface Drupal\\\\Core\\\\Field\\\\FieldItemListInterface but does not specify its types\\: T$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldFormatter\\ServiceMapFormatter\:\:viewElements\(\) has parameter \$items with generic interface Drupal\\Core\\Field\\FieldItemListInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
 			count: 1
 			path: src/Plugin/Field/FieldFormatter/ServiceMapFormatter.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ServiceMapFormatter\\:\\:viewElements\\(\\) has parameter \\$items with no value type specified in iterable type Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\.$#"
-			count: 1
-			path: src/Plugin/Field/FieldFormatter/ServiceMapFormatter.php
-
-		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldType\\\\AccessibilitySentenceItem\\:\\:generateSampleValue\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldType\\AccessibilitySentenceItem\:\:generateSampleValue\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldType/AccessibilitySentenceItem.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldType\\\\AccessibilitySentenceItem\\:\\:schema\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldType\\AccessibilitySentenceItem\:\:schema\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldType/AccessibilitySentenceItem.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldType\\\\ConnectionItem\\:\\:generateSampleValue\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldType\\ConnectionItem\:\:generateSampleValue\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldType/ConnectionItem.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldType\\\\ConnectionItem\\:\\:schema\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldType\\ConnectionItem\:\:schema\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldType/ConnectionItem.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldType\\\\ConnectionItem\\:\\:setValue\\(\\) has no return type specified\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldType\\ConnectionItem\:\:setValue\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: src/Plugin/Field/FieldType/ConnectionItem.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldType\\\\ConnectionItem\\:\\:setValue\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldType\\ConnectionItem\:\:setValue\(\) has parameter \$values with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldType/ConnectionItem.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldType\\\\OntologyWordDetailItem\\:\\:generateSampleValue\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldType\\OntologyWordDetailItem\:\:generateSampleValue\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldType/OntologyWordDetailItem.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\Field\\\\FieldType\\\\OntologyWordDetailItem\\:\\:schema\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\Field\\FieldType\\OntologyWordDetailItem\:\:schema\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/Field/FieldType/OntologyWordDetailItem.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\process\\\\ArrayElementEquals\\:\\:__construct\\(\\) has parameter \\$configuration with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\process\\ArrayElementEquals\:\:__construct\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/process/ArrayElementEquals.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\process\\\\ArrayElementEquals\\:\\:transform\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\process\\ArrayElementEquals\:\:transform\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/process/ArrayElementEquals.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\OntologyWordDetails\\:\\:combineContentAndDetails\\(\\) has parameter \\$content with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\OntologyWordDetails\:\:combineContentAndDetails\(\) has parameter \$content with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/OntologyWordDetails.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\OntologyWordDetails\\:\\:combineContentAndDetails\\(\\) has parameter \\$detailedContent with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\OntologyWordDetails\:\:combineContentAndDetails\(\) has parameter \$detailedContent with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/OntologyWordDetails.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\OntologyWordDetails\\:\\:combineContentAndDetails\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\OntologyWordDetails\:\:combineContentAndDetails\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/OntologyWordDetails.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\OntologyWordDetails\\:\\:create\\(\\) has parameter \\$configuration with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\OntologyWordDetails\:\:create\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/OntologyWordDetails.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\OntologyWordDetails\\:\\:fields\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\OntologyWordDetails\:\:fields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/OntologyWordDetails.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\OntologyWordDetails\\:\\:getIds\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\OntologyWordDetails\:\:getIds\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/OntologyWordDetails.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\OntologyWordDetails\\:\\:getOntologyIdsLimit\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\OntologyWordDetails\:\:getOntologyIdsLimit\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/OntologyWordDetails.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\OntologyWordDetails\\:\\:normalizeMultilingualData\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\OntologyWordDetails\:\:normalizeMultilingualData\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/OntologyWordDetails.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\ServiceChannel\\:\\:normalizeMultilingualData\\(\\) has parameter \\$content with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\ServiceChannel\:\:normalizeMultilingualData\(\) has parameter \$content with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/ServiceChannel.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\ServiceMap\\:\\:getExtraUnitData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\ServiceMap\:\:getExtraUnitData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/ServiceMap.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\ServiceMap\\:\\:normalizeAccessibilitySentences\\(\\) has parameter \\$sentences with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\ServiceMap\:\:normalizeAccessibilitySentences\(\) has parameter \$sentences with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/ServiceMap.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\ServiceMap\\:\\:normalizeAccessibilitySentences\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\ServiceMap\:\:normalizeAccessibilitySentences\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/ServiceMap.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\ServiceMap\\:\\:normalizeConnections\\(\\) has parameter \\$connections with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\ServiceMap\:\:normalizeConnections\(\) has parameter \$connections with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/ServiceMap.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\ServiceMap\\:\\:normalizeConnections\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\ServiceMap\:\:normalizeConnections\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/ServiceMap.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\ServiceMap\\:\\:normalizeMultilingualData\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\ServiceMap\:\:normalizeMultilingualData\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/ServiceMap.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\ServiceMap\\:\\:normalizeServices\\(\\) has parameter \\$services with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\ServiceMap\:\:normalizeServices\(\) has parameter \$services with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/ServiceMap.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\ServiceRegister\\:\\:normalizeMultilingualData\\(\\) has parameter \\$content with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\ServiceRegister\:\:normalizeMultilingualData\(\) has parameter \$content with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/ServiceRegister.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\TprSourceBase\\:\\:fields\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\TprSourceBase\:\:fields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/TprSourceBase.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\migrate\\\\source\\\\TprSourceBase\\:\\:getIds\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\migrate\\source\\TprSourceBase\:\:getIds\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/migrate/source/TprSourceBase.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\views\\\\argument\\\\ServiceIdArgument\\:\\:query\\(\\) has parameter \\$group_by with no type specified\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\views\\argument\\ServiceIdArgument\:\:query\(\) has parameter \$group_by with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: src/Plugin/views/argument/ServiceIdArgument.php
 
 		-
-			message: "#^Parameter \\#1 \\$group of method Drupal\\\\views\\\\Plugin\\\\views\\\\query\\\\Sql\\:\\:addWhere\\(\\) expects string, int\\|string given\\.$#"
+			message: '#^Parameter \#1 \$group of method Drupal\\views\\Plugin\\views\\query\\Sql\:\:addWhere\(\) expects string, int\|string given\.$#'
+			identifier: argument.type
 			count: 2
 			path: src/Plugin/views/argument/ServiceIdArgument.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\views\\\\filter\\\\ProvidedLanguages\\:\\:init\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\views\\filter\\ProvidedLanguages\:\:init\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Plugin/views/filter/ProvidedLanguages.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\views\\\\filter\\\\Status\\:\\:canExpose\\(\\) has no return type specified\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\views\\filter\\Status\:\:canExpose\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: src/Plugin/views/filter/Status.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\views\\\\filter\\\\Status\\:\\:query\\(\\) has no return type specified\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\views\\filter\\Status\:\:query\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: src/Plugin/views/filter/Status.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\Plugin\\\\views\\\\relationship\\\\TagOwdRelationship\\:\\:query\\(\\) has no return type specified\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\Plugin\\views\\relationship\\TagOwdRelationship\:\:query\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: src/Plugin/views/relationship/TagOwdRelationship.php
 
 		-
-			message: "#^Method Drupal\\\\helfi_tpr\\\\TprViewsData\\:\\:getViewsData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\helfi_tpr\\TprViewsData\:\:getViewsData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/TprViewsData.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ErrandServiceListTest\\:\\:assertUpdateListEntity\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ErrandServiceListTest\:\:assertUpdateListEntity\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ErrandServiceListTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$body of class donatj\\\\MockWebServer\\\\Response constructor expects string, string\\|false given\\.$#"
+			message: '#^Parameter \#1 \$body of class donatj\\MockWebServer\\Response constructor expects string, string\|false given\.$#'
+			identifier: argument.type
 			count: 1
 			path: tests/src/Functional/ErrandServiceListTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ListTestBase\\:\\:assertExpectedListItems\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ListTestBase\:\:assertExpectedListItems\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ListTestBase.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ListTestBase\\:\\:assertPublishAction\\(\\) has parameter \\$languages with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ListTestBase\:\:assertPublishAction\(\) has parameter \$languages with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ListTestBase.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ListTestBase\\:\\:assertUpdateAction\\(\\) has parameter \\$languages with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ListTestBase\:\:assertUpdateAction\(\) has parameter \$languages with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ListTestBase.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ListTestBase\\:\\:assertUpdateListEntity\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ListTestBase\:\:assertUpdateListEntity\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ListTestBase.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ListTestBase\\:\\:runErrandServiceMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ListTestBase\:\:fixture\(\) should return Drupal\\helfi_api_base\\Fixture\\FixtureBase but returns object\.$#'
+			identifier: return.type
 			count: 1
 			path: tests/src/Functional/ListTestBase.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ListTestBase\\:\\:runOntologyWordDetailsMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ListTestBase\:\:runErrandServiceMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ListTestBase.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ListTestBase\\:\\:runServiceChannelMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ListTestBase\:\:runOntologyWordDetailsMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ListTestBase.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ListTestBase\\:\\:runServiceMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ListTestBase\:\:runServiceChannelMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ListTestBase.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ListTestBase\\:\\:runUnitMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ListTestBase\:\:runServiceMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ListTestBase.php
 
 		-
-			message: "#^Property Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ListTestBase\\:\\:\\$listPermissions type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ListTestBase\:\:runUnitMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ListTestBase.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\Plugin\\\\Field\\\\FieldFormatter\\\\ServiceChannelFormatterTest\\:\\:assertChannelOrder\\(\\) has parameter \\$expectedOrder with no value type specified in iterable type array\\.$#"
+			message: '#^Property Drupal\\Tests\\helfi_tpr\\Functional\\ListTestBase\:\:\$listPermissions type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/src/Functional/ListTestBase.php
+
+		-
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\Plugin\\Field\\FieldFormatter\\ServiceChannelFormatterTest\:\:assertChannelOrder\(\) has parameter \$expectedOrder with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/Plugin/Field/FieldFormatter/ServiceChannelFormatterTest.php
 
 		-
-			message: "#^Parameter \\#2 \\$callback of function usort expects callable\\(Drupal\\\\helfi_tpr\\\\Entity\\\\ChannelType\\|null, Drupal\\\\helfi_tpr\\\\Entity\\\\ChannelType\\|null\\)\\: int, Closure\\(Drupal\\\\helfi_tpr\\\\Entity\\\\ChannelType, Drupal\\\\helfi_tpr\\\\Entity\\\\ChannelType\\)\\: int\\<\\-1, 1\\> given\\.$#"
+			message: '#^Parameter \#2 \$callback of function usort expects callable\(Drupal\\helfi_tpr\\Entity\\ChannelType\|null, Drupal\\helfi_tpr\\Entity\\ChannelType\|null\)\: int, Closure\(Drupal\\helfi_tpr\\Entity\\ChannelType, Drupal\\helfi_tpr\\Entity\\ChannelType\)\: int\<\-1, 1\> given\.$#'
+			identifier: argument.type
 			count: 1
 			path: tests/src/Functional/Plugin/Field/FieldFormatter/ServiceChannelFormatterTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceChannelListTest\\:\\:runErrandServiceMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceChannelListTest\:\:fixture\(\) should return Drupal\\helfi_api_base\\Fixture\\FixtureBase but returns object\.$#'
+			identifier: return.type
 			count: 1
 			path: tests/src/Functional/ServiceChannelListTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceChannelListTest\\:\\:runOntologyWordDetailsMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceChannelListTest\:\:runErrandServiceMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceChannelListTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceChannelListTest\\:\\:runServiceChannelMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceChannelListTest\:\:runOntologyWordDetailsMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceChannelListTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceChannelListTest\\:\\:runServiceMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceChannelListTest\:\:runServiceChannelMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceChannelListTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceChannelListTest\\:\\:runUnitMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceChannelListTest\:\:runServiceMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceChannelListTest.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\<Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\>\\:\\:\\$summary\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceChannelListTest\:\:runUnitMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/src/Functional/ServiceChannelListTest.php
+
+		-
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceListTest\:\:assertUpdateListEntity\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceListTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceListTest\\:\\:assertUpdateListEntity\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Parameter \#1 \$body of class donatj\\MockWebServer\\Response constructor expects string, string\|false given\.$#'
+			identifier: argument.type
 			count: 1
 			path: tests/src/Functional/ServiceListTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$body of class donatj\\\\MockWebServer\\\\Response constructor expects string, string\\|false given\\.$#"
-			count: 1
-			path: tests/src/Functional/ServiceListTest.php
-
-		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceMenuLinkTest\\:\\:runErrandServiceMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceMenuLinkTest\:\:fixture\(\) should return Drupal\\helfi_api_base\\Fixture\\FixtureBase but returns object\.$#'
+			identifier: return.type
 			count: 1
 			path: tests/src/Functional/ServiceMenuLinkTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceMenuLinkTest\\:\\:runOntologyWordDetailsMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceMenuLinkTest\:\:runErrandServiceMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceMenuLinkTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceMenuLinkTest\\:\\:runServiceChannelMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceMenuLinkTest\:\:runOntologyWordDetailsMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceMenuLinkTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceMenuLinkTest\\:\\:runServiceMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceMenuLinkTest\:\:runServiceChannelMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceMenuLinkTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceMenuLinkTest\\:\\:runUnitMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceMenuLinkTest\:\:runServiceMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceMenuLinkTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceRevisionTest\\:\\:runErrandServiceMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceMenuLinkTest\:\:runUnitMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/src/Functional/ServiceMenuLinkTest.php
+
+		-
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceRevisionTest\:\:fixture\(\) should return Drupal\\helfi_api_base\\Fixture\\FixtureBase but returns object\.$#'
+			identifier: return.type
 			count: 1
 			path: tests/src/Functional/ServiceRevisionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceRevisionTest\\:\\:runOntologyWordDetailsMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceRevisionTest\:\:runErrandServiceMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceRevisionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceRevisionTest\\:\\:runServiceChannelMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceRevisionTest\:\:runOntologyWordDetailsMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceRevisionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceRevisionTest\\:\\:runServiceMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceRevisionTest\:\:runServiceChannelMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceRevisionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceRevisionTest\\:\\:runUnitMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceRevisionTest\:\:runServiceMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceRevisionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceTranslationTest\\:\\:runErrandServiceMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceRevisionTest\:\:runUnitMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/src/Functional/ServiceRevisionTest.php
+
+		-
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceTranslationTest\:\:fixture\(\) should return Drupal\\helfi_api_base\\Fixture\\FixtureBase but returns object\.$#'
+			identifier: return.type
 			count: 1
 			path: tests/src/Functional/ServiceTranslationTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceTranslationTest\\:\\:runOntologyWordDetailsMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceTranslationTest\:\:runErrandServiceMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceTranslationTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceTranslationTest\\:\\:runServiceChannelMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceTranslationTest\:\:runOntologyWordDetailsMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceTranslationTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceTranslationTest\\:\\:runServiceMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceTranslationTest\:\:runServiceChannelMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceTranslationTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\ServiceTranslationTest\\:\\:runUnitMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceTranslationTest\:\:runServiceMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/ServiceTranslationTest.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\<Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\>\\:\\:\\$summary\\.$#"
-			count: 2
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\ServiceTranslationTest\:\:runUnitMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/src/Functional/ServiceTranslationTest.php
+
+		-
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitListTest\:\:assertUpdateListEntity\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
 			path: tests/src/Functional/UnitListTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitListTest\\:\\:assertUpdateListEntity\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Parameter \#1 \$body of class donatj\\MockWebServer\\Response constructor expects string, string\|false given\.$#'
+			identifier: argument.type
 			count: 1
 			path: tests/src/Functional/UnitListTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$body of class donatj\\\\MockWebServer\\\\Response constructor expects string, string\\|false given\\.$#"
-			count: 1
-			path: tests/src/Functional/UnitListTest.php
-
-		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitMenuLinkTest\\:\\:runErrandServiceMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitMenuLinkTest\:\:fixture\(\) should return Drupal\\helfi_api_base\\Fixture\\FixtureBase but returns object\.$#'
+			identifier: return.type
 			count: 1
 			path: tests/src/Functional/UnitMenuLinkTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitMenuLinkTest\\:\\:runOntologyWordDetailsMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitMenuLinkTest\:\:runErrandServiceMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/UnitMenuLinkTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitMenuLinkTest\\:\\:runServiceChannelMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitMenuLinkTest\:\:runOntologyWordDetailsMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/UnitMenuLinkTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitMenuLinkTest\\:\\:runServiceMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitMenuLinkTest\:\:runServiceChannelMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/UnitMenuLinkTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitMenuLinkTest\\:\\:runUnitMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitMenuLinkTest\:\:runServiceMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/UnitMenuLinkTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitRevisionTest\\:\\:runErrandServiceMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitMenuLinkTest\:\:runUnitMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/src/Functional/UnitMenuLinkTest.php
+
+		-
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitRevisionTest\:\:fixture\(\) should return Drupal\\helfi_api_base\\Fixture\\FixtureBase but returns object\.$#'
+			identifier: return.type
 			count: 1
 			path: tests/src/Functional/UnitRevisionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitRevisionTest\\:\\:runOntologyWordDetailsMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitRevisionTest\:\:runErrandServiceMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/UnitRevisionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitRevisionTest\\:\\:runServiceChannelMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitRevisionTest\:\:runOntologyWordDetailsMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/UnitRevisionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitRevisionTest\\:\\:runServiceMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitRevisionTest\:\:runServiceChannelMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/UnitRevisionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitRevisionTest\\:\\:runUnitMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitRevisionTest\:\:runServiceMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/UnitRevisionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitTranslationTest\\:\\:runErrandServiceMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitRevisionTest\:\:runUnitMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/src/Functional/UnitRevisionTest.php
+
+		-
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitTranslationTest\:\:fixture\(\) should return Drupal\\helfi_api_base\\Fixture\\FixtureBase but returns object\.$#'
+			identifier: return.type
 			count: 1
 			path: tests/src/Functional/UnitTranslationTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitTranslationTest\\:\\:runOntologyWordDetailsMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitTranslationTest\:\:runErrandServiceMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/UnitTranslationTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitTranslationTest\\:\\:runServiceChannelMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitTranslationTest\:\:runOntologyWordDetailsMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/UnitTranslationTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitTranslationTest\\:\\:runServiceMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitTranslationTest\:\:runServiceChannelMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/UnitTranslationTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Functional\\\\UnitTranslationTest\\:\\:runUnitMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitTranslationTest\:\:runServiceMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Functional/UnitTranslationTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Kernel\\\\MigrationTestBase\\:\\:assertMigrateMapRowHash\\(\\) has no return type specified\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Functional\\UnitTranslationTest\:\:runUnitMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/src/Functional/UnitTranslationTest.php
+
+		-
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Kernel\\MigrationTestBase\:\:assertMigrateMapRowHash\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: tests/src/Kernel/MigrationTestBase.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Kernel\\\\MigrationTestBase\\:\\:runErrandServiceMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Kernel\\MigrationTestBase\:\:fixture\(\) should return Drupal\\helfi_api_base\\Fixture\\FixtureBase but returns object\.$#'
+			identifier: return.type
 			count: 1
 			path: tests/src/Kernel/MigrationTestBase.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Kernel\\\\MigrationTestBase\\:\\:runOntologyWordDetailsMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Kernel\\MigrationTestBase\:\:runErrandServiceMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Kernel/MigrationTestBase.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Kernel\\\\MigrationTestBase\\:\\:runServiceChannelMigration\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Kernel\\MigrationTestBase\:\:runOntologyWordDetailsMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Kernel/MigrationTestBase.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Kernel\\\\MigrationTestBase\\:\\:runServiceMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Kernel\\MigrationTestBase\:\:runServiceChannelMigration\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Kernel/MigrationTestBase.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Kernel\\\\MigrationTestBase\\:\\:runUnitMigrate\\(\\) has parameter \\$responses with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Kernel\\MigrationTestBase\:\:runServiceMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Kernel/MigrationTestBase.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Kernel\\\\OntologyWordDetailsMigrationTest\\:\\:expectedOntologyWordDetailsData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Kernel\\MigrationTestBase\:\:runUnitMigrate\(\) has parameter \$responses with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/src/Kernel/MigrationTestBase.php
+
+		-
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Kernel\\OntologyWordDetailsMigrationTest\:\:expectedOntologyWordDetailsData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Kernel/OntologyWordDetailsMigrationTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Kernel\\\\OverrideFieldTest\\:\\:nameData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Attribute class PHPUnit\\Framework\\Attributes\\DataProvider constructor invoked with named argument \$methodName, but it''s not allowed because of @no\-named\-arguments\.$#'
+			identifier: argument.named
 			count: 1
 			path: tests/src/Kernel/OverrideFieldTest.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\:\\:\\$group\\.$#"
-			count: 2
-			path: tests/src/Kernel/Plugin/Field/FieldType/AccessibilitySentenceItemTest.php
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Kernel\\OverrideFieldTest\:\:nameData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/src/Kernel/OverrideFieldTest.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\:\\:\\$data\\.$#"
-			count: 2
-			path: tests/src/Kernel/Plugin/Field/FieldType/ConnectionItemTest.php
-
-		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\:\\:\\$type\\.$#"
-			count: 2
-			path: tests/src/Kernel/Plugin/Field/FieldType/ConnectionItemTest.php
-
-		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Kernel\\\\Plugin\\\\Field\\\\FieldType\\\\ConnectionItemTest\\:\\:assertEntity\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Kernel\\Plugin\\Field\\FieldType\\ConnectionItemTest\:\:assertEntity\(\) has parameter \$values with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Kernel/Plugin/Field/FieldType/ConnectionItemTest.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\:\\:\\$value\\.$#"
+			message: '#^Access to an undefined property Drupal\\Core\\Field\\FieldItemInterface\:\:\$value\.$#'
+			identifier: property.notFound
 			count: 1
 			path: tests/src/Kernel/ServiceChannelMigrationTest.php
 
 		-
-			message: "#^Cannot call method getTranslation\\(\\) on Drupal\\\\helfi_tpr\\\\Entity\\\\Channel\\|false\\.$#"
+			message: '#^Cannot call method getTranslation\(\) on Drupal\\helfi_tpr\\Entity\\Channel\|false\.$#'
+			identifier: method.nonObject
 			count: 1
 			path: tests/src/Kernel/ServiceChannelMigrationTest.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\:\\:\\$target_id\\.$#"
+			message: '#^Access to an undefined property Drupal\\Core\\Field\\FieldItemInterface\:\:\$target_id\.$#'
+			identifier: property.notFound
 			count: 1
 			path: tests/src/Kernel/ServiceMigrationTest.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\:\\:\\$title\\.$#"
+			message: '#^Access to an undefined property Drupal\\Core\\Field\\FieldItemInterface\:\:\$title\.$#'
+			identifier: property.notFound
 			count: 1
 			path: tests/src/Kernel/ServiceMigrationTest.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\:\\:\\$uri\\.$#"
+			message: '#^Access to an undefined property Drupal\\Core\\Field\\FieldItemInterface\:\:\$uri\.$#'
+			identifier: property.notFound
 			count: 1
 			path: tests/src/Kernel/ServiceMigrationTest.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\<Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\>\\:\\:\\$summary\\.$#"
-			count: 1
-			path: tests/src/Kernel/ServiceMigrationTest.php
-
-		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\:\\:\\$data\\.$#"
+			message: '#^Access to an undefined property Drupal\\Core\\Field\\FieldItemInterface\:\:\$data\.$#'
+			identifier: property.notFound
 			count: 9
 			path: tests/src/Kernel/UnitMigrationTest.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\:\\:\\$group\\.$#"
+			message: '#^Access to an undefined property Drupal\\Core\\Field\\FieldItemInterface\:\:\$group\.$#'
+			identifier: property.notFound
 			count: 1
 			path: tests/src/Kernel/UnitMigrationTest.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\:\\:\\$value\\.$#"
+			message: '#^Access to an undefined property Drupal\\Core\\Field\\FieldItemInterface\:\:\$value\.$#'
+			identifier: property.notFound
 			count: 8
 			path: tests/src/Kernel/UnitMigrationTest.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\<Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\>\\:\\:\\$address_line1\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Kernel\\UnitMigrationTest\:\:expectedUnitData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Kernel/UnitMigrationTest.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\<Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\>\\:\\:\\$country_code\\.$#"
-			count: 1
-			path: tests/src/Kernel/UnitMigrationTest.php
-
-		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\<Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\>\\:\\:\\$locality\\.$#"
-			count: 1
-			path: tests/src/Kernel/UnitMigrationTest.php
-
-		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\<Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\>\\:\\:\\$postal_code\\.$#"
-			count: 1
-			path: tests/src/Kernel/UnitMigrationTest.php
-
-		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\<Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\>\\:\\:\\$uri\\.$#"
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Drupal\\\\Core\\\\StringTranslation\\\\TranslatableMarkup'' and Drupal\\Core\\StringTranslation\\TranslatableMarkup will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
 			count: 2
-			path: tests/src/Kernel/UnitMigrationTest.php
+			path: tests/src/Unit/ChannelTypeCollectionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Kernel\\\\UnitMigrationTest\\:\\:expectedUnitData\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: tests/src/Kernel/UnitMigrationTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(Drupal\\\\helfi_tpr\\\\Entity\\\\ChannelType\\|null\\)\\: mixed\\)\\|null, Closure\\(Drupal\\\\helfi_tpr\\\\Entity\\\\ChannelType\\)\\: int given\\.$#"
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(Drupal\\helfi_tpr\\Entity\\ChannelType\|null\)\: mixed\)\|null, Closure\(Drupal\\helfi_tpr\\Entity\\ChannelType\)\: int given\.$#'
+			identifier: argument.type
 			count: 1
 			path: tests/src/Unit/ChannelTypeCollectionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Unit\\\\ConnectionRepositoryTest\\:\\:getTestData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Attribute class PHPUnit\\Framework\\Attributes\\DataProvider constructor invoked with named argument \$methodName, but it''s not allowed because of @no\-named\-arguments\.$#'
+			identifier: argument.named
 			count: 1
 			path: tests/src/Unit/ConnectionRepositoryTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Unit\\\\ConnectionTest\\:\\:invalidFieldValueData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Unit\\ConnectionRepositoryTest\:\:getTestData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/src/Unit/ConnectionRepositoryTest.php
+
+		-
+			message: '#^Attribute class PHPUnit\\Framework\\Attributes\\DataProvider constructor invoked with named argument \$methodName, but it''s not allowed because of @no\-named\-arguments\.$#'
+			identifier: argument.named
+			count: 4
+			path: tests/src/Unit/ConnectionTest.php
+
+		-
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Unit\\ConnectionTest\:\:invalidFieldValueData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Unit/ConnectionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Unit\\\\ConnectionTest\\:\\:openingHourData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Unit\\ConnectionTest\:\:openingHourData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Unit/ConnectionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Unit\\\\ConnectionTest\\:\\:testInvalidFieldValue\\(\\) has parameter \\$value with no type specified\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Unit\\ConnectionTest\:\:testInvalidFieldValue\(\) has parameter \$value with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: tests/src/Unit/ConnectionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Unit\\\\ConnectionTest\\:\\:testValidFieldValue\\(\\) has parameter \\$value with no type specified\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Unit\\ConnectionTest\:\:testValidFieldValue\(\) has parameter \$value with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: tests/src/Unit/ConnectionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Unit\\\\ConnectionTest\\:\\:validFieldValueData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Unit\\ConnectionTest\:\:validFieldValueData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Unit/ConnectionTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Unit\\\\Plugin\\\\migrate\\\\process\\\\ArrayElementEqualsTest\\:\\:constructorExceptionData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Attribute class PHPUnit\\Framework\\Attributes\\DataProvider constructor invoked with named argument \$methodName, but it''s not allowed because of @no\-named\-arguments\.$#'
+			identifier: argument.named
+			count: 2
+			path: tests/src/Unit/Plugin/migrate/process/ArrayElementEqualsTest.php
+
+		-
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Unit\\Plugin\\migrate\\process\\ArrayElementEqualsTest\:\:constructorExceptionData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Unit/Plugin/migrate/process/ArrayElementEqualsTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Unit\\\\Plugin\\\\migrate\\\\process\\\\ArrayElementEqualsTest\\:\\:testConstructorException\\(\\) has parameter \\$configuration with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Unit\\Plugin\\migrate\\process\\ArrayElementEqualsTest\:\:testConstructorException\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Unit/Plugin/migrate/process/ArrayElementEqualsTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Unit\\\\Plugin\\\\migrate\\\\process\\\\ArrayElementEqualsTest\\:\\:testTransform\\(\\) has parameter \\$configuration with no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Unit\\Plugin\\migrate\\process\\ArrayElementEqualsTest\:\:testTransform\(\) has parameter \$configuration with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Unit/Plugin/migrate/process/ArrayElementEqualsTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Unit\\\\Plugin\\\\migrate\\\\process\\\\ArrayElementEqualsTest\\:\\:transformData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Unit\\Plugin\\migrate\\process\\ArrayElementEqualsTest\:\:transformData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Unit/Plugin/migrate/process/ArrayElementEqualsTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Unit\\\\Plugin\\\\migrate\\\\process\\\\LocalizeAccessibilityUrlTest\\:\\:testTransform\\(\\) has parameter \\$rowSource with no value type specified in iterable type array\\.$#"
+			message: '#^Attribute class PHPUnit\\Framework\\Attributes\\DataProvider constructor invoked with named argument \$methodName, but it''s not allowed because of @no\-named\-arguments\.$#'
+			identifier: argument.named
 			count: 1
 			path: tests/src/Unit/Plugin/migrate/process/LocalizeAccessibilityUrlTest.php
 
 		-
-			message: "#^Method Drupal\\\\Tests\\\\helfi_tpr\\\\Unit\\\\Plugin\\\\migrate\\\\process\\\\LocalizeAccessibilityUrlTest\\:\\:transformData\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Unit\\Plugin\\migrate\\process\\LocalizeAccessibilityUrlTest\:\:testTransform\(\) has parameter \$rowSource with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/src/Unit/Plugin/migrate/process/LocalizeAccessibilityUrlTest.php
+
+		-
+			message: '#^Method Drupal\\Tests\\helfi_tpr\\Unit\\Plugin\\migrate\\process\\LocalizeAccessibilityUrlTest\:\:transformData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/src/Unit/Plugin/migrate/process/LocalizeAccessibilityUrlTest.php

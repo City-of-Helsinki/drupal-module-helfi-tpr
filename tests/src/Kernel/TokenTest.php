@@ -92,6 +92,43 @@ class TokenTest extends MigrationTestBase {
   }
 
   /**
+   * Tests created and changed tokens.
+   */
+  public function testCreatedChanged() : void {
+    $entity_types = [
+      'tpr_unit',
+      'tpr_service',
+      'tpr_service_channel',
+      'tpr_errand_service',
+    ];
+
+    foreach ($entity_types as $entity_type) {
+      $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
+      /** @var \Drupal\helfi_tpr\Entity\TprEntityBase $entity */
+      $entity = $storage->create([
+        'id' => 999,
+        'name' => 'Name fi',
+        'langcode' => 'fi',
+      ]);
+      $entity->save();
+
+      $created = \Drupal::service('date.formatter')
+        ->format($entity->getCreatedTime(), 'custom', 'Y-m-d\TH:i:sP');
+      $changed = \Drupal::service('date.formatter')
+        ->format($entity->getChangedTime(), 'custom', 'Y-m-d\TH:i:sP');
+
+      $this->assertEquals($created, \Drupal::token()->replace(
+        sprintf('[%s:created:html_datetime]', $entity_type),
+        [$entity_type => $entity]
+      ));
+      $this->assertEquals($changed, \Drupal::token()->replace(
+        sprintf('[%s:changed:html_datetime]', $entity_type),
+        [$entity_type => $entity]
+      ));
+    }
+  }
+
+  /**
    * Tests description token.
    */
   public function testDescription() : void {

@@ -23,7 +23,7 @@
     "extra": {
         "patches": {
             "drupal/readonly_field_widget": {
-                "php8.5+phpstan test fix": "./public/modules/contrib/helfi_platform_config/patches/readonly_field_widget_test_fix.patch"
+                "php8.5+phpstan test fix": "./public/modules/contrib/helfi_tpr/patches/readonly_field_widget_test_fix.patch"
             }
         }
     }

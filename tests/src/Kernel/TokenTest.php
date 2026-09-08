@@ -24,6 +24,7 @@ class TokenTest extends MigrationTestBase {
   protected static $modules = [
     'file',
     'image',
+    'token',
   ];
 
   /**
@@ -113,9 +114,9 @@ class TokenTest extends MigrationTestBase {
       $entity->save();
 
       $created = \Drupal::service('date.formatter')
-        ->format($entity->getCreatedTime(), 'custom', 'Y-m-d\TH:i:sP');
+        ->format($entity->getCreatedTime(), 'html_datetime');
       $changed = \Drupal::service('date.formatter')
-        ->format($entity->getChangedTime(), 'custom', 'Y-m-d\TH:i:sP');
+        ->format($entity->getChangedTime(), 'html_datetime');
 
       $this->assertEquals($created, \Drupal::token()->replace(
         sprintf('[%s:created:html_datetime]', $entity_type),

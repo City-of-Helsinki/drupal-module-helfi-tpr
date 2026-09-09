@@ -36,6 +36,16 @@ function helfi_tpr_token_info(): array {
     $info['tokens'][$entity_type]['label'] = [
       'name' => t('Label'),
     ];
+    $info['tokens'][$entity_type]['created'] = [
+      'name' => t('Date created'),
+      'description' => t('The date the content was created.'),
+      'type' => 'date',
+    ];
+    $info['tokens'][$entity_type]['changed'] = [
+      'name' => t('Date changed'),
+      'description' => t('The date the content was most recently updated.'),
+      'type' => 'date',
+    ];
 
     if ($entity_type == 'tpr_unit' || $entity_type == 'tpr_service') {
       $info['tokens'][$entity_type]['menu-link-parents'] = [
@@ -81,10 +91,19 @@ function helfi_tpr_tokens(
   /** @var \Drupal\helfi_tpr\Entity\TprEntityBase $entity */
   $entity = $data[$type];
   $replacements = [];
+  $token_service = \Drupal::token();
 
   foreach ($tokens as $name => $original) {
     if ($name === 'label') {
       $replacements[$original] = $entity->label();
+    }
+
+    if ($name === 'created') {
+      $replacements[$original] = \Drupal::service('date.formatter')->format($entity->getCreatedTime(), 'medium');
+    }
+
+    if ($name === 'changed') {
+      $replacements[$original] = \Drupal::service('date.formatter')->format($entity->getChangedTime(), 'medium');
     }
 
     if ($entity instanceof Unit) {
@@ -130,6 +149,13 @@ function helfi_tpr_tokens(
         }
       }
     }
+  }
+
+  if ($created_tokens = $token_service->findWithPrefix($tokens, 'created')) {
+    $replacements += $token_service->generate('date', $created_tokens, ['date' => $entity->getCreatedTime()], $options, $bubbleable_metadata);
+  }
+  if ($changed_tokens = $token_service->findWithPrefix($tokens, 'changed')) {
+    $replacements += $token_service->generate('date', $changed_tokens, ['date' => $entity->getChangedTime()], $options, $bubbleable_metadata);
   }
 
   return $replacements;

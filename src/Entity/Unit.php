@@ -411,8 +411,18 @@ class Unit extends TprEntityBase {
 
       $language = $all_languages[$langcode][0];
       // phpcs:ignore
-      $language_names[] = $this->t($language);
+      $language_names[$langcode] = $this->t($language, [], ['context' => 'TPR Unit provided languages']);
     }
+
+    // Keep Finnish and Swedish always first if they exist.
+    $ordered_names = [];
+    foreach (['fi', 'sv'] as $langcode) {
+      if (isset($language_names[$langcode])) {
+        $ordered_names[] = $language_names[$langcode];
+        unset($language_names[$langcode]);
+      }
+    }
+    $language_names = array_merge($ordered_names, array_values($language_names));
 
     return implode(', ', $language_names);
   }

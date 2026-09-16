@@ -104,3 +104,75 @@ msgstr "Höjdpunkt"
 msgctxt "TPR Unit field label"
 msgid "Contact details of daycare centre groups"
 msgstr "Barngruppernas kontaktuppgifter"
+
+msgctxt "TPR Unit provided languages"
+msgid "English"
+msgstr "engelska"
+
+msgctxt "TPR Unit provided languages"
+msgid "Finnish"
+msgstr "finska"
+
+msgctxt "TPR Unit provided languages"
+msgid "Swedish"
+msgstr "svenska"
+
+msgctxt "TPR Unit provided languages"
+msgid "Arabic"
+msgstr "arabiska"
+
+msgctxt "TPR Unit provided languages"
+msgid "German"
+msgstr "tyska"
+
+msgctxt "TPR Unit provided languages"
+msgid "Spanish"
+msgstr "spanska"
+
+msgctxt "TPR Unit provided languages"
+msgid "Estonian"
+msgstr "estniska"
+
+msgctxt "TPR Unit provided languages"
+msgid "Persian"
+msgstr "persiska"
+
+msgctxt "TPR Unit provided languages"
+msgid "French"
+msgstr "franska"
+
+msgctxt "TPR Unit provided languages"
+msgid "Hebrew"
+msgstr "hebreiska"
+
+msgctxt "TPR Unit provided languages"
+msgid "Hindi"
+msgstr "hindi"
+
+msgctxt "TPR Unit provided languages"
+msgid "Japanese"
+msgstr "japanska"
+
+msgctxt "TPR Unit provided languages"
+msgid "Portuguese"
+msgstr "portugisiska"
+
+msgctxt "TPR Unit provided languages"
+msgid "Russian"
+msgstr "ryska"
+
+msgctxt "TPR Unit provided languages"
+msgid "Northern Sami"
+msgstr "nordsamiska"
+
+msgctxt "TPR Unit provided languages"
+msgid "Somali"
+msgstr "somaliska"
+
+msgctxt "TPR Unit provided languages"
+msgid "Ukrainian"
+msgstr "ukrainska"
+
+msgctxt "TPR Unit provided languages"
+msgid "Chinese"
+msgstr "kinesiska"

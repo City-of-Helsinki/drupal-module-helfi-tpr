@@ -150,3 +150,75 @@ msgstr "Päiväkotiryhmien yhteystiedot"
 msgctxt "TPR entity delete error "
 msgid "Cannot delete TPR-entity which still exists in the API"
 msgstr "Rajapinnasta löytyvää TPR-entiteettiä ei voida poistaa"
+
+msgctxt "TPR Unit provided languages"
+msgid "English"
+msgstr "englanti"
+
+msgctxt "TPR Unit provided languages"
+msgid "Finnish"
+msgstr "suomi"
+
+msgctxt "TPR Unit provided languages"
+msgid "Swedish"
+msgstr "ruotsi"
+
+msgctxt "TPR Unit provided languages"
+msgid "Arabic"
+msgstr "arabia"
+
+msgctxt "TPR Unit provided languages"
+msgid "German"
+msgstr "saksa"
+
+msgctxt "TPR Unit provided languages"
+msgid "Spanish"
+msgstr "espanja"
+
+msgctxt "TPR Unit provided languages"
+msgid "Estonian"
+msgstr "viro"
+
+msgctxt "TPR Unit provided languages"
+msgid "Persian"
+msgstr "persia"
+
+msgctxt "TPR Unit provided languages"
+msgid "French"
+msgstr "ranska"
+
+msgctxt "TPR Unit provided languages"
+msgid "Hebrew"
+msgstr "heprea"
+
+msgctxt "TPR Unit provided languages"
+msgid "Hindi"
+msgstr "hindi"
+
+msgctxt "TPR Unit provided languages"
+msgid "Japanese"
+msgstr "japani"
+
+msgctxt "TPR Unit provided languages"
+msgid "Portuguese"
+msgstr "portugali"
+
+msgctxt "TPR Unit provided languages"
+msgid "Russian"
+msgstr "venäjä"
+
+msgctxt "TPR Unit provided languages"
+msgid "Northern Sami"
+msgstr "pohjoissaame"
+
+msgctxt "TPR Unit provided languages"
+msgid "Somali"
+msgstr "somali"
+
+msgctxt "TPR Unit provided languages"
+msgid "Ukrainian"
+msgstr "ukraina"
+
+msgctxt "TPR Unit provided languages"
+msgid "Chinese"
+msgstr "kiina"

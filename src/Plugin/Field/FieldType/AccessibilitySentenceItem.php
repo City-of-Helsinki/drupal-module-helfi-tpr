@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\helfi_tpr\Plugin\Field\FieldType;
 
 use Drupal\Component\Utility\Random;
+use Drupal\Core\Field\Attribute\FieldType;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
@@ -13,14 +14,13 @@ use Drupal\Core\TypedData\DataDefinition;
 
 /**
  * Defines the 'tpr_accessibility_sentence' field type.
- *
- * @FieldType(
- *   id = "tpr_accessibility_sentence",
- *   label = @Translation("AccessibilitySentence"),
- *   no_ui = TRUE,
- *   default_formatter = "tpr_accessibility_sentence"
- * )
  */
+#[FieldType(
+  id: 'tpr_accessibility_sentence',
+  label: new TranslatableMarkup('AccessibilitySentence'),
+  no_ui: TRUE,
+  default_formatter: 'tpr_accessibility_sentence',
+)]
 class AccessibilitySentenceItem extends FieldItemBase {
 
   /**

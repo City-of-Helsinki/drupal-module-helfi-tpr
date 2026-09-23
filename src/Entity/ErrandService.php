@@ -4,61 +4,70 @@ declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\Entity;
 
+use Drupal\Core\Entity\Attribute\ContentEntityType;
+use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\EntityViewBuilder;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess;
+use Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider;
+use Drupal\helfi_tpr\Entity\Form\TprDeleteForm;
+use Drupal\helfi_tpr\Entity\Listing\ListBuilder;
+use Drupal\helfi_tpr\TprViewsData;
 
 /**
  * Defines the tpr_errand_service entity class.
- *
- * @ContentEntityType(
- *   id = "tpr_errand_service",
- *   label = @Translation("TPR - Errand Service"),
- *   label_collection = @Translation("TPR - Errand Service"),
- *   handlers = {
- *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\helfi_tpr\Entity\Listing\ListBuilder",
- *     "views_data" = "Drupal\helfi_tpr\TprViewsData",
- *     "access" = "Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess",
- *     "translation" = "Drupal\helfi_tpr\Entity\TranslationHandler",
- *     "form" = {
- *       "default" = "Drupal\Core\Entity\ContentEntityForm",
- *       "delete" = "Drupal\helfi_tpr\Entity\Form\TprDeleteForm",
- *     },
- *     "route_provider" = {
- *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
- *     },
- *   },
- *   content_translation_ui_skip = TRUE,
- *   base_table = "tpr_errand_service",
- *   data_table = "tpr_errand_service_field_data",
- *   revision_table = "tpr_errand_service_revision",
- *   revision_data_table = "tpr_errand_service_field_revision",
- *   show_revision_ui = TRUE,
- *   translatable = TRUE,
- *   admin_permission = "administer remote entities",
- *   entity_keys = {
- *     "id" = "id",
- *     "revision" = "revision_id",
- *     "langcode" = "langcode",
- *     "label" = "name",
- *     "uuid" = "uuid",
- *     "published" = "content_translation_status",
- *     "owner" = "content_translation_uid",
- *   },
- *   revision_metadata_keys = {
- *     "revision_created" = "revision_timestamp",
- *     "revision_user" = "revision_user",
- *     "revision_log_message" = "revision_log"
- *   },
- *   links = {
- *     "edit-form" = "/admin/content/integrations/tpr-errand-service/{tpr_errand_service}/edit",
- *     "collection" = "/admin/content/integrations/tpr-errand-service",
- *     "delete-form" = "/admin/content/integrations/tpr-errand-service/{tpr_errand_service}/delete",
- *   },
- *   field_ui_base_route = "tpr_errand_service.settings"
- * )
  */
+#[ContentEntityType(
+  id: 'tpr_errand_service',
+  label: new TranslatableMarkup('TPR - Errand Service'),
+  label_collection: new TranslatableMarkup('TPR - Errand Service'),
+  handlers: [
+    'view_builder' => EntityViewBuilder::class,
+    'list_builder' => ListBuilder::class,
+    'views_data' => TprViewsData::class,
+    'access' => RemoteEntityAccess::class,
+    'translation' => TranslationHandler::class,
+    'form' => [
+      'default' => ContentEntityForm::class,
+      'delete' => TprDeleteForm::class,
+    ],
+    'route_provider' => [
+      'html' => EntityRouteProvider::class,
+    ],
+  ],
+  base_table: 'tpr_errand_service',
+  data_table: 'tpr_errand_service_field_data',
+  revision_table: 'tpr_errand_service_revision',
+  revision_data_table: 'tpr_errand_service_field_revision',
+  show_revision_ui: TRUE,
+  translatable: TRUE,
+  admin_permission: 'administer remote entities',
+  entity_keys: [
+    'id' => 'id',
+    'revision' => 'revision_id',
+    'langcode' => 'langcode',
+    'label' => 'name',
+    'uuid' => 'uuid',
+    'published' => 'content_translation_status',
+    'owner' => 'content_translation_uid',
+  ],
+  revision_metadata_keys: [
+    'revision_created' => 'revision_timestamp',
+    'revision_user' => 'revision_user',
+    'revision_log_message' => 'revision_log',
+  ],
+  links: [
+    'edit-form' => '/admin/content/integrations/tpr-errand-service/{tpr_errand_service}/edit',
+    'collection' => '/admin/content/integrations/tpr-errand-service',
+    'delete-form' => '/admin/content/integrations/tpr-errand-service/{tpr_errand_service}/delete',
+  ],
+  field_ui_base_route: 'tpr_errand_service.settings',
+  additional: [
+    'content_translation_ui_skip' => TRUE,
+  ],
+)]
 class ErrandService extends TprEntityBase {
 
   use DataFieldTrait;

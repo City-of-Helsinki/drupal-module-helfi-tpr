@@ -5,22 +5,21 @@ declare(strict_types=1);
 namespace Drupal\helfi_tpr\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\helfi_tpr\Entity\Unit;
 
 /**
  * Field formatter to render service maps.
- *
- * @FieldFormatter(
- *   id = "service_map_embed",
- *   label = @Translation("TPR - Service map embed"),
- *   field_types = {
- *     "string"
- *   }
- * )
  */
+#[FieldFormatter(
+  id: 'service_map_embed',
+  label: new TranslatableMarkup('TPR - Service map embed'),
+  field_types: ['string'],
+)]
 final class ServiceMapFormatter extends FormatterBase {
 
   /**

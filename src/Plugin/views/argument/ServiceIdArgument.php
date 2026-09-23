@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\Plugin\views\argument;
 
+use Drupal\views\Attribute\ViewsArgument;
 use Drupal\views\Plugin\views\argument\ArgumentPluginBase;
 use Drupal\views\Plugin\views\query\Sql;
 
@@ -12,9 +13,8 @@ use Drupal\views\Plugin\views\query\Sql;
  *
  * Provide the following parameters from the definition:
  * - service_id: (integer) Name of the column where weight units are stored.
- *
- * @ViewsArgument("id_or_service_id_handler")
  */
+#[ViewsArgument('id_or_service_id_handler')]
 class ServiceIdArgument extends ArgumentPluginBase {
 
   /**
@@ -24,7 +24,7 @@ class ServiceIdArgument extends ArgumentPluginBase {
     $this->ensureMyTable();
 
     // Separate IDs from Service IDs.
-    $input = explode('|', $this->argument);
+    $input = explode('|', $this->argument ?? '');
     $ids = array_filter(explode(',', $input[0]));
     $service_ids = array_filter(explode(',', $input[1]));
 

@@ -6,59 +6,67 @@ namespace Drupal\helfi_tpr\Entity;
 
 use CommerceGuys\Addressing\AddressFormat\AddressField;
 use CommerceGuys\Addressing\AddressFormat\FieldOverride;
+use Drupal\Core\Entity\Attribute\ContentEntityType;
+use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\EntityViewBuilder;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess;
+use Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider;
+use Drupal\helfi_tpr\Entity\Listing\ListBuilder;
+use Drupal\helfi_tpr\TprViewsData;
 
 /**
  * Defines the tpr_service_channel entity class.
- *
- * @ContentEntityType(
- *   id = "tpr_service_channel",
- *   label = @Translation("TPR - Service Channel"),
- *   label_collection = @Translation("TPR - Service Channel"),
- *   handlers = {
- *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\helfi_tpr\Entity\Listing\ListBuilder",
- *     "views_data" = "Drupal\helfi_tpr\TprViewsData",
- *     "access" = "Drupal\helfi_api_base\Entity\Access\RemoteEntityAccess",
- *     "translation" = "Drupal\helfi_tpr\Entity\TranslationHandler",
- *     "form" = {
- *       "default" = "Drupal\Core\Entity\ContentEntityForm",
- *     },
- *     "route_provider" = {
- *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
- *     },
- *   },
- *   content_translation_ui_skip = TRUE,
- *   base_table = "tpr_service_channel",
- *   data_table = "tpr_service_channel_field_data",
- *   revision_table = "tpr_service_channel_revision",
- *   revision_data_table = "tpr_service_channel_field_revision",
- *   show_revision_ui = TRUE,
- *   translatable = TRUE,
- *   admin_permission = "administer remote entities",
- *   entity_keys = {
- *     "id" = "id",
- *     "revision" = "revision_id",
- *     "langcode" = "langcode",
- *     "label" = "name",
- *     "uuid" = "uuid",
- *     "published" = "content_translation_status",
- *     "owner" = "content_translation_uid",
- *   },
- *   revision_metadata_keys = {
- *     "revision_created" = "revision_timestamp",
- *     "revision_user" = "revision_user",
- *     "revision_log_message" = "revision_log"
- *   },
- *   links = {
- *     "edit-form" = "/admin/content/integrations/tpr-service-channel/{tpr_service_channel}/edit",
- *     "collection" = "/admin/content/integrations/tpr-service-channel",
- *   },
- *   field_ui_base_route = "tpr_service_channel.settings"
- * )
  */
+#[ContentEntityType(
+  id: 'tpr_service_channel',
+  label: new TranslatableMarkup('TPR - Service Channel'),
+  label_collection: new TranslatableMarkup('TPR - Service Channel'),
+  handlers: [
+    'view_builder' => EntityViewBuilder::class,
+    'list_builder' => ListBuilder::class,
+    'views_data' => TprViewsData::class,
+    'access' => RemoteEntityAccess::class,
+    'translation' => TranslationHandler::class,
+    'form' => [
+      'default' => ContentEntityForm::class,
+    ],
+    'route_provider' => [
+      'html' => EntityRouteProvider::class,
+    ],
+  ],
+  base_table: 'tpr_service_channel',
+  data_table: 'tpr_service_channel_field_data',
+  revision_table: 'tpr_service_channel_revision',
+  revision_data_table: 'tpr_service_channel_field_revision',
+  show_revision_ui: TRUE,
+  translatable: TRUE,
+  admin_permission: 'administer remote entities',
+  entity_keys: [
+    'id' => 'id',
+    'revision' => 'revision_id',
+    'langcode' => 'langcode',
+    'label' => 'name',
+    'uuid' => 'uuid',
+    'published' => 'content_translation_status',
+    'owner' => 'content_translation_uid',
+  ],
+  revision_metadata_keys: [
+    'revision_created' => 'revision_timestamp',
+    'revision_user' => 'revision_user',
+    'revision_log_message' => 'revision_log',
+  ],
+  links: [
+    'edit-form' => '/admin/content/integrations/tpr-service-channel/{tpr_service_channel}/edit',
+    'collection' => '/admin/content/integrations/tpr-service-channel',
+  ],
+  field_ui_base_route: 'tpr_service_channel.settings',
+  additional: [
+    'content_translation_ui_skip' => TRUE,
+  ],
+)]
 class Channel extends TprEntityBase {
 
   /**

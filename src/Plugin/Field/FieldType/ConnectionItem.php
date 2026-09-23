@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\helfi_tpr\Plugin\Field\FieldType;
 
 use Drupal\Component\Utility\Random;
+use Drupal\Core\Field\Attribute\FieldType;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
@@ -15,14 +16,13 @@ use Drupal\helfi_tpr\Field\Connection\OpeningHour;
 
 /**
  * Defines the 'tpr_connection' field type.
- *
- * @FieldType(
- *   id = "tpr_connection",
- *   label = @Translation("Connection"),
- *   no_ui = TRUE,
- *   default_formatter = "tpr_connection"
- * )
  */
+#[FieldType(
+  id: 'tpr_connection',
+  label: new TranslatableMarkup('Connection'),
+  no_ui: TRUE,
+  default_formatter: 'tpr_connection',
+)]
 class ConnectionItem extends FieldItemBase {
 
   /**

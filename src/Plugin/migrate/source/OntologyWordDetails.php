@@ -7,16 +7,16 @@ namespace Drupal\helfi_tpr\Plugin\migrate\source;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\helfi_api_base\Plugin\migrate\source\HttpSourcePluginBase;
+use Drupal\migrate\Attribute\MigrateSource;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Source plugin for retrieving data from Tpr.
- *
- * @MigrateSource(
- *   id = "tpr_ontology_word_details"
- * )
  */
+#[MigrateSource(
+  id: 'tpr_ontology_word_details',
+)]
 class OntologyWordDetails extends HttpSourcePluginBase implements ContainerFactoryPluginInterface {
 
   /**

@@ -6,14 +6,14 @@ namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
 use Drupal\Component\Datetime\DateTimePlus;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\migrate\Attribute\MigrateSource;
 
 /**
  * Source plugin for retrieving data from Tpr.
- *
- * @MigrateSource(
- *   id = "tpr_service_map"
- * )
  */
+#[MigrateSource(
+  id: 'tpr_service_map',
+)]
 class ServiceMap extends TprSourceBase implements ContainerFactoryPluginInterface {
 
   use ServiceMapTrait;

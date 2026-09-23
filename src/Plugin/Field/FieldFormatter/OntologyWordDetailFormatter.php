@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Plugin implementation of the 'Ontology word detail item' formatter.
- *
- * @FieldFormatter(
- *   id = "tpr_ontology_word_detail_item",
- *   label = @Translation("Ontology word detail item"),
- *   field_types = {
- *     "tpr_ontology_word_detail_item"
- *   }
- * )
  */
+#[FieldFormatter(
+  id: 'tpr_ontology_word_detail_item',
+  label: new TranslatableMarkup('Ontology word detail item'),
+  field_types: ['tpr_ontology_word_detail_item'],
+)]
 final class OntologyWordDetailFormatter extends FormatterBase {
 
   /**

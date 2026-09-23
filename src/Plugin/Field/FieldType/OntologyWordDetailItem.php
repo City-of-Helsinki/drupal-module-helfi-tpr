@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\helfi_tpr\Plugin\Field\FieldType;
 
 use Drupal\Component\Utility\Random;
+use Drupal\Core\Field\Attribute\FieldType;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
@@ -13,14 +14,13 @@ use Drupal\Core\TypedData\DataDefinition;
 
 /**
  * Defines the 'tpr_ontology_word_detail_item' field type.
- *
- * @FieldType(
- *   id = "tpr_ontology_word_detail_item",
- *   label = @Translation("Ontology word detail item"),
- *   no_ui = TRUE,
- *   default_formatter = "tpr_ontology_word_detail_item"
- * )
  */
+#[FieldType(
+  id: 'tpr_ontology_word_detail_item',
+  label: new TranslatableMarkup('Ontology word detail item'),
+  no_ui: TRUE,
+  default_formatter: 'tpr_ontology_word_detail_item',
+)]
 class OntologyWordDetailItem extends FieldItemBase {
 
   /**

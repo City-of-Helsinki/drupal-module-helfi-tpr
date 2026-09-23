@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Drupal\helfi_tpr\Field\Connection;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Url;
+use Drupal\filter\Plugin\Filter\FilterAutoP;
 
 /**
  * A base class for connections with text and link.
@@ -28,8 +30,10 @@ abstract class TextWithLink extends Connection {
   public function build(): array {
     $markup = Html::escape($this->get('name'));
 
-    if (function_exists('_filter_autop')) {
-      $markup = _filter_autop($markup);
+    if (class_exists(FilterAutoP::class)) {
+      $markup = (new FilterAutoP([], 'filter_autop', ['provider' => 'filter']))
+        ->process($markup, LanguageInterface::LANGCODE_NOT_SPECIFIED)
+        ->getProcessedText();
     }
 
     $build = [

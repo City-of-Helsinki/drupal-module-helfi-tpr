@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
+use Drupal\migrate\Attribute\MigrateSource;
+
 /**
  * Source plugin for retrieving service channel data from errand services.
- *
- * @MigrateSource(
- *   id = "tpr_service_channel",
- * )
  */
+#[MigrateSource(
+  id: 'tpr_service_channel',
+)]
 class ServiceChannel extends TprSourceBase {
 
   /**

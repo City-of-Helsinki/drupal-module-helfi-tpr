@@ -378,12 +378,6 @@ parameters:
 			path: src/Entity/Form/TprDeleteForm.php
 
 		-
-			message: '#^Direct injection of entity storage via \$storage is not recommended\. Inject Drupal\\Core\\Entity\\EntityTypeManagerInterface and call getStorage\(\) at the call\-site instead\.$#'
-			identifier: drupal.entityStorageDirectInjection
-			count: 1
-			path: src/Entity/Listing/ListBuilder.php
-
-		-
 			message: '#^Method Drupal\\helfi_tpr\\Entity\\Listing\\ListBuilder\:\:buildHeader\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -528,17 +522,6 @@ parameters:
 			path: src/Field/Connection/Highlight.php
 
 		-
-			message: '''
-				#^Call to deprecated function _filter_autop\(\)\:
-				in drupal\:11\.4\.0 and is removed from drupal\:13\.0\.0\. The logic has
-				  been included in \\Drupal\\filter\\Plugin\\Filter\\FilterAutoP\:\:process\(\) and no
-				  replacement is provided\.$#
-			'''
-			identifier: function.deprecated
-			count: 1
-			path: src/Field/Connection/OtherInfo.php
-
-		-
 			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\OtherInfo\:\:build\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -561,17 +544,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/PhoneOrEmail.php
-
-		-
-			message: '''
-				#^Call to deprecated function _filter_autop\(\)\:
-				in drupal\:11\.4\.0 and is removed from drupal\:13\.0\.0\. The logic has
-				  been included in \\Drupal\\filter\\Plugin\\Filter\\FilterAutoP\:\:process\(\) and no
-				  replacement is provided\.$#
-			'''
-			identifier: function.deprecated
-			count: 1
-			path: src/Field/Connection/Price.php
 
 		-
 			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\Price\:\:build\(\) return type has no value type specified in iterable type array\.$#'
@@ -602,17 +574,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: src/Field/Connection/Subgroup.php
-
-		-
-			message: '''
-				#^Call to deprecated function _filter_autop\(\)\:
-				in drupal\:11\.4\.0 and is removed from drupal\:13\.0\.0\. The logic has
-				  been included in \\Drupal\\filter\\Plugin\\Filter\\FilterAutoP\:\:process\(\) and no
-				  replacement is provided\.$#
-			'''
-			identifier: function.deprecated
-			count: 1
-			path: src/Field/Connection/TextWithLink.php
 
 		-
 			message: '#^Method Drupal\\helfi_tpr\\Field\\Connection\\TextWithLink\:\:build\(\) return type has no value type specified in iterable type array\.$#'

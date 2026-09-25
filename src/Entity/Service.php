@@ -4,74 +4,84 @@ declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\Entity;
 
+use Drupal\Core\Entity\Attribute\ContentEntityType;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\EntityViewBuilder;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\entity\EntityAccessControlHandler;
+use Drupal\entity\EntityPermissionProvider;
+use Drupal\entity\Menu\DefaultEntityLocalTaskProvider;
+use Drupal\entity\Menu\EntityCollectionLocalActionProvider;
+use Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider;
+use Drupal\helfi_api_base\Entity\Routing\RevisionRouteProvider;
+use Drupal\helfi_tpr\Entity\Form\ContentEntityForm;
+use Drupal\helfi_tpr\Entity\Form\TprDeleteForm;
+use Drupal\helfi_tpr\Entity\Listing\ListBuilder;
+use Drupal\helfi_tpr\TprViewsData;
 use Webmozart\Assert\Assert;
 
 /**
  * Defines the tpr_service entity class.
- *
- * @ContentEntityType(
- *   id = "tpr_service",
- *   label = @Translation("TPR - Service"),
- *   label_collection = @Translation("TPR - Service"),
- *   handlers = {
- *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\helfi_tpr\Entity\Listing\ListBuilder",
- *     "views_data" = "Drupal\helfi_tpr\TprViewsData",
- *     "access" = "Drupal\entity\EntityAccessControlHandler",
- *     "permission_provider" = "Drupal\entity\EntityPermissionProvider",
- *     "translation" = "Drupal\helfi_tpr\Entity\TranslationHandler",
- *     "form" = {
- *       "default" = "Drupal\helfi_tpr\Entity\Form\ContentEntityForm",
- *       "delete" = "Drupal\helfi_tpr\Entity\Form\TprDeleteForm",
- *     },
- *     "route_provider" = {
- *       "html" = "Drupal\helfi_api_base\Entity\Routing\EntityRouteProvider",
- *       "revision" = "\Drupal\helfi_api_base\Entity\Routing\RevisionRouteProvider",
- *     },
- *     "local_action_provider" = {
- *       "collection" = "\Drupal\entity\Menu\EntityCollectionLocalActionProvider",
- *     },
- *     "local_task_provider" = {
- *       "default" = "\Drupal\entity\Menu\DefaultEntityLocalTaskProvider",
- *     },
- *   },
- *   base_table = "tpr_service",
- *   data_table = "tpr_service_field_data",
- *   revision_table = "tpr_service_revision",
- *   revision_data_table = "tpr_service_field_revision",
- *   show_revision_ui = TRUE,
- *   revisionable = TRUE,
- *   translatable = TRUE,
- *   admin_permission = "administer tpr_service",
- *   entity_keys = {
- *     "id" = "id",
- *     "revision" = "revision_id",
- *     "langcode" = "langcode",
- *     "label" = "name",
- *     "uuid" = "uuid",
- *     "published" = "content_translation_status",
- *     "owner" = "content_translation_uid",
- *   },
- *   revision_metadata_keys = {
- *     "revision_created" = "revision_timestamp",
- *     "revision_user" = "revision_user",
- *     "revision_log_message" = "revision_log"
- *   },
- *   links = {
- *     "canonical" = "/tpr-service/{tpr_service}",
- *     "edit-form" = "/admin/content/integrations/tpr-service/{tpr_service}/edit",
- *     "collection" = "/admin/content/integrations/tpr-service",
- *     "version-history" = "/admin/content/integrations/tpr-service/{tpr_service}/revisions",
- *     "revision" = "/tpr-service/{tpr_service}/revisions/{tpr_service_revision}/view",
- *     "revision-revert-language-form" = "/admin/content/integrations/tpr-service/{tpr_service}/revisions/{tpr_service_revision}/revert/{langcode}",
- *     "delete-form" = "/admin/content/integrations/tpr-service/{tpr_service}/delete",
- *   },
- *   field_ui_base_route = "tpr_service.settings"
- * )
  */
+#[ContentEntityType(
+  id: 'tpr_service',
+  label: new TranslatableMarkup('TPR - Service'),
+  label_collection: new TranslatableMarkup('TPR - Service'),
+  handlers: [
+    'view_builder' => EntityViewBuilder::class,
+    'list_builder' => ListBuilder::class,
+    'views_data' => TprViewsData::class,
+    'access' => EntityAccessControlHandler::class,
+    'permission_provider' => EntityPermissionProvider::class,
+    'translation' => TranslationHandler::class,
+    'form' => [
+      'default' => ContentEntityForm::class,
+      'delete' => TprDeleteForm::class,
+    ],
+    'route_provider' => [
+      'html' => EntityRouteProvider::class,
+      'revision' => RevisionRouteProvider::class,
+    ],
+    'local_action_provider' => [
+      'collection' => EntityCollectionLocalActionProvider::class,
+    ],
+    'local_task_provider' => [
+      'default' => DefaultEntityLocalTaskProvider::class,
+    ],
+  ],
+  base_table: 'tpr_service',
+  data_table: 'tpr_service_field_data',
+  revision_table: 'tpr_service_revision',
+  revision_data_table: 'tpr_service_field_revision',
+  show_revision_ui: TRUE,
+  translatable: TRUE,
+  admin_permission: 'administer tpr_service',
+  entity_keys: [
+    'id' => 'id',
+    'revision' => 'revision_id',
+    'langcode' => 'langcode',
+    'label' => 'name',
+    'uuid' => 'uuid',
+    'published' => 'content_translation_status',
+    'owner' => 'content_translation_uid',
+  ],
+  revision_metadata_keys: [
+    'revision_created' => 'revision_timestamp',
+    'revision_user' => 'revision_user',
+    'revision_log_message' => 'revision_log',
+  ],
+  links: [
+    'canonical' => '/tpr-service/{tpr_service}',
+    'edit-form' => '/admin/content/integrations/tpr-service/{tpr_service}/edit',
+    'collection' => '/admin/content/integrations/tpr-service',
+    'version-history' => '/admin/content/integrations/tpr-service/{tpr_service}/revisions',
+    'revision' => '/tpr-service/{tpr_service}/revisions/{tpr_service_revision}/view',
+    'revision-revert-language-form' => '/admin/content/integrations/tpr-service/{tpr_service}/revisions/{tpr_service_revision}/revert/{langcode}',
+    'delete-form' => '/admin/content/integrations/tpr-service/{tpr_service}/delete',
+  ],
+  field_ui_base_route: 'tpr_service.settings',
+)]
 class Service extends TprEntityBase {
 
   use DataFieldTrait;

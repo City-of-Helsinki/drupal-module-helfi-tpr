@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\Plugin\views\filter;
 
+use Drupal\views\Attribute\ViewsFilter;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
 use Drupal\views\Plugin\views\query\Sql;
 
@@ -11,9 +12,8 @@ use Drupal\views\Plugin\views\query\Sql;
  * Filter by published status.
  *
  * @ingroup views_filter_handlers
- *
- * @ViewsFilter("tpr_status")
  */
+#[ViewsFilter('tpr_status')]
 class Status extends FilterPluginBase {
 
   /**

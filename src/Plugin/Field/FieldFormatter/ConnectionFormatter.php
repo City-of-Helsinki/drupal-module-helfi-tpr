@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\helfi_tpr\Field\Connection\Connection;
 
 /**
  * Plugin implementation of the 'Connection' formatter.
- *
- * @FieldFormatter(
- *   id = "tpr_connection",
- *   label = @Translation("Connection"),
- *   field_types = {
- *     "tpr_connection"
- *   }
- * )
  */
+#[FieldFormatter(
+  id: 'tpr_connection',
+  label: new TranslatableMarkup('Connection'),
+  field_types: ['tpr_connection'],
+)]
 final class ConnectionFormatter extends FormatterBase {
 
   /**

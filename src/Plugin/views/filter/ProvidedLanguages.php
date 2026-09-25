@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\Plugin\views\filter;
 
+use Drupal\views\Attribute\ViewsFilter;
 use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\filter\InOperator;
 use Drupal\views\ViewExecutable;
@@ -12,9 +13,8 @@ use Drupal\views\ViewExecutable;
  * Filter units by provided language.
  *
  * @ingroup views_filter_handlers
- *
- * @ViewsFilter("tpr_provided_languages")
  */
+#[ViewsFilter('tpr_provided_languages')]
 class ProvidedLanguages extends InOperator {
 
   /**

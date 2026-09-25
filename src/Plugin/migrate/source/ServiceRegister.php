@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\Plugin\migrate\source;
 
+use Drupal\migrate\Attribute\MigrateSource;
+
 /**
  * Source plugin for retrieving data from Tpr.
- *
- * @MigrateSource(
- *   id = "tpr_service_register"
- * )
  */
+#[MigrateSource(
+  id: 'tpr_service_register',
+)]
 class ServiceRegister extends TprSourceBase {
 
   /**

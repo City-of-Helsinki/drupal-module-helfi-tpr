@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\helfi_tpr\Plugin\migrate\process;
 
 use Drupal\helfi_tpr\Entity\Unit;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -12,16 +13,15 @@ use Drupal\migrate\Row;
 /**
  * Check unit's published status by ID and return it.
  *
- * @MigrateProcessPlugin(
- *   id = "publish_by_unit"
- * )
- *
  * @code
  * content_translation_status:
  *   plugin: publish_by_unit
  *   source: unit_id
  * @endcode
  */
+#[MigrateProcess(
+  id: 'publish_by_unit',
+)]
 class PublishByUnit extends ProcessPluginBase {
 
   /**

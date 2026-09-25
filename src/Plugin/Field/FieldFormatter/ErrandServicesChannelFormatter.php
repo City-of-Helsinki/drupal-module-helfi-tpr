@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Drupal\helfi_tpr\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\SortArray;
+use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\helfi_tpr\Entity\ChannelType;
 use Drupal\helfi_tpr\Entity\ChannelTypeCollection;
 use Drupal\helfi_tpr\Entity\Service;
@@ -17,15 +19,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Field formatter to render errand service maps.
- *
- * @FieldFormatter(
- *   id = "tpr_service_err_channel_list",
- *   label = @Translation("TPR - Errand Service Channels List"),
- *   field_types = {
- *     "entity_reference"
- *   }
- * )
  */
+#[FieldFormatter(
+  id: 'tpr_service_err_channel_list',
+  label: new TranslatableMarkup('TPR - Errand Service Channels List'),
+  field_types: ['entity_reference'],
+)]
 final class ErrandServicesChannelFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
 
   /**

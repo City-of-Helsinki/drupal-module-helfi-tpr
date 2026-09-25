@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Plugin implementation of the 'Accessibility sentence' formatter.
- *
- * @FieldFormatter(
- *   id = "tpr_accessibility_sentence",
- *   label = @Translation("Accessibibility sentences"),
- *   field_types = {
- *     "tpr_accessibility_sentence"
- *   }
- * )
  */
+#[FieldFormatter(
+  id: 'tpr_accessibility_sentence',
+  label: new TranslatableMarkup('Accessibibility sentences'),
+  field_types: ['tpr_accessibility_sentence'],
+)]
 final class AccessibilitySentenceFormatter extends FormatterBase {
 
   /**

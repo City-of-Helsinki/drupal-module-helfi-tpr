@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
  * Only include array when element (with a given key) matches a given value.
- *
- * @MigrateProcessPlugin(
- *   id = "array_element_equals"
- * )
  *
  * @code
  * opening_hours_connections:
@@ -35,6 +32,9 @@ use Drupal\migrate\Row;
  *   key: type
  * @endcode
  */
+#[MigrateProcess(
+  id: 'array_element_equals',
+)]
 class ArrayElementEquals extends ProcessPluginBase {
 
   /**

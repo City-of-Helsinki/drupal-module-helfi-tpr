@@ -5,23 +5,22 @@ declare(strict_types=1);
 namespace Drupal\helfi_tpr\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\SortArray;
+use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceEntityFormatter;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\helfi_tpr\Entity\ChannelTypeCollection;
 use Drupal\helfi_tpr\Entity\ErrandService;
 
 /**
  * Field formatter to render service maps.
- *
- * @FieldFormatter(
- *   id = "tpr_service_channel_formatter",
- *   label = @Translation("TPR - Service channel formatter"),
- *   field_types = {
- *     "entity_reference"
- *   }
- * )
  */
+#[FieldFormatter(
+  id: 'tpr_service_channel_formatter',
+  label: new TranslatableMarkup('TPR - Service channel formatter'),
+  field_types: ['entity_reference'],
+)]
 final class ServiceChannelFormatter extends EntityReferenceEntityFormatter {
 
   /**

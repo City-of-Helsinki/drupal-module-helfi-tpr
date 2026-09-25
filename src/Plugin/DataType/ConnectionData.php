@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Drupal\helfi_tpr\Plugin\DataType;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\TypedData\Attribute\DataType;
 use Drupal\Core\TypedData\TypedData;
 use Drupal\helfi_tpr\Field\Connection\Connection;
 
 /**
  * Provides a data type wrapping for \Drupal\helfi_tpr\Connection.
- *
- * @DataType(
- *   id = "tpr_connection_data",
- *   label = @Translation("TRP - Connection data"),
- * )
  */
+#[DataType(
+  id: 'tpr_connection_data',
+  label: new TranslatableMarkup('TRP - Connection data'),
+)]
 class ConnectionData extends TypedData {
 
   /**

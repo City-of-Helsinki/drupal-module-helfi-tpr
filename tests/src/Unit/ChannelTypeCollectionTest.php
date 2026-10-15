@@ -118,8 +118,8 @@ class ChannelTypeCollectionTest extends UnitTestCase {
     foreach ($sut as $key => $item) {
       $index++;
       $this->assertTrue(is_string($key));
-      $this->assertNotNull($item->id);
-      $this->assertNotNull($item->weight);
+      $this->assertNotEmpty($item->id);
+      $this->assertNotEmpty($item->weight);
     }
     $this->assertEquals(2, $index);
     $this->assertCount(2, $sut);

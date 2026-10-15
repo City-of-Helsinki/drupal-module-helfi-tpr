@@ -62,8 +62,8 @@ function helfi_address_search_views_pre_execute(ViewExecutable $view): void {
  * Implements hook_views_pre_render().
  */
 function helfi_address_search_views_pre_render(ViewExecutable $view): void {
-  if (isset($view->filter['address_search'])) {
-    $view = AddressSearch::sortByAddress($view);
+  if (isset($view->filter['address_search']) && $view->filter['address_search'] instanceof AddressSearch) {
+    $view->filter['address_search']->sortByAddress($view);
   }
 }
 

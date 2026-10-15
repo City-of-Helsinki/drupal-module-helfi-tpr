@@ -276,18 +276,6 @@ parameters:
 			path: modules/helfi_address_search/src/Plugin/views/filter/AddressSearch.php
 
 		-
-			message: '#^Offset ''fi'' might not exist on non\-empty\-array\{fi\?\: array\{query\: array\{q\: string, type\: ''address'', page\: ''1'', page_size\: ''1'', language\: ''fi''\|''sv'', municipality\: ''helsinki''\}\}, sv\?\: array\{query\: array\{q\: string, type\: ''address'', page\: ''1'', page_size\: ''1'', language\: ''fi''\|''sv'', municipality\: ''helsinki''\}\}\}\.$#'
-			identifier: offsetAccess.notFound
-			count: 1
-			path: modules/helfi_address_search/src/Plugin/views/filter/AddressSearch.php
-
-		-
-			message: '#^Offset ''sv'' might not exist on non\-empty\-array\{fi\?\: array\{query\: array\{q\: string, type\: ''address'', page\: ''1'', page_size\: ''1'', language\: ''fi''\|''sv'', municipality\: ''helsinki''\}\}, sv\?\: array\{query\: array\{q\: string, type\: ''address'', page\: ''1'', page_size\: ''1'', language\: ''fi''\|''sv'', municipality\: ''helsinki''\}\}\}\.$#'
-			identifier: offsetAccess.notFound
-			count: 1
-			path: modules/helfi_address_search/src/Plugin/views/filter/AddressSearch.php
-
-		-
 			message: '#^Match expression does not handle remaining value\: string$#'
 			identifier: match.unhandled
 			count: 2

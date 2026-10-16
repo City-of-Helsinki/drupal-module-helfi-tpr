@@ -11,12 +11,15 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\TranslatableInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
 use Drupal\views\Plugin\views\pager\PagerPluginBase;
 use Drupal\views\ViewExecutable;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Promise\Utils;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Address search for sorting the results to show the nearest units first.
@@ -32,6 +35,52 @@ use GuzzleHttp\Promise\Utils;
 class AddressSearch extends FilterPluginBase {
 
   const BASE_URL = 'https://api.hel.fi/servicemap/v2/';
+
+  /**
+   * The ServiceMap API request timeout in seconds.
+   */
+  const TIMEOUT = 5;
+
+  /**
+   * The HTTP client.
+   *
+   * @var \GuzzleHttp\ClientInterface
+   */
+  protected ClientInterface $httpClient;
+
+  /**
+   * The language manager.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected LanguageManagerInterface $languageManager;
+
+  /**
+   * The logger.
+   *
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected LoggerInterface $logger;
+
+  /**
+   * {@inheritdoc}
+   *
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The container.
+   * @param array<string, mixed> $configuration
+   *   The plugin configuration.
+   * @param string $plugin_id
+   *   The plugin ID.
+   * @param mixed $plugin_definition
+   *   The plugin definition.
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->httpClient = $container->get('http_client');
+    $instance->languageManager = $container->get('language_manager');
+    $instance->logger = $container->get('logger.factory')->get('helfi_tpr');
+    return $instance;
+  }
 
   /**
    * Provide a simple textfield for street address.
@@ -65,7 +114,7 @@ class AddressSearch extends FilterPluginBase {
    * @return \Drupal\views\ViewExecutable
    *   Sorted results or original results when there is no address input.
    */
-  public static function sortByAddress(ViewExecutable $view): ViewExecutable {
+  public function sortByAddress(ViewExecutable $view): ViewExecutable {
     $exposedInput = $view->getExposedInput();
     if (empty($exposedInput['address_search'])) {
       $view->result = AddressSearch::limitByPaging($view->result, $view->pager);
@@ -74,7 +123,7 @@ class AddressSearch extends FilterPluginBase {
 
     // Get the coordinates.
     $address = Xss::filter($exposedInput['address_search']);
-    $coordinates = AddressSearch::fetchAddressCoordinates($address);
+    $coordinates = $this->fetchAddressCoordinates($address);
     if (empty($coordinates)) {
       $view->result = AddressSearch::limitByPaging($view->result, $view->pager);
       $view->element = AddressSearch::setSearchStatus($view->element, FALSE);
@@ -141,8 +190,8 @@ class AddressSearch extends FilterPluginBase {
    * @return array
    *   Latitude and longitude coordinates in array, or empty array.
    */
-  protected static function fetchAddressCoordinates(string $address): array {
-    $currentLanguage = \Drupal::languageManager()
+  protected function fetchAddressCoordinates(string $address): array {
+    $currentLanguage = $this->languageManager
       ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
       ->getId();
 
@@ -152,12 +201,9 @@ class AddressSearch extends FilterPluginBase {
       $langcodes = array_unique(array_merge([$currentLanguage], $langcodes));
     }
 
-    $client = new Client([
-      'base_uri' => self::BASE_URL,
-    ]);
-
+    $promises = [];
     foreach ($langcodes as $langcode) {
-      $queries[$langcode] = [
+      $promises[$langcode] = $this->httpClient->requestAsync('GET', self::BASE_URL . 'search', [
         'query' => [
           'q' => $address,
           'type' => 'address',
@@ -166,22 +212,17 @@ class AddressSearch extends FilterPluginBase {
           'language' => $langcode,
           'municipality' => 'helsinki',
         ],
-      ];
+        'timeout' => self::TIMEOUT,
+      ]);
     }
 
     try {
-      $promises = [
-        'sv' => $client->getAsync('search', $queries['sv']),
-        'fi' => $client->getAsync('search', $queries['fi']),
-      ];
       $responses = Utils::unwrap($promises);
     }
-    catch (ConnectException $e) {
-      \Drupal::logger('helfi_tpr')
-        ->error(
-          "After school activity search\'s coordinate search failed,
-         message: {$e->getMessage()}"
-        );
+    catch (GuzzleException $e) {
+      $this->logger->error('Address search coordinate lookup failed: @message', [
+        '@message' => $e->getMessage(),
+      ]);
       return [];
     }
 
